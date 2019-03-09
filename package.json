@@ -1,0 +1,21 @@
+{
+  "name": "cibus-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
+    "gun": "0.9.9999991",
+    "jsonwebtoken": "^8.5.0",
+    "nodemon": "1.18.10"
+  }
+}
