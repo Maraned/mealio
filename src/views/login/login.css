@@ -1,0 +1,16 @@
+.login {
+  position: relative;
+}
+
+.login__popup {
+  position: absolute;
+  padding: .5rem .75rem;
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.login__popup > *:not(:last-child) {
+  margin-bottom: .75rem;
+}

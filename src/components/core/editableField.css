@@ -1,0 +1,7 @@
+.editableField {
+  padding: .5rem .25rem;
+}
+
+.editableField__edit {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}

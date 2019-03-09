@@ -1,0 +1,11 @@
+.recipe {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+.recipe__name {
+  width: 50%;
+  text-align: center;
+}

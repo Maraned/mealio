@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { useContext } from 'react';
+
+import Header from 'views/header/Header';
+import { LoggedInProvider, LoggedInContext } from 'contexts/login';
+import { GunProvider } from 'contexts/gun';
+
+import MainView from 'views/MainView';
+
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+
+const App = () => {
+  // const [loggedIn, setLoggedIn] = useState(localStorage.getItem('token'));
+
+  return (
+    <LoggedInProvider>
+      <GunProvider>
+        <Header />
+
+        <MainView />
+      </GunProvider>
+    </LoggedInProvider>
+  )
 }
 
 export default App;

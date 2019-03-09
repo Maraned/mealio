@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classcat": "^3.2.5",
+    "gun": "^0.9.9999991",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-i18next": "^10.3.0",
+    "react-pose": "^4.0.8",
     "react-scripts": "2.1.8"
   },
   "scripts": {
@@ -21,5 +25,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "http://localhost:3001"
 }

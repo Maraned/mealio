@@ -1,0 +1,5 @@
+.mainView {
+  height: 100%;
+  display: flex;
+  padding-top: var(--header-height);
+}
