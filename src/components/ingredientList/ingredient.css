@@ -1,3 +1,7 @@
+.ingredient {
+  display: flex;
+}
+
 .ingredient > *:not(:last-child) {
   margin-right: .25rem;
 }

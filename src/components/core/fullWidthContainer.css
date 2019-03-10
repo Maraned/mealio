@@ -1,0 +1,21 @@
+.fullWidthContainer {
+  width: 100%;
+  display: flex;
+}
+
+.fullWidthContainer--centered:not(.fullWidthContainer--stack) {
+  justify-content: center;
+}
+
+.fullWidthContainer--stack {
+  flex-direction: column;
+}
+
+.fullWidthContainer--stack > * {
+  margin-bottom: .5rem;
+}
+
+.fullWidthContainer--stack.fullWidthContainer--centered {
+  align-items: center;
+}
+

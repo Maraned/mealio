@@ -1,0 +1,9 @@
+.timerButton {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+}
+
+.timerButton--done {
+  background-color: var(--alert-color);
+  color: var(--alert-text-color);
+}

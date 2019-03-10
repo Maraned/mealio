@@ -1,20 +1,20 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import posed from 'react-pose';
-import { useTranslation } from 'react-i18next';
 import { LoggedInContext } from 'contexts/login';
 import { setTokens } from 'utils/token';
+
+import { useTranslation } from 'react-i18next';
 
 import './login.css';
 
 const Login = () => {
-  const { t, i18n } = useTranslation();
   const [popupOpen, setPopupOpen] = useState(false);
   const popupNode = useRef(null);
   const [username, setUsername] = useState('master');
   const [password, setPassword] = useState('trader');
   const { dispatch } = useContext(LoggedInContext);
-  console.log('dispatch', dispatch)
- 
+  const { t, i18n } = useTranslation();
+  
   const handleClick = event => {
     if (popupOpen) {
       if (popupNode.current 

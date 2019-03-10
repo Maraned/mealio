@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { t } from 'utils/translation';
+import { useTranslation } from 'react-i18next';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
@@ -13,7 +13,7 @@ import './ingredientList.css';
 const IngredientList = () => {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
-
+  const { t } = useTranslation();
   const { ingredients } = recipe;
 
   const updateIngredient = (index, ingredient) => {
@@ -27,8 +27,8 @@ const IngredientList = () => {
   }
 
   return (
-    <div className="ingredientList">
-      <h4>{t('Recipe.Ingredients')}</h4>
+    <div className="ingredientList list">
+      <h4>{t('Recipe:Ingredients')}</h4>
       {ingredients.map((ingredient, index) => (
         <Ingredient
           key={'ingredient' + index}
@@ -39,7 +39,7 @@ const IngredientList = () => {
       ))}
       {state.editable && (
         <button onClick={addIngredient}>
-          {t('Recipe.AddIngredient')}
+          {t('Recipe:AddIngredient')}
         </button>
       )}
     </div>

@@ -5,13 +5,14 @@ import { removeTokens } from 'utils/token';
 
 import { LoggedInContext } from 'contexts/login';
 
+import { useTranslation } from 'react-i18next';
+
 import './header.css';
 
 const Header = () => {
   const { state, dispatch } = useContext(LoggedInContext);
-
-  console.log('loggedIn', state.loggedIn)
-
+  const { t, i18n } = useTranslation();
+  
   const logout = () => {
     removeTokens();
     dispatch({ type: 'logout' });
@@ -22,8 +23,15 @@ const Header = () => {
       {!state.loggedIn ? (
         <Login />
       ) : (
-        <button onClick={logout}>Logout</button>
+        <button onClick={logout}>{t('Login:Logout')}</button>
       )}
+
+      <button onClick={() => {
+        const nextLocale = i18n.language === 'sv' ? 'en' : 'sv';
+        i18n.changeLanguage(nextLocale);
+      }}>
+        Change language
+      </button>
 
     </header>
   )

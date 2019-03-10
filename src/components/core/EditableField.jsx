@@ -9,7 +9,7 @@ const EditableField = ({
   value, 
   onChange, 
   placeholder,
-  className 
+  className,
 }) => {
   const { state } = useContext(EditableContext);
 

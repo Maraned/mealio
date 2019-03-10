@@ -5,41 +5,72 @@ import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 
 import IngredientList from 'components/ingredientList/IngredientList';
+import StepList from 'components/stepList/StepList';
 import EditableField from 'components/core/EditableField';
+import FullWidthContainer from 'components/core/FullWidthContainer';
 
 import 'views/recipe/recipe.css';
 
-import { t } from 'utils/translation';
+import { useTranslation } from 'react-i18next';
+
+import './createRecipe.css';
 
 const CreateRecipe = () => {
   const Gun = useContext(GunContext);
-  const { dispatch } = useContext(EditableContext);
+  const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
+  const { t } = useTranslation();
+  const { name, description } = state;
 
-  console.log('state', state)
-
-  const { name } = state;
-  
   useEffect(() => {
     dispatch({ type: 'edit' })
   }, []);
+
+  const toggleViewMode = () => {
+    editState.editable 
+      ? dispatch({ type: 'view' })
+      : dispatch({ type: 'edit' })
+  }
 
   const changeName = event => {
     updateRecipe({ type: 'name', value: event.target.value });
   }
 
+  const changeDescription = event => {
+    updateRecipe({ type: 'description', value: event.target.value });
+  }
+
   return (
     <div className="createRecipe recipe">
-      <div className="fullWidthContainer fullWidthContainer--centered">
+      <button 
+        className="createRecipe__toggleModeBtn"
+        onClick={toggleViewMode}
+      >
+        {editState.editable 
+          ? t('Recipe:View') 
+          : t('Recipe:Edit')}
+      </button>
+
+      <FullWidthContainer center stack>
         <EditableField 
           onChange={changeName} 
           value={name}
           className="recipe__name" 
           placeholder={t('Recipe.Name')}
         />
-      </div>
 
-      <IngredientList />
+        <EditableField 
+          onChange={changeDescription} 
+          value={description}
+          className="recipe__description" 
+          placeholder={t('Recipe.Description')}
+        />
+      </FullWidthContainer>
+
+      <FullWidthContainer>
+        <IngredientList />
+        <StepList />
+      </FullWidthContainer>
     </div>
   )
 }

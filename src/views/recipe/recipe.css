@@ -1,11 +1,15 @@
 .recipe {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  flex-wrap: wrap;
   padding: 1rem;
 }
 
-.recipe__name {
+.recipe__name,
+.recipe__description {
   width: 50%;
+}
+
+.recipe__name {
   text-align: center;
 }

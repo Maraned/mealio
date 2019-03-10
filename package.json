@@ -5,9 +5,11 @@
   "dependencies": {
     "classcat": "^3.2.5",
     "gun": "^0.9.9999991",
+    "i18next": "^15.0.6",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-i18next": "^10.3.0",
+    "react-icons": "^3.5.0",
     "react-pose": "^4.0.8",
     "react-scripts": "2.1.8"
   },

@@ -16,8 +16,6 @@ const RecipeList = () => {
     listenForRecipes();
   }, []);
 
-  console.log('recipes', recipes)
-
   return (
     <div className="recipeList">
 

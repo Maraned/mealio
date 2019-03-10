@@ -1,0 +1,17 @@
+.highlightedWord {
+  color: #1578cd;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+}
+
+.step .editableField {
+  width: 100%;
+}
+
+.step svg {
+  color: #ffc000;
+  margin-right: .25rem;
+}

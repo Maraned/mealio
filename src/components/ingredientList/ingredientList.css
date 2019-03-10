@@ -1,8 +1,4 @@
 .ingredientList {
   height: 100%;
-  padding: 1rem;
-}
-
-.ingredientList > *:not(:last-child) {
-  margin-bottom: .5rem;
+  flex-shrink: 0;
 }
