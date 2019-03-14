@@ -6,7 +6,9 @@
 }
 
 .recipe__name,
-.recipe__description {
+.recipe__description,
+.recipe__imageUpload,
+.recipe__imageGallery {
   width: 50%;
 }
 

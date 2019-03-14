@@ -1,0 +1,40 @@
+.imageGallery {
+  display: flex;
+  position: relative;
+}
+
+.imageGallery__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 3rem;
+}
+
+.imageGallery__arrow--right {
+  right: 0;
+}
+
+.imageGallery__images {
+  display: flex;
+  overflow: hidden;
+  margin: 0 3rem;
+}
+
+.imageGallery img {
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%);
+}
+
+.imageGallery__animate {
+  transition: transform .5s;  
+}
+
+.imageGallery__slideLeft {
+  transform: translateX(0%) !important;
+}
+
+.imageGallery__slideRight {
+  transform: translateX(-200%) !important;
+}

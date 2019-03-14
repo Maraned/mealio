@@ -1,0 +1,31 @@
+.imageUpload__dragndrop,
+.imageUpload__uploading,
+.imageUpload__success,
+.imageUpload__error,
+.imageUpload__file {
+  display: none;
+}
+
+.imageUpload {
+  background-color: white;
+  outline: 2px dashed black;
+  outline-offset: -10px;
+  padding: 1rem;
+}
+
+.imageUpload__chooseImage {
+  cursor: pointer;
+}
+
+.imageUpload__input {
+  display: flex;
+  justify-content: center;
+}
+
+.imageUpload__dragndrop {
+  display: inline;
+}
+
+.imageUpload--isDragOver {
+  background-color: grey;
+}

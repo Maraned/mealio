@@ -7,7 +7,9 @@ export default {
     View: 'Förhandsgranska',
     Edit: 'Editera',
     AddStep: 'Lägg till steg',
-    AddIngredient: 'Lägg till Ingrediens'
+    AddIngredient: 'Lägg till Ingrediens',
+    ChooseImage: 'Välj bild',
+    OrDragItHere: 'eller dra den hit'
   },
   Time: {
     Second: 'sekund',

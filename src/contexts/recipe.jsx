@@ -12,6 +12,8 @@ const recipeReducer = (state, action) => {
       return { ...state,  steps: action.value };
     case 'description': 
       return { ...state, description: action.value };
+    case 'images':
+      return { ...state, images: action.value }
     default:
       return;
   }

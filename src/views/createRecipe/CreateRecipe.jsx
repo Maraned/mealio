@@ -8,6 +8,8 @@ import IngredientList from 'components/ingredientList/IngredientList';
 import StepList from 'components/stepList/StepList';
 import EditableField from 'components/core/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
+import ImageUpload from 'components/core/imageUpload/ImageUpload';
+import ImageGallery from 'components/core/imageGallery/ImageGallery';
 
 import 'views/recipe/recipe.css';
 
@@ -20,7 +22,7 @@ const CreateRecipe = () => {
   const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
   const { t } = useTranslation();
-  const { name, description } = state;
+  const { name, description, images } = state;
 
   useEffect(() => {
     dispatch({ type: 'edit' })
@@ -40,6 +42,11 @@ const CreateRecipe = () => {
     updateRecipe({ type: 'description', value: event.target.value });
   }
 
+  const onFileDrop = files => {
+    const newImages = [...images, ...Array.from(files)];
+    updateRecipe({ type: 'images', value: newImages });
+  }
+
   return (
     <div className="createRecipe recipe">
       <button 
@@ -57,6 +64,18 @@ const CreateRecipe = () => {
           value={name}
           className="recipe__name" 
           placeholder={t('Recipe.Name')}
+        />
+
+        {editState.editable && (
+          <ImageUpload 
+            onDrop={onFileDrop} 
+            className="recipe__imageUpload" 
+          />
+        )}
+
+        <ImageGallery
+          className="recipe__imageGallery" 
+          images={images} 
         />
 
         <EditableField 

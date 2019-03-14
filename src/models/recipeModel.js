@@ -26,6 +26,7 @@ const RecipeModel = {
   portions: '',
   steps: [step1, step2, step3],
   ingredients: [ing1, ing2, ing3, ing4],
+  images: [], 
 }
 
 export default RecipeModel;
