@@ -9,7 +9,11 @@ export default {
     AddStep: 'Lägg till steg',
     AddIngredient: 'Lägg till Ingrediens',
     ChooseImage: 'Välj bild',
-    OrDragItHere: 'eller dra den hit'
+    OrDragItHere: 'eller dra den hit',
+    Ingredients: 'Ingredienser',
+    Steps: 'Steg',
+    Portion: 'Portion',
+    Portion_plural: 'Portioner'
   },
   Time: {
     Second: 'sekund',

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import cc from 'classcat';
 
+import { FaPause } from 'react-icons/fa';
+
 import './timerButton.css';
 
 const TimerButton = ({ time, unit, text }) => {
   const [timerText, setTimerText] = useState(text);
   const [timerTime, setTimerTime] = useState(0);
   const [timerDone, setTimerDone] = useState(false);
+  const [timerPaused, setTimerPaused] = useState(false);
+  const [timerStarted, setTimerStarted] = useState(false);
 
   const parseTime = (dateTime) => {
     let timeText = '';
@@ -65,26 +69,36 @@ const TimerButton = ({ time, unit, text }) => {
     timeToDateType();
   }, []);
 
-  const startTimer = () => {
-    let timeLeft = timerTime;
-    /* TODO
-      Make timer go negative, so you might see how much time has passed since timer is done
-    */
-    timeLeft -= 1000;
-    updateTimerText(timeLeft);
-    if (timeLeft <= 0) {
+  useEffect(() => {
+    updateTimerText(timerTime);
+  }, [timerTime])
 
-    } else { 
-      const activeTimer = setInterval(() => {
-        timeLeft -= 1000;
-        updateTimerText(timeLeft);
-        if (timeLeft <= 0) {
-          clearInterval(activeTimer);
+  const updateTimeLeft = () => {
+    if (!timerDone && timerStarted) {
+      setTimeout(() => {
+        if (timerPaused) {
+          return
+        } else if (timerTime > 0) {
+          setTimerTime(timerTime - 1000);
+        } else if (timerTime <= 0) {
           setTimerDone(true);
+          setTimerTime(0);
         }
       }, 1000);
     }
   }
+
+  const startTimer = () => {
+    if (!timerStarted) {
+      setTimerStarted(true);
+    } else {
+      setTimerPaused(!timerPaused);
+    }
+  }
+
+  useEffect(() => {
+    updateTimeLeft();
+  }, [timerTime, timerStarted, timerPaused]);
 
   return (
     <button 
@@ -94,6 +108,12 @@ const TimerButton = ({ time, unit, text }) => {
       }])}
     >
       {timerText}
+
+      {timerPaused && (
+        <div className="timerButton--paused">
+          <FaPause />
+        </div>
+      )}
     </button>
   )
 }

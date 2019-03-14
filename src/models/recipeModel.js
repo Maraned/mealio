@@ -9,7 +9,7 @@
 
 const ing1 = { amount: 15,  unit: 'dl', name: 'mjölk' }
 const ing2 = { amount: 5,  unit: 'koppar', name: 'socker' }
-const ing3 = { amount: 2,  unit: 'kg', name: 'mjöl' }
+const ing3 = { amount: 7,  unit: 'kg', name: 'mjöl' }
 const ing4 = { amount: 2,  unit: 'st', name: 'ägg' }
 
 const step1 = 'Blanda mjöl, ägg och socker tillsammans. Låt stå i 5 minuter.';
@@ -23,7 +23,6 @@ const RecipeModel = {
   name: 'Sockerkaka',
   description,
   time: '',
-  portions: '',
   steps: [step1, step2, step3],
   ingredients: [ing1, ing2, ing3, ing4],
   images: [], 

@@ -2,6 +2,15 @@ import React, { createContext, useReducer } from 'react';
 
 import RecipeModel from 'models/recipeModel';
 
+const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
+  const isNumber = !isNaN(number);
+  const isWithinLowerLimit = number >= lowerLimit;
+  const isWithinUpperLimit = number <= upperLimit;
+  console.log('number', number, isNumber, isWithinLowerLimit, isWithinUpperLimit)
+
+  return isNumber && isWithinLowerLimit && isWithinUpperLimit;
+}
+
 const recipeReducer = (state, action) => {
   switch (action.type) {
     case 'ingredients':
@@ -13,9 +22,11 @@ const recipeReducer = (state, action) => {
     case 'description': 
       return { ...state, description: action.value };
     case 'images':
-      return { ...state, images: action.value }
-    default:
-      return;
+      return { ...state, images: action.value };
+    case 'defaultPortions':
+      return isNumberBetweenLimits(action.value, 1, 8) ? { ...state, defaultPortions: action.value } : state;
+    case 'portions':
+      return isNumberBetweenLimits(action.value, 1, 8) ? { ...state, portions: action.value } : state;
   }
 };
 

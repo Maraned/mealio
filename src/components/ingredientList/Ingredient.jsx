@@ -8,9 +8,16 @@ import './ingredient.css';
 const Ingredient = ({ 
   ingredient, 
   updateIngredient, 
-  index 
+  index,
+  defaultPortions,
+  portions,
 }) => {
   const { t, i18n } = useTranslation();
+
+  const amountValue = () => {
+    const factor = portions / defaultPortions;
+    return parseInt(ingredient.amount, 10) * factor;
+  }
 
   const updateAmount = event => {
     ingredient.amount = event.target.value;
@@ -30,7 +37,7 @@ const Ingredient = ({
   return (
     <div className="ingredient">
       <EditableField 
-        value={ingredient.amount} 
+        value={amountValue()} 
         onChange={updateAmount} 
         placeholder={t('Ingredient.Amount')} 
       />

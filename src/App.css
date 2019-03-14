@@ -13,6 +13,15 @@ body,
   height: 100%;
 }
 
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  margin: 0;
+}
+
 button {
   border: none;
   box-sizing: border-box;
@@ -32,6 +41,10 @@ input:focus {
   border: none;
   outline-style: none;
   box-shadow: 0px 4px 2px -2px rgba(73, 100, 255, .5);
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .list {
