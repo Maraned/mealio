@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cc from 'classcat';
 
 import './imageUpload.css';
@@ -6,7 +6,6 @@ import './imageUpload.css';
 import { useTranslation } from 'react-i18next';
 
 const ImageUpload = ({ onDrop, className }) => {
-  const [droppedFiles, setDroppedFiles] = useState(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const { t } = useTranslation();
 
@@ -25,11 +24,16 @@ const ImageUpload = ({ onDrop, className }) => {
     const files = event.dataTransfer.files;
     if (onDrop) {
       onDrop(files);
-    } else {
-      setDroppedFiles(files);
     }
     setIsDraggingOver(false);
   } 
+
+  const onChange = event => {
+    const files = event.target.files;
+    if (onDrop) {
+      onDrop(files);
+    }
+  }
 
   return (
     <form 
@@ -50,7 +54,8 @@ const ImageUpload = ({ onDrop, className }) => {
           className="imageUpload__file" 
           type="file" 
           name="files[]" 
-          id="file" 
+          id="file"
+          onChange={onChange} 
           multiple 
         />
         

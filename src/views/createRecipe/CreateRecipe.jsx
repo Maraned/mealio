@@ -10,6 +10,7 @@ import EditableField from 'components/core/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
 import ImageGallery from 'components/core/imageGallery/ImageGallery';
+import ImageOrder from 'components/core/imageOrder/ImageOrder';
 
 import 'views/recipe/recipe.css';
 
@@ -42,9 +43,13 @@ const CreateRecipe = () => {
     updateRecipe({ type: 'description', value: event.target.value });
   }
 
-  const onFileDrop = files => {
+  const addImages = files => {
     const newImages = [...images, ...Array.from(files)];
     updateRecipe({ type: 'images', value: newImages });
+  }
+
+  const updateImages = images => {
+    updateRecipe({ type: 'images', value: images });
   }
 
   return (
@@ -67,16 +72,25 @@ const CreateRecipe = () => {
         />
 
         {editState.editable && (
-          <ImageUpload 
-            onDrop={onFileDrop} 
-            className="recipe__imageUpload" 
-          />
+          <>
+            <ImageUpload 
+              onDrop={addImages} 
+              className="recipe__imageUpload" 
+            />
+            <ImageOrder 
+              onOrderChange={updateImages}
+              className="recipe__imageGallery" 
+              images={images}
+            />
+          </>
         )}
 
-        <ImageGallery
+        {!editState.editable && (
+          <ImageGallery
           className="recipe__imageGallery" 
-          images={images} 
-        />
+            images={images} 
+          />
+        )}
 
         <EditableField 
           onChange={changeDescription} 

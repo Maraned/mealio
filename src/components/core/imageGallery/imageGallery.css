@@ -1,6 +1,15 @@
 .imageGallery {
   display: flex;
   position: relative;
+  overflow: hidden;
+}
+
+.imageGallery__arrowContainer {
+  width: 2rem;
+  display: flex;
+  flex-shrink: 0;
+  background-color: #fff;
+  z-index: 1;
 }
 
 .imageGallery__arrow {
@@ -18,23 +27,19 @@
 .imageGallery__images {
   display: flex;
   overflow: hidden;
-  margin: 0 3rem;
+}
+
+.imageGallery__slide {
+  width: 100%;
+  height: 100%;
 }
 
 .imageGallery img {
   width: 100%;
   height: 100%;
+}
+
+.imageGallery__images__innerContainer {
+  display: flex;
   transform: translateX(-100%);
-}
-
-.imageGallery__animate {
-  transition: transform .5s;  
-}
-
-.imageGallery__slideLeft {
-  transform: translateX(0%) !important;
-}
-
-.imageGallery__slideRight {
-  transform: translateX(-200%) !important;
 }
