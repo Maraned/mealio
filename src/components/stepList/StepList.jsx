@@ -31,6 +31,10 @@ const StepList = () => {
     updateRecipe({ type: 'steps', value: steps })
   }
 
+  const updateSteps = steps => {
+    updateRecipe({ type: 'steps', value: steps });
+  }
+
   const hoverStep = ingredient => event => {
     const rect = event.target.getBoundingClientRect();
     setPopup({
@@ -47,6 +51,20 @@ const StepList = () => {
     })
   }
 
+  const parseStepText = stepText => {
+    const lines = stepText.split('\n');
+    if (lines.length) {
+      const newSteps = [...steps, ...lines];
+      updateSteps(newSteps);
+    }
+  }
+
+  const pasteSteps = event => {
+    event.preventDefault();
+    const pastedText = event.clipboardData.getData('Text');
+    parseStepText(pastedText)
+  }
+
   return (
     <div className="stepList list">
       <h4>{t('Recipe:Steps')}</h4>
@@ -59,6 +77,7 @@ const StepList = () => {
           ingredients={ingredients}
           onMouseOver={hoverStep}
           onMouseLeave={closePopup}
+          onPaste={pasteSteps}
         />
       ))}
       {state.editable && (

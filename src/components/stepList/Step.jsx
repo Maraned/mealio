@@ -16,7 +16,8 @@ const Step = ({
   index,
   ingredients,
   onMouseOver,
-  onMouseLeave
+  onMouseLeave,
+  onPaste,
 }) => {
   const [parsedStep, setParsedStep] = useState([]);
   const { state } = useContext(EditableContext);
@@ -37,7 +38,7 @@ const Step = ({
 
   const wordContainsIngredient = (word, ingredient) => {
     const ingredientInWord = word.includes(ingredient);
-    const wordContainsIngredient = ingredient.includes(word);
+    const wordContainsIngredient = word.length > 3 && ingredient.includes(word);
 
     return ingredientInWord 
       || wordContainsIngredient; 
@@ -166,6 +167,7 @@ const Step = ({
     <EditableField
       value={step}
       onChange={onChange}
+      onPaste={onPaste}
     />
   );
 

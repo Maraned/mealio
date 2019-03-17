@@ -34,13 +34,51 @@ const IngredientList = () => {
   const updatePortions = event => {
     updateRecipe({ type: 'portions', value: event.target.value });
   }
+
+  const updateIngredients = ingredients => {
+    updateRecipe({ type: 'ingredients', value: ingredients });
+  }
+
+  const parseIngredientText = ingredientText => {
+    const fullIngredientRegex = /([\d,\.]+)\s(.+?)\s(.+)/;
+    const lines = ingredientText.split('\n');
+    const parsedIngredients = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      const matches = lines[i].match(fullIngredientRegex);
+      if (matches) {
+        const [, amount, unit, name] = matches;
+        if (amount && unit && name) {
+          parsedIngredients.push({
+            ...IngredientModel,
+            amount: parseFloat(amount.replace(',', '.')), 
+            unit, 
+            name
+          });
+        }
+      }
+    }
+
+    if (parsedIngredients.length) {
+      const newIngredients = [...ingredients, ...parsedIngredients];
+      updateIngredients(newIngredients);
+    }
+  }
+
+  const pasteIngredients = event => {
+    event.preventDefault();
+    const pastedText = event.clipboardData.getData('Text');
+    parseIngredientText(pastedText)
+  }
   
   const portionsAmount = parseInt(portions, 10) || parseInt(defaultPortions, 10);
 
   return (
     <div className="ingredientList list">
       <div className="ingredientList__header">
-        <h4>{t('Recipe:Ingredients')}</h4>
+        <div>
+          <h4>{t('Recipe:Ingredients')}</h4>
+        </div>
       
         {state.editable && (
           <div>
@@ -74,6 +112,7 @@ const IngredientList = () => {
           ingredient={ingredient}
           defaultPortions={defaultPortions}
           portions={portionsAmount}
+          onPaste={pasteIngredients}
         />
       ))}
       {state.editable && (

@@ -13,7 +13,8 @@ export default {
     Ingredients: 'Ingredienser',
     Steps: 'Steg',
     Portion: 'Portion',
-    Portion_plural: 'Portioner'
+    Portion_plural: 'Portioner',
+    Paste: 'Klista in',
   },
   Time: {
     Second: 'sekund',

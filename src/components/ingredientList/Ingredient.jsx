@@ -11,12 +11,13 @@ const Ingredient = ({
   index,
   defaultPortions,
   portions,
+  onPaste,
 }) => {
   const { t, i18n } = useTranslation();
 
   const amountValue = () => {
     const factor = portions / defaultPortions;
-    return parseInt(ingredient.amount, 10) * factor;
+    return parseFloat(ingredient.amount) * factor;
   }
 
   const updateAmount = event => {
@@ -40,18 +41,21 @@ const Ingredient = ({
         value={amountValue()} 
         onChange={updateAmount} 
         placeholder={t('Ingredient.Amount')} 
+        onPaste={onPaste}
       />
 
       <EditableField 
         value={ingredient.unit} 
         onChange={updateUnit} 
         placeholder={t('Ingredient.Unit')} 
+        onPaste={onPaste}
       />
 
       <EditableField 
         value={ingredient.name} 
         onChange={updateName} 
         placeholder={t('Ingredient.Name')} 
+        onPaste={onPaste}
       />
     </div>
   )

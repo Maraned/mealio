@@ -10,6 +10,7 @@ const EditableField = ({
   onChange, 
   placeholder,
   className,
+  onPaste,
 }) => {
   const { state } = useContext(EditableContext);
 
@@ -19,6 +20,7 @@ const EditableField = ({
       onChange={onChange}
       value={value}  
       placeholder={placeholder}
+      onPaste={onPaste}
     />
   ) : (
     <div className="editableField">
