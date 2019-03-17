@@ -109,9 +109,7 @@ const ImageOrder = ({ images, className, onOrderChange }) => {
             <ImageBox
               key={`${index}:${file.name}`} 
               poseKey={`${index}:${file.name}`}
-              className={cc(['imageOrder__file', {
-                'imageOrder__file--main': index === 1,
-              }])}
+              className="imageOrder__file"
               onDragStart={onDragStart}
               onValueChange={{ x: onDrag(index) }}
             >

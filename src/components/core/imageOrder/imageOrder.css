@@ -12,20 +12,6 @@
   position: relative;
   cursor: move;
 }
-/* 
-.imageOrder__file:not(.imageOrder__file--main) {
-  margin-top: 1rem;
-} */
-.imageOrder__file--main {
-  border: 4px dashed #ff0000;
-  padding: .25rem;
-}
-
-.imageOrder__file__mainTitle {
-  height: 1rem;
-  display: flex;
-  justify-content: center;
-}
 
 .imageOrder__file__name {
   pointer-events: none;
