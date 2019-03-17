@@ -5,3 +5,15 @@
 .ingredient > *:not(:last-child) {
   margin-right: .25rem;
 }
+
+.ingredient__remove {
+  background-color: #ff0000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 .25rem;
+}
+
+.ingredient__remove svg {
+  fill: white;
+}

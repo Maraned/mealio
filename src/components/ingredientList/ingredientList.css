@@ -1,6 +1,6 @@
 .ingredientList {
   height: 100%;
-  flex-shrink: 0;
+  /* flex-shrink: 0; */
 }
 
 .ingredientList__header {

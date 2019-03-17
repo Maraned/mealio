@@ -39,6 +39,12 @@ const IngredientList = () => {
     updateRecipe({ type: 'ingredients', value: ingredients });
   }
 
+  const removeIngredient = (index, ingredient) => {
+    const modifiedIngredients = [...ingredients];
+    modifiedIngredients.splice(index, 1);
+    updateRecipe({ type: 'ingredients', value: modifiedIngredients });
+  }
+
   const parseIngredientText = ingredientText => {
     const fullIngredientRegex = /([\d,\.]+)\s(.+?)\s(.+)/;
     const lines = ingredientText.split('\n');
@@ -113,6 +119,7 @@ const IngredientList = () => {
           defaultPortions={defaultPortions}
           portions={portionsAmount}
           onPaste={pasteIngredients}
+          onRemove={removeIngredient}
         />
       ))}
       {state.editable && (

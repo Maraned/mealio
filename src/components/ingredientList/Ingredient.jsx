@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaTimes } from 'react-icons/fa';
 
 import EditableField from 'components/core/EditableField';
 
@@ -12,8 +13,10 @@ const Ingredient = ({
   defaultPortions,
   portions,
   onPaste,
+  onRemove,
 }) => {
   const { t, i18n } = useTranslation();
+  const [showRemove, setShowRemove] = useState(false);
 
   const amountValue = () => {
     const factor = portions / defaultPortions;
@@ -35,6 +38,18 @@ const Ingredient = ({
     updateIngredient(index, ingredient);
   }
 
+  const removeIngredient = () => {
+    onRemove(index, ingredient);
+  }
+
+  const onFocus = () => {
+    setShowRemove(true);
+  }
+
+  const onBlur = () => {
+    setShowRemove(false);
+  }
+
   return (
     <div className="ingredient">
       <EditableField 
@@ -42,6 +57,8 @@ const Ingredient = ({
         onChange={updateAmount} 
         placeholder={t('Ingredient.Amount')} 
         onPaste={onPaste}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
 
       <EditableField 
@@ -49,6 +66,8 @@ const Ingredient = ({
         onChange={updateUnit} 
         placeholder={t('Ingredient.Unit')} 
         onPaste={onPaste}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
 
       <EditableField 
@@ -56,7 +75,15 @@ const Ingredient = ({
         onChange={updateName} 
         placeholder={t('Ingredient.Name')} 
         onPaste={onPaste}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
+
+      {showRemove && (
+        <div className="ingredient__remove">
+          <FaTimes onClick={removeIngredient} />
+        </div>
+      )}
     </div>
   )
 }
