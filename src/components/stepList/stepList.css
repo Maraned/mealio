@@ -1,7 +1,7 @@
 .stepList {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 50%;
 }
 
 .stepList__popup {

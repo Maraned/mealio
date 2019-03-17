@@ -20,10 +20,20 @@ const Step = ({
 }) => {
   const [parsedStep, setParsedStep] = useState([]);
   const { state } = useContext(EditableContext);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const [oven, setOven] = useState(0);
 
+  const includesDegrees = () => {
+    const regex = new RegExp(`(\\d+)\\s*${t('Recipe:Degrees')}`, 'g');
+    const match = regex.exec(step);
+    if (match) {
+      setOven(match[1]);
+    }
+  }
 
-  const showFireSymbol = step.includes(t('Recipe:Degrees'));
+  useEffect(() => {
+    includesDegrees();
+  }, [step])
 
   const wordContainsIngredient = (word, ingredient) => {
     const ingredientInWord = word.includes(ingredient);
@@ -115,31 +125,40 @@ const Step = ({
 
   const viewMode = () => (
     <>
-       <span>{index + 1}.&nbsp;</span>
+      <div className="step__symbols">
+        <span>{index + 1}.&nbsp;</span>
 
-       {showFireSymbol && (
-        <FaBurn />
-       )}
+        {!!oven && (
+          <div className="step__oven">
+            <FaBurn />
+            <span>{oven}</span>
+          </div>
+        )}
+       </div>
 
-      {parsedStep.map((word, wordIndex) => (
-        <span 
-          key={word.text + wordIndex} 
-          className={word.ingredient && 'highlightedWord'}
-          onMouseOver={word.ingredient && onMouseOver(word.ingredient)}
-          onMouseLeave={onMouseLeave}
-        >
-          {word.text}
-          &nbsp;
-        </span>
-      ))}
+      <div className="step__content">
+        {parsedStep.map((word, wordIndex) => (
+          <span 
+            key={word.text + wordIndex} 
+            className={word.ingredient && 'highlightedWord'}
+            onMouseOver={word.ingredient && onMouseOver(word.ingredient)}
+            onMouseLeave={onMouseLeave}
+          >
+            {word.text}
+            &nbsp;
+          </span>
+        ))}
 
-      {timer && (
-        <TimerButton 
-          unit={timer.type} 
-          text={timer.timeText} 
-          time={timer.time} 
-        />
-      )}
+        {timer && (
+          <div className="step__timerButtonContainer">
+            <TimerButton 
+              unit={timer.type} 
+              text={timer.timeText} 
+              time={timer.time} 
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 

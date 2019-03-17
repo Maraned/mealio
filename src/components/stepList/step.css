@@ -3,15 +3,53 @@
 }
 
 .step {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-row-gap: .25rem;
+  grid-column-gap: .25rem;
+  margin-bottom: 1rem !important;
 }
 
 .step .editableField {
   width: 100%;
 }
 
-.step svg {
+.step__timerButtonContainer {
+  width: 100%;
+  margin-top: .25rem;
+}
+
+.step input {
+  grid-area: 1 / span 2;
+}
+
+.step__content {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.step__symbols {
+  display: flex;
+  flex-direction: column;
+}
+
+.step__oven {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.step__oven svg {
+  height: 2rem;
+  width: 1.5rem;
   color: #ffc000;
-  margin-right: .25rem;
+}
+
+.step__oven span {
+  position: absolute;
+  bottom: 0;
+  top: 1rem;
+  font-size: .75rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
