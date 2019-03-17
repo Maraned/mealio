@@ -19,8 +19,10 @@ const Ingredient = ({
   const [showRemove, setShowRemove] = useState(false);
 
   const amountValue = () => {
-    const factor = portions / defaultPortions;
-    return parseFloat(ingredient.amount) * factor;
+    if (ingredient.amount) {
+      const factor = portions / defaultPortions;
+      return parseFloat(ingredient.amount) * factor;
+    }
   }
 
   const updateAmount = event => {
