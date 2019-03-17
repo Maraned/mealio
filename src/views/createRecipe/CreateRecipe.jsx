@@ -100,7 +100,7 @@ const CreateRecipe = () => {
         />
       </FullWidthContainer>
 
-      <FullWidthContainer>
+      <FullWidthContainer center>
         <IngredientList />
         <StepList />
       </FullWidthContainer>

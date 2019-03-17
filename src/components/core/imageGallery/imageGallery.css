@@ -1,5 +1,6 @@
 .imageGallery {
   display: flex;
+  justify-content: center;
   position: relative;
   overflow: hidden;
 }
@@ -10,6 +11,7 @@
   flex-shrink: 0;
   background-color: #fff;
   z-index: 1;
+  position: relative;
 }
 
 .imageGallery__arrow {
@@ -27,6 +29,8 @@
 .imageGallery__images {
   display: flex;
   overflow: hidden;
+  max-width: 450px;
+  max-height: 600px;
 }
 
 .imageGallery__slide {
