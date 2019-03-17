@@ -35,6 +35,12 @@ const StepList = () => {
     updateRecipe({ type: 'steps', value: steps });
   }
 
+  const removeStep = (step, index) => {
+    const modifiedSteps = [...steps];
+    modifiedSteps.splice(index, 1);
+    updateRecipe({ type: 'steps', value: modifiedSteps });
+  }
+
   const hoverStep = ingredient => event => {
     const rect = event.target.getBoundingClientRect();
     setPopup({
@@ -78,6 +84,7 @@ const StepList = () => {
           onMouseOver={hoverStep}
           onMouseLeave={closePopup}
           onPaste={pasteSteps}
+          onRemove={removeStep}
         />
       ))}
       {state.editable && (

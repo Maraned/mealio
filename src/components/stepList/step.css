@@ -1,13 +1,38 @@
+.step {
+  position: relative;
+}
+
 .highlightedWord {
   color: #1578cd;
 }
 
-.step {
+.step:not(.step--edit) {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-row-gap: .25rem;
   grid-column-gap: .25rem;
   margin-bottom: 1rem !important;
+}
+
+.step--edit {
+  display: flex;
+}
+
+.step__number {
+  line-height: 2rem;
+  font-size: 1rem;
+}
+
+.step__remove {
+  background-color: #ff0000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 .25rem;
+}
+
+.step__remove svg {
+  fill: white;
 }
 
 .step .editableField {
@@ -52,4 +77,35 @@
   font-size: .75rem;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.step__content--indentation-1 {
+  margin-left: 2rem;
+}
+
+.step__content--indentation-2 {
+  margin-left: 4rem;
+}
+
+.step__tools {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+  display: flex;
+  box-shadow: var(--box-shadow);
+}
+
+.step__tools__option {
+  cursor: pointer;
+  padding: .5rem;
+}
+
+.step__tools__option:hover {
+  background-color: var(--text-hover);
+}
+
+.step__tools__option * {
+  pointer-events: none;
 }

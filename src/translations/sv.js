@@ -15,6 +15,10 @@ export default {
     Portion: 'Portion',
     Portion_plural: 'Portioner',
     Paste: 'Klista in',
+    IncreaseIndent: 'Öka indentera',
+    DecreaseIndent: 'Minska indentera',
+    ShowStepNumbers: 'Visa stegnumrering',
+    HideStepNumbers: 'Dölj stegnumrering',
   },
   Time: {
     Second: 'sekund',
