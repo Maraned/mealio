@@ -27,6 +27,8 @@ const recipeReducer = (state, action) => {
       return isNumberBetweenLimits(action.value, 1, 8) ? { ...state, defaultPortions: action.value } : state;
     case 'portions':
       return isNumberBetweenLimits(action.value, 1, 8) ? { ...state, portions: action.value } : state;
+    case 'time':
+      return { ...state, time: action.value }
   }
 };
 

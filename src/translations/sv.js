@@ -19,6 +19,7 @@ export default {
     DecreaseIndent: 'Minska indentera',
     ShowStepNumbers: 'Visa stegnumrering',
     HideStepNumbers: 'Dölj stegnumrering',
+    Time: 'Tid',
   },
   Time: {
     Second: 'sekund',

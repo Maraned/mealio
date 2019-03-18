@@ -12,6 +12,22 @@
   width: 50%;
 }
 
-.recipe__name {
+.recipe__name,
+.recipe__description {
   text-align: center;
+}
+
+.recipe__time {
+  display: flex;
+  align-items: center;
+}
+
+.recipe__time > * {
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.recipe__time svg {
+  margin-right: .5rem;
 }

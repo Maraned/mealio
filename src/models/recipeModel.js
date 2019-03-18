@@ -34,7 +34,7 @@ const description = 'Denna goda sockerkaka är riktigt underbar, speciellt tills
 const RecipeModel = {
   name: 'Sockerkaka',
   description,
-  time: '',
+  time: '30 min',
   steps: [step1, step2, step3],
   ingredients: [ing1, ing2, ing3, ing4],
   images: [], 

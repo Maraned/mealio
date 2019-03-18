@@ -15,6 +15,7 @@ import ImageOrder from 'components/core/imageOrder/ImageOrder';
 import 'views/recipe/recipe.css';
 
 import { useTranslation } from 'react-i18next';
+import { FaRegClock } from 'react-icons/fa';
 
 import './createRecipe.css';
 
@@ -23,7 +24,7 @@ const CreateRecipe = () => {
   const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
   const { t } = useTranslation();
-  const { name, description, images } = state;
+  const { name, description, images, time } = state;
 
   useEffect(() => {
     dispatch({ type: 'edit' })
@@ -50,6 +51,10 @@ const CreateRecipe = () => {
 
   const updateImages = images => {
     updateRecipe({ type: 'images', value: images });
+  }
+
+  const changeTime = event => {
+    updateRecipe({ type: 'time', value: event.target.value });
   }
 
   return (
@@ -96,8 +101,18 @@ const CreateRecipe = () => {
           onChange={changeDescription} 
           value={description}
           className="recipe__description" 
-          placeholder={t('Recipe.Description')}
+          placeholder={t('Recipe:Description')}
+          type="text"
         />
+
+        <div className="recipe__time">
+          <FaRegClock />
+          <EditableField 
+            onChange={changeTime} 
+            value={time}
+            placeholder={t('Recipe:Time')}
+          />
+        </div>
       </FullWidthContainer>
 
       <FullWidthContainer center>

@@ -45,7 +45,7 @@ const EditableField = ({
   }
 
   const renderViewMode = () => (
-    <div className="editableField">
+    <div className={cc(['editableField', className])}>
       {value}
     </div>  
   );
