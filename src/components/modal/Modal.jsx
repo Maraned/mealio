@@ -1,0 +1,50 @@
+import React, { useRef, useContext, useState } from 'react';
+import posed, { PoseGroup } from 'react-pose';
+
+import { RouterContext } from 'contexts/router';
+
+import './modal.css';
+
+const PosedModal = posed.div({
+  enter: {
+    opacity: 1,
+    transition: {
+
+    }
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+    }
+  },
+})
+
+const Modal = ({ children, ref }) => {
+  const modalRef = useRef(null);
+  const { state: router, dispatch } = useContext(RouterContext);
+  const { ModalView } = router;
+
+  const outsideClick = event => {
+    if (!modalRef.current.contains(event.target)) {
+      dispatch({ type: 'closeModal' });
+    }
+  }
+
+  return (
+    <PoseGroup enterPose="enter">
+    {!!ModalView && (
+      <PosedModal 
+        key="modal" 
+        className="modalWrapper" 
+        onClick={outsideClick}
+      >
+        <div className="modal" ref={modalRef}>
+          <ModalView />
+        </div>
+      </PosedModal>
+    )}
+  </PoseGroup>
+  );
+}
+
+export default Modal;

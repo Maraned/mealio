@@ -4,6 +4,8 @@ import './translations/i18n';
 import Header from 'views/header/Header';
 import { LoggedInProvider, LoggedInContext } from 'contexts/login';
 import { GunProvider } from 'contexts/gun';
+import { UserProvider } from 'contexts/user';
+import { RouterProvider } from 'contexts/router';
 
 import MainView from 'views/MainView';
 
@@ -14,9 +16,13 @@ const App = () => {
   return (
     <LoggedInProvider>
       <GunProvider>
-        <Header />
+        <UserProvider>
+          <RouterProvider>
+            <Header />
 
-        <MainView />
+            <MainView />
+          </RouterProvider>
+        </UserProvider>
       </GunProvider>
     </LoggedInProvider>
   )

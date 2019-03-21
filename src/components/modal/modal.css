@@ -1,0 +1,21 @@
+.modalWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0, .03);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  max-width: 50%;
+  box-shadow: var(--box-shadow);
+  z-index: 1000;
+  background-color: #fff;
+  min-height: 80vh;
+  min-width: 768px;
+  display: flex;
+}

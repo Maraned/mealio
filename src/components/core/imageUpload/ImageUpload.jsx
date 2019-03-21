@@ -59,7 +59,7 @@ const ImageUpload = ({ onDrop, className }) => {
           multiple 
         />
         
-        <label for="file">
+        <label htmlFor="file">
           <strong className="imageUpload__chooseImage">{t('Recipe:ChooseImage')}</strong>
           <span className="imageUpload__dragndrop">
             &nbsp;{t('Recipe:OrDragItHere')}

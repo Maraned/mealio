@@ -1,0 +1,19 @@
+.avatar {
+
+}
+
+.avatar__image {
+  background-color: #333;
+  padding: .25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  cursor: pointer; 
+}
+
+.avatar svg {
+  fill: #fff;
+}

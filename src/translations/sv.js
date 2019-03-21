@@ -30,5 +30,10 @@ export default {
     Hour_plural: 'timmar',
     Day: 'dag',
     Day_plural: 'dagar', 
+  },
+  Menu: {
+    Logout: 'Logga ut',
+    Settings: 'Inställningar',
+    User: 'Användare'
   }
 }

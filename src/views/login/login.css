@@ -9,6 +9,7 @@
   box-shadow: var(--box-shadow);
   display: flex;
   flex-direction: column;
+  right: 0;
 }
 
 .login__popup > *:not(:last-child) {
