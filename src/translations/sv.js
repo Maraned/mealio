@@ -1,6 +1,14 @@
 export default {
   Login: {
     Login: 'Logga in',
+    Username: 'Email-adress',
+    Password: 'Lösenord',
+    Register: 'Registrera',
+    CreateAccount: 'Skapa konto',
+    InvalidEmailFormat: 'Ogiltig email-adress',
+    UserCreated: 'Användare skapad',
+    Error: 'Fel användarnamn eller lösenord',
+    UserAlreadyExists: 'Användaren är redan registrerad'
   },
   Recipe: {
     Degrees: 'grader',
@@ -34,6 +42,9 @@ export default {
   Menu: {
     Logout: 'Logga ut',
     Settings: 'Inställningar',
-    User: 'Användare'
-  }
+    UserSettings: 'Användare'
+  },
+  UserSettings: {
+    DisplayName: 'Namn'
+  },
 }

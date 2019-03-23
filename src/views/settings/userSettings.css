@@ -1,0 +1,23 @@
+.userSettings {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.userSettings > *:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.userSettings__avatar {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  background-color: var(--light-grey);
+  position: relative;
+}
+
+.userSettings__imageUploader {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

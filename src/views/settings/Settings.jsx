@@ -2,39 +2,43 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import cc from 'classcat';
 
+import { EditableProvider } from 'contexts/editable';
 import UserSettings from './UserSettings';
-import Modal from 'components/modal/Modal';
 
 import './settings.css';
 
 const Settings = () => {
-  const [ActiveView, setActiveView] = useState(UserSettings);
   const [activeViewName, setActiveViewName] = useState('UserSettings');
   const { t } = useTranslation();
 
-  const setUserSettingsActive = () => {
-    setActiveViewName('UserSettings');
-    setActiveView(UserSettings);
-  }
+  const renderMenuOption = viewName => (
+    <div 
+      className={cc(['settings__menu__option', {
+        'settings__menu__option--selected': activeViewName === viewName
+      }])}
+      onClick={() => setActiveViewName(viewName)}
+    >
+      {t(`Menu:${viewName}`)}
+    </div>
+  );
 
   const renderMenu = () => (
     <div className="settings__menu">
-      <div 
-        className={cc(['settings__menu__option', {
-          'settings__menu__option--selected': activeViewName === 'UserSettings'
-        }])}
-        onClick={setUserSettingsActive}
-      >
-        {t('Menu:User')}
-      </div>
+      {renderMenuOption('UserSettings')}
     </div>
   );
 
   return (
     <div className="settings">
-      {renderMenu()}
+      <EditableProvider>
+        {renderMenu()}
 
-      {ActiveView}
+        <div className="settings__activeView">
+          {activeViewName === 'UserSettings' && (
+            <UserSettings />
+          )}
+        </div>
+      </EditableProvider>
     </div>
   );
 }

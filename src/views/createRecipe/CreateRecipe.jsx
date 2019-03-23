@@ -81,6 +81,7 @@ const CreateRecipe = () => {
             <ImageUpload 
               onDrop={addImages} 
               className="recipe__imageUpload" 
+              id="createRecipe"
             />
             <ImageOrder 
               onOrderChange={updateImages}

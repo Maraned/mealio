@@ -36,3 +36,8 @@
 .userMenu__menu__option > * {
   height: 1rem;
 }
+
+.userMenu .avatar {
+  height: 2.5rem;
+  width: 2.5rem;
+}

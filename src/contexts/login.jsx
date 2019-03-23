@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 
 const loginReducer = (state, action) => {
   switch (action.type) {
@@ -11,7 +11,7 @@ const loginReducer = (state, action) => {
   }
 };
 
-const initialState = { loggedIn: !!localStorage.getItem('accessToken') }
+const initialState = { loggedIn: false }
 
 export const LoggedInContext = createContext(initialState);
 

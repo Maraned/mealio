@@ -5,17 +5,16 @@ import './avatar.css';
 import { UserContext } from 'contexts/user';
 
 const Avatar = ({ onClick }) => {
-  const user = useContext(UserContext);
-  const { avatar } = user;
-
+  const { state } = useContext(UserContext);
+  const avatar = state.userProfile.avatar;
   
   return (
     <div className="avatar" onClick={onClick}>
-    {avatar ? (
-      <img src={avatar} className="avatar__image" />
-    ) : (
-      <FaUser className="avatar__image" />
-    )}
+      {avatar ? (
+        <img src={avatar} className="avatar__image" />
+      ) : (
+        <FaUser className="avatar__image" />
+      )}
     </div>
   )
 } 

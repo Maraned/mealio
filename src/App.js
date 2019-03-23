@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import './translations/i18n';
 
 import Header from 'views/header/Header';
-import { LoggedInProvider, LoggedInContext } from 'contexts/login';
+import { LoggedInProvider } from 'contexts/login';
 import { GunProvider } from 'contexts/gun';
 import { UserProvider } from 'contexts/user';
 import { RouterProvider } from 'contexts/router';
@@ -14,17 +14,17 @@ import './vars.css';
 
 const App = () => {
   return (
-    <LoggedInProvider>
+    <UserProvider>
       <GunProvider>
-        <UserProvider>
+        <LoggedInProvider>
           <RouterProvider>
             <Header />
 
             <MainView />
           </RouterProvider>
-        </UserProvider>
+        </LoggedInProvider>
       </GunProvider>
-    </LoggedInProvider>
+    </UserProvider>
   )
 }
 

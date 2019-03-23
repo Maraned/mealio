@@ -6,7 +6,6 @@ const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
   const isNumber = !isNaN(number);
   const isWithinLowerLimit = number >= lowerLimit;
   const isWithinUpperLimit = number <= upperLimit;
-  console.log('number', number, isNumber, isWithinLowerLimit, isWithinUpperLimit)
 
   return isNumber && isWithinLowerLimit && isWithinUpperLimit;
 }

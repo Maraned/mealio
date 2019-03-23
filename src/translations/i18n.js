@@ -4,11 +4,6 @@ import { initReactI18next } from "react-i18next";
 import sv from './sv';
 import en from './en';
 
-const squashTranslation = translation => {
-  console.log('translation', translation)
-}
-
-
 // the translations
 // (tip move them in a JSON file and import them)
 const resources = {

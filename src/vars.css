@@ -1,11 +1,19 @@
 :root {
   --primary-color: #1578cd;
   --primary-text-color: #fff;
+  --primary-color-lighter: #71b6f0;
 
   --alert-color: #ee6666;
   --alert-text-color: #fff;
 
+  --success-color: #28a745;
+  --success-text-color: #fff;
+
   --text-hover: rgba(0, 0, 0, 0.06);
 
   --light-grey: #efefef;
+
+  --box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .15);
+  --header-height: 50px;
+  --box-shadow-inset: inset 0px 0px 1px 0px rgba(0,0,0,0.25);
 }

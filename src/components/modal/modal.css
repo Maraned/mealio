@@ -18,4 +18,5 @@
   min-height: 80vh;
   min-width: 768px;
   display: flex;
+  border-radius: 5px;
 }

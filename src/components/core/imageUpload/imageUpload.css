@@ -6,11 +6,36 @@
   display: none;
 }
 
-.imageUpload {
+.imageUpload:not(.imageUpload--circle) {
   background-color: white;
   outline: 2px dashed black;
   outline-offset: -10px;
   padding: 1rem;
+}
+
+.imageUpload--circle {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.imageUpload--circle .imageUpload__label {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageUpload--circle .imageUpload__dragndrop {
+  margin-top: .5rem;
+}
+
+.imageUpload__circleOutline {
+  position: absolute;
+  pointer-events: none;
 }
 
 .imageUpload__chooseImage {
@@ -27,5 +52,5 @@
 }
 
 .imageUpload--isDragOver {
-  background-color: grey;
+  background-color: var(--light-gray);
 }
