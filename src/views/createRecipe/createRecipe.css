@@ -1,3 +1,21 @@
-.createRecipe__toggleModeBtn {
+.createRecipe__toggleModeBtn,
+.createRecipe__publish {
   max-width: 140px;
+}
+
+.createRecipe__publish {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+}
+
+.createRecipe__lastSaved {
+  width: 100%;
+  text-align: center;
+  font-size: .8rem;
+  color: var(--grey);
+  font-style: italic;
+}
+
+.createRecipe__recipe {
+  position: relative;
 }

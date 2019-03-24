@@ -11,7 +11,9 @@ const MainView = () => {
 
   return (
     <div className="mainView">
-      <ActiveView />
+      {ActiveView && (
+        <ActiveView />
+      )}
 
       <Modal />
     </div>

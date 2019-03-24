@@ -19,3 +19,6 @@
   align-items: center;
 }
 
+.fullWidthContainer--spaceBetween {
+  justify-content: space-between;
+}

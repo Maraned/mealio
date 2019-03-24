@@ -40,6 +40,7 @@ const UserSettings = () => {
     let reader = new FileReader();
     reader.addEventListener('load', () => {
       const source = reader.result;
+      console.log('state', state)
       state.user.put({ avatar: source })
     });
     reader.readAsDataURL(image);

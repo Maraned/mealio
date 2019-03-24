@@ -1,0 +1,19 @@
+
+.recipeAccordion {
+  overflow: hidden;
+}
+
+.recipeAccordion__header {
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+
+.recipeAccordion:not(:last-child) {
+  margin-bottom: .5rem;
+}
+
+.recipeAccordion__content {
+  /* height: 0; */
+}

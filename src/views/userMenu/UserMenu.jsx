@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import posed from 'react-pose';
 import { useTranslation } from 'react-i18next';
-import { FaSignOutAlt, FaCogs } from 'react-icons/fa';
+import { FaSignOutAlt, FaCogs, FaUtensils } from 'react-icons/fa';
 
 import Avatar from 'components/user/Avatar';
 import { LoggedInContext } from 'contexts/login';
@@ -44,27 +44,42 @@ const UserMenu = () => {
   const logout = () => {
     removeTokens();
     dispatch({ type: 'logout' });
-  }
+  };
 
-  const routeToSettings = () => {
+  const routeToView = view => () => {
     setMenuOpen(false);
-    route({ type: 'settings' });
-  }
+    route({ type: view });
+  };
+
+  const renderMenuOption = ({ onClick, text, Icon }) => (
+    <div className="userMenu__menu__option" onClick={onClick}>
+      <Icon />
+      <span>{text}</span>
+    </div>
+  );
 
   return (
     <div className="userMenu" ref={menuRef}>
       <Avatar onClick={() => setMenuOpen(!menuOpen)} />
 
       <Menu pose={menuOpen ? 'open' : 'closed'} className="userMenu__menu">
-        <div className="userMenu__menu__option" onClick={logout}>
-          <FaSignOutAlt />
-          <span>{t('Menu:Logout')}</span>
-        </div>
+        {renderMenuOption({ 
+          onClick: routeToView('settings'), 
+          text: t('Menu:Settings'),
+          Icon: FaCogs
+        })}
 
-        <div className="userMenu__menu__option" onClick={routeToSettings}>
-          <FaCogs />
-          <span>{t('Menu:Settings')}</span>
-        </div>
+        {renderMenuOption({ 
+          onClick: routeToView('myRecipes'), 
+          text: t('Menu:MyRecipes'),
+          Icon: FaUtensils
+        })}
+
+        {renderMenuOption({ 
+          onClick: logout, 
+          text: t('Menu:Logout'),
+          Icon: FaSignOutAlt
+        })}
       </Menu>
     </div>
   );

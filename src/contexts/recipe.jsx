@@ -36,7 +36,7 @@ const initialState = {...RecipeModel};
 export const RecipeContext = createContext(initialState);
 
 export const RecipeProvider = props => {
-  const [state, dispatch] = useReducer(recipeReducer, initialState);
+  const [state, dispatch] = useReducer(recipeReducer, props.recipe || initialState);
 
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>

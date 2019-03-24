@@ -28,6 +28,8 @@ export default {
     ShowStepNumbers: 'Visa stegnumrering',
     HideStepNumbers: 'Dölj stegnumrering',
     Time: 'Tid',
+    LastSaved: 'Senast sparad:',
+    Publish: 'Publicera',
   },
   Time: {
     Second: 'sekund',
@@ -42,9 +44,13 @@ export default {
   Menu: {
     Logout: 'Logga ut',
     Settings: 'Inställningar',
-    UserSettings: 'Användare'
+    UserSettings: 'Användare',
+    MyRecipes: 'Mina recept',
   },
   UserSettings: {
     DisplayName: 'Namn'
   },
+  MyRecipes: {
+    DraftRecipes: 'Utkast',
+  }
 }

@@ -6,6 +6,7 @@ import { LoggedInProvider } from 'contexts/login';
 import { GunProvider } from 'contexts/gun';
 import { UserProvider } from 'contexts/user';
 import { RouterProvider } from 'contexts/router';
+import { PendingRequestProvider } from 'contexts/pendingRequests';
 
 import MainView from 'views/MainView';
 
@@ -14,17 +15,19 @@ import './vars.css';
 
 const App = () => {
   return (
-    <UserProvider>
-      <GunProvider>
-        <LoggedInProvider>
-          <RouterProvider>
-            <Header />
+    <PendingRequestProvider>
+      <UserProvider>
+        <GunProvider>
+          <LoggedInProvider>
+            <RouterProvider>
+              <Header />
 
-            <MainView />
-          </RouterProvider>
-        </LoggedInProvider>
-      </GunProvider>
-    </UserProvider>
+              <MainView />  
+            </RouterProvider>
+          </LoggedInProvider>
+        </GunProvider>
+      </UserProvider>
+    </PendingRequestProvider>
   )
 }
 

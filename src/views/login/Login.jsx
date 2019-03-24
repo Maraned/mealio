@@ -3,6 +3,7 @@ import posed, { PoseGroup } from 'react-pose';
 import { LoggedInContext } from 'contexts/login';
 import { GunContext } from 'contexts/gun';
 import { UserContext } from 'contexts/user';
+import { PendingRequestContext } from 'contexts/pendingRequests';
 
 import { useTranslation } from 'react-i18next';
 
@@ -41,6 +42,10 @@ const Login = () => {
   const { dispatch } = useContext(LoggedInContext);
   const Gun = useContext(GunContext);
   const { state, dispatch: userDispatch } = useContext(UserContext);
+  const { 
+    state: pendingRequestState, 
+    dispatch: pendingRequestDispatch 
+  } = useContext(PendingRequestContext);
   const { t } = useTranslation();
   const [activeView, setActiveView] = useState('login');
   const [error, setError] = useState('');
@@ -63,14 +68,17 @@ const Login = () => {
     }
   }
 
-  const authenticateUser = callback => {
-    Gun.user().auth(username, password, ack => {
+  const authenticateUser = () => {
+    const user = Gun.user();
+    user.auth(username, password, ack => {
       if (ack.err) {
         setError(t('Login:Error'));
       } else {
-        if (callback) {
-          callback();
-        }
+        console.log('logging in', ack)
+        user.get(ack.get)
+        user.on(data => {
+          userDispatch({ type: 'userProfile', value: data })
+        })
         dispatch({ type: 'login' });
       }
     })
@@ -93,12 +101,7 @@ const Login = () => {
         if (ack.err) {
           setError(t('Login:UserAlreadyExists'));
         } else {
-          authenticateUser(() => {
-            userDispatch({ type: 'user', value: user })
-            user.on(data => {
-              userDispatch({ type: 'userProfile', value: data.profile })
-            })
-          })
+          authenticateUser();
         }
       });
     } else {
@@ -185,7 +188,7 @@ const Login = () => {
     </div>
   );
 
-  return (
+  return !pendingRequestState.initialFetch && (
     <div className="login" key="login-container">
       <button 
         onClick={() => setPopupOpen(!popupOpen)}
