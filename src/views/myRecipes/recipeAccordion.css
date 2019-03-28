@@ -5,15 +5,23 @@
 
 .recipeAccordion__header {
   padding: 1rem;
-  background-color: var(--primary-color);
-  color: var(--primary-text-color);
+  background-color: var(--secondary-color);
+  color: var(--secondary-text-color);
   cursor: pointer;
+  border-radius: 4px;
+}
+
+.recipeAccordion__header--draft {
+  background-color: var(--grey);
 }
 
 .recipeAccordion:not(:last-child) {
   margin-bottom: .5rem;
 }
 
-.recipeAccordion__content {
-  /* height: 0; */
+.recipeAccordion__recipeStatus {
+  border: 1px solid #fff;
+  border-radius: 4px;
+  padding: .5rem;
+  margin-right: .5rem;
 }

@@ -30,6 +30,8 @@ export default {
     Time: 'Tid',
     LastSaved: 'Senast sparad:',
     Publish: 'Publicera',
+    Draft: 'Utkast',
+    Published: 'Publicerad',
   },
   Time: {
     Second: 'sekund',
@@ -52,5 +54,7 @@ export default {
   },
   MyRecipes: {
     DraftRecipes: 'Utkast',
+    AllRecipes: 'Alla recept',
+    PublishedRecipes: 'Publicerade recept'
   }
 }

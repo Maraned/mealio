@@ -4,8 +4,10 @@ import { RecipeProvider } from 'contexts/recipe';
 import { EditableProvider } from 'contexts/editable';
 import CreateRecipeView from 'views/createRecipe/CreateRecipe';
 import { tween } from 'popmotion'
+import cc from 'classcat';
 
 import './recipeAccordion.css'
+import { useTranslation } from 'react-i18next';
 
 const Content = posed.div({
   enter: {
@@ -21,7 +23,9 @@ const Content = posed.div({
 
 const RecipeAccordion = ({ recipe }) => {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
+  console.log('recipe', recipe)
 
   return (
     <div 
@@ -29,9 +33,14 @@ const RecipeAccordion = ({ recipe }) => {
       key={recipe.id}
     >
       <div 
-        className="recipeAccordion__header"
+        className={cc(['recipeAccordion__header', {
+          'recipeAccordion__header--draft': recipe.draft
+        }])}
         onClick={() => setOpen(!open)}
       >
+        <label className="recipeAccordion__recipeStatus">
+          {recipe.draft ? t('Recipe:Draft') : t('Recipe:Published')}
+        </label>
         {recipe.name}
       </div>
 
