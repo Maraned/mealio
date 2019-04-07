@@ -20,23 +20,34 @@
 }
 
 .sideMenuLayout__sideMenuOption {
-  padding: 1rem;
-  cursor: pointer; 
+  padding: 0 1rem;
   display: flex;
   align-items: center;
+  height: 3rem;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.sideMenuLayout__sideMenuOption:not(.sideMenuLayout__sideMenuOption--disabled) {
+  cursor: pointer;
 }
 
 .sideMenuLayout__sideMenuOption--selected,
-.sideMenuLayout__sideMenuOption:hover {
+.sideMenuLayout__sideMenuOption:hover:not(.sideMenuLayout__sideMenuOption--disabled) {
   color: var(--primary-text-color);
 }
 
 .sideMenuLayout__sideMenuOption--selected {
-  background-color: var(--primary-color);
+  background-color: var(--primary-color-lighter);
 }
 
-.sideMenuLayout__sideMenuOption:hover {
-  background-color: var(--primary-color-lighter);  
+.sideMenuLayout__sideMenuOption:hover:not(.sideMenuLayout__sideMenuOption--disabled) {
+  background-color: var(--primary-color);  
+}
+
+.sideMenuLayout__sideMenuOption--disabled {
+  background-color: var(--disabled-color);
+  color: var(--disabled-text-color);
+  font-style: var(--disabled-text-style);
 }
 
 .sideMenuLayout__sideMenuOption__count {
@@ -52,6 +63,7 @@
   font-weight: 700;
   background: var(--primary-color);
   color: #fff;
+  font-size: .9rem;
 }
 
 .sideMenuLayout__sideMenuOption:hover .sideMenuLayout__sideMenuOption__count,

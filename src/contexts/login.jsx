@@ -1,4 +1,8 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import React, { createContext, useReducer, useContext, useEffect } from 'react';
+
+import { postRequest } from 'utils/request';
+import { UserContext } from 'contexts/user';
+import { access } from 'fs';
 
 const loginReducer = (state, action) => {
   switch (action.type) {
@@ -11,12 +15,38 @@ const loginReducer = (state, action) => {
   }
 };
 
+const autoLogin = async (dispatch, userDispatch) => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  const email = localStorage.getItem('email');
+
+  if (refreshToken) {
+    const response = await postRequest('login/refresh', {
+      refreshToken,
+      email,
+    });
+    
+    if (response && response.accessToken) {
+      const { accessToken, user } = response;
+      console.log('got login', accessToken)
+      localStorage.setItem('accessToken', accessToken);
+      dispatch({ type: 'login' });
+      userDispatch({ type: 'user', value: user });
+    }
+  }
+}
+
 const initialState = { loggedIn: false }
 
 export const LoggedInContext = createContext(initialState);
 
 export function LoggedInProvider(props) {
   const [state, dispatch] = useReducer(loginReducer, initialState);
+  const { dispatch: userDispatch } = useContext(UserContext);
+
+  useEffect(() => {
+    autoLogin(dispatch, userDispatch);
+  }, [])
+
   return (
     <LoggedInContext.Provider value={{ state, dispatch }}>
       {props.children}

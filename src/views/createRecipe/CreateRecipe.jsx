@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 
-import { GunContext } from 'contexts/gun';
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
@@ -13,6 +12,10 @@ import ImageUpload from 'components/core/imageUpload/ImageUpload';
 import ImageGallery from 'components/core/imageGallery/ImageGallery';
 import ImageOrder from 'components/core/imageOrder/ImageOrder';
 
+import FetchMyRecipes from 'utils/fetchMyRecipes';
+
+import { postRequest } from 'utils/request';
+
 import 'views/recipe/recipe.css';
 
 import { useTranslation } from 'react-i18next';
@@ -21,8 +24,7 @@ import { FaRegClock } from 'react-icons/fa';
 import './createRecipe.css';
 
 const CreateRecipe = () => {
-  const Gun = useContext(GunContext);
-  const { state: userState } = useContext(UserContext);
+  const { state: user } = useContext(UserContext);
   const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
   const { t, i18n } = useTranslation();
@@ -30,6 +32,12 @@ const CreateRecipe = () => {
   const autoSave = useRef(null);
   const [lastSaved, setLastSaved] = useState(null);
   const [lastSavedText, setLastSavedText] = useState('');
+  const [changed, setChanged] = useState(false);
+
+  const {
+    getDraftRecipes,
+    getPublishedRecipes
+  } = FetchMyRecipes();
 
   const updateLastSaved = date => {
     if (!date) {
@@ -50,32 +58,43 @@ const CreateRecipe = () => {
     setLastSavedText(date.toLocaleDateString(locale, options));
   };
 
-  const parseRecipeForGun = async () => {
-    const { images, ingredients, steps, ...rest } = state;
-    if (id) {
-      userState.user.get(`draftRecipes/${id}`).put(rest);
-    } else {
-      userState.user.get('draftRecipes').set(rest);
-    }
-  }
-
-  const autoSaveDraft = () => {
+  const autoSaveDraft = async () => {
     const newSavedDate = new Date();
     setLastSaved(newSavedDate);
     updateLastSaved(newSavedDate);
-    parseRecipeForGun();
+    setChanged(false);
+
+    const response = await postRequest('recipes/createUpdate', {
+      recipe: { ...state, draft: true },
+      id: user.id,
+    });
+
+    const { status, draftId, recipe } = response;
+    console.log('response', response)
+    if (status === 'created') {
+      updateRecipe({ type: 'id', value: draftId });     
+      getDraftRecipes(user.id);
+      getPublishedRecipes(user.id); 
+    }
+
+    updateRecipe({ type: 'recipe', value: recipe });
   };
 
   useEffect(() => {
     updateLastSaved();
-  }, [i18n.language])
+  }, [i18n.language]);
 
   useEffect(() => {
-    if (autoSave.current) {
-      clearTimeout(autoSave.current);
+    if (changed) {
+      if (autoSave.current) {
+        clearTimeout(autoSave.current);
+      }
+      if (state.draft == null) {
+        updateRecipe({ type: 'draft', value: true });
+      } 
+      autoSave.current = setTimeout(autoSaveDraft, 5000);
     }
-    autoSave.current = setTimeout(autoSaveDraft, 5000);
-  }, [state]);
+  }, [changed]);
 
   useEffect(() => {
     dispatch({ type: 'edit' })
@@ -87,40 +106,92 @@ const CreateRecipe = () => {
       : dispatch({ type: 'edit' })
   };
 
+  const deleteRecipe = async () => {
+    const responseStatus = await postRequest('recipes/delete', {
+      type: state.draft ? 'draftRecipes' : 'publishedRecipes',
+      recipeId: state.id,
+      id: user.id,
+    }, false);
+    if (state.draft) {
+      getDraftRecipes(user.id);
+    } else {
+      getPublishedRecipes(user.id);
+    }
+    console.log('responseStatus', responseStatus)
+
+    if (responseStatus === 200) {
+      updateRecipe({ type: 'reset' });
+    }
+  }
+
+  console.log('user', user)
+
   const publishRecipe = async () => {
-    const { images, ingredients, steps, ...rest } = state;
-    // console.log('unsetting draft');
-    // userState.user.get(`draftRecipes/${id}`).unset(state);
-    // console.log('adding to recipes')
-    // Gun.get('recipes').set(rest);
-    // Gun.get(`recipes/${publishedRecipe.id}`).get('author').put(userState.user);
-    // console.log('adding recipe to published')
+    if (state.draft) {
+      updateRecipe({ type: 'draft', value: false });
+    }
+    await postRequest('recipes/publish', {
+      id: user.id,
+      recipe: { ...state, draft: false, author: {
+        id: user.id,
+        name: user.displayName
+      } },
+    }, false);
+    getDraftRecipes(user.id);
+    getPublishedRecipes(user.id);
+  }
 
-    userState.user.get('publishedRecipes').set(userState.user.get(`draftRecipes/${id}`));
-    userState.user.get('publishedRecipes').on(data => {
-      console.log('published', data)
-    })
-  };
-
+  const editRecipe = async () => {
+    await postRequest('recipes/createUpdate', {
+      id: user.id,
+      recipe: { ...state, draft: false },
+    }, false);
+  }
+  
   const changeName = event => {
     updateRecipe({ type: 'name', value: event.target.value });
+    setChanged(true);
   };
 
   const changeDescription = event => {
     updateRecipe({ type: 'description', value: event.target.value });
+    setChanged(true);
   };
 
-  const addImages = files => {
-    const newImages = [...images, ...Array.from(files)];
+  const readImage = image => {
+    let reader = new FileReader();
+    return new Promise(resolve => {
+      reader.addEventListener('load', () => {
+        const source = reader.result;
+        resolve(source)
+      });
+      reader.readAsDataURL(image);
+    })
+  }
+
+  const addImages = async files => {
+    const promises = [];
+
+    for (let i = 0; i < files.length; i++) {
+      promises.push(readImage(files[i]))
+    }
+
+    const uploadedImages = await Promise.all(promises);
+    console.log('uploadedImages', uploadedImages)
+
+    const newImages = [...images, ...uploadedImages];
     updateRecipe({ type: 'images', value: newImages });
+    setChanged(true);
   };
 
   const updateImages = images => {
     updateRecipe({ type: 'images', value: images });
+    setChanged(true);
   };
 
   const changeTime = event => {
     updateRecipe({ type: 'time', value: event.target.value });
+    setChanged(true);
   };
 
   const renderLastSaved = () => lastSaved && lastSavedText && (
@@ -128,6 +199,8 @@ const CreateRecipe = () => {
       {t('Recipe:LastSaved')} {lastSavedText}
     </div>
   );
+
+  console.log('images', images)
 
   return (
     <div className="createRecipe recipe">
@@ -143,14 +216,33 @@ const CreateRecipe = () => {
             : t('Recipe:Edit')}
         </button>
 
-        {state.draft && (
-          <button 
-            className="createRecipe__publish"
-            onClick={publishRecipe}
+        <div>
+          {state.draft && (
+            <button 
+              className="createRecipe__publish"
+              onClick={publishRecipe}
+            >
+              {t('Recipe:Publish')}
+            </button>
+          )}
+
+          {state.draft != null && !state.draft && (
+            <button 
+              className="createRecipe__update"
+              onClick={editRecipe}
+            >
+              {t('Recipe:Update')}
+            </button>
+          )}
+
+          <button
+            className="createRecipe__delete"
+            onClick={deleteRecipe}
           >
-            {t('Recipe:Publish')}
+            {t('Recipe:Delete')}
           </button>
-        )}
+        </div>
+
       </FullWidthContainer>
 
       <FullWidthContainer center stack>
@@ -176,7 +268,7 @@ const CreateRecipe = () => {
           </>
         )}
 
-        {!editState.editable && (
+        {!editState.editable && images && (
           <ImageGallery
           className="recipe__imageGallery" 
             images={images} 

@@ -1,17 +1,30 @@
 import React from 'react'; 
 import RecipeAccordion from 'views/myRecipes/RecipeAccordion';
 
-const RecipeAccordionList = ({ data: recipes }) => (
-  <div className="recipeAccordionList">
-    {recipes.map((recipe, index) => (
-      <RecipeAccordion 
-        recipe={recipe} 
-        key={index} 
-        index={index} 
-      />
-    ))}
-  </div>
-);
+import { useTranslation } from 'react-i18next';
+
+const RecipeAccordionList = ({ data: recipes }) => {
+  const { t } = useTranslation();
+
+  return (
+    <div className="recipeAccordionList">
+      {recipes.map((recipe, index) => (
+        <RecipeAccordion 
+          recipe={recipe} 
+          key={index} 
+          index={index} 
+        />
+      ))}
+
+      {recipes.length === 0 && (
+        <div className="recipeAccordionList--noRecipes">
+          {t('MyRecipes:NoRecipes')}
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 export default RecipeAccordionList;
 

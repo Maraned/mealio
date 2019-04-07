@@ -8,31 +8,27 @@ import { useTranslation } from 'react-i18next';
   @param defaultView: String
 */
 
-const SideMenuLayout = ({ views, defaultView, className }) => {
+const SideMenuLayout = ({ views, defaultView }) => {
   const [activeView, setActiveView] = useState(defaultView);
   const { t } = useTranslation();
 
-  console.log('activeView', activeView)
-
-  const renderSideMenuOption = ({ viewName, text, count }) => {
-    console.log('viewName', viewName, viewName === activeView)
-    return (
+  const renderSideMenuOption = ({ viewName, text, count, disabled }) => (
     <div 
       key={viewName}
       className={cc(['sideMenuLayout__sideMenuOption', {
-        'sideMenuLayout__sideMenuOption--selected': viewName === activeView
+        'sideMenuLayout__sideMenuOption--selected': viewName === activeView,
+        'sideMenuLayout__sideMenuOption--disabled': disabled
       }])}
       onClick={() => setActiveView(viewName)}
     >
       {!!count && (
-        <div className="sideMenuLayout__sideMenuOption__count">{count}</div>
+        <div className="sideMenuLayout__sideMenuOption__count">
+          <span>{count}</span>
+        </div>
       )}
       {text}
     </div>
-  )
-  };
-
-  console.log('views', views)
+  );
 
   return (
     <div className="sideMenuLayout">
@@ -40,7 +36,8 @@ const SideMenuLayout = ({ views, defaultView, className }) => {
         {views.map(view => renderSideMenuOption({
           viewName: view.name,
           text: t(`MyRecipes:${view.text}`),
-          count: view.data.length
+          count: view.data && view.data.length,
+          disabled: view.disabled
         }))}
       </div>
 

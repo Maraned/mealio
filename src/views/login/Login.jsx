@@ -7,6 +7,8 @@ import { PendingRequestContext } from 'contexts/pendingRequests';
 
 import { useTranslation } from 'react-i18next';
 
+import { postRequest } from 'utils/request';
+
 import './login.css';
 
 const Box = posed.div({
@@ -37,7 +39,7 @@ const Box = posed.div({
 const Login = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const popupNode = useRef(null);
-  const [username, setUsername] = useState('a@b.com');
+  const [email, setEmail] = useState('a@b.com');
   const [password, setPassword] = useState('a@b.com');
   const { dispatch } = useContext(LoggedInContext);
   const Gun = useContext(GunContext);
@@ -68,20 +70,37 @@ const Login = () => {
     }
   }
 
-  const authenticateUser = () => {
-    const user = Gun.user();
-    user.auth(username, password, ack => {
-      if (ack.err) {
-        setError(t('Login:Error'));
-      } else {
-        console.log('logging in', ack)
-        user.get(ack.get)
-        user.on(data => {
-          userDispatch({ type: 'userProfile', value: data })
-        })
-        dispatch({ type: 'login' });
-      }
-    })
+  const handleLoginResponse = ({ 
+    accessToken, 
+    refreshToken,
+    currentUserValue,
+    user
+  }) => {
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('currentUserValue', currentUserValue);
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('email', user.email);
+    userDispatch({ type: 'user', value: user });
+
+    dispatch({ type: 'login' });
+  }
+
+  const authenticateUser = async () => {
+    // var encrypted = CryptoJS.AES.encrypt(
+    //   `${email}:${password}`, 
+    //   process.env.passPhrase, 
+    //   { mode: CryptoJS.mode.CFB }
+    // );
+    // var encrypted = CryptoJS.AES.encrypt(btoa(`${email}:${password}`), passPhrase, { mode: CryptoJS.mode.CFB });
+    const response = await postRequest('login', {
+      credentials: btoa(`${email}:${password}`)
+    });
+
+    if (response.error) {
+      setError(t(`Login:${response.error}`));
+    } else  {
+      handleLoginResponse(response);
+    }
   }
 
   const submitLogin = async (callback) => {
@@ -95,15 +114,17 @@ const Login = () => {
 
   const submitRegister = async event => {
     event.preventDefault(); 
-    if (validEmail(username)) {
-      const user = Gun.user();
-      user.create(username, password, ack => {
-        if (ack.err) {
-          setError(t('Login:UserAlreadyExists'));
-        } else {
-          authenticateUser();
-        }
+    if (validEmail(email)) {
+      const response = await postRequest('users/create', {
+        email,
+        password
       });
+
+      if (response.error) {
+        setError(t(`Login:${response.error}`));
+      } else {
+        handleLoginResponse(response);
+      }
     } else {
       setError(t('Login:InvalidEmailFormat'));
     }
@@ -135,8 +156,8 @@ const Login = () => {
     >
       <input 
         type="email"
-        value={username} 
-        onChange={event => setUsername(event.target.value)}
+        value={email} 
+        onChange={event => setEmail(event.target.value)}
         placeholder={t('Login:username')} 
       /> 
       <input 

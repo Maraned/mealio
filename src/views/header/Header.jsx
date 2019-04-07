@@ -4,6 +4,7 @@ import UserMenu from 'views/userMenu/UserMenu';
 
 import { LoggedInContext } from 'contexts/login';
 import { UserContext } from 'contexts/user';
+import { RouterContext } from 'contexts/router';
 
 import { useTranslation } from 'react-i18next';
 
@@ -12,6 +13,7 @@ import './header.css';
 const Header = () => {
   const { state, dispatch } = useContext(LoggedInContext);
   const User = useContext(UserContext);
+  const { state: router, dispatch: routerDispatch } = useContext(RouterContext);
   const { t, i18n } = useTranslation();
 
   return (
@@ -22,6 +24,8 @@ const Header = () => {
       }}>
         Change language
       </button>
+
+      <button onClick={() => routerDispatch({ type: 'recipeList' })}>Recipe List</button>
       
       {!state.loggedIn ? (
         <Login />

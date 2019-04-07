@@ -12,6 +12,10 @@
   --success-color: #28a745;
   --success-text-color: #fff;
 
+  --disabled-color: #efefef;
+  --disabled-text-color: #969696;
+  --disabled-text-style: italic;
+
   --text-hover: rgba(0, 0, 0, 0.06);
 
   --grey: #ababab;

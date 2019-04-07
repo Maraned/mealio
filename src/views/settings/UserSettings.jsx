@@ -10,6 +10,7 @@ import Avatar from 'components/user/Avatar';
 
 import './userSettings.css';
 import { useTranslation } from 'react-i18next';
+import { postRequest } from 'utils/request';
 
 const ImageUploadPosed = posed.div({
   show: {
@@ -21,9 +22,9 @@ const ImageUploadPosed = posed.div({
 })
 
 const UserSettings = () => {
-  const { state } = useContext(UserContext);
+  const { state, dispatch: userDispatch } = useContext(UserContext);
   const [showImageUploader, setShowImageUploader] = useState(false);
-  const [displayName, setDisplayName] = useState(state.userProfile.displayName);
+  const [displayName, setDisplayName] = useState(state.user.displayName);
   const { dispatch } = useContext(EditableContext);
   const { t } = useTranslation();
 
@@ -31,20 +32,26 @@ const UserSettings = () => {
     dispatch({ type: 'edit' })
   }, []);
 
-  const saveUserSettings = () => {
-    state.user.put({ displayName })
-  }
+  const saveUserSettings = (change) => async () => {
+    const newUserData = { ...state.user, ...change };
+
+    await postRequest('users/update', {
+      user: newUserData
+    }, false);
+
+    userDispatch({ type: 'user', value: newUserData });
+  };
 
   const selectAvatar = files => {
     const image = files[0];
+
     let reader = new FileReader();
     reader.addEventListener('load', () => {
       const source = reader.result;
-      console.log('state', state)
-      state.user.put({ avatar: source })
+      saveUserSettings({ avatar: source })();
     });
     reader.readAsDataURL(image);
-  }
+  };
 
   const renderUserAvatar = () => (
     <div 
@@ -69,7 +76,7 @@ const UserSettings = () => {
     <EditableField 
       value={displayName}
       onChange={event => setDisplayName(event.target.value)}  
-      onBlur={saveUserSettings}  
+      onBlur={saveUserSettings({ displayName })}  
       placeholder={t('UserSettings:DisplayName')}
       center
     />

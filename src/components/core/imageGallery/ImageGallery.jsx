@@ -13,25 +13,25 @@ const ImageGallery = ({ images, className }) => {
   const galleryIndex = useRef(0);
   const clickedDirection = useRef('');
 
-  const setSourcesFromImages = () => {
-    const sources = [];
-    let imagesLoaded = 0;
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-      let reader = new FileReader();
-      reader.addEventListener('load', () => {
-        imagesLoaded += 1;
-        sources[i] = reader.result;
-        if (images.length === imagesLoaded) {
-          setImageSources(sources);
-        }
-      })
-      reader.readAsDataURL(image);
-    }
-  } 
+  // const setSourcesFromImages = () => {
+  //   const sources = [];
+  //   let imagesLoaded = 0;
+  //   for (let i = 0; i < images.length; i++) {
+  //     const image = images[i];
+  //     let reader = new FileReader();
+  //     reader.addEventListener('load', () => {
+  //       imagesLoaded += 1;
+  //       sources[i] = reader.result;
+  //       if (images.length === imagesLoaded) {
+  //         setImageSources(sources);
+  //       }
+  //     })
+  //     reader.readAsDataURL(image);
+  //   }
+  // } 
 
   useEffect(() => {
-    setSourcesFromImages();
+    setImageSources(images);
   }, [images]);
 
   const slideLeft = () => {

@@ -22,29 +22,30 @@ const ImageOrder = ({ images, className, onOrderChange }) => {
   const originWidth = useRef(0);
 
   useEffect(() => {
-    setMapImages(images);
+    setImageSources(images);
+    // setMapImages(images);
   }, [images]);
 
-  useEffect(() => {
-    setSourcesFromImages();
-  }, [mapImages]);
+  // useEffect(() => {
+  //   setSourcesFromImages();
+  // }, [mapImages]);
 
-  const setSourcesFromImages = () => {
-    const sources = [];
-    let imagesLoaded = 0;
-    for (let i = 0; i < mapImages.length; i++) {
-      const image = mapImages[i];
-      let reader = new FileReader();
-      reader.addEventListener('load', () => {
-        imagesLoaded += 1;
-        sources[i] = reader.result;
-        if (mapImages.length === imagesLoaded) {
-          setImageSources(sources);
-        }
-      })
-      reader.readAsDataURL(image);
-    }
-  }
+  // const setSourcesFromImages = () => {
+  //   const sources = [];
+  //   let imagesLoaded = 0;
+  //   for (let i = 0; i < mapImages.length; i++) {
+  //     const image = mapImages[i];
+  //     let reader = new FileReader();
+  //     reader.addEventListener('load', () => {
+  //       imagesLoaded += 1;
+  //       sources[i] = reader.result;
+  //       if (mapImages.length === imagesLoaded) {
+  //         setImageSources(sources);
+  //       }
+  //     })
+  //     reader.readAsDataURL(image);
+  //   }
+  // }
 
   const onDragStart = event => {
     const dragRect = event.target.getBoundingClientRect();
@@ -89,13 +90,15 @@ const ImageOrder = ({ images, className, onOrderChange }) => {
     onOrderChange(reordered);
   }
 
+  console.log('imageSources', imageSources)
+
   return (
     <div
       ref={containerRef} 
       className={cc(['imageOrder', className])}
     >
       <PoseGroup>
-        {mapImages.map((file, index) => {
+        {images.map((file, index) => {
           const ImageBox = posed.div({
             draggable: 'x',
             dragEnd: { x: 0 },

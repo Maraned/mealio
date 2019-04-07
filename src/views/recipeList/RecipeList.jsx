@@ -1,24 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { GunContext } from 'contexts/gun';
+import { getRequest } from 'utils/request';
+import RecipeCard from './RecipeCard';
+
+import './recipeList.css';
 
 const RecipeList = () => {
-  const gun = useContext(GunContext);
   const [recipes, setRecipes] = useState([]);
 
-  const listenForRecipes = async () => {
-    gun.get('recipes').on((recipes, key) => {
-      setRecipes(recipes);
-    });
+  const fetchRecipes = async () => {
+    const fetchedRecipes = await getRequest('recipes');
+    setRecipes(fetchedRecipes);
   }
-
+  
   useEffect(() => {
-    listenForRecipes();
+    fetchRecipes();
   }, []);
 
   return (
     <div className="recipeList">
-
+      {recipes.map(recipe => (
+        <RecipeCard recipe={recipe} />
+      ))}
     </div>
   )
 }

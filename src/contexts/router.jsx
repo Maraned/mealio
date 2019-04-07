@@ -2,7 +2,8 @@ import React, { createContext, useReducer } from 'react';
 
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import Settings from 'views/settings/Settings';
-import MyRecipes from 'views/myRecipes/MyRecipes';
+import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
+import RecipeList from 'views/recipeList/RecipeList';
 
 const routerReducer = (state, action) => {
   switch (action.type) {
@@ -14,6 +15,8 @@ const routerReducer = (state, action) => {
       return { ...state, ActiveView: MyRecipes };
     case 'closeModal':
       return { ...state, ModalView: null };
+    case 'recipeList':
+      return { ...state, ActiveView: RecipeList };
   }
 };
 

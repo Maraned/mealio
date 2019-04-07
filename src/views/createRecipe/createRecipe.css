@@ -3,7 +3,8 @@
   max-width: 140px;
 }
 
-.createRecipe__publish {
+.createRecipe__publish,
+.createRecipe__update {
   background-color: var(--primary-color);
   color: var(--primary-text-color);
 }

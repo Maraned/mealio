@@ -1,6 +1,6 @@
 import Gun from 'gun';
-import 'gun/sea';
 import 'gun/lib/unset.js';
+import 'gun/sea';
 import 'gun/lib/path.js';
 
 import React, { createContext, useEffect, useContext } from 'react';

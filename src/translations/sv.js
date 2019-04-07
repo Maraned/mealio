@@ -7,8 +7,10 @@ export default {
     CreateAccount: 'Skapa konto',
     InvalidEmailFormat: 'Ogiltig email-adress',
     UserCreated: 'Användare skapad',
-    Error: 'Fel användarnamn eller lösenord',
-    UserAlreadyExists: 'Användaren är redan registrerad'
+    NOUSER: 'Ingen användare registrerad med den mailen',
+    USERALREADYEXISTS: 'Användaren är redan registrerad',
+    COULDNOTCREATEUSER: 'Något gick fel vid registreringen',
+    AUTHENTICATIONFAILED: 'Fel användarnamn eller lösenord',
   },
   Recipe: {
     Degrees: 'grader',
@@ -32,6 +34,8 @@ export default {
     Publish: 'Publicera',
     Draft: 'Utkast',
     Published: 'Publicerad',
+    Delete: 'Ta bort',
+    Update: 'Uppdatera'
   },
   Time: {
     Second: 'sekund',
@@ -55,6 +59,8 @@ export default {
   MyRecipes: {
     DraftRecipes: 'Utkast',
     AllRecipes: 'Alla recept',
-    PublishedRecipes: 'Publicerade recept'
+    PublishedRecipes: 'Publicerade recept',
+    CreateRecipe: 'Skapa recept',
+    NoRecipes: 'Inga skapade recept'
   }
 }

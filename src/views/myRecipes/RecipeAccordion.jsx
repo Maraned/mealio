@@ -25,8 +25,6 @@ const RecipeAccordion = ({ recipe }) => {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
-  console.log('recipe', recipe)
-
   return (
     <div 
       className="recipeAccordion" 

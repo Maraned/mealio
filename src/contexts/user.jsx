@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-const initialState = { user: null, userProfile: {} };
+const initialState = { };
 
 const userReducer = (state, action) => {
   switch (action.type) {
     case 'user':
-      return { ...state, user: action.value };
-    case 'userProfile':
-      return { ...state, userProfile: action.value || {} }
+      return { ...state, ...action.value };
+    case 'draftRecipes': 
+      return { ...state, draftRecipes: action.value }
   }
 };
 
