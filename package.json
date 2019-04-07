@@ -4,18 +4,26 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "nodemon main.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
     "gun": "0.9.9999991",
     "jsonwebtoken": "^8.5.0",
-    "nodemon": "1.18.10"
+    "nodemon": "1.18.10",
+    "sharp": "^0.22.0"
+  },
+  "devDependencies": {
+    "bcrypt": "^3.0.5",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "helmet": "^3.16.0",
+    "morgan": "^1.9.1",
+    "rethinkdb": "^2.3.3"
   }
 }

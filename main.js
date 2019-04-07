@@ -1,20 +1,15 @@
-require('dotenv').config()
-var Gun = require('gun/gun');
+var port    = process.env.OPENSHIFT_NODEJS_PORT || process.env.VCAP_APP_PORT || process.env.PORT || process.argv[2] || 3001;
+var express = require('express');
+var Gun     = require('gun');
 
-const express = require('express');
-const app = express();
-const port = 3001;
+var app    = express();
+app.use(Gun.serve);
+app.use(express.static(__dirname));
 
-const bodyParser = require('body-parser');
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+var server = app.listen(port);
+var gun = Gun({	file: 'data', web: server });
 
-const login = require('./routes/login');
+global.Gun = Gun; /// make global to `node --inspect` - debug only
+global.gun = gun; /// make global to `node --inspect` - debug only
 
-app.use('/login', login);
-
-app.get('/', (req, res) => res.send('Hello World!'));
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-var gun = Gun({web: app});
+console.log('Server started on port ' + port + ' with /gun');

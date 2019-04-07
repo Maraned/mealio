@@ -51,5 +51,6 @@ const createRefreshTokenFromRefreshToken = (refreshToken, currentUserValue) => {
 
 module.exports = {
   createAccessToken,
-  createRefreshToken
+  createRefreshToken,
+  createAccessTokenFromRefreshToken
 };
