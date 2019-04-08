@@ -22,9 +22,9 @@ const ImageUploadPosed = posed.div({
 })
 
 const UserSettings = () => {
-  const { state, dispatch: userDispatch } = useContext(UserContext);
+  const { state: user, dispatch: userDispatch } = useContext(UserContext);
   const [showImageUploader, setShowImageUploader] = useState(false);
-  const [displayName, setDisplayName] = useState(state.user.displayName);
+  const [displayName, setDisplayName] = useState(user.displayName);
   const { dispatch } = useContext(EditableContext);
   const { t } = useTranslation();
 
@@ -33,7 +33,7 @@ const UserSettings = () => {
   }, []);
 
   const saveUserSettings = (change) => async () => {
-    const newUserData = { ...state.user, ...change };
+    const newUserData = { ...user, ...change };
 
     await postRequest('users/update', {
       user: newUserData

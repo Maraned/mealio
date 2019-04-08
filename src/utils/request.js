@@ -10,7 +10,7 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
     },
     body: JSON.stringify(data),
   });
-  if (expectResponse) { 
+  if (expectResponse && response.status !== 401) { 
     const responseJSON = await response.json();
     console.log(`POST response ${endpoint}: `, responseJSON);
     return responseJSON;
@@ -25,7 +25,6 @@ export const getRequest = async endpoint => {
       "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
     },
   });
-  console.log('response', response)
   const responseJSON = await response.json();
   console.log(`GET response ${endpoint}: `, responseJSON);
   return responseJSON;

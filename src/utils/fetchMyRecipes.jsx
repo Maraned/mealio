@@ -18,13 +18,11 @@ const FetchMyRecipes = () => {
 
   const getDraftRecipes = async (userId) => {
     const recipes = await getRequest(`users/${userId}/draftRecipes`);
-    console.log('getDraftRecipes', recipes)
     draftRecipesDispatch({ type: 'update', value: Object.values(recipes) })
   };
 
   const getPublishedRecipes = async (userId) => {
     const recipes = await getRequest(`users/${userId}/publishedRecipes`);
-    console.log('getPublishedRecipes', recipes)
     publishedRecipesDispatch({ type: 'update', value: Object.values(recipes) })
   };
 

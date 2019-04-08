@@ -27,7 +27,6 @@ const autoLogin = async (dispatch, userDispatch) => {
     
     if (response && response.accessToken) {
       const { accessToken, user } = response;
-      console.log('got login', accessToken)
       localStorage.setItem('accessToken', accessToken);
       dispatch({ type: 'login' });
       userDispatch({ type: 'user', value: user });

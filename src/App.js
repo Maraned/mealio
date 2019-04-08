@@ -6,6 +6,7 @@ import { LoggedInProvider } from 'contexts/login';
 import { GunProvider } from 'contexts/gun';
 import { UserProvider } from 'contexts/user';
 import { RouterProvider } from 'contexts/router';
+import { RecipeProvider } from 'contexts/recipe';
 import { PendingRequestProvider } from 'contexts/pendingRequests';
 
 import MainView from 'views/MainView';
@@ -20,9 +21,11 @@ const App = () => {
         <GunProvider>
           <LoggedInProvider>
             <RouterProvider>
-              <Header />
+              <RecipeProvider>
+                <Header />
 
-              <MainView />  
+                <MainView />  
+              </RecipeProvider>
             </RouterProvider>
           </LoggedInProvider>
         </GunProvider>

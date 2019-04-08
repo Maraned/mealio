@@ -4,6 +4,7 @@ import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import Settings from 'views/settings/Settings';
 import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
 import RecipeList from 'views/recipeList/RecipeList';
+import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
 
 const routerReducer = (state, action) => {
   switch (action.type) {
@@ -17,6 +18,8 @@ const routerReducer = (state, action) => {
       return { ...state, ModalView: null };
     case 'recipeList':
       return { ...state, ActiveView: RecipeList };
+    case 'recipeDetail':
+      return { ...state, ActiveView: RecipeDetail }
   }
 };
 

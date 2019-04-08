@@ -90,8 +90,6 @@ const ImageOrder = ({ images, className, onOrderChange }) => {
     onOrderChange(reordered);
   }
 
-  console.log('imageSources', imageSources)
-
   return (
     <div
       ref={containerRef} 

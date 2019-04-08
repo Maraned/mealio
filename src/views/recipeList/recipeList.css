@@ -5,4 +5,5 @@
   grid-row-gap: 1rem;
   grid-template-rows: minmax(50px,250px);
   margin: 1rem;
+  width: calc(100% - 2rem);
 }

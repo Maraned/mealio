@@ -70,14 +70,21 @@ const CreateRecipe = () => {
     });
 
     const { status, draftId, recipe } = response;
-    console.log('response', response)
     if (status === 'created') {
-      updateRecipe({ type: 'id', value: draftId });     
-      getDraftRecipes(user.id);
-      getPublishedRecipes(user.id); 
+      updateRecipe({ type: 'id', value: draftId });      
     }
 
+    getDraftRecipes(user.id);
+    getPublishedRecipes(user.id);
+
     updateRecipe({ type: 'recipe', value: recipe });
+  };
+
+  const resetAutoSaveTimeout = () => {
+    if (autoSave.current) {
+      clearTimeout(autoSave.current);
+    }
+    autoSave.current = setTimeout(autoSaveDraft, 5000);
   };
 
   useEffect(() => {
@@ -86,13 +93,15 @@ const CreateRecipe = () => {
 
   useEffect(() => {
     if (changed) {
-      if (autoSave.current) {
-        clearTimeout(autoSave.current);
-      }
+      resetAutoSaveTimeout();
+    }
+  }, [changed, state])
+
+  useEffect(() => {
+    if (changed) {
       if (state.draft == null) {
         updateRecipe({ type: 'draft', value: true });
       } 
-      autoSave.current = setTimeout(autoSaveDraft, 5000);
     }
   }, [changed]);
 
@@ -117,14 +126,10 @@ const CreateRecipe = () => {
     } else {
       getPublishedRecipes(user.id);
     }
-    console.log('responseStatus', responseStatus)
-
     if (responseStatus === 200) {
       updateRecipe({ type: 'reset' });
     }
-  }
-
-  console.log('user', user)
+  };
 
   const publishRecipe = async () => {
     if (state.draft) {
@@ -139,22 +144,24 @@ const CreateRecipe = () => {
     }, false);
     getDraftRecipes(user.id);
     getPublishedRecipes(user.id);
-  }
+  };
 
   const editRecipe = async () => {
     await postRequest('recipes/createUpdate', {
       id: user.id,
       recipe: { ...state, draft: false },
     }, false);
-  }
+  };
   
   const changeName = event => {
     updateRecipe({ type: 'name', value: event.target.value });
+    resetAutoSaveTimeout();
     setChanged(true);
   };
 
   const changeDescription = event => {
     updateRecipe({ type: 'description', value: event.target.value });
+    resetAutoSaveTimeout();
     setChanged(true);
   };
 
@@ -177,20 +184,22 @@ const CreateRecipe = () => {
     }
 
     const uploadedImages = await Promise.all(promises);
-    console.log('uploadedImages', uploadedImages)
 
     const newImages = [...images, ...uploadedImages];
     updateRecipe({ type: 'images', value: newImages });
+    resetAutoSaveTimeout();
     setChanged(true);
   };
 
   const updateImages = images => {
     updateRecipe({ type: 'images', value: images });
+    resetAutoSaveTimeout();
     setChanged(true);
   };
 
   const changeTime = event => {
     updateRecipe({ type: 'time', value: event.target.value });
+    resetAutoSaveTimeout();    
     setChanged(true);
   };
 
@@ -199,8 +208,6 @@ const CreateRecipe = () => {
       {t('Recipe:LastSaved')} {lastSavedText}
     </div>
   );
-
-  console.log('images', images)
 
   return (
     <div className="createRecipe recipe">
@@ -301,7 +308,7 @@ const CreateRecipe = () => {
         <StepList />
       </FullWidthContainer>
     </div>
-  )
+  );
 }
 
 export default CreateRecipe;

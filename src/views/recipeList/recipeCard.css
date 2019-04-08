@@ -3,6 +3,7 @@
   box-shadow: var(--box-shadow);
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .recipeCard__image {

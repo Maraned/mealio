@@ -12,7 +12,7 @@ const RecipeList = () => {
     const fetchedRecipes = await getRequest('recipes');
     setRecipes(fetchedRecipes);
   }
-  
+
   useEffect(() => {
     fetchRecipes();
   }, []);
@@ -20,7 +20,10 @@ const RecipeList = () => {
   return (
     <div className="recipeList">
       {recipes.map(recipe => (
-        <RecipeCard recipe={recipe} />
+        <RecipeCard 
+          key={recipe.id}
+          recipe={recipe} 
+        />
       ))}
     </div>
   )

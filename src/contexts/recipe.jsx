@@ -36,6 +36,8 @@ const recipeReducer = (state, action) => {
       return { ...state, ...action.value };
     case 'reset':
       return { ...RecipeModel };
+    case 'unset':
+      return false;
   }
 };
 
