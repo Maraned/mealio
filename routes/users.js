@@ -49,31 +49,38 @@ router.post('/create', async (req, res, next) => {
   res.send({ accessToken, refreshToken, currentUserValue: 1, user: rest });
 });
 
-router.post('/update', async (req, res, next) => {
-  const { user } = req.body;
-  const { id, avatar: userAvatar, ...rest } = user;
-
-  if (userAvatar.indexOf(';base64,') !== -1) {
+const updateAvatar = async userAvatar => {
+  if (userAvatar && userAvatar.indexOf(';base64,') !== -1) {
     try {
-    const uri = userAvatar.split(';base64,').pop();
-    let imgBuffer =  Buffer.from(uri, 'base64');
-    const folderPath = `images/${id}`;
-    const imagePath = `${folderPath}/avatar.webp`;
-    if (!fs.existsSync(folderPath)) {
-      fs.mkdirSync(folderPath);
-    }
-    await sharp(imgBuffer)
-      .resize(200, 200)
-      .webp({ lossless: true })
-      .toFile(imagePath);
-    
-    rest.avatar = `${id}/avatar.webp`; 
+      const uri = userAvatar.split(';base64,').pop();
+      let imgBuffer =  Buffer.from(uri, 'base64');
+      const folderPath = `images/${id}`;
+      const imagePath = `${folderPath}/avatar.webp`;
+      if (!fs.existsSync(folderPath)) {
+        fs.mkdirSync(folderPath);
+      }
+      await sharp(imgBuffer)
+        .resize(200, 200)
+        .webp({ lossless: true })
+        .toFile(imagePath);
+      
+      return avatar = `${id}/avatar.webp`; 
 
     } catch (error) {
       console.error('Sharp error: ', error);
     }
   }
+}
 
+router.post('/update', async (req, res, next) => {
+  const { user } = req.body;
+  const { id, avatar: userAvatar, ...rest } = user;
+
+  const avatar = updateAvatar(userAvatar);
+  if (avatar) {
+    rest.avatar = avatar;
+  }
+  
   await rdb.edit('users', id, rest);
   res.sendStatus(200);
 });

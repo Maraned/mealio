@@ -91,7 +91,7 @@ router.post('/publish', async (req, res, next) => {
 
     try {
       await rdb.addToArray('users', id, 'publishedRecipes', recipe.id);
-      await rdb.destoy('draftRecipes', recipe.id);
+      await rdb.destroy('draftRecipes', recipe.id);
       await rdb.removeFromArray('users', id, 'draftRecipes', recipe.id);
       return res.sendStatus(200);
     } catch (error) {
