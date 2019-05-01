@@ -32,13 +32,13 @@ router.post('/', async (req, res, next) => {
   const userResult = await rdb.findBy('users', 'email', email);
   const user = userResult[0];
 
-  const { password: userPassword, ...rest } = user; 
-
   if (!user) {
     const userNotFoundError = new Error('NOUSER');
     userNotFoundError.status = 404;
     return next(userNotFoundError);
   }
+
+  const { password: userPassword, ...rest } = user; 
 
   const authenticated = await auth.authenticate(password, user.password);
   if (authenticated) {

@@ -13,7 +13,7 @@ var app = express();
 var users = require('./routes/users');
 var login = require('./routes/login');
 var recipes = require('./routes/recipes');
-
+var groceryList = require('./routes/groceryList');
 
 // HTTP REQUEST HANDLING
 app.use(express.static('images'))
@@ -38,6 +38,7 @@ app.use(jwt({ secret: process.env.SECRET })
 app.use('/users', users);
 app.use('/login', login);
 app.use('/recipes', recipes);
+app.use('/groceryList', groceryList);
 
 // ERROR HANDLING
 app.use(function (error, request, response, next) {

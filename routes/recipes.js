@@ -101,7 +101,7 @@ router.post('/publish', async (req, res, next) => {
   return res.sendStatus(400);
 });
 
-router.post('/delete', async (req, res, next) => {
+router.delete('/', async (req, res, next) => {
   const { id, type, recipeId } = req.body;
 
   if (recipeId && id && type) {

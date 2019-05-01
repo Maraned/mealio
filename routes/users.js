@@ -29,7 +29,12 @@ router.post('/create', async (req, res, next) => {
     res.send({ error: 'COULDNOTCREATEUSER' })
   }
 
-  const userInfo = { ...user, draftRecipes: [], publishedRecipes: [] };
+  const userInfo = { 
+    ...user, 
+    draftRecipes: [], 
+    publishedRecipes: [],  
+    groceryLists: [],
+  };
 
   const result = await rdb.save('users', userInfo);
   if (!result.inserted) {
@@ -96,5 +101,16 @@ router.get('/:userid/publishedRecipes', async (req, res, next) => {
   const result = await rdb.userRecipes('publishedRecipes', userid);
   res.send(result);
 });
+
+router.get('/:userid/groceryLists', async (req, res) => {
+  try {
+    const { userid } = req.params;
+    const result = await rdb.groceryLists(userid);
+    res.send(result);
+  } catch (error) {
+    console.log('error', error)
+    res.sendStatus(500);
+  }
+})
 
 module.exports = router;
