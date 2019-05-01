@@ -10,12 +10,14 @@ import { RecipeContext } from 'contexts/recipe';
 import { useTranslation } from 'react-i18next';
 
 import './header.css';
+import { AlertBannerContext } from 'contexts/alertBanner';
 
 const Header = () => {
   const { state, dispatch } = useContext(LoggedInContext);
   const User = useContext(UserContext);
   const { state: router, dispatch: routerDispatch } = useContext(RouterContext);
   const { dispatch: recipeDispatch } = useContext(RecipeContext);
+  const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
   const { t, i18n } = useTranslation();
 
   const goToRecipeList = () => {
@@ -33,7 +35,7 @@ const Header = () => {
       </button>
 
       <button onClick={() => {
-        routerDispatch({ type: 'alertBanner', value: { text: 'HELLO', type: 'success' } });
+        alertBannerDispatch({ type: 'add', value: { text: 'HELLO', type: 'success' } });
       }}>ShowAlert</button>
 
       <button onClick={goToRecipeList}>Recipe List</button>

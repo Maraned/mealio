@@ -1,0 +1,32 @@
+.select {
+  width: 140px;
+  position: relative;
+  text-align: center;
+}
+
+.select__input {
+  border: 1px solid #333;
+  padding: .5rem .25rem;
+  border-radius: 2px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.select__content {
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid #333;
+  border-top-color: transparent;
+  position: absolute;
+  width: 100%;
+  background-color: #fff;
+}
+
+.select__option {
+  padding: .5rem 1rem;
+  cursor: pointer;
+}
+
+.select__option:hover {
+  background-color: var(--light-grey);
+}

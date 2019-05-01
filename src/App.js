@@ -8,6 +8,7 @@ import { UserProvider } from 'contexts/user';
 import { RouterProvider } from 'contexts/router';
 import { RecipeProvider } from 'contexts/recipe';
 import { PendingRequestProvider } from 'contexts/pendingRequests';
+import { AlertBannerProvider } from 'contexts/alertBanner';
 
 import MainView from 'views/MainView';
 
@@ -22,9 +23,11 @@ const App = () => {
           <LoggedInProvider>
             <RouterProvider>
               <RecipeProvider>
-                <Header />
+                <AlertBannerProvider>
+                  <Header />
 
-                <MainView />  
+                  <MainView />  
+                </AlertBannerProvider>
               </RecipeProvider>
             </RouterProvider>
           </LoggedInProvider>

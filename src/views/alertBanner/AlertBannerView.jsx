@@ -3,7 +3,7 @@ import AlertBanner from './AlertBanner';
 
 import './alertBannerView.css';
 
-import { RouterContext } from 'contexts/router';
+import { AlertBannerContext } from 'contexts/alertBanner';
 
 
 import posed, { PoseGroup } from 'react-pose';
@@ -19,17 +19,16 @@ const AlertBannerPose = posed.div({
 });
 
 const AlertBannerView = () => {
-  const { state: router, dispatch } = useContext(RouterContext);
-  const { AlertBanners } = router;
+  const { state: alertBanners, dispatch } = useContext(AlertBannerContext);
 
   const removeAfterDelay = id => () => {
-    dispatch({ type: 'closeAlertBanner' , value: id });
+    dispatch({ type: 'close' , value: id });
   }
 
   return (
     <div className="alertBannerView">
       <PoseGroup>
-        {AlertBanners && AlertBanners.map((alertBanner, index) => alertBanner && (
+        {alertBanners && alertBanners.map((alertBanner, index) => alertBanner && (
           <AlertBannerPose key={alertBanner.id}>
             <AlertBanner 
               text={alertBanner.text}

@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
+import { AlertBannerContext } from 'contexts/alertBanner';
 
 import IngredientList from 'components/ingredientList/IngredientList';
 import StepList from 'components/stepList/StepList';
@@ -27,6 +28,7 @@ const CreateRecipe = () => {
   const { state: user } = useContext(UserContext);
   const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
+  const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
   const { t, i18n } = useTranslation();
   const { name, description, images, time, id } = state;
   const autoSave = useRef(null);
@@ -132,18 +134,31 @@ const CreateRecipe = () => {
   };
 
   const publishRecipe = async () => {
-    if (state.draft) {
-      updateRecipe({ type: 'draft', value: false });
-    }
-    await postRequest('recipes/publish', {
+    console.log('state', state)
+    const response = await postRequest('recipes/publish', {
       id: user.id,
       recipe: { ...state, draft: false, author: {
         id: user.id,
         name: user.displayName
       } },
     }, false);
-    getDraftRecipes(user.id);
-    getPublishedRecipes(user.id);
+
+    if (!isNaN(response) && response !== 200) {
+      alertBannerDispatch({ type: 'add', value: { 
+        text: t('Recipe:FailedToPublish'), 
+        type: 'error', 
+      } });
+    } else {
+      if (state.draft) {
+        alertBannerDispatch({ type: 'add', value: { 
+          text: t('Recipe:PublishSuccess'), 
+          type: 'success', 
+        } });
+        updateRecipe({ type: 'draft', value: false });
+        getDraftRecipes(user.id);
+        getPublishedRecipes(user.id);
+      }
+    }
   };
 
   const editRecipe = async () => {
@@ -224,7 +239,7 @@ const CreateRecipe = () => {
         </button>
 
         <div>
-          {state.draft && (
+          {state.draft && state.id && (
             <button 
               className="createRecipe__publish"
               onClick={publishRecipe}

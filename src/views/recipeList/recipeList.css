@@ -4,6 +4,17 @@
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
   grid-template-rows: minmax(50px,250px);
-  margin: 1rem;
-  width: calc(100% - 2rem);
+}
+
+.recipeListView {
+  margin: auto;
+}
+
+.recipeFilter__accordion {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.recipeFilter__accordion .accordion__header {
+  justify-content: center;
 }

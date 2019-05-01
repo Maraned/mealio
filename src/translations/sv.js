@@ -36,7 +36,11 @@ export default {
     Published: 'Publicerad',
     Delete: 'Ta bort',
     Update: 'Uppdatera',
-    AddToGroceryList: 'Lägg till i inköpslista'
+    AddToGroceryList: 'Lägg till i inköpslista',
+    FailedToPublish: 'Något gick fel vid publiceringen.',
+    PublishSuccess: 'Receptet har publicerats!',
+    Filter: 'Filtrera',
+    Sort: 'Sortering',
   },
   Time: {
     Second: 'sekund',
@@ -51,7 +55,7 @@ export default {
   Menu: {
     Logout: 'Logga ut',
     Settings: 'Inställningar',
-    UserSettings: 'Användare',
+    UserSettings: 'Profil',
     MyRecipes: 'Mina recept',
     GroceryLists: 'Mina inköpslistor'
   },
