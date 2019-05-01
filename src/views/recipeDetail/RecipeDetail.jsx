@@ -25,8 +25,6 @@ const RecipeDetail = () => {
     time,
   } = recipe;
 
-  console.log('RecipeDetail')
-
   return (
     <div className="createRecipe recipe">
       <FullWidthContainer center stack>

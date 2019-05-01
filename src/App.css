@@ -98,3 +98,13 @@ button:hover {
   padding: .25rem;
   display: flex;
 }
+
+.removeButton--inverted {
+  color: var(--alert-color);
+  background-color: transparent;
+  width: 2rem;
+}
+
+.removeButton--inverted svg {
+  transform: translateX(-50%);
+}

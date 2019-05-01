@@ -15,10 +15,7 @@ const GroceryList = ({ list, listIndex }) => {
   const checkedList = [];
 
   const removeItem = index => () => {
-    console.log('list.items before', list.items[index])
     list.items.splice(index, 1);
-    console.log('removing index', index)
-    console.log('list.items after', list.items[index])
     dispatch({ type: 'updateListIndex', index: listIndex, value: list });
   };
 

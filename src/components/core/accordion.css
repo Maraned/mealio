@@ -1,5 +1,5 @@
 .accordion__header {
-  padding: .5rem 3rem;
+  padding: .5rem 2.5rem;
   background-color: var(--primary-color);
   color: #fff;
   border-radius: 4px;
@@ -10,6 +10,19 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+}
+
+.accordion__header__leftIcon {
+  position: absolute;
+  left: 0;
+  width: 2rem;
+  height: 100%;
+}
+
+.accordion__header__leftIcon svg {
+  height: 2rem;
+  width: 1rem;
+  transform: translateX(-50%);
 }
 
 .accordion__content {

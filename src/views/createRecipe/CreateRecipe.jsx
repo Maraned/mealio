@@ -116,7 +116,6 @@ const CreateRecipe = () => {
   };
 
   const deleteRecipe = async () => {
-    console.log('state', state)
     const responseStatus = await deleteRequest('recipes', {
       type: state.draft ? 'draftRecipes' : 'publishedRecipes',
       recipeId: state.id,
@@ -209,7 +208,6 @@ const CreateRecipe = () => {
       {t('Recipe:LastSaved')} {lastSavedText}
     </div>
   );
-  console.log('CreateRecipe', state)
 
   return (
     <div className="createRecipe recipe">

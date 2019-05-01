@@ -54,7 +54,9 @@ const Accordion = ({
       >
       
         {LeftIcon && (
-          <LeftIcon />
+          <button className="accordion__header__leftIcon">
+            <LeftIcon />
+          </button>
         )}
 
         {editable ? (

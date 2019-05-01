@@ -72,7 +72,9 @@ const GroceryLists = ({ data }) => {
     groceryListDispatch({ type: 'updateListIndex', index, value: groceryLists[index], silent: true });
   };
 
-  const addDataItemsToGroceryList = index => () => {
+  const addDataItemsToGroceryList = index => event => {
+    event.preventDefault();
+    event.stopPropagation();
     groceryLists[index].items = [...groceryLists[index].items, ...recipeData.items];
     groceryListDispatch({ type: 'updateListIndex', index, value: groceryLists[index] });
     setRecipeData(new RecipeData());
@@ -112,13 +114,11 @@ const GroceryLists = ({ data }) => {
         </div>
       </div>
 
-      {groceryLists.map((list, index) => {
-        console.log('list parten', list)
-        return (
+      {groceryLists.map((list, index) => (
         <Accordion 
           title={list.name} 
           key={list.id} 
-          LeftIcon={addToCartIcon(index)}
+          LeftIcon={recipeData && !!recipeData.items.length && addToCartIcon(index)}
           editable 
           onBlur={updateGroceryListName(index)}
           removeable
@@ -137,7 +137,7 @@ const GroceryLists = ({ data }) => {
           </div>
         </Accordion>
       
-      )})}
+      ))}
     </div>
   )
 };

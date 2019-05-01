@@ -45,7 +45,7 @@ export const GroceryListContext = createContext(initialState);
 
 export const GroceryListProvider = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  console.log('state', state)
+
   return (
     <GroceryListContext.Provider value={{ state: state.sort(sortByCreatedAt), dispatch }}>
       {props.children}

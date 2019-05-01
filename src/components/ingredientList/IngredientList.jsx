@@ -100,8 +100,6 @@ const IngredientList = () => {
   
   const portionsAmount = parseInt(portions, 10) || parseInt(defaultPortions, 10);
 
-  console.log('ingredients', ingredients)
-
   return (
     <div className="ingredientList list">
       <div className="ingredientList__header">

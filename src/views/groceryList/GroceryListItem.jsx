@@ -57,7 +57,7 @@ const GroceryListItem = ({
         className="groceryListItem__buttons" 
         pose={showButtons ? 'visible' : 'hidden'}
       >
-        <button className="removeButton" onClick={removeItem}>
+        <button className="removeButton--inverted" onClick={removeItem}>
           <FaTrash />
         </button>
       </ButtonsContainer>
