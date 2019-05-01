@@ -32,6 +32,10 @@ const Header = () => {
         Change language
       </button>
 
+      <button onClick={() => {
+        routerDispatch({ type: 'alertBanner', value: { text: 'HELLO', type: 'success' } });
+      }}>ShowAlert</button>
+
       <button onClick={goToRecipeList}>Recipe List</button>
       
       {!state.loggedIn ? (

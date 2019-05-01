@@ -1,0 +1,19 @@
+.alertBanner {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--box-shadow);
+  border-radius: .25rem;
+  width: 240px;
+}
+
+.alertBanner--success {
+  background-color: var(--success-color);
+  color: var(--success-text-color);
+}
+
+.alertBanner--error {
+  background-color: var(--alert-color);
+  color: var(--alert-text-color);
+}

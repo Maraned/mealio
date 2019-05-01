@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import { RouterContext } from 'contexts/router';
 import Modal from 'components/modal/Modal';
+import AlertBannerView from 'views/alertBanner/AlertBannerView';
 
 import './mainView.css';
 
@@ -16,6 +17,8 @@ const MainView = () => {
       )}
 
       <Modal />
+
+      <AlertBannerView />
     </div>
   )
 }

@@ -8,7 +8,7 @@ const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
   const isWithinUpperLimit = number <= upperLimit;
 
   return isNumber && isWithinLowerLimit && isWithinUpperLimit;
-}
+};
 
 const recipeReducer = (state, action) => {
   switch (action.type) {
@@ -47,8 +47,6 @@ export const RecipeContext = createContext(initialState);
 
 export const RecipeProvider = props => {
   const [state, dispatch] = useReducer(recipeReducer, props.recipe || initialState);
-
-  console.log('state', state);
 
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>
