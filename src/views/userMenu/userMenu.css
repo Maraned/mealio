@@ -41,3 +41,8 @@
   height: 2.5rem;
   width: 2.5rem;
 }
+
+.userMenu .avatar__image--default {
+  height: 2rem;
+  width: 2rem;
+}

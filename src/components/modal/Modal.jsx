@@ -22,7 +22,7 @@ const PosedModal = posed.div({
 const Modal = ({ children, ref }) => {
   const modalRef = useRef(null);
   const { state: router, dispatch } = useContext(RouterContext);
-  const { ModalView } = router;
+  const { ModalView, ModalData } = router;
 
   const outsideClick = event => {
     if (!modalRef.current.contains(event.target)) {
@@ -39,7 +39,7 @@ const Modal = ({ children, ref }) => {
         onClick={outsideClick}
       >
         <div className="modal" ref={modalRef}>
-          <ModalView />
+          <ModalView data={ModalData} />
         </div>
       </PosedModal>
     )}

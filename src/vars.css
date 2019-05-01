@@ -9,6 +9,9 @@
   --alert-color: #ee6666;
   --alert-text-color: #fff;
 
+  --warning-color: #ff8f00;
+  --warning-text-color: #fff;
+
   --success-color: #28a745;
   --success-text-color: #fff;
 
@@ -17,6 +20,7 @@
   --disabled-text-style: italic;
 
   --text-hover: rgba(0, 0, 0, 0.06);
+  --light-hover: rgba(0, 0, 0, 0.03);
 
   --grey: #ababab;
   --light-grey: #efefef;

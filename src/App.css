@@ -91,3 +91,10 @@ input[type=number]::-webkit-inner-spin-button {
 button:hover {
   opacity: .7;
 }
+
+.removeButton {
+  background-color: var(--alert-color);
+  color: #fff;
+  padding: .25rem;
+  display: flex;
+}

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
+import { RouterContext } from 'contexts/router';
 import IngredientModel from 'models/ingredientModel';
 
 import Ingredient from 'components/ingredientList/Ingredient';
@@ -14,6 +15,7 @@ import './ingredientList.css';
 const IngredientList = () => {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
+  const { dispatch: changeView } = useContext(RouterContext);
   const { t } = useTranslation();
   const { ingredients, portions, defaultPortions = 4 } = recipe;
 
@@ -75,9 +77,30 @@ const IngredientList = () => {
     event.preventDefault();
     const pastedText = event.clipboardData.getData('Text');
     parseIngredientText(pastedText)
+  };
+
+  const ingredientsToGroceryListItems = ingredients => {
+    let groceryListItems = [];
+    for (let ingredient of ingredients) {
+      groceryListItems.push({
+        text: `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`,
+        checked: false,
+      });
+    }
+    return groceryListItems;
   }
+
+  const openGroceryListModal = () => {
+    changeView({ type: 'groceryLists', value: { 
+      items: ingredientsToGroceryListItems(ingredients), 
+      recipeId: recipe.id,
+      recipeName: recipe.name,
+    } });
+  };
   
   const portionsAmount = parseInt(portions, 10) || parseInt(defaultPortions, 10);
+
+  console.log('ingredients', ingredients)
 
   return (
     <div className="ingredientList list">
@@ -122,9 +145,13 @@ const IngredientList = () => {
           onRemove={removeIngredient}
         />
       ))}
-      {state.editable && (
+      {state.editable ? (
         <button onClick={addIngredient}>
           {t('Recipe:AddIngredient')}
+        </button>
+      ) : (
+        <button onClick={openGroceryListModal}>
+          {t('Recipe:AddToGroceryList')}
         </button>
       )}
     </div>

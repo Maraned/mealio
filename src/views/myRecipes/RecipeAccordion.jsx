@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import posed, { PoseGroup } from 'react-pose';
 import { EditableProvider } from 'contexts/editable';
+import { RecipeProvider } from 'contexts/recipe';
 import CreateRecipeView from 'views/createRecipe/CreateRecipe';
-import { tween } from 'popmotion'
 import cc from 'classcat';
 
 import './recipeAccordion.css'
@@ -42,9 +42,11 @@ const RecipeAccordion = ({ recipe }) => {
       </div>
 
       <EditableProvider>
-        <Content className="recipeAccordion__content" initialPose="exit" pose={open ? "enter" : "exit"}>
-          <CreateRecipeView />
-        </Content>
+        <RecipeProvider recipe={recipe}>
+          <Content className="recipeAccordion__content" initialPose="exit" pose={open ? "enter" : "exit"}>
+            <CreateRecipeView />
+          </Content>
+        </RecipeProvider>
       </EditableProvider>
     </div>
   );

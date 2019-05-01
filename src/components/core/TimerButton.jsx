@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cc from 'classcat';
 
-import { FaPause } from 'react-icons/fa';
+import { FaPause, FaClock } from 'react-icons/fa';
 
 import './timerButton.css';
 
@@ -104,11 +104,12 @@ const TimerButton = ({ time, unit, text }) => {
     <button 
       onClick={startTimer}
       className={cc(['timerButton', {
+        'timerButton--active': timerStarted,
         'timerButton--done': timerDone
       }])}
     >
+      <FaClock className="timerButton__clockIcon" />
       {timerText}
-
       {timerPaused && (
         <div className="timerButton--paused">
           <FaPause />

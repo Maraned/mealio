@@ -35,7 +35,8 @@ export default {
     Draft: 'Utkast',
     Published: 'Publicerad',
     Delete: 'Ta bort',
-    Update: 'Uppdatera'
+    Update: 'Uppdatera',
+    AddToGroceryList: 'Lägg till i inköpslista'
   },
   Time: {
     Second: 'sekund',
@@ -52,6 +53,7 @@ export default {
     Settings: 'Inställningar',
     UserSettings: 'Användare',
     MyRecipes: 'Mina recept',
+    GroceryLists: 'Mina inköpslistor'
   },
   UserSettings: {
     DisplayName: 'Namn'
@@ -62,5 +64,14 @@ export default {
     PublishedRecipes: 'Publicerade recept',
     CreateRecipe: 'Skapa recept',
     NoRecipes: 'Inga skapade recept'
+  },
+  GroceryList: {
+    Title: 'Inköpslistor',
+    CreateNew: 'Skapa ny inköpslista',
+    AddIngredientsToExisting: 'Lägg till i existerande',
+    NewGroceryList: 'Ny inköpslista',
+    AddGroceryItem: 'Lägg till',
+    CreatedAt: 'Skapad',
+    CheckedItems: 'Avklarade',
   }
 }

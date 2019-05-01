@@ -5,6 +5,7 @@ import Settings from 'views/settings/Settings';
 import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
 import RecipeList from 'views/recipeList/RecipeList';
 import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
+import GroceryLists from 'views/groceryList/GroceryListsWrapper';
 
 const routerReducer = (state, action) => {
   switch (action.type) {
@@ -19,7 +20,9 @@ const routerReducer = (state, action) => {
     case 'recipeList':
       return { ...state, ActiveView: RecipeList };
     case 'recipeDetail':
-      return { ...state, ActiveView: RecipeDetail }
+      return { ...state, ActiveView: RecipeDetail };
+    case 'groceryLists':
+      return { ...state, ModalView: GroceryLists, ModalData: action.value };
   }
 };
 

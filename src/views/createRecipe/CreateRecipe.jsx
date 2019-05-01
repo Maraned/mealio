@@ -14,7 +14,7 @@ import ImageOrder from 'components/core/imageOrder/ImageOrder';
 
 import FetchMyRecipes from 'utils/fetchMyRecipes';
 
-import { postRequest } from 'utils/request';
+import { postRequest, deleteRequest } from 'utils/request';
 
 import 'views/recipe/recipe.css';
 
@@ -116,7 +116,8 @@ const CreateRecipe = () => {
   };
 
   const deleteRecipe = async () => {
-    const responseStatus = await postRequest('recipes/delete', {
+    console.log('state', state)
+    const responseStatus = await deleteRequest('recipes', {
       type: state.draft ? 'draftRecipes' : 'publishedRecipes',
       recipeId: state.id,
       id: user.id,
@@ -208,6 +209,7 @@ const CreateRecipe = () => {
       {t('Recipe:LastSaved')} {lastSavedText}
     </div>
   );
+  console.log('CreateRecipe', state)
 
   return (
     <div className="createRecipe recipe">

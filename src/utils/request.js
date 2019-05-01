@@ -17,7 +17,45 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
   } else {
     return response.status;
   }
-}
+};
+
+export const putRequest = async (endpoint, data, expectResponse = false) => {
+  console.log('sending PUT ', data, 'to endpoint', endpoint)
+  const response = await fetch(`${url}/${endpoint}`, {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
+    },
+    body: JSON.stringify(data),
+  });
+  if (expectResponse && response.status !== 401) { 
+    const responseJSON = await response.json();
+    console.log(`PUT response ${endpoint}: `, responseJSON);
+    return responseJSON;
+  } else {
+    return response.status;
+  }
+};
+
+export const deleteRequest = async (endpoint, data, expectResponse = false) => {
+  console.log('sending DELETE ', data, 'to endpoint', endpoint)
+  const response = await fetch(`${url}/${endpoint}`, {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
+    },
+    body: JSON.stringify(data),
+  });
+  if (expectResponse && response.status !== 401) { 
+    const responseJSON = await response.json();
+    console.log(`DELETE response ${endpoint}: `, responseJSON);
+    return responseJSON;
+  } else {
+    return response.status;
+  } 
+};
 
 export const getRequest = async endpoint => {
   const response = await fetch(`${url}/${endpoint}`, {

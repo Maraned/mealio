@@ -1,0 +1,45 @@
+.accordion__header {
+  padding: .5rem 3rem;
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.accordion__content {
+  overflow: hidden;
+}
+
+.accordion__header__input {
+  background-color: transparent;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+  flex: 1;
+}
+
+.accordion__header__input:focus {
+  border-bottom: 1px solid #fff;
+}
+
+.accordion__header__caret {
+  transition: transform 0.15s;
+}
+
+.accordion__header__open .accordion__header__caret {
+  transform: rotate(180deg); 
+}
+
+.accordion__header .removeButton {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 2rem;
+  justify-content: center;
+}

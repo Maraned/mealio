@@ -1,0 +1,14 @@
+.groceryList__ingredient__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.groceryList__checkedItems {
+  margin: 1rem 2rem;
+}
+
+.groceryList__checkedItems .accordion__header {
+  background-color: var(--secondary-color);
+}
+
