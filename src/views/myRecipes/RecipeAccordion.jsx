@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import posed, { PoseGroup } from 'react-pose';
-import { EditableProvider } from 'contexts/editable';
-import { RecipeProvider } from 'contexts/recipe';
-import CreateRecipeView from 'views/createRecipe/CreateRecipe';
+import posed from 'react-pose';
+import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import cc from 'classcat';
 
 import './recipeAccordion.css'
@@ -24,6 +22,7 @@ const RecipeAccordion = ({ recipe }) => {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
+
   return (
     <div 
       className="recipeAccordion" 
@@ -41,13 +40,9 @@ const RecipeAccordion = ({ recipe }) => {
         {recipe.name}
       </div>
 
-      <EditableProvider>
-        <RecipeProvider recipe={recipe}>
-          <Content className="recipeAccordion__content" initialPose="exit" pose={open ? "enter" : "exit"}>
-            <CreateRecipeView />
-          </Content>
-        </RecipeProvider>
-      </EditableProvider>
+      <Content className="recipeAccordion__content" initialPose="exit" pose={open ? "enter" : "exit"}>
+        <CreateRecipeView recipe={recipe} />
+      </Content>
     </div>
   );
 };

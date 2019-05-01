@@ -48,6 +48,8 @@ export const RecipeContext = createContext(initialState);
 export const RecipeProvider = props => {
   const [state, dispatch] = useReducer(recipeReducer, props.recipe || initialState);
 
+  console.log('state', state);
+
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>
       {props.children}
