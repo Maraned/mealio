@@ -14,6 +14,7 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var recipes = require('./routes/recipes');
 var groceryList = require('./routes/groceryList');
+var ingredients = require('./routes/ingredients');
 
 // HTTP REQUEST HANDLING
 app.use(express.static('images'))
@@ -39,6 +40,7 @@ app.use('/users', users);
 app.use('/login', login);
 app.use('/recipes', recipes);
 app.use('/groceryList', groceryList);
+app.use('/ingredients', ingredients);
 
 // ERROR HANDLING
 app.use(function (error, request, response, next) {

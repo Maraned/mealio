@@ -56,45 +56,55 @@ const removeImages = async (images, id) => {
 }
 
 router.get('/', async (req, res, next) => {
-  const response = await rdb.findAll('publishedRecipes');
-  res.status(200);
-  return res.send(response);
+  try {
+    const response = await rdb.findAll('publishedRecipes');
+    res.status(200);
+    return res.send(response);
+  } catch (error) {
+    console.error(error);
+    return res.sendStatus(500);
+  }
 });
 
 router.post('/createUpdate', async (req, res, next) => {
-  const { recipe, id } = req.body;
+  try {
+    const { recipe, id } = req.body;
 
-  if (recipe && id) {
-    if (recipe.id) {
-      const images = await getImages(recipe.images, id);
-      await rdb.edit('draftRecipes', recipe.id, { ...recipe, images });
-      res.status(200);
-      return res.send({ status: 'updated', recipe: { ...recipe, images }});
-    } else {
-      const images = await getImages(recipe.images, id);
-      const response = await rdb.save('draftRecipes', { ...recipe, images });
-      const draftId = response.generated_keys[0];
-      await rdb.addToArray('users', id, 'draftRecipes', draftId);
+    if (recipe && id) {
+      if (recipe.id) {
+        const images = await getImages(recipe.images, id);
+        await rdb.edit('draftRecipes', recipe.id, { ...recipe, images });
+        res.status(200);
+        return res.send({ status: 'updated', recipe: { ...recipe, images }});
+      } else {
+        const images = await getImages(recipe.images, id);
+        const response = await rdb.save('draftRecipes', { ...recipe, images });
+        const draftId = response.generated_keys[0];
+        await rdb.addToArray('users', id, 'draftRecipes', draftId);
 
-      res.status(200);
-      return res.send({ draftId, status: 'created', recipe: { ...recipe, images } });
+        res.status(200);
+        return res.send({ draftId, status: 'created', recipe: { ...recipe, images } });
+      }
     }
+    return res.sendStatus(400);
+  } catch (error) {
+    console.error(error);
+    return res.sendStatus(500);
   }
-  return res.sendStatus(400);
 });
 
 router.post('/publish', async (req, res, next) => {
   const { recipe, id } = req.body;
 
   if (recipe && id) {
-    await rdb.save('publishedRecipes', recipe);
-
     try {
+      await rdb.save('publishedRecipes', recipe);
       await rdb.addToArray('users', id, 'publishedRecipes', recipe.id);
       await rdb.destroy('draftRecipes', recipe.id);
       await rdb.removeFromArray('users', id, 'draftRecipes', recipe.id);
       return res.sendStatus(200);
     } catch (error) {
+      console.error(error);
       return res.sendStatus(500);
     }
   }
@@ -112,6 +122,7 @@ router.delete('/', async (req, res, next) => {
       await rdb.destroy(type, recipeId);
       return res.sendStatus(200);
     } catch (error) {
+      console.error(error);
       return res.sendStatus(500);
     }
   }
