@@ -54,7 +54,7 @@
   display: inline-block;
   border: 1px solid var(--primary-color);
   border-radius: 50%;
-  width: 1.5rem;
+  min-width: 1.5rem;
   height: 1.5rem;
   display: flex;
   justify-content: center;

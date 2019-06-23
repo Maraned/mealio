@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
 
+import { RouterContext } from 'contexts/router';
+import { AllIngredientsContext } from 'contexts/allIngredients';
+
 import EditableField from 'components/core/EditableField';
+import Select from 'components/core/Select';
+
 
 import './ingredient.css';
 
@@ -14,9 +19,12 @@ const Ingredient = ({
   portions,
   onPaste,
   onRemove,
+  groups,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [showRemove, setShowRemove] = useState(false);
+  const { dispatch: route } = useContext(RouterContext);
+  const { state: allIngredients } = useContext(AllIngredientsContext);
 
   const amountValue = () => {
     if (ingredient.amount) {
@@ -30,8 +38,9 @@ const Ingredient = ({
     updateIngredient(index, ingredient);
   }
 
-  const updateName = event => {
-    ingredient.name = event.target.value;
+  const updateName = ingredient => {
+    ingredient.name = ingredient.name;
+    ingredient.ingredientId = ingredient.id;
     updateIngredient(index, ingredient);
   }
 
@@ -52,12 +61,16 @@ const Ingredient = ({
     setShowRemove(false);
   }
 
+  const onAddIngredient = () => {
+    route({ type: 'newIngredient', value: groups, size: 'auto', allIngredients, });
+  };
+
   return (
     <div className="ingredient">
       <EditableField 
         value={amountValue()} 
         onChange={updateAmount} 
-        placeholder={t('Ingredient.Amount')} 
+        placeholder={t('Ingredient:Amount')} 
         onPaste={onPaste}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -66,26 +79,30 @@ const Ingredient = ({
       <EditableField 
         value={ingredient.unit} 
         onChange={updateUnit} 
-        placeholder={t('Ingredient.Unit')} 
+        placeholder={t('Ingredient:Unit')} 
         onPaste={onPaste}
         onFocus={onFocus}
         onBlur={onBlur}
       />
-
-      <EditableField 
-        value={ingredient.name} 
-        onChange={updateName} 
-        placeholder={t('Ingredient.Name')} 
-        onPaste={onPaste}
-        onFocus={onFocus}
-        onBlur={onBlur}
+      
+      <Select 
+        onChange={updateName}
+        preSelected={ingredient}
+        defaultText={t('Ingredient:SelectIngredient')}
+        textAttribute="name"
+        options={allIngredients}
+        addable
+        onAddItem={onAddIngredient}
+        addItemText={t('Ingredient:NewIngredient')}
       />
 
-      {showRemove && (
-        <div className="ingredient__remove">
-          <FaTimes onClick={removeIngredient} />
-        </div>
-      )}
+      <div className="ingredient__remove__container">
+        {showRemove && (
+          <div className="ingredient__remove">
+            <FaTimes onClick={removeIngredient} />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

@@ -2,3 +2,7 @@
   margin: 1rem 0;
   display: flex;
 }
+
+.recipeFilter__title {
+  padding: 0 1rem;
+}

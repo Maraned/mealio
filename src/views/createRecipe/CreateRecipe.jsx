@@ -23,14 +23,23 @@ import { useTranslation } from 'react-i18next';
 import { FaRegClock } from 'react-icons/fa';
 
 import './createRecipe.css';
+import { AllIngredientsContext } from '../../contexts/allIngredients';
 
 const CreateRecipe = () => {
+  // CONTEXTS
   const { state: user } = useContext(UserContext);
   const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
+  const { 
+    state: allIngredients, 
+    dispatch: allIngredientsDispatch 
+  } = useContext(AllIngredientsContext);
+
   const { t, i18n } = useTranslation();
   const { name, description, images, time, id } = state;
+
+  // STATES
   const autoSave = useRef(null);
   const [lastSaved, setLastSaved] = useState(null);
   const [lastSavedText, setLastSavedText] = useState('');
@@ -134,7 +143,6 @@ const CreateRecipe = () => {
   };
 
   const publishRecipe = async () => {
-    console.log('state', state)
     const response = await postRequest('recipes/publish', {
       id: user.id,
       recipe: { ...state, draft: false, author: {
@@ -273,6 +281,8 @@ const CreateRecipe = () => {
           value={name}
           className="recipe__name" 
           placeholder={t('Recipe.Name')}
+          titleField
+          center
         />
 
         {editState.editable && (

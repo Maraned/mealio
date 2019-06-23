@@ -5,7 +5,6 @@
   padding: 1rem;
 }
 
-.recipe__name,
 .recipe__description,
 .recipe__imageUpload,
 .recipe__imageGallery {
@@ -18,12 +17,6 @@
 }
 
 .recipe__time {
-  display: flex;
-  align-items: center;
-}
-
-.recipe__time > * {
-  height: 1.5rem;
   display: flex;
   align-items: center;
 }

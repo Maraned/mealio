@@ -1,12 +1,8 @@
-.createRecipe__toggleModeBtn,
-.createRecipe__publish {
-  max-width: 140px;
-}
-
 .createRecipe__publish,
 .createRecipe__update {
   background-color: var(--primary-color);
   color: var(--primary-text-color);
+  margin-right: .5rem;
 }
 
 .createRecipe__lastSaved {

@@ -1,0 +1,33 @@
+.newIngredient {
+  width: 100%;
+  padding: 3rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.newIngredient > * {
+  margin-bottom: 1rem;
+}
+
+.newIngredient > *:last-child {
+  margin-bottom: 0;
+}
+
+.ingredient__tags {
+  display: flex; 
+  flex-wrap: wrap;
+  margin-top: .25rem;
+  margin-bottom: .5rem;
+}
+
+.ingredient__tag {
+  padding: .5rem;
+  margin-right: .25rem;
+  margin-top: .25rem;
+  border-radius: .75rem;
+  background: var(--primary-color);
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+

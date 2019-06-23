@@ -1,5 +1,6 @@
 import React, { useRef, useContext, useState } from 'react';
 import posed, { PoseGroup } from 'react-pose';
+import cc from 'classcat';
 
 import { RouterContext } from 'contexts/router';
 
@@ -22,7 +23,7 @@ const PosedModal = posed.div({
 const Modal = ({ children, ref }) => {
   const modalRef = useRef(null);
   const { state: router, dispatch } = useContext(RouterContext);
-  const { ModalView, ModalData } = router;
+  const { ModalView, ModalData, ModalSize = 'large' } = router;
 
   const outsideClick = event => {
     if (!modalRef.current.contains(event.target)) {
@@ -38,7 +39,13 @@ const Modal = ({ children, ref }) => {
         className="modalWrapper" 
         onClick={outsideClick}
       >
-        <div className="modal" ref={modalRef}>
+        <div 
+          className={cc(['modal', {
+            'modal--large': ModalSize === 'large',
+            'modal--auto': ModalSize === 'auto'
+          }])} 
+          ref={modalRef}
+        >
           <ModalView data={ModalData} />
         </div>
       </PosedModal>

@@ -1,58 +1,148 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import cc from 'classcat';
+import posed from 'react-pose';
 
 import { EditableContext } from 'contexts/editable';
 
 import './editableField.css';
 
-const EditableField = ({ 
-  value, 
-  onChange, 
+const OptionsContainer = posed.div({
+  open: {
+    height: 'auto',
+    opacity: 1,
+  },
+  closed : {
+    height: 0,
+    opacity: 0,
+  },
+});
+
+const EditableField = ({
+  value,
+  onChange,
   placeholder,
   className,
   onPaste,
-  onFocus, 
+  onFocus,
   onBlur,
   type,
   center,
+  searchOptions,
+  onOptionClick,
+  optionText,
+  titleField = false,
 }) => {
+  const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
+  const [fallbackValue, setFallbackValue] = useState(value || '');
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const node = useRef();
+
+  const fallbackOnChange = event => {
+    setFallbackValue(event.target.value);
+  };
+
+  const handleClick = e => {
+    if (node.current && !node.current.contains(e.target)) {
+      setOpen(false);
+      
+      if (onBlur) {
+        onBlur();
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, []);
+
+  const focus = () => {
+    setOpen(true);
+
+    if (onFocus) {
+      onFocus();
+    }
+  }
+
+  useEffect(() => {
+    let fieldValue = value || fallbackValue;
+    const alteredFilteredOptions = [];
+    if (searchOptions) {
+      for (let option of searchOptions) {
+        const lowerCaseValue = fieldValue ? fieldValue.toLowerCase() : '';
+        const lowerCaseOption = optionText(option).toLowerCase();
+
+        if (lowerCaseOption.indexOf(lowerCaseValue) !== -1) {
+          alteredFilteredOptions.push(option);
+        }
+      }
+    }
+    setFilteredOptions(alteredFilteredOptions);
+  }, [value, fallbackValue])
+
+  const optionClick = option => () => {
+    setOpen(false);
+    if (onOptionClick) {
+      onOptionClick(option);
+    }
+  };
 
   const renderEditMode = () => {
     return type === 'text' ? (
       <div
-        contentEditable 
+        contentEditable
         className={cc(["editableField editableField__edit", className, {
           'editableField--center': center
         }])}
-        onChange={onChange}
+        onChange={onChange || fallbackOnChange}
         placeholder={placeholder}
         onPaste={onPaste}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={focus}
         suppressContentEditableWarning={true}
+        ref={node} 
       >
-        {value}
+        {value || fallbackValue}
       </div>
     ) : (
-      <input 
-        className={cc(["editableField editableField__edit", className, {
-          'editableField--center': center
-        }])}
-        onChange={onChange}
-        value={value}  
-        placeholder={placeholder}
-        onPaste={onPaste}
-        onFocus={onFocus}
-        onBlur={onBlur}  
-      />    
-    );
-  }
+      <div ref={node} className={cc(["editableField__container", {
+        'editableField__container--center': center
+      }])}>
+        <input
+          className={cc(["editableField editableField__edit", className, {
+            'editableField--center': center
+          }])}
+          onChange={onChange || fallbackOnChange}
+          value={value || fallbackValue}
+          placeholder={placeholder}
+          onPaste={onPaste}
+          onFocus={focus}
+        />
 
-  const renderViewMode = () => (
+        {searchOptions && (
+          <OptionsContainer className="editableField__options" pose={open ? "open" : "closed"} initialPose="closed">
+            {filteredOptions.map(option => (
+              <div className="editableField__option" onClick={optionClick(option)}>
+                {optionText(option)}
+              </div>
+            ))}
+          </OptionsContainer>
+        )}
+      </div>
+    );
+  };
+
+  const renderViewMode = () => titleField ? (
+    <h1 className={cc(['editableField', className])}>
+      {value}
+    </h1>
+  ) : (
     <div className={cc(['editableField', className])}>
       {value}
-    </div>  
+    </div>
   );
 
   return state.editable ? renderEditMode() : renderViewMode();

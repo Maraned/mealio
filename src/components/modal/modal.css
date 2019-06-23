@@ -15,10 +15,13 @@
   box-shadow: var(--box-shadow);
   z-index: 1000;
   background-color: #fff;
-  min-height: 80vh;
-  min-width: 768px;
   display: flex;
   border-radius: 5px;
   max-height: 80vh;
   overflow-y: auto;
+}
+
+.modal--large {
+  min-height: 80vh;
+  min-width: 768px;
 }

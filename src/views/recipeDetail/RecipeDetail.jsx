@@ -32,6 +32,7 @@ const RecipeDetail = () => {
           value={name}
           className="recipe__name" 
           placeholder={t('Recipe.Name')}
+          titleField
         />
 
         {images && (

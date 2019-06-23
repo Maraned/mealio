@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .userMenu__menu {
@@ -31,10 +32,6 @@
 
 .userMenu__menu__option svg {
   margin-right: .5rem;
-}
-
-.userMenu__menu__option > * {
-  height: 1rem;
 }
 
 .userMenu .avatar {

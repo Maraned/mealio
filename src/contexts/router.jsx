@@ -6,6 +6,7 @@ import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
 import RecipeList from 'views/recipeList/RecipeList';
 import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
 import GroceryLists from 'views/groceryList/GroceryListsWrapper';
+import NewIngredient from 'components/ingredientList/NewIngredientWrapper';
 
 const routerReducer = (state, action) => {
   switch (action.type) {
@@ -23,10 +24,17 @@ const routerReducer = (state, action) => {
       return { ...state, ActiveView: RecipeDetail };
     case 'groceryLists':
       return { ...state, ModalView: GroceryLists, ModalData: action.value };      
+    case 'newIngredient':
+      return { 
+        ...state, 
+        ModalView: NewIngredient, 
+        ModalData: { groups: action.value, allIngredients: action.allIngredients }, 
+        ModalSize: action.size 
+      }
   }
 };
 
-const initialState = { ActiveView: RecipeList, ModalView: null };
+const initialState = { ActiveView: MyRecipes, ModalView: null };
 
 export const RouterContext = createContext(initialState);
 

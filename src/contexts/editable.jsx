@@ -16,7 +16,7 @@ const initialState = { editable: false };
 export const EditableContext = createContext(initialState);
 
 export const EditableProvider = props => {
-  const [state, dispatch] = useReducer(editableReducer, props.editable || initialState);
+  const [state, dispatch] = useReducer(editableReducer, { editable: props.editable } || initialState);
 
   return (
     <EditableContext.Provider value={{ state, dispatch }}>

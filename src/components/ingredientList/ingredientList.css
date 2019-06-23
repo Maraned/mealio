@@ -1,12 +1,12 @@
 .ingredientList {
   height: 100%;
-  /* flex-shrink: 0; */
 }
 
 .ingredientList__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-right: 1.75rem;
 }
 
 .ingredientList__header input {

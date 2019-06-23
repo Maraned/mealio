@@ -1,4 +1,7 @@
 export default {
+  Common: {
+    Save: 'Spara',
+  },
   Login: {
     Login: 'Logga in',
     Username: 'Email-adress',
@@ -17,7 +20,7 @@ export default {
     View: 'Förhandsgranska',
     Edit: 'Editera',
     AddStep: 'Lägg till steg',
-    AddIngredient: 'Lägg till Ingrediens',
+    AddIngredient: 'Lägg till ingrediens',
     ChooseImage: 'Välj bild',
     OrDragItHere: 'eller dra den hit',
     Ingredients: 'Ingredienser',
@@ -52,6 +55,17 @@ export default {
     Day: 'dag',
     Day_plural: 'dagar', 
   },
+  Ingredient: {
+    Amount: 'Mängd',
+    Unit: 'Enhet',
+    SelectIngredient: 'Välj ingrediens...',
+    NewIngredient: 'Ny ingrediens',
+    Name: 'Namn',
+    Group: 'Grupp',
+    Alternatives: 'Alternativ',
+    Alternative: 'Alternativ',
+    NewIngredient: 'Ny Ingrediens'
+  },
   Menu: {
     Logout: 'Logga ut',
     Settings: 'Inställningar',
@@ -77,5 +91,16 @@ export default {
     AddGroceryItem: 'Lägg till',
     CreatedAt: 'Skapad',
     CheckedItems: 'Avklarade',
+  },
+  Ingredients: {
+    Tomato: 'Tomat',
+    Tomato__plural: 'Tomater',
+  },
+  Group: {
+    Vegetables: 'Grönsaker',
+    Dairies: 'Mejerier',
+    Meat: 'Kött',
+    Bird: 'Fågel',
+    Fish: 'Fisk',
   }
 }

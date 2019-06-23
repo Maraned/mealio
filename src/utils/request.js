@@ -11,9 +11,14 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
     body: JSON.stringify(data),
   });
   if (expectResponse && response.status !== 401) { 
-    const responseJSON = await response.json();
-    console.log(`POST response ${endpoint}: `, responseJSON);
-    return responseJSON;
+    try {
+      const responseJSON = await response.json();
+      console.log(`POST response ${endpoint}: `, responseJSON);
+      return responseJSON;
+    } catch (error) {
+      console.error(error, response);
+    }
+    
   } else {
     return response.status;
   }

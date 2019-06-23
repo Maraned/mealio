@@ -19,7 +19,10 @@ const RecipeFilter = ({ recipes }) => {
 
   return (
     <div className="recipeFilter">
-      <Accordion className="recipeFilter__accordion" title={t('Recipe:Filter')}>
+      <Accordion 
+        className="recipeFilter__accordion" 
+        title={<span className="recipeFilter__title">{t('Recipe:Filter')}</span>}
+      >
 
       </Accordion>
 

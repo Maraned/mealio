@@ -1,10 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
+
+import { getRequest } from 'utils/request';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { RouterContext } from 'contexts/router';
+import { AllIngredientsContext } from 'contexts/allIngredients';
 import IngredientModel from 'models/ingredientModel';
 
 import Ingredient from 'components/ingredientList/Ingredient';
@@ -16,8 +19,29 @@ const IngredientList = () => {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: changeView } = useContext(RouterContext);
+  const { dispatch: allIngredientsDispatch } = useContext(AllIngredientsContext);
   const { t } = useTranslation();
   const { ingredients, portions, defaultPortions = 4 } = recipe;
+  const [ ingredientGroups, setIngredientGroups ] = useState([]); 
+
+  const fetchIngredients = async () => {
+    const newAllIngredients = await getRequest('ingredients');
+    if (!ingredients.error) {
+      allIngredientsDispatch({ type: 'update', value: newAllIngredients });
+    }
+  };
+
+  const fetchIngredientGroups = async () => {
+    const ingredientGroups = await getRequest('ingredients/groups');
+    setIngredientGroups(ingredientGroups);
+  };
+
+  useEffect(() => {
+    if (state.editable) {
+      fetchIngredients();
+      fetchIngredientGroups();
+    }
+  }, []);
 
   const updateIngredient = (index, ingredient) => {
     ingredients[index] = ingredient;
@@ -101,58 +125,61 @@ const IngredientList = () => {
   const portionsAmount = parseInt(portions, 10) || parseInt(defaultPortions, 10);
 
   return (
-    <div className="ingredientList list">
-      <div className="ingredientList__header">
-        <div>
-          <h4>{t('Recipe:Ingredients')}</h4>
-        </div>
-      
-        {state.editable && (
+    <>
+      <div className="ingredientList list">
+        <div className="ingredientList__header">
           <div>
-            <label>{t('Recipe:Portion_plural')}</label>
-            <input 
-              type="number" 
-              value={defaultPortions} 
-              max={10} 
-              min={1} 
-              onChange={updateDefaultPortions}  
-            />
+            <h4>{t('Recipe:Ingredients')}</h4>
           </div>
+        
+          {state.editable && (
+            <div>
+              <label>{t('Recipe:Portion_plural')}</label>
+              <input 
+                type="number" 
+                value={defaultPortions} 
+                max={10} 
+                min={1} 
+                onChange={updateDefaultPortions}  
+              />
+            </div>
+          )}
+        </div>
+
+        {!state.editable && (
+          <RangeSlider 
+            value={portionsAmount}
+            min={1} 
+            max={8} 
+            label={t('Recipe:Portion', { count: portionsAmount })} 
+            onChange={updatePortions}
+          />
+        )}
+
+        {ingredients.map((ingredient, index) => (
+          <Ingredient
+            key={'ingredient' + index}
+            updateIngredient={updateIngredient} 
+            index={index} 
+            ingredient={ingredient}
+            defaultPortions={defaultPortions}
+            portions={portionsAmount}
+            onPaste={pasteIngredients}
+            onRemove={removeIngredient}
+            groups={ingredientGroups}
+          />
+        ))}
+        {state.editable ? (
+          <button onClick={addIngredient}>
+            {t('Recipe:AddIngredient')}
+          </button>
+        ) : (
+          <button onClick={openGroceryListModal}>
+            {t('Recipe:AddToGroceryList')}
+          </button>
         )}
       </div>
-
-      {!state.editable && (
-        <RangeSlider 
-          value={portionsAmount}
-          min={1} 
-          max={8} 
-          label={t('Recipe:Portion', { count: portionsAmount })} 
-          onChange={updatePortions}
-        />
-      )}
-
-      {ingredients.map((ingredient, index) => (
-        <Ingredient
-          key={'ingredient' + index}
-          updateIngredient={updateIngredient} 
-          index={index} 
-          ingredient={ingredient}
-          defaultPortions={defaultPortions}
-          portions={portionsAmount}
-          onPaste={pasteIngredients}
-          onRemove={removeIngredient}
-        />
-      ))}
-      {state.editable ? (
-        <button onClick={addIngredient}>
-          {t('Recipe:AddIngredient')}
-        </button>
-      ) : (
-        <button onClick={openGroceryListModal}>
-          {t('Recipe:AddToGroceryList')}
-        </button>
-      )}
-    </div>
+    </>
   )
 }
 
