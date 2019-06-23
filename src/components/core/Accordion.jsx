@@ -58,7 +58,7 @@ const Accordion = ({
             <LeftIcon />
           </button>
         )}
-
+        
         {editable ? (
           <input className="accordion__header__input" value={accordionTitle} onChange={changeTitle} onBlur={onBlur} />
         ) : title}

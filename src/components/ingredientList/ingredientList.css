@@ -12,3 +12,8 @@
 .ingredientList__header input {
   text-align: center;
 }
+
+.ingredientList__portions {
+  border: var(--input-border);
+  margin-right: .25rem;
+}

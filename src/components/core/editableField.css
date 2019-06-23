@@ -1,5 +1,5 @@
 .editableField__edit {
-  border: 1px solid rgba(0, 0, 0, 0.25);
+  border: var(--input-border);
   padding: .5rem .25rem;
   min-height: var(--edit-field-min-height);
 }

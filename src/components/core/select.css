@@ -21,7 +21,7 @@
 .select__content {
   overflow: hidden;
   border-radius: 2px;
-  border: 1px solid #333;
+  border: 1px solid rgba(0, 0, 0, 0.25);
   border-top-color: transparent;
   position: absolute;
   width: 100%;

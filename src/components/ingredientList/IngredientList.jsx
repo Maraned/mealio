@@ -134,14 +134,15 @@ const IngredientList = () => {
         
           {state.editable && (
             <div>
-              <label>{t('Recipe:Portion_plural')}</label>
               <input 
+                className="ingredientList__portions"
                 type="number" 
                 value={defaultPortions} 
                 max={10} 
                 min={1} 
                 onChange={updateDefaultPortions}  
               />
+              <label>{t('Recipe:Portion_plural')}</label>
             </div>
           )}
         </div>
