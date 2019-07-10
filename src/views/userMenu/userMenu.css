@@ -39,7 +39,13 @@
   width: 2.5rem;
 }
 
-.userMenu .avatar__image--default {
+.userMenu .avatar__image--default,
+.userMenu__adminDashboard {
   height: 2rem;
   width: 2rem;
+}
+
+.userMenu__adminDashboard {
+  margin-right: .5rem;
+  cursor: pointer;
 }

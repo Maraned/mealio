@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import posed from 'react-pose';
 import { useTranslation } from 'react-i18next';
-import { FaSignOutAlt, FaCogs, FaUtensils, FaListUl } from 'react-icons/fa';
+import { FaSignOutAlt, FaCogs, FaUtensils, FaListUl, FaUsersCog } from 'react-icons/fa';
 
 import Avatar from 'components/user/Avatar';
 import { LoggedInContext } from 'contexts/login';
+import { UserContext } from 'contexts/user';
 import { removeTokens } from 'utils/token';
 
 import './userMenu.css';
@@ -23,6 +24,7 @@ const Menu = posed.div({
 
 const UserMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { state: user } = useContext(UserContext);
   const { dispatch } = useContext(LoggedInContext);
   const { dispatch: route } = useContext(RouterContext)
   const { t, i18n } = useTranslation();
@@ -60,6 +62,10 @@ const UserMenu = () => {
 
   return (
     <div className="userMenu" ref={menuRef}>
+      {user.isAdmin && (
+        <FaUsersCog className="userMenu__adminDashboard" onClick={routeToView('adminPage')} />
+      )}
+
       <Avatar onClick={() => setMenuOpen(!menuOpen)} />
 
       <Menu pose={menuOpen ? 'open' : 'closed'} className="userMenu__menu">

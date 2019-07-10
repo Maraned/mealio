@@ -1,0 +1,13 @@
+.adminDashboard {
+  width: 100%;
+  padding: 2rem;
+}
+
+.adminDashboard__pieMode {
+  display: flex;
+  justify-content: center;
+}
+
+.adminDashboard__pieMode .pieContainer {
+  padding: 0 2rem;
+}

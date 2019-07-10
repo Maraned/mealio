@@ -4,6 +4,11 @@
   border: 1px solid #333;
   border-radius: 4px;
   position: relative;
+  background-color: var(--backgroundColor);
+}
+
+.checkbox--checked {
+  background-color: var(--checkedBackgroundColor);
 }
 
 .checkbox__wrapper {

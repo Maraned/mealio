@@ -10,6 +10,9 @@ const Checkbox = ({
   value,
   text,
   disabled,
+  showIcon = true,
+  backgroundColor = "#fff",
+  checkedBackgroundColor = "#fff"
 }) => {
   const [checked, setChecked] = useState(value);
 
@@ -35,8 +38,12 @@ const Checkbox = ({
         className={cc(['checkbox', {
           'checkbox--checked': checked,
         }])}
+        style={{
+          '--backgroundColor': backgroundColor, 
+          '--checkedBackgroundColor': checkedBackgroundColor
+        }}
       >
-        {checked && (
+        {checked && showIcon && (
           <FaCheck className="checkbox__icon" />
         )}
       </div>

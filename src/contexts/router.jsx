@@ -7,6 +7,8 @@ import RecipeList from 'views/recipeList/RecipeList';
 import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
 import GroceryLists from 'views/groceryList/GroceryListsWrapper';
 import NewIngredient from 'components/ingredientList/NewIngredientWrapper';
+import AdminPage from 'views/admin/AdminPage';
+import AdminDashboard from 'views/admin/Dashboard';
 
 const routerReducer = (state, action) => {
   switch (action.type) {
@@ -24,6 +26,10 @@ const routerReducer = (state, action) => {
       return { ...state, ActiveView: RecipeDetail };
     case 'groceryLists':
       return { ...state, ModalView: GroceryLists, ModalData: action.value };      
+    case 'adminPage':
+      return { ...state, ActiveView: AdminPage };
+    case 'adminDashboard':
+      return { ...state, ActiveView: AdminDashboard };
     case 'newIngredient':
       return { 
         ...state, 
@@ -34,7 +40,7 @@ const routerReducer = (state, action) => {
   }
 };
 
-const initialState = { ActiveView: MyRecipes, ModalView: null };
+const initialState = { ActiveView: AdminDashboard, ModalView: null };
 
 export const RouterContext = createContext(initialState);
 

@@ -8,9 +8,13 @@ import './recipeList.css';
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
+  console.log('recipes', recipes)
 
   const fetchRecipes = async () => {
     const fetchedRecipes = await getRequest('recipes');
+    if (!fetchedRecipes.error) {
+      console.log('fetchedRecipes', fetchedRecipes)
+    }
     setRecipes(fetchedRecipes);
   }
 

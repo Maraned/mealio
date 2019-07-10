@@ -116,3 +116,13 @@ button:hover {
 .hidden {
   display: none;
 }
+
+a {
+  text-decoration: none;
+  color:#fff;
+}
+
+a:hover {
+  color:#fff;
+  opacity: .7;
+}

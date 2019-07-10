@@ -63,14 +63,19 @@ export const deleteRequest = async (endpoint, data, expectResponse = false) => {
 };
 
 export const getRequest = async endpoint => {
-  const response = await fetch(`${url}/${endpoint}`, {
-    headers: {
-      "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
-    },
-  });
-  const responseJSON = await response.json();
-  console.log(`GET response ${endpoint}: `, responseJSON);
-  return responseJSON;
+  try {
+    const response = await fetch(`${url}/${endpoint}`, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
+      },
+    });
+    const responseJSON = await response.json();
+    console.log(`GET response ${endpoint}: `, responseJSON);
+    return responseJSON;
+  } catch (error) {
+    console.error('getRequest', { endpoint });
+    return { error: 'Something went wrong with getRequests' };
+  }
 }
 
 export const login = ({ username, password }) => {
