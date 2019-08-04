@@ -115,17 +115,28 @@ router.get('/:userid/groceryLists', async (req, res) => {
 });
 
 router.get('/:id/recipeCollection', async (req, res) => {
-  console.info('GET /recipes/:id/recipeCollection', req.params);
+  console.info('GET /users/:id/recipeCollection', req.params);
   const { id } = req.params;
   const recipeIds = (await rdb.find('users', id)).recipeCollection;
-  console.log('recipeIds', recipeIds)
   if (recipeIds.length) {
     const recipeCollection = await (await rdb.getAll('publishedRecipes', recipeIds)).toArray();
-    console.log('recipeCollection', recipeCollection);
     return res.send(recipeCollection);
   } else {
     return res.send([]);
   }
 });
+
+router.post('/:id/dashboardSettings', async (req, res) => {
+  console.info('POST /users/:id/dashboardSettings', req.body);
+  const { id } = req.params;
+  const { dashboardSettings } = req.body;
+  if (dashboardSettings) {
+    const dashboardSettingsResponse = await rdb.edit('users', id, {
+      dashboardSettings,
+    });  
+  }
+  const userResponse = await rdb.find('users', id);
+  return res.send(userResponse);
+})
 
 module.exports = router;
