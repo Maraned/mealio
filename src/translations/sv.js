@@ -108,5 +108,8 @@ export default {
   },
   RecipeCollection: {
     NoRecipes: 'Du har tyvärr inga sparade recept att visa här :('
+  },
+  Dashboard: {
+    SaveSettings: 'Spara inställningar'
   }
 }

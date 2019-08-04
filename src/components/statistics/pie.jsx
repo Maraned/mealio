@@ -1,6 +1,6 @@
 import './pie.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Checkbox from 'components/core/Checkbox';
 
 const segmentColors = [
@@ -16,7 +16,7 @@ export default function Pie({
   size,
   title,
 }) {  
-  const [pieSegments, setPieSegments] = useState(segments);
+  const [pieSegments, setPieSegments] = useState([]);
   let offset = 0;
 
   const disablePieSegment = (segment, index) => () => {
@@ -26,6 +26,10 @@ export default function Pie({
     setPieSegments(modifiedPieSegments);
   }
 
+  useEffect(() => {
+    setPieSegments(segments);
+  }, [segments]);
+
   return (
     <div className="pieContainer">
       {title && (
@@ -33,12 +37,9 @@ export default function Pie({
       )}
       <div className="pie" style={{ height: `${size}rem`, width: `${size}rem` }}>
         {pieSegments.map((segment, index) => {
-          console.log('!disabled', !segment.disabled)
           if (segment.disabled) {
             return '';
           }
-
-          console.log('value', segment.value)
 
           const value = isNaN(segment.value) ? 0 : segment.value;
           const currentOffset = offset;
@@ -72,6 +73,5 @@ export default function Pie({
         </div>
       ))}
     </div>
-
   );
 }

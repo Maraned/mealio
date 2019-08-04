@@ -11,3 +11,20 @@
 .adminDashboard__pieMode .pieContainer {
   padding: 0 2rem;
 }
+
+.adminDashboard__viewModeOptions {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5rem;
+}
+
+.adminDashboard__viewModeOption {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  margin-right: .25rem;
+}
+
+.adminDashboard__viewModeOption--disabled {
+  background-color: var(--grey);
+}
+

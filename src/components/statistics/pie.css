@@ -39,12 +39,9 @@
 
 .pie__segmentDescription {
   display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 }
 
 .pie__segmentDescription *:not(:last-child) {
   margin-right: .5rem;
 }
-
