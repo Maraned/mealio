@@ -15,3 +15,8 @@
 .login__popup > *:not(:last-child) {
   margin-bottom: .75rem;
 }
+
+.login__link,
+.login__link:hover {
+  color: #000;
+}

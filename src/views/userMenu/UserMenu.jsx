@@ -1,7 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import posed from 'react-pose';
 import { useTranslation } from 'react-i18next';
-import { FaSignOutAlt, FaCogs, FaUtensils, FaListUl, FaUsersCog } from 'react-icons/fa';
+import { 
+  FaSignOutAlt, 
+  FaCogs, 
+  FaUtensils, 
+  FaListUl, 
+  FaUsersCog,
+  FaStar 
+} from 'react-icons/fa';
 
 import Avatar from 'components/user/Avatar';
 import { LoggedInContext } from 'contexts/login';
@@ -73,6 +80,12 @@ const UserMenu = () => {
           onClick: routeToView('settings'), 
           text: t('Menu:Settings'),
           Icon: FaCogs
+        })}
+
+        {renderMenuOption({ 
+          onClick: routeToView('recipeCollection'), 
+          text: t('Menu:MyRecipeCollection'),
+          Icon: FaStar
         })}
 
         {renderMenuOption({ 

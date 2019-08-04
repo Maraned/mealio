@@ -3,12 +3,13 @@ import React, { createContext, useReducer } from 'react';
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import Settings from 'views/settings/Settings';
 import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
-import RecipeList from 'views/recipeList/RecipeList';
+import RecipeList from 'views/recipeList/RecipeListWrapper';
 import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
 import GroceryLists from 'views/groceryList/GroceryListsWrapper';
 import NewIngredient from 'components/ingredientList/NewIngredientWrapper';
 import AdminPage from 'views/admin/AdminPage';
 import AdminDashboard from 'views/admin/Dashboard';
+import RecipeCollection from 'views/recipeCollection/RecipeCollection';
 
 const routerReducer = (state, action) => {
   switch (action.type) {
@@ -16,6 +17,8 @@ const routerReducer = (state, action) => {
       return { ...state, ActiveView: CreateRecipeView };
     case 'settings':
       return { ...state, ModalView: Settings };
+    case 'recipeCollection':
+      return { ...state, ActiveView: RecipeCollection };
     case 'myRecipes':
       return { ...state, ActiveView: MyRecipes };
     case 'closeModal':

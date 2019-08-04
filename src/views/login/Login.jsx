@@ -183,7 +183,7 @@ const Login = () => {
         {btnText}
       </button>
 
-      <a onClick={onClickChangeView}>{changeViewText}</a>
+      <a className="login__link" onClick={onClickChangeView}>{changeViewText}</a>
     </Box>
   );
   

@@ -44,6 +44,8 @@ export default {
     PublishSuccess: 'Receptet har publicerats!',
     Filter: 'Filtrera',
     Sort: 'Sortering',
+    AddToMyCollection: 'Spara recept',
+    RemoveFromMyCollection: 'Ta bort från sparade recept',
   },
   Time: {
     Second: 'sekund',
@@ -70,6 +72,7 @@ export default {
     Logout: 'Logga ut',
     Settings: 'Inställningar',
     UserSettings: 'Profil',
+    MyRecipeCollection: 'Sparade recept',
     MyRecipes: 'Mina recept',
     GroceryLists: 'Mina inköpslistor'
   },

@@ -16,6 +16,10 @@
   text-align: center;
 }
 
+.recipe__saveToCollectionIcon {
+  margin-right: .25rem;
+}
+
 .recipe__time {
   display: flex;
   align-items: center;

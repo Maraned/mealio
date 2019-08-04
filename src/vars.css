@@ -22,6 +22,9 @@
   --disabled-text-color: #969696;
   --disabled-text-style: italic;
 
+  --favorite-color: #E8C70C;
+  --favorite-text-color: white;
+
   --text-hover: rgba(0, 0, 0, 0.06);
   --light-hover: rgba(0, 0, 0, 0.03);
 
