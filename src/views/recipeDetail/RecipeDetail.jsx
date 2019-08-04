@@ -52,8 +52,6 @@ const RecipeDetail = () => {
     }
   }
 
-  console.log('recipedetail user', user) 
-
   return (
     <div className="createRecipe recipe">
       <FullWidthContainer center stack>

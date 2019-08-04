@@ -105,5 +105,8 @@ export default {
     Meat: 'Kött',
     Bird: 'Fågel',
     Fish: 'Fisk',
+  },
+  RecipeCollection: {
+    NoRecipes: 'Du har tyvärr inga sparade recept att visa här :('
   }
 }
