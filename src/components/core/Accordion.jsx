@@ -44,36 +44,38 @@ const Accordion = ({
 
   return (
     <div className={cc(['accordion', className])} >
-      <div 
+      <div className="accordion__headerContainer"
         onMouseOver={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
-        className={cc(['accordion__header', {
-          'accordion__header__open': open
-        }])}
-       onClick={toggleOpen}
       >
-      
-        {LeftIcon && (
-          <button className="accordion__header__leftIcon">
-            <LeftIcon />
-          </button>
-        )}
-        
-        {editable ? (
-          <input className="accordion__header__input" value={accordionTitle} onChange={changeTitle} onBlur={onBlur} />
-        ) : title}
-
-        {!hideIcon && (
-          <FaCaretDown className="accordion__header__caret" />
-        )}
-
         {removeable && hovering && (
           <button className="removeButton" onClick={onRemove}>
             <FaTrash />
           </button>
         )}
-      </div>
+        <div 
+          className={cc(['accordion__header', {
+            'accordion__header--open': open,
+            'accordion__header--removeButtonVisible': hovering && removeable 
+          }])}
+          onClick={toggleOpen}
+        >
+        
+          {LeftIcon && (
+            <button className="accordion__header__leftIcon">
+              <LeftIcon />
+            </button>
+          )}
+          
+          {editable ? (
+            <input className="accordion__header__input" value={accordionTitle} onChange={changeTitle} onBlur={onBlur} />
+          ) : title}
 
+          {!hideIcon && (
+            <FaCaretDown className="accordion__header__caret" />
+          )}
+        </div>
+      </div>
       <Content className="accordion__content" initialPose="exit" pose={open ? "enter" : "exit"}>
         {children}
       </Content>

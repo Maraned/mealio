@@ -11,6 +11,12 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  flex: 1;
+}
+
+.accordion__header--removeButtonVisible {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
 .accordion__header__leftIcon {
@@ -44,16 +50,20 @@
 
 .accordion__header__caret {
   transition: transform 0.15s;
+  margin: 0 .5rem;
 }
 
-.accordion__header__open .accordion__header__caret {
+.accordion__header--open .accordion__header__caret {
   transform: rotate(180deg); 
 }
 
-.accordion__header .removeButton {
-  position: absolute;
-  right: 0;
-  height: 100%;
+.accordion__headerContainer {
+  display: flex;
+}
+
+.accordion__headerContainer .removeButton {
   width: 2rem;
   justify-content: center;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
