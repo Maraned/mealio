@@ -4,6 +4,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 
 const rdb = require('../lib/rethink');
+const logger = require('../utils/logger');
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -98,7 +99,7 @@ router.post('/publish', async (req, res, next) => {
 
   if (recipe && id) {
     try {
-      await rdb.save('publishedRecipes', recipe);
+      await rdb.save('publishedRecipes', { ...recipe, collectionCount: 0 });
       await rdb.addToArray('users', id, 'publishedRecipes', recipe.id);
       await rdb.destroy('draftRecipes', recipe.id);
       await rdb.removeFromArray('users', id, 'draftRecipes', recipe.id);
@@ -127,7 +128,62 @@ router.delete('/', async (req, res, next) => {
     }
   }
   return res.sendStatus(400);
+});
 
-})
+router.post('/saveToCollection', async (req, res) => {
+  const { id, userId } = req.body;
+
+  if (id && userId) {
+    try {
+      const addToArrayResponse = await rdb.addToArray('users', userId, 'recipeCollection', id);
+
+      if (!addToArrayResponse.unchanged) {
+        try {
+          const collectionCountResponse = await rdb.increment('publishedRecipes', id, 'collectionCount');
+        } catch (error) {
+          logger('POST /saveToCollection increment recipe collectionCount', { 
+            id 
+          }, error);
+        }
+
+        const userResponse = await rdb.find('users', userId);
+        return res.send(userResponse);
+      }
+    } catch (error) {
+      logger('POST /saveToCollection addToRecipeCollection', { userId, id }, error);
+    } 
+  } else {
+    logger('POST /saveToCollection', { id, userId }, 'No id or userId provided');
+    return res.sendStatus(400);
+  }
+});
+
+router.post('/removeFromCollection', async (req, res) => {
+  const { id, userId } = req.body;
+
+  if (id && userId) {
+    try {
+      const removeFromArrayResponse = await rdb.removeFromArray('users', userId, 'recipeCollection', id);
+
+      if (!removeFromArrayResponse.unchanged) {
+        try {
+          const collectionCountResponse = await rdb.decrement('publishedRecipes', id, 'collectionCount');
+        } catch (error) {
+          logger('POST /saveToCollection increment recipe collectionCount', { 
+            id 
+          }, error);
+        }
+
+        const userResponse = await rdb.find('users', userId);
+        return res.send(userResponse);
+      }
+    } catch (error) {
+      logger('POST /saveToCollection addToRecipeCollection', { userId, id }, error);
+    } 
+  } else {
+    logger('POST /saveToCollection', { id, userId }, 'No id or userId provided');
+    return res.sendStatus(400);
+  }
+});
 
 module.exports = router;

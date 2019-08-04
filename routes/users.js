@@ -34,6 +34,7 @@ router.post('/create', async (req, res, next) => {
     draftRecipes: [], 
     publishedRecipes: [],  
     groceryLists: [],
+    recipeCollection: [],
   };
 
   const result = await rdb.save('users', userInfo);
@@ -111,6 +112,20 @@ router.get('/:userid/groceryLists', async (req, res) => {
     console.log('error', error)
     res.sendStatus(500);
   }
-})
+});
+
+router.get('/:id/recipeCollection', async (req, res) => {
+  console.info('GET /recipes/:id/recipeCollection', req.params);
+  const { id } = req.params;
+  const recipeIds = (await rdb.find('users', id)).recipeCollection;
+  console.log('recipeIds', recipeIds)
+  if (recipeIds.length) {
+    const recipeCollection = await (await rdb.getAll('publishedRecipes', recipeIds)).toArray();
+    console.log('recipeCollection', recipeCollection);
+    return res.send(recipeCollection);
+  } else {
+    return res.send([]);
+  }
+});
 
 module.exports = router;
