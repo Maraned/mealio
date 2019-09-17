@@ -18,7 +18,7 @@ const RecipeFilter = ({ recipes }) => {
   }, []);
 
   return (
-    <div className="recipeFilter">
+    <div className="recipeFilter background">
       <Accordion 
         className="recipeFilter__accordion" 
         title={<span className="recipeFilter__title">{t('Recipe:Filter')}</span>}

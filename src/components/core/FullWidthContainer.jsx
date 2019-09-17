@@ -7,12 +7,13 @@ const FullWidthContainer = ({
   stack,
   center,
   spaceBetween,
+  className,
   children
 }) => (
-  <div className={cc(['fullWidthContainer', {
+  <div className={cc(['fullWidthContainer', className, {
     'fullWidthContainer--stack': stack,
     'fullWidthContainer--centered': center,
-    'fullWidthContainer--spaceBetween': spaceBetween
+    'fullWidthContainer--spaceBetween': spaceBetween,
   }])}>
     {children}
   </div>

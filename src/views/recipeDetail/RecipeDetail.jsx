@@ -54,7 +54,7 @@ const RecipeDetail = () => {
 
   return (
     <div className="createRecipe recipe">
-      <FullWidthContainer center stack>
+      <FullWidthContainer center stack className="background recipe__main">
         <EditableField 
           value={name}
           className="recipe__name" 

@@ -3,4 +3,5 @@
   display: flex;
   padding-top: var(--header-height);
   position: relative;
+  background-color: var(--primary-background);
 }

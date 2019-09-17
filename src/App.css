@@ -126,3 +126,8 @@ a:hover {
   color:#fff;
   opacity: .7;
 }
+
+.background {
+  background-color: white;
+  box-shadow: var(--box-shadow);
+}

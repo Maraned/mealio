@@ -126,7 +126,7 @@ const IngredientList = () => {
 
   return (
     <>
-      <div className="ingredientList list">
+      <div className="ingredientList list background">
         <div className="ingredientList__header">
           <div>
             <h4>{t('Recipe:Ingredients')}</h4>

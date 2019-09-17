@@ -1,6 +1,7 @@
 .fullWidthContainer {
   width: 100%;
   display: flex;
+  margin: 0 auto;
 }
 
 .fullWidthContainer--centered:not(.fullWidthContainer--stack) {

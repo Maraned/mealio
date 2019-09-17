@@ -72,7 +72,7 @@ const StepList = () => {
   }
 
   return (
-    <div className="stepList list">
+    <div className="stepList list background">
       <h4>{t('Recipe:Steps')}</h4>
       {steps.map((step, index) => (
         <Step
