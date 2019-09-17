@@ -14,6 +14,7 @@
     "express-jwt": "^5.3.1",
     "gun": "0.9.9999991",
     "jsonwebtoken": "^8.5.0",
+    "lodash": "^4.17.15",
     "nodemon": "1.18.10",
     "sharp": "^0.22.0"
   },
