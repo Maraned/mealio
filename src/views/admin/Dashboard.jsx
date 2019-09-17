@@ -6,22 +6,39 @@ import { FaChartPie, FaGripHorizontal } from 'react-icons/fa';
 import cc from 'classcat';
 import { postRequest, getRequest } from 'utils/request';
 import { UserContext } from 'contexts/user';
+import { get } from 'lodash';
 
-import Pie from 'components/statistics/pie';
+import Pie from 'components/statistics/Pie';
 
 export default function Dashboard() {
   const [settings, setSettings] = useState({
     pieMode: false,
-    pieSettings: [],
     gridMode: false,
-    gridSettings: [],
+    settings: {
+      pieMode: {
+        users: {
+          include: ['registered'],
+          stat: 'count'
+        },
+        recipes: {
+          include: ['published',  'draft'],
+          stat: 'count'
+        },
+      },
+      gridMode: {
+        users: ['month'],
+        publishedRecipes: ['count'],
+        authors: ['count'],
+      }
+    }
   });
   const [statistics, setStatistics] = useState({});
+  const [showSettings, setShowSettings] = useState(false);
   const { t, i18n } = useTranslation();
   const { state: user, dispatch: userDispatch } = useContext(UserContext);
 
   const fetchStatistics = async () => {
-    const response = await getRequest('statistics');
+    const response = await getRequest('statistics', settings);
     setStatistics(response);
   };
 
@@ -69,25 +86,39 @@ export default function Dashboard() {
       <button onClick={saveSettings}>
         {t('Dashboard:SaveSettings')}
       </button>
+
+      <div 
+        className="adminDashboard__toggleSettings" 
+        onClick={() => setShowSettings(!showSettings)}
+      >
+        <a role="button">{t('Dashboard:Settings')}</a>
+      </div>
     </div>
-  )
+  );
 
   const renderPieMode = () => {
+    const pieStats = get(statistics, 'pieStats', {});
+
     const pieSize = 10;
+
+    const registeredUsers = get(pieStats, 'users.registered', 0);
     const userPieSegments = [{
-      value: 100,
+      value: registeredUsers * 100,
       label: t('statistics:users', { percent: 100 }),
     }];
 
-    const totalRecipes = statistics.publishedRecipesCount + statistics.draftRecipesCount;
+    const publishedRecipes = get(pieStats, 'recipes.published', 0);
+    const draftRecipes = get(pieStats, 'recipes.draft', 0);
+    const totalRecipes = publishedRecipes + draftRecipes;
+
     let recipeSegments = [
       { 
-        value: (statistics.publishedRecipesCount / totalRecipes) * 100, 
-        label: t('statistics:publishedRecipes', { percent: (statistics.publishedRecipesCount / totalRecipes) * 100 })
+        value: (publishedRecipes / totalRecipes) * 100, 
+        label: t('statistics:publishedRecipes', { percent: (publishedRecipes / totalRecipes) * 100 })
       },  
       { 
-        value: (statistics.draftRecipesCount / totalRecipes) * 100,
-        label: t('statistics:draftRecipes', { percent: (statistics.draftRecipesCount / totalRecipes) * 100 })
+        value: (draftRecipes / totalRecipes) * 100,
+        label: t('statistics:draftRecipes', { percent: (draftRecipes / totalRecipes) * 100 })
       },
     ];
 
@@ -99,10 +130,34 @@ export default function Dashboard() {
     );
   };
 
+  const renderSettingOption = (label, viewMode, toggleMode) => (
+    <div className="adminDashboard__settingsOption">
+      <div className="adminDashboard__settingsOption__viewMode">
+        <button 
+          className={cc(['adminDashboard__viewModeOption', {
+            'adminDashboard__viewModeOption--disabled': !viewMode
+          }])}
+          onClick={() => toggleMode(!viewMode)}
+        >
+          {t(`Dashboard:${label}`)}
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderSettings = () => {
+    return (
+      <div className="adminDashboard__settings">
+
+      </div>
+    )
+  }
+
 
   return (
     <div className="adminDashboard">
       {renderViewModeOptions()}
+      {renderSettings()}
       {settings.pieMode && renderPieMode()}
     </div>
   );

@@ -1,6 +1,9 @@
 .adminDashboard {
   width: 100%;
   padding: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .adminDashboard__pieMode {
@@ -15,7 +18,8 @@
 .adminDashboard__viewModeOptions {
   display: flex;
   justify-content: flex-end;
-  padding-right: 5rem;
+  max-width: 1024px;
+  width: 100%;
 }
 
 .adminDashboard__viewModeOption {

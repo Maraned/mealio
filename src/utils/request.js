@@ -1,24 +1,25 @@
+import request from 'request-promise-native';
 const url = 'http://localhost:3001';
 
 export const postRequest = async (endpoint, data, expectResponse = true) => {
-  console.log('sending ', data, 'to endpoint', endpoint)
-  const response = await fetch(`${url}/${endpoint}`, {
+  console.log('sending POST', data, 'to endpoint', endpoint)
+  const response = await request({
+    url: `${url}/${endpoint}`,
     method: 'POST',
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
     },
-    body: JSON.stringify(data),
+    body: data,
+    json: true,
   });
   if (expectResponse && response.status !== 401) { 
     try {
-      const responseJSON = await response.json();
-      console.log(`POST response ${endpoint}: `, responseJSON);
-      return responseJSON;
+      console.log(`POST response ${endpoint}: `, response);
+      return response;
     } catch (error) {
       console.error(error, response);
     }
-    
   } else {
     return response.status;
   }
@@ -26,18 +27,19 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
 
 export const putRequest = async (endpoint, data, expectResponse = false) => {
   console.log('sending PUT ', data, 'to endpoint', endpoint)
-  const response = await fetch(`${url}/${endpoint}`, {
+  const response = await request({
+    url: `${url}/${endpoint}`,
     method: 'PUT',
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
     },
-    body: JSON.stringify(data),
+    body: data,
+    json: true,
   });
   if (expectResponse && response.status !== 401) { 
-    const responseJSON = await response.json();
-    console.log(`PUT response ${endpoint}: `, responseJSON);
-    return responseJSON;
+    console.log(`PUT response ${endpoint}: `, response);
+    return response;
   } else {
     return response.status;
   }
@@ -45,13 +47,14 @@ export const putRequest = async (endpoint, data, expectResponse = false) => {
 
 export const deleteRequest = async (endpoint, data, expectResponse = false) => {
   console.log('sending DELETE ', data, 'to endpoint', endpoint)
-  const response = await fetch(`${url}/${endpoint}`, {
+  const response = await request({
+    url: `${url}/${endpoint}`,
     method: 'DELETE',
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
     },
-    body: JSON.stringify(data),
+    body: data,
   });
   if (expectResponse && response.status !== 401) { 
     const responseJSON = await response.json();
@@ -62,16 +65,17 @@ export const deleteRequest = async (endpoint, data, expectResponse = false) => {
   } 
 };
 
-export const getRequest = async endpoint => {
+export const getRequest = async (endpoint, query) => {
   try {
-    const response = await fetch(`${url}/${endpoint}`, {
+    const response = JSON.parse(await request({
+      uri: `${url}/${endpoint}`,
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
       },
-    });
-    const responseJSON = await response.json();
-    console.log(`GET response ${endpoint}: `, responseJSON);
-    return responseJSON;
+      qs: query,
+    }));
+    console.log(`GET response ${endpoint}: `, response);
+    return response;
   } catch (error) {
     console.error('getRequest', { endpoint });
     return { error: 'Something went wrong with getRequests' };

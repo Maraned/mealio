@@ -56,13 +56,21 @@ export default function Pie({
           }
 
           return (
-            <div className="pie__segment" style={segmentStyle} />
+            <div 
+              key={`segment-${index}`}          
+              className="pie__segment" 
+              style={segmentStyle} 
+            />
           )
         })}
       </div>
 
       {pieSegments.map((segment, index) => (
-        <div className="pie__segmentDescription" onClick={disablePieSegment(segment)}>
+        <div 
+          key={`segmentDescription-${index}`}
+          className="pie__segmentDescription" 
+          onClick={disablePieSegment(segment)}
+        >
           <Checkbox 
             value={!segment.disabled}
             showIcon={false}
