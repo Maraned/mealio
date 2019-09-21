@@ -53,7 +53,7 @@ const RecipeDetail = () => {
   }
 
   return (
-    <div className="createRecipe recipe">
+    <div className="createRecipe recipe viewMaxWidth">
       <FullWidthContainer center stack className="background recipe__main">
         <EditableField 
           value={name}
@@ -64,12 +64,12 @@ const RecipeDetail = () => {
 
         {user.recipeCollection
          && user.recipeCollection.includes(recipe.id) ? (
-          <button className="recipe__savedInCollectionButton" onClick={removeRecipeFromMyCollection}>
+          <button className="remove" onClick={removeRecipeFromMyCollection}>
             <FaStar className="recipe__saveToCollectionIcon" />
             {t('Recipe:RemoveFromMyCollection')}
           </button>
         ) : (
-          <button onClick={addRecipeToMyCollection}>
+          <button className="favorite" onClick={addRecipeToMyCollection}>
             <FaStar className="recipe__saveToCollectionIcon" />
             {t('Recipe:AddToMyCollection')}
           </button>

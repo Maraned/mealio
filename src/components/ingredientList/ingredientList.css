@@ -4,7 +4,7 @@
 
 @media all and (min-width: 640px) {
   .ingredientList {
-    max-width: 20rem;
+    width: 15rem;
     margin-right: .5rem;
   }
 }

@@ -55,6 +55,7 @@ export const deleteRequest = async (endpoint, data, expectResponse = false) => {
       "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
     },
     body: data,
+    json: true,
   });
   if (expectResponse && response.status !== 401) { 
     const responseJSON = await response.json();

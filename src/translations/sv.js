@@ -80,6 +80,7 @@ export default {
     DisplayName: 'Namn'
   },
   MyRecipes: {
+    allRecipes: 'Skapade recept',
     DraftRecipes: 'Utkast',
     AllRecipes: 'Alla recept',
     PublishedRecipes: 'Publicerade recept',

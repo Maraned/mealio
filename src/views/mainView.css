@@ -1,7 +1,12 @@
 .mainView {
   height: 100%;
   display: flex;
+  justify-content: center;
   padding-top: var(--header-height);
   position: relative;
   background-color: var(--primary-background);
+}
+
+.mainView > *:not(.alertBannerView) {
+  margin-top: 2rem;
 }

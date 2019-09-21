@@ -43,7 +43,7 @@ const routerReducer = (state, action) => {
   }
 };
 
-const initialState = { ActiveView: AdminDashboard, ModalView: null };
+const initialState = { ActiveView: MyRecipes, ModalView: null };
 
 export const RouterContext = createContext(initialState);
 

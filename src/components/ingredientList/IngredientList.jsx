@@ -175,7 +175,7 @@ const IngredientList = () => {
             {t('Recipe:AddIngredient')}
           </button>
         ) : (
-          <button onClick={openGroceryListModal}>
+          <button className="fullWidth" onClick={openGroceryListModal}>
             {t('Recipe:AddToGroceryList')}
           </button>
         )}

@@ -233,7 +233,7 @@ const CreateRecipe = () => {
   );
 
   return (
-    <div className="createRecipe recipe">
+    <div className="createRecipe recipe background">
       {renderLastSaved()}
 
       <FullWidthContainer spaceBetween>

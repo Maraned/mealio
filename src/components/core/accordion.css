@@ -37,11 +37,14 @@
 }
 
 .accordion__header__input {
+  padding-left: 2rem;
   background-color: transparent;
   border-bottom: 1px solid #fff;
   color: #fff;
   text-align: center;
   flex: 1;
+  max-width: calc(100% - 4rem);
+  margin: 0 auto;
 }
 
 .accordion__header__input:focus {

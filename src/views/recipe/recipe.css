@@ -10,12 +10,6 @@
   margin-bottom: .5rem;
 }
 
-@media all and (min-width: 1024px) {
-  .recipe__main {
-    max-width: 50%;
-  }
-}
-
 .recipe__description,
 .recipe__imageUpload,
 .recipe__imageGallery {

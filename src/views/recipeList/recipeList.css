@@ -7,8 +7,8 @@
 }
 
 .recipeListView {
-  margin: 0 auto;
-  padding: 1rem 2rem;
+  margin: inherit auto;
+  padding: 0 2rem;
 }
 
 .recipeFilter__accordion {

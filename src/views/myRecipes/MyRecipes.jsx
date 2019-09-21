@@ -24,27 +24,31 @@ const MyRecipes = () => {
     }
   }, [user.id]);
 
+  const allRecipes = [...draftRecipes, ...publishedRecipes];
+
   const views = [{
     View: CreateRecipeView,
     name: 'createRecipe',
     text: t('MyRecipes:CreateRecipe'),
+    createAction: true,
   }, {
     View: RecipeAccordionList,
     name: 'allRecipes',
     text: t('MyRecipes:AllRecipes'),
-    data: [...draftRecipes, ...publishedRecipes],
+    data: allRecipes,
+    disabled: !allRecipes.length
   }, {
     View: RecipeAccordionList,
     name: 'draftRecipes',
     text: t('MyRecipes:DraftRecipes'),
     data: draftRecipes,
-    disabled: draftRecipes.length === 0,
+    disabled: !draftRecipes.length
   }, {
     View: RecipeAccordionList,
     name: 'publishedRecipes',
     text: t('MyRecipes:PublishedRecipes'),
     data: publishedRecipes,
-    disabled: publishedRecipes.length === 0,
+    disabled: !publishedRecipes.length
   }];
 
   return (

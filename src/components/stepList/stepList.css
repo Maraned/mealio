@@ -5,12 +5,6 @@
   flex-grow: 1;
 }
 
-@media all and (min-width: 1024px) {
-  .stepList {
-    max-width: 50%;
-  }
-}
-
 .stepList__popup {
   position: absolute;
   padding: 1rem;
