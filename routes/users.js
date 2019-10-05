@@ -82,7 +82,7 @@ router.post('/update', async (req, res, next) => {
   const { user } = req.body;
   const { id, avatar: userAvatar, ...rest } = user;
 
-  const avatar = updateAvatar(userAvatar);
+  const avatar = await updateAvatar(userAvatar);
   if (avatar) {
     rest.avatar = avatar;
   }
