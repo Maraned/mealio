@@ -49,6 +49,10 @@ h6 {
   /* font-weight: 500; */
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 button {
   border: none;
   box-sizing: border-box;
@@ -62,12 +66,14 @@ button {
   align-items: center;
 }
 
-button.selected {
+button.selected,
+.clickable.selected {
   background-color: var(--primary-color);  
   color: var(--primary-text-color);
 }
 
-button.disabled {
+button.disabled,
+.clickable.selected {
   background-color: var(--disabled-color);
   color: var(--disabled-text-color);
   font-style: var(--disabled-text-style);
@@ -175,14 +181,15 @@ a:hover {
 .background {
   background-color: white;
   box-shadow: var(--box-shadow);
+  border-radius: 10px;
 }
 
 .box {
   padding: 1rem;
 }
 
-.box-divider {
-  margin: 1rem -1rem;
+.boxDivider {
+  margin: .75rem -1rem;
   height: 1px;
   box-shadow: var(--box-shadow-thin);
 }
@@ -197,6 +204,10 @@ a:hover {
 
 .flex.center {
   justify-content: center;
+}
+
+.flex.vcenter {
+  align-items: center;
 }
 
 .grow {

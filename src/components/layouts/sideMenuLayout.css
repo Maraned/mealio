@@ -1,11 +1,10 @@
 .sideMenuLayout {
   width: 100%;
   display: flex;
-  justify-content: center;
 }
 
 .sideMenuLayout__sideMenu {
-  padding: 0 1rem;
+  padding-right: 1rem;
   width: 20rem;
 }
 

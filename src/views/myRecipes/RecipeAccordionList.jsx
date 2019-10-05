@@ -10,7 +10,7 @@ const RecipeAccordionList = ({ title, data: recipes }) => {
     <div className="recipeAccordionList flex grow column background box">
       <h2 className="center">{title}</h2>
       
-      <div className="box-divider" />
+      <div className="boxDivider" />
 
       {recipes.map((recipe, index) => (
         <RecipeAccordion 

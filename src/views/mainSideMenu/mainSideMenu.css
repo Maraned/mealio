@@ -1,0 +1,10 @@
+.mainSideMenu {
+  width: 100%;
+}
+
+@media all and (min-width: 1025px) {
+  .mainSideMenu {
+    width: 15rem;
+    margin-left: 1rem;
+  }
+}

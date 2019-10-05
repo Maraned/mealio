@@ -1,6 +1,7 @@
 import React, { useRef, useContext, useState } from 'react';
 import posed, { PoseGroup } from 'react-pose';
 import cc from 'classcat';
+import { useTranslation } from 'react-i18next';
 
 import { RouterContext } from 'contexts/router';
 
@@ -23,7 +24,8 @@ const PosedModal = posed.div({
 const Modal = ({ children, ref }) => {
   const modalRef = useRef(null);
   const { state: router, dispatch } = useContext(RouterContext);
-  const { ModalView, ModalData, ModalSize = 'large' } = router;
+  const { ModalView, ModalData = {}, ModalSize = 'large' } = router;
+  const { t } = useTranslation();
 
   const outsideClick = event => {
     if (!modalRef.current.contains(event.target)) {

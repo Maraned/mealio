@@ -7,6 +7,7 @@ import { EditableContext } from 'contexts/editable';
 import ImageUpload from 'components/core/imageUpload/ImageUpload'
 import EditableField from 'components/core/EditableField';
 import Avatar from 'components/user/Avatar';
+import ModalButtons from 'components/modal/ModalButtons';
 
 import './userSettings.css';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +26,7 @@ const UserSettings = () => {
   const { state: user, dispatch: userDispatch } = useContext(UserContext);
   const [showImageUploader, setShowImageUploader] = useState(false);
   const [displayName, setDisplayName] = useState(user.displayName);
+  const [avatar, setAvatar] = useState(user.avatar);
   const { dispatch } = useContext(EditableContext);
   const { t } = useTranslation();
 
@@ -32,12 +34,20 @@ const UserSettings = () => {
     dispatch({ type: 'edit' })
   }, []);
 
-  const saveUserSettings = (change) => async () => {
-    const newUserData = { ...user, ...change };
 
-    await postRequest('users/update', {
+  const saveUserSettings = async () => {
+    const newUserData = { 
+      ...user, 
+      avatar,
+      displayName 
+    };
+    console.log('newUserData', newUserData)
+
+    const response = await postRequest('users/update', {
       user: newUserData
     }, false);
+
+    console.log('usersetting response', response)
 
     userDispatch({ type: 'user', value: newUserData });
   };
@@ -48,7 +58,7 @@ const UserSettings = () => {
     let reader = new FileReader();
     reader.addEventListener('load', () => {
       const source = reader.result;
-      saveUserSettings({ avatar: source })();
+      setAvatar(source);
     });
     reader.readAsDataURL(image);
   };
@@ -76,17 +86,22 @@ const UserSettings = () => {
     <EditableField 
       value={displayName}
       onChange={event => setDisplayName(event.target.value)}  
-      onBlur={saveUserSettings({ displayName })}  
       placeholder={t('UserSettings:DisplayName')}
       center
     />
   );
 
+  const saveDisabled = user.displayName === displayName;
+
   return (
-    <div className="userSettings">
-      {renderUserAvatar()}
-      {renderUserName()}
-    </div>
+    <>
+      <div className="userSettings">
+        {renderUserAvatar()}
+        {renderUserName()}
+
+      </div>
+      <ModalButtons onSave={saveUserSettings} saveDisabled={saveDisabled} />
+    </>
   );
 }
 

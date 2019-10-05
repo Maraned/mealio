@@ -24,7 +24,7 @@ const App = () => {
             <RouterProvider>
               <RecipeProvider>
                 <AlertBannerProvider>
-                  <Header />
+                  {/* <Header /> */}
 
                   <MainView />  
                 </AlertBannerProvider>

@@ -25,7 +25,7 @@ export default function RecipeCollection({
   }, []);
 
   return (
-    <div className="recipeCollection">
+    <div className="recipeCollection background">
       {recipes.length ? (
         <RecipeList recipes={recipes} />
       ) : (

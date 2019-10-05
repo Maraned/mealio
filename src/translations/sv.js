@@ -112,5 +112,8 @@ export default {
   },
   Dashboard: {
     SaveSettings: 'Spara inställningar'
+  },
+  Modal: {
+    Save: 'Spara'
   }
 }

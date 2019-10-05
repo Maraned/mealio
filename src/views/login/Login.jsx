@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import posed, { PoseGroup } from 'react-pose';
 import { LoggedInContext } from 'contexts/login';
-import { GunContext } from 'contexts/gun';
 import { UserContext } from 'contexts/user';
 import { PendingRequestContext } from 'contexts/pendingRequests';
 
@@ -11,38 +9,12 @@ import { postRequest } from 'utils/request';
 
 import './login.css';
 
-const Box = posed.div({
-  visible: { 
-    opacity: 1,
-    transition: {
-      type: 'spring',
-      stiffness: 200,
-      damping: 0
-    } 
-  },
-  hidden: { 
-    opacity: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 200,
-      damping: 0
-    } 
-  },
-  enter: {
-    opacity: 1,
-  },
-  exit: {
-    opacity: 0,
-  }
-});
-
 const Login = () => {
   const [popupOpen, setPopupOpen] = useState(false);
   const popupNode = useRef(null);
   const [email, setEmail] = useState('a@b.com');
   const [password, setPassword] = useState('a@b.com');
   const { dispatch } = useContext(LoggedInContext);
-  const Gun = useContext(GunContext);
   const { state, dispatch: userDispatch } = useContext(UserContext);
   const { 
     state: pendingRequestState, 
@@ -86,12 +58,6 @@ const Login = () => {
   }
 
   const authenticateUser = async () => {
-    // var encrypted = CryptoJS.AES.encrypt(
-    //   `${email}:${password}`, 
-    //   process.env.passPhrase, 
-    //   { mode: CryptoJS.mode.CFB }
-    // );
-    // var encrypted = CryptoJS.AES.encrypt(btoa(`${email}:${password}`), passPhrase, { mode: CryptoJS.mode.CFB });
     const response = await postRequest('login', {
       credentials: btoa(`${email}:${password}`)
     });
@@ -148,12 +114,7 @@ const Login = () => {
     btnText, 
     changeViewText 
   }) => (
-    <Box
-      key={key}
-      ref={popupNode}
-      pose={popupOpen ? 'visible' : 'hidden'}
-      className="login__popup"
-    >
+    <>
       <input 
         type="email"
         value={email} 
@@ -179,12 +140,12 @@ const Login = () => {
         </div>
       )}
 
-      <button onClick={onClick}>
+      <button className="fullWidth" onClick={onClick}>
         {btnText}
       </button>
 
       <a className="login__link" onClick={onClickChangeView}>{changeViewText}</a>
-    </Box>
+    </>
   );
   
   const renderLogin = () => renderForm({ 
@@ -209,22 +170,26 @@ const Login = () => {
     </div>
   );
 
-  return !pendingRequestState.initialFetch && (
-    <div className="login" key="login-container">
-      <button 
-        onClick={() => setPopupOpen(!popupOpen)}
-      >
-        {t('Login:login')}
-      </button>
+  const renderActiveView = () => {
+    switch (activeView) {
+      case 'login':
+        return renderLogin();
+      case 'register':
+        return renderRegister();
+      case 'userCreated':
+        return renderUserCreated();
+    }
+  }
 
-    <PoseGroup>
-      {activeView === 'login' && renderLogin()}
-      {activeView === 'register' && renderRegister()}
-      {activeView === 'userCreated' && renderUserCreated()}
-    </PoseGroup>
-
+  return (
+    <div className="login box background" key="login-container">
+      <div className="flex">
+        {t('Login:Login')}
+      </div>
+      <div className="boxDivider" />
+      {!pendingRequestState.initialFetch && renderActiveView()}
     </div>
-  )
+  );
 }
 
 export default Login;

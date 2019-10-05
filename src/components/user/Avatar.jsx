@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { FaUser } from 'react-icons/fa';
+import { isEmpty } from 'lodash';
 
 import './avatar.css';
 import { UserContext } from 'contexts/user';
@@ -7,8 +8,9 @@ import { UserContext } from 'contexts/user';
 const url = 'http://localhost:3001/';
 
 const Avatar = ({ onClick }) => {
-  const { state } = useContext(UserContext);
-  const avatar = state.user && state.user.avatar;
+  const { state: user } = useContext(UserContext);
+  console.log('avatar user', user)
+  const avatar = user && !isEmpty(user.avatar);
   
   return (
     <div className="avatar" onClick={onClick}>

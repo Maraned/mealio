@@ -52,7 +52,7 @@ const SideMenuLayout = ({ views, defaultView }) => {
       <div className="sideMenuLayout__sideMenu">
         <div className="background box">
           <h2 className="center">{t(`MyRecipes:${activeView}`)}</h2>
-          <div className="box-divider" />
+          <div className="boxDivider" />
           {views.map(view => renderSideMenuOption({
             viewName: view.name,
             text: t(`MyRecipes:${view.text}`),

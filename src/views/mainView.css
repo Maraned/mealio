@@ -1,12 +1,22 @@
 .mainView {
   height: 100%;
   display: flex;
-  justify-content: center;
-  padding-top: var(--header-height);
+  flex-direction: column;
+  /* justify-content: center; */
+  /* padding-top: var(--header-height); */
   position: relative;
   background-color: var(--primary-background);
+  padding: 0 1rem;
+}
+
+@media all and (min-width: 1025px) {
+  .mainView {
+    flex-direction: row;
+    padding: 0;
+  }
 }
 
 .mainView > *:not(.alertBannerView) {
   margin-top: 2rem;
+  margin-right: 1rem;
 }

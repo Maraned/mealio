@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { RouterContext } from 'contexts/router';
 import Modal from 'components/modal/Modal';
 import AlertBannerView from 'views/alertBanner/AlertBannerView';
+import MainSideMenu from './mainSideMenu/MainSideMenu';
 
 import './mainView.css';
 
@@ -12,6 +13,8 @@ const MainView = () => {
 
   return (
     <div className="mainView">
+      <MainSideMenu />
+
       {ActiveView && (
         <ActiveView />
       )}
