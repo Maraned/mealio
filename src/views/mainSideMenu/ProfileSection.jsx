@@ -38,7 +38,9 @@ export default function ProfileSection({
         <MenuOption 
           text={t('Menu:Settings')}
           Icon={FaCogs}
-          onClick={() => route({ type: 'settings'})}
+          onClick={() => route({ type: 'settings', modalData: {
+            headerTitle: t('Menu:Settings')
+          }})}
         />
 
         <MenuOption 

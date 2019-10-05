@@ -1,5 +1,6 @@
 import React, { useRef, useContext, useState } from 'react';
 import posed, { PoseGroup } from 'react-pose';
+import { FaTimes } from  'react-icons/fa';
 import cc from 'classcat';
 import { useTranslation } from 'react-i18next';
 
@@ -27,10 +28,16 @@ const Modal = ({ children, ref }) => {
   const { ModalView, ModalData = {}, ModalSize = 'large' } = router;
   const { t } = useTranslation();
 
+  const { headerTitle } = ModalData;
+
   const outsideClick = event => {
     if (!modalRef.current.contains(event.target)) {
       dispatch({ type: 'closeModal' });
     }
+  }
+
+  const closeModal = event => {
+    dispatch({ type: 'closeModal' });
   }
 
   return (
@@ -48,6 +55,14 @@ const Modal = ({ children, ref }) => {
           }])} 
           ref={modalRef}
         >
+          <div className="modal__header">
+            <div>{headerTitle}</div>
+
+            <div className="modal__closeIcon">
+              <FaTimes onClick={closeModal} />
+            </div>
+          </div>
+
           <ModalView data={ModalData} />
         </div>
       </PosedModal>

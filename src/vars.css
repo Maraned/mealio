@@ -46,4 +46,7 @@
   --divider-border: 1px solid #e5e5e5;
 
   --desktop-size: 1025px;
+
+  --modal-side-menu-width: 8rem;
+  --modal-header-left-padding: 9rem;
 }

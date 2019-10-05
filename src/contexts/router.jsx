@@ -16,7 +16,7 @@ const routerReducer = (state, action) => {
     case 'createRecipe':
       return { ...state, ActiveView: CreateRecipeView };
     case 'settings':
-      return { ...state, ModalView: Settings };
+      return { ...state, ModalView: Settings, ModalData: action.modalData };
     case 'recipeCollection':
       return { ...state, ActiveView: RecipeCollection };
     case 'myRecipes':

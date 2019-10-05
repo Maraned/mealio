@@ -16,6 +16,7 @@
   z-index: 1000;
   background-color: #fff;
   display: flex;
+  flex-direction: column;
   border-radius: 5px;
   max-height: 80vh;
   overflow-y: auto;
@@ -24,4 +25,33 @@
 .modal--large {
   min-height: 80vh;
   min-width: 768px;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: center;
+  padding: .75rem 2rem;
+  box-shadow: var(--box-shadow);
+  padding-left: var(--modal-header-left-padding);
+  position: relative;
+}
+
+.modal__closeIcon {
+  position: absolute;
+  right: 0;
+  padding: 0 .5rem;
+  cursor: pointer;
+}
+
+.modal__closeIcon svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.modal__closeIcon:hover {
+  opacity: .5;
+}
+
+.modal > *:not(.modal__header) {
+  flex: 1;
 }
