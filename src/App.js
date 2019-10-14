@@ -9,6 +9,7 @@ import { RouterProvider } from 'contexts/router';
 import { RecipeProvider } from 'contexts/recipe';
 import { PendingRequestProvider } from 'contexts/pendingRequests';
 import { AlertBannerProvider } from 'contexts/alertBanner';
+import { FacebookProvider } from 'thirdParty/facebook/facebookProvider';
 
 import MainView from 'views/MainView';
 
@@ -17,23 +18,25 @@ import './vars.css';
 
 const App = () => {
   return (
-    <PendingRequestProvider>
-      <UserProvider>
-        <GunProvider>
-          <LoggedInProvider>
-            <RouterProvider>
-              <RecipeProvider>
-                <AlertBannerProvider>
-                  {/* <Header /> */}
+    <FacebookProvider>
+      <PendingRequestProvider>
+        <UserProvider>
+          <GunProvider>
+            <LoggedInProvider>
+              <RouterProvider>
+                <RecipeProvider>
+                  <AlertBannerProvider>
+                    {/* <Header /> */}
 
-                  <MainView />  
-                </AlertBannerProvider>
-              </RecipeProvider>
-            </RouterProvider>
-          </LoggedInProvider>
-        </GunProvider>
-      </UserProvider>
-    </PendingRequestProvider>
+                    <MainView />  
+                  </AlertBannerProvider>
+                </RecipeProvider>
+              </RouterProvider>
+            </LoggedInProvider>
+          </GunProvider>
+        </UserProvider>
+      </PendingRequestProvider>
+    </FacebookProvider>
   )
 }
 

@@ -25,7 +25,12 @@ const PosedModal = posed.div({
 const Modal = ({ children, ref }) => {
   const modalRef = useRef(null);
   const { state: router, dispatch } = useContext(RouterContext);
-  const { ModalView, ModalData = {}, ModalSize = 'large' } = router;
+  const { 
+    ModalView, 
+    ModalData = {}, 
+    ModalSize = 'large', 
+    WithSideMenu = true 
+  } = router;
   const { t } = useTranslation();
 
   const { headerTitle } = ModalData;
@@ -34,11 +39,11 @@ const Modal = ({ children, ref }) => {
     if (!modalRef.current.contains(event.target)) {
       dispatch({ type: 'closeModal' });
     }
-  }
+  };
 
   const closeModal = event => {
     dispatch({ type: 'closeModal' });
-  }
+  };
 
   return (
     <PoseGroup enterPose="enter">
@@ -51,7 +56,8 @@ const Modal = ({ children, ref }) => {
         <div 
           className={cc(['modal', {
             'modal--large': ModalSize === 'large',
-            'modal--auto': ModalSize === 'auto'
+            'modal--auto': ModalSize === 'auto',
+            'modal--withSideMenu': WithSideMenu
           }])} 
           ref={modalRef}
         >

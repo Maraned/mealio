@@ -56,7 +56,12 @@ export default function ProfileSection({
         />
 
         <MenuOption
-          onClick={() => route({ type: 'groceryLists' })}
+          onClick={() => route({ 
+            type: 'groceryLists', 
+            value: {
+              headerTitle: t('GroceryList:Title'),
+            } 
+          })}
           text={t('Menu:GroceryLists')}
           Icon={FaListUl}
         />

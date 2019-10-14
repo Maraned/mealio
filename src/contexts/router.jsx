@@ -28,7 +28,11 @@ const routerReducer = (state, action) => {
     case 'recipeDetail':
       return { ...state, ActiveView: RecipeDetail };
     case 'groceryLists':
-      return { ...state, ModalView: GroceryLists, ModalData: action.value };      
+      return { 
+        ...state, 
+        ModalView: GroceryLists, 
+        ModalData: action.value 
+    };      
     case 'adminPage':
       return { ...state, ActiveView: AdminPage };
     case 'adminDashboard':

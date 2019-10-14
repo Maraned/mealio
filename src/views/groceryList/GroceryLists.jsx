@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { get } from 'lodash';
 import { postRequest, getRequest } from 'utils/request';
 
 import { GroceryListContext } from 'contexts/groceryList';
@@ -32,6 +33,8 @@ const GroceryLists = ({ data }) => {
   } = useContext(GroceryListContext);
   const { state: user } = useContext(UserContext);
   const [recipeData, setRecipeData] = useState(data);
+  const [activeList, setActiveList] = useState(null);
+  const [activeListIndex, setActiveListIndex] = useState(0);
 
   const { t, i18n } = useTranslation();
 
@@ -62,14 +65,23 @@ const GroceryLists = ({ data }) => {
     setRecipeData(new RecipeData());
   };
 
-  const updateGroceryListName = index => event => {
-    groceryLists[index].name = event.target.value;
-    groceryListDispatch({ type: 'updateListIndex', index, value: groceryLists[index] });
+  const updateGroceryListName = event => {
+    groceryLists[activeListIndex].name = event.target.value;
+    groceryListDispatch({ 
+      type: 'updateListIndex', 
+      index: activeListIndex, 
+      value: groceryLists[activeListIndex] 
+    });
   };
 
-  const addGroceryListItem = index => () => {
-    groceryLists[index].items.push({ text: '', checked: false });
-    groceryListDispatch({ type: 'updateListIndex', index, value: groceryLists[index], silent: true });
+  const addGroceryListItem = () => {
+    groceryLists[activeListIndex].items.push({ text: '', checked: false });
+    groceryListDispatch({ 
+      type: 'updateListIndex', 
+      index: activeListIndex, 
+      value: groceryLists[activeListIndex], 
+      silent: true 
+    });
   };
 
   const addDataItemsToGroceryList = index => event => {
@@ -106,38 +118,32 @@ const GroceryLists = ({ data }) => {
 
   return (
     <div className="groceryLists">
-      <div className="groceryLists__header">
-        <h2 className="groceryLists__title">{t('GroceryList:Title')}</h2>
-
-        <div className="groceryLists__create" onClick={createNewGroceryList}>
-          {t('GroceryList:CreateNew')}
-        </div>
+      <div className="modal__sideMenu">
+        {groceryLists.map((list, index) => (  
+          <div className="groceryLists__list">
+            {list.name}
+          </div>
+        ))}
+      </div>
+      <div className="groceryLists__create" onClick={createNewGroceryList}>
+        {t('GroceryList:CreateNew')}
       </div>
 
-      {groceryLists.map((list, index) => (
-        <Accordion 
-          title={list.name} 
-          key={list.id} 
-          LeftIcon={recipeData && !!recipeData.items.length && addToCartIcon(index)}
-          editable 
-          onBlur={updateGroceryListName(index)}
-          removeable
-          onRemove={removeList(index, list.id)}
-        >
+      {activeList && (
+        <>
           <div className="groceryLists__createdAt">
-            {t('GroceryList:CreatedAt')}: {createdAtDate(list.createdAt)}
+            {t('GroceryList:CreatedAt')}: {createdAtDate(activeList.createdAt)}
           </div>
-          <GroceryList key={list} list={list} listIndex={index} />
+          <GroceryList key={activeList} list={activeList} listIndex={activeListIndex} />
           <div 
             className="groceryLists__addItem"
-            onClick={addGroceryListItem(index)}
+            onClick={addGroceryListItem}
           >
             <FaPlusCircle />
             {t('GroceryList:AddGroceryItem')}
           </div>
-        </Accordion>
-      
-      ))}
+        </>
+      )}
     </div>
   )
 };

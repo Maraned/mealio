@@ -119,6 +119,7 @@ const IngredientList = () => {
       items: ingredientsToGroceryListItems(ingredients), 
       recipeId: recipe.id,
       recipeName: recipe.name,
+      headerTitle: t('GroceryList:Title'),
     } });
   };
   

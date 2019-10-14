@@ -32,9 +32,13 @@
   justify-content: center;
   padding: .75rem 2rem;
   box-shadow: var(--box-shadow);
-  padding-left: var(--modal-header-left-padding);
   position: relative;
+  height: 3rem;
 }
+
+.modal--withSideMenu .modal__header {
+  padding-left: var(--modal-header-left-padding);
+} 
 
 .modal__closeIcon {
   position: absolute;
@@ -54,4 +58,8 @@
 
 .modal > *:not(.modal__header) {
   flex: 1;
+}
+
+.modal__sideMenu {
+  width: var(--modal-side-menu-width);
 }

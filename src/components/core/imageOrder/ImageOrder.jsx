@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import './imageOrder.css';
 
-const ImageOrder = ({ images, className, onOrderChange }) => {
+const ImageOrder = ({ images = [], className, onOrderChange }) => {
   const containerRef = useRef(null);
   const [mapImages, setMapImages] = useState([]);
   const [imageSources, setImageSources] = useState([]);
