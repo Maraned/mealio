@@ -1,3 +1,5 @@
 node_modules
 frontend
 backend
+environment
+rethinkdb_data
