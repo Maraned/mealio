@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var helmet = require('helmet');
 var jwt = require('express-jwt');
-require('dotenv').load();
 
 var app = express();
 

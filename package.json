@@ -2,17 +2,15 @@
   "name": "cibus-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
   "scripts": {
-    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
-    "gun": "0.9.9999991",
     "jsonwebtoken": "^8.5.0",
     "lodash": "^4.17.15",
     "nodemon": "1.18.10",
