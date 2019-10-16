@@ -18,11 +18,14 @@
     "request-promise-native": "^1.0.7",
     "sharp": "^0.22.0"
   },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "./node_modules/.bin/react-scripts start",
+    "build": "./node_modules/.bin/react-scripts build",
+    "test": "./node_modules/.bin/react-scripts test",
+    "eject": "./node_modules/.bin/react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
