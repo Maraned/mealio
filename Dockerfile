@@ -22,7 +22,10 @@ FROM node:8 as web-build
 WORKDIR /app
 
 #Copying package.json to Docker Image
-COPY package.json /app
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+COPY public public
+COPY src src
 
 #Installing all dependencies.
 RUN npm install
