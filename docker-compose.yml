@@ -5,6 +5,7 @@ services:
 #   Setup react js container
 ################################
   frontend:
+    container_name: frontend
     build: ./frontend/cibus
     expose:
       - 3000
@@ -28,6 +29,7 @@ services:
 #   Setup backend container
 ################################
   backend:
+    container_name: backend
     build: './backend/cibus-backend'
     # command: nodemon --watch . -e js ./backend/cibus-backend/server.js
     # command: nodemon ./backend/cibus-backend/server.js
