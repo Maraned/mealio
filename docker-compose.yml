@@ -7,12 +7,14 @@ services:
   frontend:
     container_name: frontend
     build: ./frontend/cibus
+    command: npm start
     expose:
       - 3000
     ports:
       - 3000:3000
     volumes:
-      - ./frontend/cibus:/app
+      - ./frontend/cibus/public:/app/public
+      - ./frontend/cibus/src:/app/src
 ################################
 #   Setup nginx load balancer
 ################################
@@ -33,12 +35,12 @@ services:
     build: './backend/cibus-backend'
     # command: nodemon --watch . -e js ./backend/cibus-backend/server.js
     # command: nodemon ./backend/cibus-backend/server.js
-    command: nodemon --legacy-watch server.js
+    # command: nodemon --legacy-watch server.js
     env_file:
       - environment
     environment:
-      CHOKIDAR_USEPOLLING: 'true'
-      CHOKIDAR_INTERVAL: 300
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=300
     expose:
       - 3001
     ports: 

@@ -6,7 +6,8 @@ services:
 ################################
   frontend:
     container_name: frontend
-    image: mealio/mealio_frontend
+    image: mealio/mealio_frontend:latest
+    command: npm run prod
     expose:
       - 3000
     ports:
