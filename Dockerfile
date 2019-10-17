@@ -31,4 +31,4 @@ COPY src src
 RUN npm install
 
 # Running the dev server.
-CMD ["npm", "start"]
+CMD ["npm", "build"]
