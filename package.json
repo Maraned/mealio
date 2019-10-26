@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "node ./scripts/setup.js"
+    "setup": "node ./scripts/setup.js",
+    "frontend": "docker-compose build -t mealio/mealio_frontend frontend"
   },
   "author": "",
   "license": "ISC"
