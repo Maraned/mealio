@@ -10,8 +10,8 @@ services:
     # command: npm run prod
     # expose:
     #   - 3000
-    # ports:
-    #   - 3000:3000
+    ports:
+      - 80:80
 ################################
 #   Setup nginx load balancer
 ################################
