@@ -8,7 +8,8 @@
     "setup": "node ./scripts/setup.js",
     "frontend": "docker-compose build -t mealio/mealio_frontend frontend",
     "pullFrontend": "docker pull mealio/mealio_frontend",
-    "pullBackend": "docker pull mealio/mealio_backend"
+    "pullBackend": "docker pull mealio/mealio_backend",
+    "dcomp": "docker-compose -f production.yml"
   },
   "author": "",
   "license": "ISC"
