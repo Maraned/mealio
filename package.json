@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup": "node ./scripts/setup.js",
-    "frontend": "docker-compose build -t mealio/mealio_frontend frontend"
+    "frontend": "docker-compose build -t mealio/mealio_frontend frontend",
+    "pullFrontend": "docker pull mealio/mealio_frontend",
+    "pullBackend": "docker pull mealio/mealio_backend"
   },
   "author": "",
   "license": "ISC"
