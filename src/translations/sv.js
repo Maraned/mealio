@@ -115,5 +115,38 @@ export default {
   },
   Modal: {
     Save: 'Spara'
+  },
+  WelcomePage: {
+    Welcome: 'Welcome',
+    ToMealio: 'to Mealio!',
+    WelcomeToMealio: 'Välkommen till Mealio!',
+    WelcomeUSP: `Mealio är sidan där du verkligen kan finna matinspiration, 
+      vare sig det gäller att finna nya recept (som även tar hänsyn till inlagda allergener), 
+      planera och skapa inköpslistor för veckans måltider, bli en bättre kock genom våra samlade tips och tricks, 
+      eller göra dig ett namn inom receptvärlden genom att dela med dig av dina 
+      kreationer i en smidig receptskapar studio. 
+      \n Oavsett vad du söker inom matlagning, så är det vår ambition att du ska kunna hitta det här!`,
+    RegistrationPerks: 'Fördelar som medlem',
+    RegistrationPerksList: {
+      SavedSettings: 'Alla dina sparade och skapade recept och preferenser sparas på ditt konto, som du kan komma åt från alla dina enheter.',
+      CreateRecipes: 'Få tillgång till vår receptstudio, där du kan skapa upp recept.',
+      RecipeFlows: 'Följ andra medlemmar och se när de lägger upp nya recept eller betygsätter recept.',
+      FacebookFlows: 'Lägg till en Facebook koppling och få flödesuppdateringar från dina favoritsidor.',
+    },
+  },
+  MainDashboard: {
+    SearchRecipes: 'Sök på recept',
+    CreateRecipe: 'Skapa recept',
+    SavedRecipes: 'Sparade recept',
+    BecomeMember: 'Bli medlem!',    
+    GroceryLists: 'Inköpslistor',
+    MyCreatedRecipes: 'Mina skapade recept',    
+  },
+  Breadcrumbs: {
+    welcomePage: 'Startsida',
+    createRecipe: 'Skapa recept',
+    recipeCollection: 'Sparade recept',
+    myRecipes: 'Skapade recept',
+    recipeList: 'Sök recept',
   }
 }

@@ -25,6 +25,8 @@ const Login = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  console.log('LOGIN WITH THIS!')
+
   useEffect(() => {
     if (state.user && state.user.is) {
       dispatch({ type: 'login' })
@@ -184,10 +186,10 @@ const Login = () => {
   return (
     <div className="login box background" key="login-container">
       <div className="flex">
-        {t('Login:Login')}
+        <h2>{t('Login:Login')}</h2>
       </div>
       <div className="boxDivider" />
-      {!pendingRequestState.initialFetch && renderActiveView()}
+      {!pendingRequestState.initialLoginFetch && renderActiveView()}
     </div>
   );
 }

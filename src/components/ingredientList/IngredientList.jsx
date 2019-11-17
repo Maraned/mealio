@@ -158,7 +158,7 @@ const IngredientList = () => {
           />
         )}
 
-        {ingredients.map((ingredient, index) => (
+        {ingredients && ingredients.map((ingredient, index) => (
           <Ingredient
             key={'ingredient' + index}
             updateIngredient={updateIngredient} 

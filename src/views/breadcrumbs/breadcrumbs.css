@@ -1,0 +1,19 @@
+.breadcrumbs {
+  background-color: var(--primary-background);
+  padding: 1rem 1rem;
+  font-size: .75rem;
+  display: flex;
+  margin-left: calc(var(--main-side-menu-width) + 1rem);
+}
+
+.breadcrumb--last {
+  font-weight: 700;
+}
+
+.breadcrumb:not(.breadcrumb--last) {
+  cursor: pointer;
+}
+
+.breadcrumb:not(.breadcrumb--last):hover {
+  text-decoration: underline;
+}

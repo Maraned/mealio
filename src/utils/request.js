@@ -3,25 +3,31 @@ const url = 'http://localhost:3001';
 
 export const postRequest = async (endpoint, data, expectResponse = true) => {
   console.log('sending POST', data, 'to endpoint', endpoint)
-  const response = await request({
-    url: `${url}/${endpoint}`,
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
-    },
-    body: data,
-    json: true,
-  });
-  if (expectResponse && response.status !== 401) { 
-    try {
-      console.log(`POST response ${endpoint}: `, response);
-      return response;
-    } catch (error) {
-      console.error(error, response);
+  try {
+    const response = await request({
+      url: `${url}/${endpoint}`,
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
+      },
+      body: data,
+      json: true,
+    });
+    console.log('response', response)
+    if (expectResponse && response.status !== 401) { 
+      try {
+        console.log(`POST response ${endpoint}: `, response);
+        return response;
+      } catch (error) {
+        console.error(error, response);
+      }
+    } else {
+      return response.status;
     }
-  } else {
-    return response.status;
+  } catch (err) {
+    console.error('POST ERROR', err);
+    return { error: err.error.error, status: err.statusCode };
   }
 };
 
@@ -83,11 +89,10 @@ export const getRequest = async (endpoint, query) => {
   }
 }
 
-export const login = ({ username, password }) => {
-  fetch(`${url}/login`)
-    .then(res => res.json())
-    .then(res => {
-      localStorage.setItem(res.token);
-      localStorage.setItem(res.refreshToken);
-    })
+export const login = async ({ username, password }) => {
+  const response = JSON.parse(await request({
+    uri: `${url}/login` 
+  }));
+  localStorage.setItem(response.token);
+  localStorage.setItem(response.refreshToken);
 }

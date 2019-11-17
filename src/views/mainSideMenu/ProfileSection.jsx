@@ -30,7 +30,7 @@ export default function ProfileSection({
     <div className="profileSection box background">
       <div className="flex vcenter">
         <Avatar  />
-        <div className="profileSection__userName">{user.displayName}</div>
+        <div className="profileSection__userName">{user.displayName || user.email}</div>
       </div>
       <div className="boxDivider" />
 

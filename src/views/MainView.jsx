@@ -4,6 +4,7 @@ import { RouterContext } from 'contexts/router';
 import Modal from 'components/modal/Modal';
 import AlertBannerView from 'views/alertBanner/AlertBannerView';
 import MainSideMenu from './mainSideMenu/MainSideMenu';
+import Breadcrumbs from 'views/breadcrumbs/Breadcrumbs';
 
 import './mainView.css';
 
@@ -12,17 +13,25 @@ const MainView = () => {
   const { ActiveView } = router;
 
   return (
-    <div className="mainView">
-      <MainSideMenu />
+    <>
+      <div className="mainView">
+        
+        <Breadcrumbs />
 
-      {ActiveView && (
-        <ActiveView />
-      )}
+        <div className="mainView__content">
+          <MainSideMenu />
 
-      <Modal />
+          {ActiveView && (
+            <ActiveView />
+          )}
 
-      <AlertBannerView />
-    </div>
+
+          <AlertBannerView />
+        </div>
+        
+        <Modal />
+      </div>
+    </>
   )
 }
 

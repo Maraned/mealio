@@ -1,22 +1,25 @@
 .mainView {
   height: 100%;
+  background-color: var(--primary-background);
+  padding: 0 1rem;
+}
+
+.mainView__content {
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   /* padding-top: var(--header-height); */
   position: relative;
-  background-color: var(--primary-background);
-  padding: 0 1rem;
 }
 
 @media all and (min-width: 1025px) {
-  .mainView {
+  .mainView__content {
     flex-direction: row;
     padding: 0;
   }
 }
 
-.mainView > *:not(.alertBannerView):not(.modalWrapper) {
-  margin-top: 2rem;
+.mainView__content > *:not(.alertBannerView):not(.modalWrapper) {
+  /* margin-top: 2rem; */
   margin-right: 1rem;
 }

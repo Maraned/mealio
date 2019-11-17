@@ -12,7 +12,7 @@ const RecipeList = ({
     <div className="recipeListView">
       <RecipeFilter />
 
-      <div className="recipeList">
+      <div className="recipeList box background">
 
         {recipes.map(recipe => (
           <RecipeCard 

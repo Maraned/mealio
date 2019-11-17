@@ -3,23 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "certbot": "^5.0.3",
     "classcat": "^3.2.5",
-    "crypto": "^1.0.1",
     "express": "^4.17.1",
-    "gun": "^0.9.9999991",
     "i18next": "^15.0.6",
     "react": "^16.8.4",
+    "react-anime": "^2.2.0",
     "react-dom": "^16.8.4",
     "react-facebook-login": "^4.1.1",
     "react-i18next": "^10.3.0",
     "react-icons": "^3.5.0",
-    "react-pose": "^4.0.8",
+    "react-pose": "4.0.10",
     "react-scripts": "3.2.0",
     "request-promise-native": "^1.0.7",
-    "sharp": "^0.22.0"
+    "sharp": "0.23.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "nodemon": "^1.18.10"
   },
   "scripts": {
@@ -27,7 +33,10 @@
     "build": "./node_modules/.bin/react-scripts build",
     "test": "./node_modules/.bin/react-scripts test",
     "eject": "./node_modules/.bin/react-scripts eject",
-    "prod": "node server.js"
+    "prod": "node server.js",
+    "prodBuild": "docker build -f Dockerfile-prod  . -t mealio/mealio_frontend",
+    "push": "docker push mealio/mealio_frontend",
+    "lint": "eslint"
   },
   "eslintConfig": {
     "extends": "react-app"

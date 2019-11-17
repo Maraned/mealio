@@ -1,10 +1,11 @@
 .mainSideMenu {
   width: 100%;
+  flex-shrink: 0;
 }
 
 @media all and (min-width: 1025px) {
   .mainSideMenu {
-    width: 15rem;
+    width: var(--main-side-menu-width);
     margin-left: 1rem;
   }
 }

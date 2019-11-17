@@ -10,44 +10,50 @@ import NewIngredient from 'components/ingredientList/NewIngredientWrapper';
 import AdminPage from 'views/admin/AdminPage';
 import AdminDashboard from 'views/admin/Dashboard';
 import RecipeCollection from 'views/recipeCollection/RecipeCollection';
+import WelcomePage from 'views/welcomePage/WelcomePage';
+
+const getPageData = action => {
+  const pages = {
+    closeModal: { ModalView: null },
+    createRecipe: { ActiveView: CreateRecipeView },
+    settings: { ModalView: Settings, ModalData: action.modalData },
+    recipeCollection: { ActiveView: RecipeCollection },
+    myRecipes: { ActiveView: MyRecipes },
+    recipeList: { ActiveView: RecipeList },
+    recipeDetail: { ActiveView: RecipeDetail },
+    groceryLists: { ModalView: GroceryLists, ModalData: action.modalData },
+    adminPage: { ActiveView: AdminPage },
+    adminDashboard: { ActiveView: AdminDashboard },
+    newIngredient: { 
+      ModalView: NewIngredient, 
+      ModalData: { 
+        groups: action.value, 
+        allIngredients: action.allIngredients 
+      }, 
+      ModalSize: action.size, 
+    },
+    welcomePage: { ActiveView: WelcomePage },
+  }
+
+  return pages[action.type];
+}
 
 const routerReducer = (state, action) => {
-  switch (action.type) {
-    case 'createRecipe':
-      return { ...state, ActiveView: CreateRecipeView };
-    case 'settings':
-      return { ...state, ModalView: Settings, ModalData: action.modalData };
-    case 'recipeCollection':
-      return { ...state, ActiveView: RecipeCollection };
-    case 'myRecipes':
-      return { ...state, ActiveView: MyRecipes };
-    case 'closeModal':
-      return { ...state, ModalView: null };
-    case 'recipeList':
-      return { ...state, ActiveView: RecipeList };
-    case 'recipeDetail':
-      return { ...state, ActiveView: RecipeDetail };
-    case 'groceryLists':
-      return { 
-        ...state, 
-        ModalView: GroceryLists, 
-        ModalData: action.value 
-    };      
-    case 'adminPage':
-      return { ...state, ActiveView: AdminPage };
-    case 'adminDashboard':
-      return { ...state, ActiveView: AdminDashboard };
-    case 'newIngredient':
-      return { 
-        ...state, 
-        ModalView: NewIngredient, 
-        ModalData: { groups: action.value, allIngredients: action.allIngredients }, 
-        ModalSize: action.size 
-      }
+  let breadcrumbs = [...state.breadcrumbs];
+  let pageData = getPageData(action, breadcrumbs);
+
+  if (action.type === 'breadcrumbNavigation') {
+    action.type = action.page;
+    breadcrumbs = breadcrumbs.slice(0, breadcrumbs.indexOf(action.page) + 1);
+    pageData = getPageData(action, breadcrumbs);
+  } else if (!pageData.ModalView && action.type !== 'closeModal') {
+    breadcrumbs.push(action.type);
   }
+
+  return { ...state, ...pageData, breadcrumbs };
 };
 
-const initialState = { ActiveView: MyRecipes, ModalView: null };
+const initialState = { ActiveView: WelcomePage, ModalView: null, breadcrumbs: ['welcomePage'] };
 
 export const RouterContext = createContext(initialState);
 

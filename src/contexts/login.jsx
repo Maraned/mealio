@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useContext, useEffect } from 'react';
 
 import { postRequest } from 'utils/request';
 import { UserContext } from 'contexts/user';
+import { PendingRequestContext } from 'contexts/pendingRequests';
 import { access } from 'fs';
 
 const loginReducer = (state, action) => {
@@ -15,7 +16,7 @@ const loginReducer = (state, action) => {
   }
 };
 
-const autoLogin = async (dispatch, userDispatch) => {
+const autoLogin = async (dispatch, userDispatch, pendingRequest) => {
   const refreshToken = localStorage.getItem('refreshToken');
   const email = localStorage.getItem('email');
 
@@ -24,6 +25,8 @@ const autoLogin = async (dispatch, userDispatch) => {
       refreshToken,
       email,
     });
+
+    console.log('loginResponse', response)
     
     if (response && response.accessToken) {
       const { accessToken, user } = response;
@@ -32,6 +35,7 @@ const autoLogin = async (dispatch, userDispatch) => {
       userDispatch({ type: 'user', value: user });
     }
   }
+  pendingRequest({ type: 'initialLoginFetch', value: false });
 }
 
 const initialState = { loggedIn: false }
@@ -41,9 +45,10 @@ export const LoggedInContext = createContext(initialState);
 export function LoggedInProvider(props) {
   const [state, dispatch] = useReducer(loginReducer, initialState);
   const { dispatch: userDispatch } = useContext(UserContext);
+  const { dispatch: pendingRequest } = useContext(PendingRequestContext);
 
   useEffect(() => {
-    autoLogin(dispatch, userDispatch);
+    autoLogin(dispatch, userDispatch, pendingRequest);
   }, [])
 
   return (

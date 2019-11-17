@@ -17,12 +17,11 @@ import StepList from 'components/stepList/StepList';
 const RecipeDetail = () => {
   const { state: recipe } = useContext(RecipeContext);
   const { state: user, dispatch: userDispatch } = useContext(UserContext);
+  const { t } = useTranslation();
 
   if (!recipe) {
     return '';
   }
-
-  const { t } = useTranslation();
 
   const { 
     id,

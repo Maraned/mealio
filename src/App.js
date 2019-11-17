@@ -1,9 +1,7 @@
 import React from 'react';
 import './translations/i18n';
 
-import Header from 'views/header/Header';
 import { LoggedInProvider } from 'contexts/login';
-import { GunProvider } from 'contexts/gun';
 import { UserProvider } from 'contexts/user';
 import { RouterProvider } from 'contexts/router';
 import { RecipeProvider } from 'contexts/recipe';
@@ -21,19 +19,15 @@ const App = () => {
     <FacebookProvider>
       <PendingRequestProvider>
         <UserProvider>
-          <GunProvider>
-            <LoggedInProvider>
-              <RouterProvider>
-                <RecipeProvider>
-                  <AlertBannerProvider>
-                    {/* <Header /> */}
-
-                    <MainView />  
-                  </AlertBannerProvider>
-                </RecipeProvider>
-              </RouterProvider>
-            </LoggedInProvider>
-          </GunProvider>
+          <LoggedInProvider>
+            <RouterProvider>
+              <RecipeProvider>
+                <AlertBannerProvider>
+                  <MainView />  
+                </AlertBannerProvider>
+              </RecipeProvider>
+            </RouterProvider>
+          </LoggedInProvider>
         </UserProvider>
       </PendingRequestProvider>
     </FacebookProvider>

@@ -73,6 +73,8 @@ const UserMenu = () => {
         <FaUsersCog className="userMenu__adminDashboard" onClick={routeToView('adminPage')} />
       )}
 
+      HEJsan
+
       <Avatar onClick={() => setMenuOpen(!menuOpen)} />
 
       <Menu pose={menuOpen ? 'open' : 'closed'} className="userMenu__menu">
