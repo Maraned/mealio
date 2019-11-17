@@ -34,7 +34,7 @@ router.post('/', async (req, res, next) => {
 
   if (!user) {
     const userNotFoundError = new Error('NOUSER');
-    userNotFoundError.status = 404;
+    userNotFoundError.status = 400;
     return next(userNotFoundError);
   }
 

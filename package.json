@@ -4,7 +4,9 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "docker build . -t mealio/mealio_backend",
+    "push": "docker push mealio/mealio_backend"
   },
   "author": "",
   "license": "ISC",

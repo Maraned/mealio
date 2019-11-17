@@ -1,5 +1,7 @@
 FROM node:10
 WORKDIR /usr/src/app
+USER 1000
+
 COPY config config 
 COPY lib lib
 COPY routes routes
@@ -13,4 +15,4 @@ RUN npm install -g nodemon
 
 RUN npm install
 
-CMD ['npm', 'start']
+CMD ["npm", "run", "start"]
