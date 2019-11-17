@@ -16,19 +16,26 @@
 # CMD ["nginx", "-g", "daemon off;"]
 
 
-FROM node:8 as web-build
+FROM node:12.3.0-alpine as build-deps
 
 #Setting the working directory as /app
 WORKDIR /app
+# USER 1000
 
 #Copying package.json to Docker Image
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 COPY public public
 COPY src src
+COPY .env .env
+COPY server.js server.js
+
+COPY build build
 
 #Installing all dependencies.
 RUN npm install
 
 # Running the dev server.
-CMD ["npm", "build"]
+# CMD ["npm", "build"]
+CMD ["npm", "start"]
+

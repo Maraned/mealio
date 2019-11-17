@@ -6,6 +6,7 @@
     "certbot": "^5.0.3",
     "classcat": "^3.2.5",
     "crypto": "^1.0.1",
+    "express": "^4.17.1",
     "gun": "^0.9.9999991",
     "i18next": "^15.0.6",
     "react": "^16.8.4",
@@ -14,7 +15,7 @@
     "react-i18next": "^10.3.0",
     "react-icons": "^3.5.0",
     "react-pose": "^4.0.8",
-    "react-scripts": "2.1.8",
+    "react-scripts": "3.2.0",
     "request-promise-native": "^1.0.7",
     "sharp": "^0.22.0"
   },
@@ -25,7 +26,8 @@
     "start": "./node_modules/.bin/react-scripts start",
     "build": "./node_modules/.bin/react-scripts build",
     "test": "./node_modules/.bin/react-scripts test",
-    "eject": "./node_modules/.bin/react-scripts eject"
+    "eject": "./node_modules/.bin/react-scripts eject",
+    "prod": "node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
