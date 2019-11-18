@@ -5,7 +5,7 @@ const path = require('path');
 var logger = require('morgan');
 const app = express();
 
-console.log('app running', process.env.PORT || 80)
+console.log('app running', process.env.PORT || 8800)
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(logger('combined'));
@@ -25,6 +25,6 @@ app.get('/home', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(process.env.PORT || 80, () => {
-  console.log('App listening on port', process.env.PORT || 80);
+app.listen(process.env.PORT || 8800, () => {
+  console.log('App listening on port', process.env.PORT || 8800);
 });
