@@ -7,9 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup": "node ./scripts/setup.js",
     "frontend": "docker-compose -f production.yml up -d frontend",
+    "backend": "docker-compose -f production.yml up -d backend",
     "pullFrontend": "docker pull mealio/mealio_frontend",
     "pullBackend": "docker pull mealio/mealio_backend",
-    "dcomp": "docker-compose -f production.yml"
+    "dcomp": "docker-compose -f production.yml",
+    "ssh": "docker-machine ssh mealio1"
   },
   "author": "",
   "license": "ISC"
