@@ -19,8 +19,9 @@ services:
       - '80:80' # expose 80 on host and sent to 80 in container
       - '443:443'
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      # - /etc/letsencrypt:/etc/letsencrypt
+      # - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/nginx-prod.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt
 ################################
 #   Setup backend container
 ################################
