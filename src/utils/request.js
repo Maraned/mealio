@@ -1,5 +1,7 @@
 import request from 'request-promise-native';
-const url = 'http://localhost:3001';
+var host = window.location.hostname;
+// const url = 'http://backend:3001/api';
+const url = `https://${host}/api`
 
 export const postRequest = async (endpoint, data, expectResponse = true) => {
   console.log('sending POST', data, 'to endpoint', endpoint)

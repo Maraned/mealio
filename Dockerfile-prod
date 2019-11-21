@@ -11,6 +11,6 @@ RUN npm run build
 FROM mealio/frontend_server
 #COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 COPY --from=build-deps /usr/src/app/build /app/build
-EXPOSE 80
+EXPOSE 8800
 #CMD ["nginx", "-g", "daemon off;"]
 CMD ["npm", "run", "start"]
