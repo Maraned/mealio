@@ -3,3 +3,4 @@ frontend
 backend
 environment
 rethinkdb_data
+certs
