@@ -1,7 +1,7 @@
 .mainView {
-  height: 100%;
+  height: auto;
   background-color: var(--primary-background);
-  padding: 0 1rem;
+  padding: 0 1rem 1rem;
 }
 
 .mainView__content {

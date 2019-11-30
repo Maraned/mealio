@@ -144,9 +144,9 @@ export default {
   },
   Breadcrumbs: {
     '/': 'Startsida',
-    'recipes/create': 'Skapa recept',
-    'recipes/saved': 'Sparade recept',
-    'recipes/my': 'Skapade recept',
+    'create': 'Skapa recept',
+    'saved': 'Sparade recept',
+    'myRecipes': 'Skapade recept',
     'recipes': 'Sök recept',
   }
 }

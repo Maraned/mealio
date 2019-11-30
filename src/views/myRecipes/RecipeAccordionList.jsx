@@ -7,11 +7,9 @@ const RecipeAccordionList = ({ title, data: recipes }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="recipeAccordionList flex grow column background box">
-      <h2 className="center">{title}</h2>
+    <div className="recipeAccordionList flex grow column">
+      <h2 className="center background box marginBottom">{title}</h2>
       
-      <div className="boxDivider" />
-
       {recipes.map((recipe, index) => (
         <RecipeAccordion 
           recipe={recipe} 

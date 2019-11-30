@@ -24,10 +24,10 @@ export default function MainDashboard() {
 
         {loggedIn && (
           <>
-            {renderSquare(t('MainDashboard:SavedRecipes'), '/recipes/saved')}
+            {renderSquare(t('MainDashboard:SavedRecipes'), '/savedRecipes')}
             {renderSquare(t('MainDashboard:GroceryLists'), 'groceryLists')}
             {renderSquare(t('MainDashboard:CreateRecipe'), '/recipes/create')}
-            {renderSquare(t('MainDashboard:MyCreatedRecipes'), '/recipes/my')}
+            {renderSquare(t('MainDashboard:MyCreatedRecipes'), '/myRecipes')}
           </>
         )}
       </div>

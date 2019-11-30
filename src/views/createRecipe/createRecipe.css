@@ -16,3 +16,7 @@
 .createRecipe__recipe {
   position: relative;
 }
+
+.createRecipe .ingredientList {
+  width: auto;
+}

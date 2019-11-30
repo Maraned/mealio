@@ -20,8 +20,12 @@ export default function ViewRoutes() {
         <CreateRecipeView />
       </Route>
 
-      <Route path="/recipes/my">
+      <Route path="/myRecipes">
         <MyRecipes />
+      </Route>
+
+      <Route path="/savedRecipes">
+        <RecipeCollection />
       </Route>
 
       <Route path="/recipes/:name">

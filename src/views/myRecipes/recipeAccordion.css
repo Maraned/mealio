@@ -1,6 +1,7 @@
 
 .recipeAccordion {
   overflow: hidden;
+  border-radius: 10px;
 }
 
 .recipeAccordion__header {
@@ -8,7 +9,7 @@
   background-color: var(--secondary-color);
   color: var(--secondary-text-color);
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .recipeAccordion__header--draft {

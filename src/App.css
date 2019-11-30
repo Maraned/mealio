@@ -9,11 +9,13 @@ html,
 body,
 #root {
   height: 100%;
+  background-color: var(--primary-background);
 }
 
 a {
-  color: var(--primary-color) !important;
-  font-size: .8rem;
+  /* color: var(--primary-color) !important; */
+  /* font-size: .8rem; */
+  color: black !important;
   cursor: pointer;
 }
 
@@ -184,6 +186,10 @@ a:hover {
   opacity: .7;
 }
 
+.boxShadow {
+  box-shadow: var(--box-shadow);
+}
+
 .background {
   background-color: white;
   box-shadow: var(--box-shadow);
@@ -256,4 +262,8 @@ a:hover {
 .viewMaxWidth {
   max-width: 1024px;
   width: 100%;
+}
+
+.marginBottom {
+  margin-bottom: .5rem;
 }

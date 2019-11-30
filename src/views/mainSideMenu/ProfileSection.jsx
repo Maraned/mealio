@@ -10,6 +10,7 @@ import {
   FaUsersCog,
   FaStar 
 } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import { UserContext } from 'contexts/user';
 import { RouterContext } from 'contexts/router';
@@ -43,17 +44,19 @@ export default function ProfileSection({
           }})}
         />
 
-        <MenuOption 
-          text={t('Menu:MyRecipeCollection')}
-          Icon={FaStar}
-          onClick={() => route({ type: 'recipeCollection' })}
-        />
+        <Link to="/savedRecipes">
+          <MenuOption 
+            text={t('Menu:MyRecipeCollection')}
+            Icon={FaStar}
+          />
+        </Link>
 
-        <MenuOption 
-          onClick={() => route({ type: 'myRecipes' })}
-          text={t('Menu:MyRecipes')}
-          Icon={FaUtensils}
-        />
+        <Link to="/myRecipes">
+          <MenuOption 
+            text={t('Menu:MyRecipes')}
+            Icon={FaUtensils}
+          />
+        </Link>
 
         <MenuOption
           onClick={() => route({ 

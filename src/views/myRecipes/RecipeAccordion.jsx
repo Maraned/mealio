@@ -13,7 +13,7 @@ const Content = posed.div({
   },
   exit: {
     y: "-100%",
-    height: '1px'
+    height: '0px'
   }
 })
 
@@ -25,7 +25,9 @@ const RecipeAccordion = ({ recipe }) => {
 
   return (
     <div 
-      className="recipeAccordion" 
+      className={cc(['recipeAccordion', {
+        boxShadow: !open
+      }])} 
       key={recipe.id}
     >
       <div 
