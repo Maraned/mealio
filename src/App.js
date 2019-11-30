@@ -1,5 +1,6 @@
 import React from 'react';
 import './translations/i18n';
+import { Router } from 'react-router-dom';
 
 import { LoggedInProvider } from 'contexts/login';
 import { UserProvider } from 'contexts/user';
@@ -8,6 +9,7 @@ import { RecipeProvider } from 'contexts/recipe';
 import { PendingRequestProvider } from 'contexts/pendingRequests';
 import { AlertBannerProvider } from 'contexts/alertBanner';
 import { FacebookProvider } from 'thirdParty/facebook/facebookProvider';
+
 
 import MainView from 'views/MainView';
 

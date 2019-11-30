@@ -9,7 +9,6 @@ const url = 'http://localhost:3001/';
 
 const Avatar = ({ onClick }) => {
   const { state: user } = useContext(UserContext);
-  console.log('avatar user', user)
   const avatar = user && !isEmpty(user.avatar);
   
   return (

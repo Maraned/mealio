@@ -2,33 +2,32 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LoggedInContext } from 'contexts/login';
 import { RouterContext } from 'contexts/router';
+import { Link } from 'react-router-dom';
 
 export default function MainDashboard() {
   const { t } = useTranslation();
   const { state: { loggedIn } } = useContext(LoggedInContext);
   const { dispatch } = useContext(RouterContext);
 
-  const navigateTo = page => {
-    dispatch({ type: page });
-  };
-
   const renderSquare = (text, page) => (
-    <div className="square shadow" onClick={() => navigateTo(page)}>
-      {text}
-    </div>
+    <Link to={`${page}`}>
+      <div className="square shadow">
+        {text}
+      </div>
+    </Link>
   );
 
   return (
     <div className="mainDashboard">
       <div className="flex wrap">
-        {renderSquare(t('MainDashboard:SearchRecipes'), 'recipeList')}
+        {renderSquare(t('MainDashboard:SearchRecipes'), '/recipes')}
 
         {loggedIn && (
           <>
-            {renderSquare(t('MainDashboard:SavedRecipes'), 'recipeCollection')}
+            {renderSquare(t('MainDashboard:SavedRecipes'), '/recipes/saved')}
             {renderSquare(t('MainDashboard:GroceryLists'), 'groceryLists')}
-            {renderSquare(t('MainDashboard:CreateRecipe'), 'createRecipe')}
-            {renderSquare(t('MainDashboard:MyCreatedRecipes'), 'myRecipes')}
+            {renderSquare(t('MainDashboard:CreateRecipe'), '/recipes/create')}
+            {renderSquare(t('MainDashboard:MyCreatedRecipes'), '/recipes/my')}
           </>
         )}
       </div>

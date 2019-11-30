@@ -13,6 +13,7 @@
     "react-i18next": "^10.3.0",
     "react-icons": "^3.5.0",
     "react-pose": "4.0.10",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "request-promise-native": "^1.0.7",
     "sharp": "0.23.2"
@@ -29,7 +30,7 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "start": "./node_modules/.bin/react-scripts start",
+    "start": "PORT=8800 ./node_modules/.bin/react-scripts start",
     "build": "./node_modules/.bin/react-scripts build",
     "test": "./node_modules/.bin/react-scripts test",
     "eject": "./node_modules/.bin/react-scripts eject",

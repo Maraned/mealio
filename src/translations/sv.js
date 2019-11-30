@@ -143,10 +143,10 @@ export default {
     MyCreatedRecipes: 'Mina skapade recept',    
   },
   Breadcrumbs: {
-    welcomePage: 'Startsida',
-    createRecipe: 'Skapa recept',
-    recipeCollection: 'Sparade recept',
-    myRecipes: 'Skapade recept',
-    recipeList: 'Sök recept',
+    '/': 'Startsida',
+    'recipes/create': 'Skapa recept',
+    'recipes/saved': 'Sparade recept',
+    'recipes/my': 'Skapade recept',
+    'recipes': 'Sök recept',
   }
 }

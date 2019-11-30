@@ -1,64 +1,61 @@
-import React, { createContext, useReducer } from 'react'; 
+import React, { createContext, useReducer, useEffect } from 'react'; 
 
-import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import Settings from 'views/settings/Settings';
-import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
-import RecipeList from 'views/recipeList/RecipeListWrapper';
-import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
-import GroceryLists from 'views/groceryList/GroceryListsWrapper';
-import NewIngredient from 'components/ingredientList/NewIngredientWrapper';
-import AdminPage from 'views/admin/AdminPage';
-import AdminDashboard from 'views/admin/Dashboard';
-import RecipeCollection from 'views/recipeCollection/RecipeCollection';
-import WelcomePage from 'views/welcomePage/WelcomePage';
 
-const getPageData = action => {
-  const pages = {
-    closeModal: { ModalView: null },
-    createRecipe: { ActiveView: CreateRecipeView },
-    settings: { ModalView: Settings, ModalData: action.modalData },
-    recipeCollection: { ActiveView: RecipeCollection },
-    myRecipes: { ActiveView: MyRecipes },
-    recipeList: { ActiveView: RecipeList },
-    recipeDetail: { ActiveView: RecipeDetail },
-    groceryLists: { ModalView: GroceryLists, ModalData: action.modalData },
-    adminPage: { ActiveView: AdminPage },
-    adminDashboard: { ActiveView: AdminDashboard },
-    newIngredient: { 
-      ModalView: NewIngredient, 
-      ModalData: { 
-        groups: action.value, 
-        allIngredients: action.allIngredients 
-      }, 
-      ModalSize: action.size, 
-    },
-    welcomePage: { ActiveView: WelcomePage },
-  }
+const modalView = view => ({
+  ModalView: view
+});
 
-  return pages[action.type];
+
+const pages = {
+  closeModal: modalView(null),
+  settings: modalView(Settings),
 }
 
 const routerReducer = (state, action) => {
-  let breadcrumbs = [...state.breadcrumbs];
-  let pageData = getPageData(action, breadcrumbs);
-
-  if (action.type === 'breadcrumbNavigation') {
-    action.type = action.page;
-    breadcrumbs = breadcrumbs.slice(0, breadcrumbs.indexOf(action.page) + 1);
-    pageData = getPageData(action, breadcrumbs);
-  } else if (!pageData.ModalView && action.type !== 'closeModal') {
-    breadcrumbs.push(action.type);
+  if (action.type === 'closeModal') {
+    return { ...state, ModalView: null };
   }
 
-  return { ...state, ...pageData, breadcrumbs };
+  return { ...state, ...pages[action.type] };
 };
 
-const initialState = { ActiveView: WelcomePage, ModalView: null, breadcrumbs: ['welcomePage'] };
+const initialState = { ModalView: null, breadcrumbs: [] };
 
 export const RouterContext = createContext(initialState);
 
 export const RouterProvider = props => {
   const [state, dispatch] = useReducer(routerReducer, initialState);
+
+  return (
+    <RouterContext.Provider value={{ state, dispatch }}>
+      {props.children}
+    </RouterContext.Provider>
+  );
+
+  // console.log('state', state)
+
+  // const historyHandler = event => {
+  //   if (event.state.page !== state.page) {
+  //     console.log('event', event)
+  //     console.log('event.state', event.state)
+  //     const pageData = getPageData({ type: event.state.page });
+  //     console.log('browserclick pageData', pageData)
+  //     // const pageDataFromUrl = getPageDataFromUrl(event.state.page);
+  //     // console.log('browserclick pageDataFromUrl', pageDataFromUrl)
+  //     dispatch({ type: 'urlChange', pageData });
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener('popstate', historyHandler);
+
+  //   const currentPath = window.location.pathname;
+  //   const pageDataFromUrl = getPageDataFromUrl(currentPath);
+  //   dispatch({ type: 'urlChange', pageData: pageDataFromUrl });
+
+  //   return () => window.removeEventListener('popstate', historyHandler)
+  // }, []);
 
   return (
     <RouterContext.Provider value={{ state, dispatch }}>

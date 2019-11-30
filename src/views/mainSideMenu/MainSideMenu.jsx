@@ -12,8 +12,6 @@ export default function MainSideMenu({
 }) {
   const { state } = useContext(LoggedInContext);
 
-  console.log('loggedIn state', state)
-
   return (
     <div className="mainSideMenu">
       {state.loggedIn ? (

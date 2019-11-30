@@ -4,7 +4,6 @@ var host = window.location.hostname;
 const url = `https://${host}/api`
 
 export const postRequest = async (endpoint, data, expectResponse = true) => {
-  console.log('sending POST', data, 'to endpoint', endpoint)
   try {
     const response = await request({
       url: `${url}/${endpoint}`,
@@ -16,10 +15,8 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
       body: data,
       json: true,
     });
-    console.log('response', response)
     if (expectResponse && response.status !== 401) { 
       try {
-        console.log(`POST response ${endpoint}: `, response);
         return response;
       } catch (error) {
         console.error(error, response);
@@ -29,12 +26,11 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
     }
   } catch (err) {
     console.error('POST ERROR', err);
-    return { error: err.error.error, status: err.statusCode };
+    throw { error: err.error.error, status: err.statusCode };
   }
 };
 
 export const putRequest = async (endpoint, data, expectResponse = false) => {
-  console.log('sending PUT ', data, 'to endpoint', endpoint)
   const response = await request({
     url: `${url}/${endpoint}`,
     method: 'PUT',
@@ -46,7 +42,6 @@ export const putRequest = async (endpoint, data, expectResponse = false) => {
     json: true,
   });
   if (expectResponse && response.status !== 401) { 
-    console.log(`PUT response ${endpoint}: `, response);
     return response;
   } else {
     return response.status;
@@ -54,7 +49,6 @@ export const putRequest = async (endpoint, data, expectResponse = false) => {
 };
 
 export const deleteRequest = async (endpoint, data, expectResponse = false) => {
-  console.log('sending DELETE ', data, 'to endpoint', endpoint)
   const response = await request({
     url: `${url}/${endpoint}`,
     method: 'DELETE',
@@ -67,7 +61,6 @@ export const deleteRequest = async (endpoint, data, expectResponse = false) => {
   });
   if (expectResponse && response.status !== 401) { 
     const responseJSON = await response.json();
-    console.log(`DELETE response ${endpoint}: `, responseJSON);
     return responseJSON;
   } else {
     return response.status;
@@ -83,11 +76,10 @@ export const getRequest = async (endpoint, query) => {
       },
       qs: query,
     }));
-    console.log(`GET response ${endpoint}: `, response);
     return response;
   } catch (error) {
     console.error('getRequest', { endpoint });
-    return { error: 'Something went wrong with getRequests' };
+    throw { error: 'Something went wrong with getRequests' };
   }
 }
 

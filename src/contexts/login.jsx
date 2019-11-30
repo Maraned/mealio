@@ -26,8 +26,6 @@ const autoLogin = async (dispatch, userDispatch, pendingRequest) => {
       email,
     });
 
-    console.log('loginResponse', response)
-    
     if (response && response.accessToken) {
       const { accessToken, user } = response;
       localStorage.setItem('accessToken', accessToken);

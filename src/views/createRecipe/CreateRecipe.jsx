@@ -233,49 +233,50 @@ const CreateRecipe = () => {
   );
 
   return (
-    <div className="createRecipe recipe background">
+    <div className="createRecipe recipe">
       {renderLastSaved()}
 
-      <FullWidthContainer spaceBetween>
-        <button 
-          className="createRecipe__toggleModeBtn"
-          onClick={toggleViewMode}
-        >
-          {editState.editable 
-            ? t('Recipe:View') 
-            : t('Recipe:Edit')}
-        </button>
-
-        <div>
-          {state.draft && state.id && (
-            <button 
-              className="createRecipe__publish"
-              onClick={publishRecipe}
-            >
-              {t('Recipe:Publish')}
-            </button>
-          )}
-
-          {state.draft != null && !state.draft && (
-            <button 
-              className="createRecipe__update"
-              onClick={editRecipe}
-            >
-              {t('Recipe:Update')}
-            </button>
-          )}
-
-          <button
-            className="createRecipe__delete"
-            onClick={deleteRecipe}
+      <div className="background recipe__main">
+        <FullWidthContainer spaceBetween>
+          <button 
+            className="createRecipe__toggleModeBtn"
+            onClick={toggleViewMode}
           >
-            {t('Recipe:Delete')}
+            {editState.editable 
+              ? t('Recipe:View') 
+              : t('Recipe:Edit')}
           </button>
-        </div>
 
-      </FullWidthContainer>
+          <div>
+            {state.draft && state.id && (
+              <button 
+                className="createRecipe__publish"
+                onClick={publishRecipe}
+              >
+                {t('Recipe:Publish')}
+              </button>
+            )}
 
-      <FullWidthContainer center stack>
+            {state.draft != null && !state.draft && (
+              <button 
+                className="createRecipe__update"
+                onClick={editRecipe}
+              >
+                {t('Recipe:Update')}
+              </button>
+            )}
+
+            <button
+              className="createRecipe__delete"
+              onClick={deleteRecipe}
+            >
+              {t('Recipe:Delete')}
+            </button>
+          </div>
+
+        </FullWidthContainer>
+
+        <FullWidthContainer center stack>
         <EditableField 
           onChange={changeName} 
           value={name}
@@ -324,6 +325,7 @@ const CreateRecipe = () => {
           />
         </div>
       </FullWidthContainer>
+      </div>
 
       <FullWidthContainer 
         center={!editState.editable} 

@@ -1,16 +1,39 @@
 import './breadcrumbs.css';
 
-import React, { useContext } from 'react';
-import { RouterContext } from 'contexts/router';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cc from 'classcat';
+import { useHistory, useLocation } from "react-router-dom";
 
 export default function Breadcrumbs() {
-  const { dispatch, state: { breadcrumbs } } = useContext(RouterContext);
   const { t } = useTranslation();
+  const history = useHistory();
+  let location = useLocation();
+  const [breadcrumbs, setBreadcrumbs] = useState(['/']);
 
-  const breadcrumbClick = page => {
-    dispatch({ type: 'breadcrumbNavigation', page });
+  useEffect(() => {
+    const currentLocation = history.location.pathname;
+    const currentLocationBreadcrumbs = currentLocation === '/'
+      ? ['/'] 
+      : currentLocation.split('/');
+
+    currentLocationBreadcrumbs[0] = '/';
+    return setBreadcrumbs(currentLocationBreadcrumbs);
+  }, [history, location]);
+
+  const breadcrumbClick = (breadcrumb, index) => {
+    const newLocationBreadcrumbs = breadcrumbs.slice(0, index + 1 || 1);
+    const newLocationPath = newLocationBreadcrumbs.join('/').replace('//', '/');
+    history.push(newLocationPath);
+  };
+
+  const getBreadcrumbName = breadcrumb => {
+    let breadcrumbName = breadcrumb;
+    if (breadcrumbName !== '/' &&   breadcrumbName.includes('/')) {
+      const splittedBreadcrumd = breadcrumb.split('/');
+      breadcrumbName = splittedBreadcrumd[splittedBreadcrumd.length - 1];
+    }
+    return breadcrumbName;
   }
 
   return (
@@ -18,17 +41,16 @@ export default function Breadcrumbs() {
       <div className="background box">
         {breadcrumbs.map((breadcrumb, index) => {
           const lastBreadcrumb = index === (breadcrumbs.length - 1);
-          console.log('lastBreadcrumb', lastBreadcrumb)
-          
+    
           return (
-            <span key={breadcrumb}>
+            <span key={breadcrumb + index}>
               <span 
                 className={cc(['breadcrumb', {
                   'breadcrumb--last': lastBreadcrumb
                 }])}
-                onClick={() => !lastBreadcrumb && breadcrumbClick(breadcrumb)}
+                onClick={() => !lastBreadcrumb && breadcrumbClick(breadcrumb, index)}
               >
-                {t(`Breadcrumbs:${breadcrumb}`)}
+                {t(`Breadcrumbs:${getBreadcrumbName(breadcrumb)}`)}
               </span>
 
               {!lastBreadcrumb && (

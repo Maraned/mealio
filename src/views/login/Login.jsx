@@ -25,8 +25,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  console.log('LOGIN WITH THIS!')
-
   useEffect(() => {
     if (state.user && state.user.is) {
       dispatch({ type: 'login' })
@@ -53,8 +51,10 @@ const Login = () => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('currentUserValue', currentUserValue);
     localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('email', user.email);
-    userDispatch({ type: 'user', value: user });
+    if (user) {
+      localStorage.setItem('email', user.email);
+      userDispatch({ type: 'user', value: user });
+    }
 
     dispatch({ type: 'login' });
   }
