@@ -5,7 +5,7 @@ services:
 #   Setup react js container
 ################################
   frontend:
-    image: mealio/mealio_frontend:latest
+    # image: mealio/mealio_frontend:latest
     # container_name: frontend
     build: ./frontend/cibus
     command: npm start
@@ -36,7 +36,7 @@ services:
 #   Setup backend container
 ################################
   backend:
-    image: mealio/mealio_backend:latest
+    # image: mealio/mealio_backend:latest
     # container_name: backend
     build: './backend/cibus-backend'
     # command: nodemon --watch . -e js ./backend/cibus-backend/server.js
