@@ -6,9 +6,8 @@ import { postRequest, getRequest } from 'utils/request';
 import { GroceryListContext } from 'contexts/groceryList';
 import { UserContext } from 'contexts/user';
 import GroceryList from './GroceryList';
-import Accordion from 'components/core/Accordion';
 
-import { FaPlusCircle, FaCartPlus } from 'react-icons/fa';
+import { FaCartPlus } from 'react-icons/fa';
 
 import './groceryLists.css';
 
@@ -32,6 +31,7 @@ const GroceryLists = ({ data }) => {
     dispatch: groceryListDispatch 
   } = useContext(GroceryListContext);
   const { state: user } = useContext(UserContext);
+
   const [recipeData, setRecipeData] = useState(data);
   const [activeList, setActiveList] = useState(null);
   const [activeListIndex, setActiveListIndex] = useState(0);
@@ -53,6 +53,12 @@ const GroceryLists = ({ data }) => {
     fetchGroceryLists();
   }, []);
 
+  useEffect(() => {
+    if (groceryLists && groceryLists.length && !activeList) {
+      setActiveList(groceryLists[0]);
+    }
+  }, [groceryLists]);
+
   const createNewGroceryList = async () => {
     const newGroceryList = await postRequest('groceryList/create', {
       items: (recipeData && recipeData.items) || [],
@@ -71,16 +77,6 @@ const GroceryLists = ({ data }) => {
       type: 'updateListIndex', 
       index: activeListIndex, 
       value: groceryLists[activeListIndex] 
-    });
-  };
-
-  const addGroceryListItem = () => {
-    groceryLists[activeListIndex].items.push({ text: '', checked: false });
-    groceryListDispatch({ 
-      type: 'updateListIndex', 
-      index: activeListIndex, 
-      value: groceryLists[activeListIndex], 
-      silent: true 
     });
   };
 
@@ -119,30 +115,23 @@ const GroceryLists = ({ data }) => {
   return (
     <div className="groceryLists">
       <div className="modal__sideMenu">
-        {groceryLists.map((list, index) => (  
-          <div className="groceryLists__list">
-            {list.name}
+        {groceryLists && groceryLists.map((list, index) => (  
+          <div className="modal__sideMenu__option" onClick={() => setActiveList(list)}>
+            <div className="groceryLists__listName">{list.name}</div>
+            <div className="groceryLists__createdAt">
+              ({createdAtDate(list.createdAt)})
+            </div>            
           </div>
         ))}
-      </div>
-      <div className="groceryLists__create" onClick={createNewGroceryList}>
-        {t('GroceryList:CreateNew')}
+        <div className="groceryLists__create" onClick={createNewGroceryList}>
+          {t('GroceryList:CreateNew')}
+        </div>
       </div>
 
       {activeList && (
-        <>
-          <div className="groceryLists__createdAt">
-            {t('GroceryList:CreatedAt')}: {createdAtDate(activeList.createdAt)}
-          </div>
-          <GroceryList key={activeList} list={activeList} listIndex={activeListIndex} />
-          <div 
-            className="groceryLists__addItem"
-            onClick={addGroceryListItem}
-          >
-            <FaPlusCircle />
-            {t('GroceryList:AddGroceryItem')}
-          </div>
-        </>
+        <div className="modal__content">
+          <GroceryList key={activeList} list={activeList} listIndex={activeListIndex} />          
+        </div>
       )}
     </div>
   )

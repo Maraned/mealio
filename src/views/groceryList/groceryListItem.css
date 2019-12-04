@@ -1,11 +1,11 @@
 .groceryListItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  margin-left: 1rem;
 }
 
-.groceryListItem--checked input,
-.groceryListItem--checked .checkbox {
+.groceryListItem--checked {
+  opacity: .25;
   font-style: italic;
   color: rgba(0, 0, 0, 0.7);
   border-color: rgba(0, 0, 0, 0.7);
@@ -13,6 +13,7 @@
 
 .groceryListItem__content {
   flex: 1;
+  text-align: left;
 }
 
 .groceryListItem__content input {
@@ -21,4 +22,13 @@
 
 .groceryListItem__buttons {
   margin: 0 .5rem;
+}
+
+.groceryListItem__name {
+  font-size: .75rem;
+  cursor: pointer;
+}
+
+.groceryListItem .checkbox__wrapper {
+  margin-right: .75rem;
 }

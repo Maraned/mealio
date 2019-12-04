@@ -19,7 +19,7 @@ const RecipeAccordionList = ({ title, data: recipes }) => {
       ))}
 
       {recipes.length === 0 && (
-        <div className="recipeAccordionList--noRecipes">
+        <div className="recipeAccordionList--noRecipes background box">
           {t('MyRecipes:NoRecipes')}
         </div>
       )}

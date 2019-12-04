@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useEffect } from 'react'; 
 
 import Settings from 'views/settings/Settings';
+import GroceryLists from 'views/groceryList/GroceryListsWrapper';
 
 const modalView = view => ({
   ModalView: view
@@ -10,6 +11,7 @@ const modalView = view => ({
 const pages = {
   closeModal: modalView(null),
   settings: modalView(Settings),
+  groceryLists: modalView(GroceryLists)
 }
 
 const routerReducer = (state, action) => {
@@ -17,7 +19,7 @@ const routerReducer = (state, action) => {
     return { ...state, ModalView: null };
   }
 
-  return { ...state, ...pages[action.type] };
+  return { ...state, ...pages[action.type], ModalData: action.value };
 };
 
 const initialState = { ModalView: null, breadcrumbs: [] };
@@ -32,34 +34,4 @@ export const RouterProvider = props => {
       {props.children}
     </RouterContext.Provider>
   );
-
-  // console.log('state', state)
-
-  // const historyHandler = event => {
-  //   if (event.state.page !== state.page) {
-  //     console.log('event', event)
-  //     console.log('event.state', event.state)
-  //     const pageData = getPageData({ type: event.state.page });
-  //     console.log('browserclick pageData', pageData)
-  //     // const pageDataFromUrl = getPageDataFromUrl(event.state.page);
-  //     // console.log('browserclick pageDataFromUrl', pageDataFromUrl)
-  //     dispatch({ type: 'urlChange', pageData });
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('popstate', historyHandler);
-
-  //   const currentPath = window.location.pathname;
-  //   const pageDataFromUrl = getPageDataFromUrl(currentPath);
-  //   dispatch({ type: 'urlChange', pageData: pageDataFromUrl });
-
-  //   return () => window.removeEventListener('popstate', historyHandler)
-  // }, []);
-
-  return (
-    <RouterContext.Provider value={{ state, dispatch }}>
-      {props.children}
-    </RouterContext.Provider>
-  ) 
 };

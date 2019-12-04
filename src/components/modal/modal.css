@@ -29,16 +29,17 @@
 
 .modal__header {
   display: flex;
-  justify-content: center;
-  padding: .75rem 2rem;
+  padding: .75rem 2rem .75rem 0;
   box-shadow: var(--box-shadow);
   position: relative;
   height: 3rem;
 }
 
-.modal--withSideMenu .modal__header {
-  padding-left: var(--modal-header-left-padding);
-} 
+.modal__headerTitle {
+  width: var(--modal-side-menu-width);
+  text-align: center;
+  padding: 0 .5rem;
+}
 
 .modal__closeIcon {
   position: absolute;
@@ -58,8 +59,32 @@
 
 .modal > *:not(.modal__header) {
   flex: 1;
+  display: flex;
 }
 
 .modal__sideMenu {
   width: var(--modal-side-menu-width);
+  box-shadow: var(--modal-side-menu-shadow);
+  background-color: var(--primary-background);
+  color: #fff;
+}
+
+.modal__sideMenu__option {
+  text-align: center;
+  width: 100%;
+  padding: .5rem;
+  cursor: pointer;
+}
+
+.modal__sideMenu__option:not(:last-child) {
+  border-bottom: var(--modal-side-menu-border);
+}
+
+.modal__sideMenu__option:hover {
+  opacity: .7;
+
+}
+
+.modal__content {
+  padding-top: 1rem;
 }

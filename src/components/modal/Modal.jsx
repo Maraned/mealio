@@ -62,7 +62,7 @@ const Modal = ({ children, ref }) => {
           ref={modalRef}
         >
           <div className="modal__header">
-            <div>{headerTitle}</div>
+            <div className="modal__headerTitle">{headerTitle}</div>
 
             <div className="modal__closeIcon">
               <FaTimes onClick={closeModal} />

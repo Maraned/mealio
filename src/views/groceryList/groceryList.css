@@ -5,10 +5,15 @@
 }
 
 .groceryList__checkedItems {
-  margin: 1rem 2rem;
+  opacity: .8;
 }
 
 .groceryList__checkedItems .accordion__header {
   background-color: var(--secondary-color);
 }
 
+.groceryList__header {
+  margin-bottom: .5rem;
+  position: relative;
+  padding: 0 1rem;
+}

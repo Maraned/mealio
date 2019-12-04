@@ -29,7 +29,6 @@ export default function Breadcrumbs() {
 
   const getBreadcrumbName = breadcrumb => {
     let breadcrumbName = breadcrumb;
-    console.log('breadcrumbName', breadcrumbName)
     if (breadcrumbName !== '/' &&   breadcrumbName.includes('/')) {
       const splittedBreadcrumd = breadcrumb.split('/');
       breadcrumbName = splittedBreadcrumd[splittedBreadcrumd.length - 1];

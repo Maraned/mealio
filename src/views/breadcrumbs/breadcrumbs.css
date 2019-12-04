@@ -1,9 +1,26 @@
 .breadcrumbs {
   background-color: var(--primary-background);
-  padding: 1rem 1rem;
   font-size: .75rem;
   display: flex;
-  margin-left: calc(var(--main-side-menu-width) + 1rem);
+  padding: 1rem 0;
+  width: 100%;
+}
+
+@media all and (min-width: 1025px) {
+  .breadcrumbs {
+    margin-left: calc(var(--main-side-menu-width) + 1rem);
+    padding: 1rem 1rem;
+  }
+}
+
+.breadcrumbs > * {
+  width: 100%;
+}
+
+@media all and (min-width: 1025px) {
+  .breadcrumbs > * {
+    width: auto;
+  }
 }
 
 .breadcrumb--last {

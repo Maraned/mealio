@@ -124,9 +124,13 @@ div[contenteditable] {
 input,
 textarea {
   border: none;
-  padding: .5rem .25rem; 
-  box-shadow: 0px 4px 2px -2px rgba(0, 0, 0, .07);
-  transition: box-shadow .5s;
+  padding: .5rem 0rem; 
+  /* box-shadow: 0px 4px 2px -2px rgba(0, 0, 0, .07); */
+  transition: border-bottom .5s;
+}
+
+input[type=text] {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 textarea {
@@ -136,7 +140,8 @@ textarea {
 input:focus,
 textarea:focus {
   outline-style: none;
-  box-shadow: 0px 4px 2px -2px rgba(73, 100, 255, .5);
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
+  /* box-shadow: 0px 4px 2px -2px rgba(73, 100, 255, .5); */
 }
 
 input[type=number]::-webkit-inner-spin-button {
@@ -153,6 +158,11 @@ input[type=number]::-webkit-inner-spin-button {
 
 button:hover {
   opacity: .7;
+}
+
+.hover:hover {
+  opacity: .7;
+  color: var(--primary-color-lighter);
 }
 
 .removeButton {

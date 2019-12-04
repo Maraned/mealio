@@ -1,7 +1,5 @@
 .groceryLists {
   width: 100%;
-  text-align: center;
-  padding: 1rem 3rem;
 }
 
 .groceryLists > * {
@@ -21,14 +19,10 @@
 }
 
 .groceryLists__addItem {
-  display: flex;
-  justify-content: center;
   cursor: pointer;
   padding: .5rem;
   border: 2px dashed #333;
-  margin-bottom: 1rem;
-  margin-right: 1rem;
-  margin-left: 1rem;
+  margin: .75rem 1rem 1rem;
 }
 
 .groceryLists__addItem > * {
@@ -55,7 +49,29 @@
 }
 
 .groceryLists__createdAt {
-  padding: .5rem;
-  font-size: .9rem;
+  font-size: .7rem;
   color: rgba(0, 0, 0, 0.75);
 }
+
+.groceryLists__list {
+  padding: .5rem;
+  cursor: pointer;
+  border-bottom: var(--input-border);
+}
+
+.groceryLists__create {
+  margin: .5rem;
+}
+
+.groceryLists__listHeader {
+  margin-bottom: .5rem;
+  position: relative;
+  padding: 0 1rem;
+}
+
+.groceryLists__editListIcon {
+  margin-left: .5rem;
+  font-size: .9rem;
+  cursor: pointer;
+}
+

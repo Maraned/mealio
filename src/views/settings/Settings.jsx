@@ -13,7 +13,7 @@ const Settings = () => {
 
   const renderMenuOption = viewName => (
     <div 
-      className={cc(['settings__menu__option', {
+      className={cc(['modal__sideMenu__option', {
         'settings__menu__option--selected': activeViewName === viewName
       }])}
       onClick={() => setActiveViewName(viewName)}
@@ -23,7 +23,8 @@ const Settings = () => {
   );
 
   const renderMenu = () => (
-    <div className="settings__menu">
+    // <div className="settings__menu">
+    <div className="modal__sideMenu">
       {renderMenuOption('UserSettings')}
     </div>
   );

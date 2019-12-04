@@ -4,6 +4,7 @@ import { FaTrash } from 'react-icons/fa';
 import posed from 'react-pose';
 import cc from 'classcat';
 import { GroceryListContext } from 'contexts/groceryList';
+import EditableField from 'components/core/EditableField';
 
 import Checkbox from 'components/core/Checkbox';
 
@@ -33,7 +34,6 @@ const GroceryListItem = ({
   listIndex, 
 }) => {
   const { dispatch } = useContext(GroceryListContext);
-  const [showButtons, setShowButtons] = useState(false);
   const [itemValue, setItemValue] = useState(item.text);
 
   const changeValue = event => {
@@ -45,32 +45,24 @@ const GroceryListItem = ({
     dispatch({ type: 'updateListItem', listIndex, index, value: item })
   };
 
+  const onBlur = (event) => {
+    console.log('blurring', event)
+  }
+
   return (
     <div 
       className={cc(['groceryListItem', {
         'groceryListItem--checked': item.checked,
       }])}
-      onMouseOver={() => setShowButtons(true)}
-      onMouseLeave={() => setShowButtons(false)}
     >
-      <ButtonsContainer 
-        className="groceryListItem__buttons" 
-        pose={showButtons ? 'visible' : 'hidden'}
-      >
-        <button className="removeButton--inverted" onClick={removeItem}>
-          <FaTrash />
-        </button>
-      </ButtonsContainer>
-
       <Checkbox value={item.checked} onClick={onChecked} />
-
-      <div className="groceryListItem__content">
-        <input 
-          value={itemValue} 
-          onChange={changeValue}
-          onBlur={changeItem}  
-        />
-      </div>
+      
+      <EditableField
+        value={itemValue} 
+        onChange={changeValue}
+        onBlur={onBlur} // changeItem 
+        onClick={() => onChecked(!item.checked)} 
+      />
     </div>
   )
 };

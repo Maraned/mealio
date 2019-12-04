@@ -17,6 +17,15 @@ export default function MainDashboard() {
     </Link>
   );
 
+  const renderModalSquare = (text, page) => (
+    <a>
+      <div className="square shadow" onClick={() => dispatch({ type: page })}>
+        {text}
+      </div>
+    </a>
+  )
+
+
   return (
     <div className="mainDashboard">
       <div className="flex wrap">
@@ -25,7 +34,7 @@ export default function MainDashboard() {
         {loggedIn && (
           <>
             {renderSquare(t('MainDashboard:SavedRecipes'), '/savedRecipes')}
-            {renderSquare(t('MainDashboard:GroceryLists'), 'groceryLists')}
+            {renderModalSquare(t('MainDashboard:GroceryLists'), 'groceryLists')}
             {renderSquare(t('MainDashboard:CreateRecipe'), '/recipes/create')}
             {renderSquare(t('MainDashboard:MyCreatedRecipes'), '/myRecipes')}
           </>

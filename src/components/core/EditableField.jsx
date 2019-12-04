@@ -20,6 +20,7 @@ const OptionsContainer = posed.div({
 const EditableField = ({
   value,
   onChange,
+  onClick,
   placeholder,
   className,
   onPaste,
@@ -37,6 +38,7 @@ const EditableField = ({
   const [fallbackValue, setFallbackValue] = useState(value || '');
   const [filteredOptions, setFilteredOptions] = useState([]);
   const node = useRef();
+  const isFocused = useRef(null);
 
   const fallbackOnChange = event => {
     setFallbackValue(event.target.value);
@@ -46,8 +48,8 @@ const EditableField = ({
     if (node.current && !node.current.contains(e.target)) {
       setOpen(false);
       
-      if (onBlur) {
-        onBlur();
+      if (isFocused.current && onBlur) {
+        onBlur(e);
       }
     }
   };
@@ -62,6 +64,8 @@ const EditableField = ({
 
   const focus = () => {
     setOpen(true);
+
+    isFocused.current = true;
 
     if (onFocus) {
       onFocus();
@@ -135,15 +139,21 @@ const EditableField = ({
     );
   };
 
-  const renderViewMode = () => titleField ? (
-    <h1 className={cc(['editableField', className])}>
-      {value}
-    </h1>
-  ) : (
-    <div className={cc(['editableField', className])}>
-      {value}
-    </div>
-  );
+  const renderViewMode = () => {
+    const classes = cc(['editableField', className, { 
+      'editableField--clickable': onClick 
+    }]);
+
+    return titleField ? (
+      <h1 className={classes} onClick={onClick}>
+        {value}
+      </h1>
+    ) : (
+      <div className={classes} onClick={onClick}>
+        {value}
+      </div>
+    );
+  }
 
   return state.editable ? renderEditMode() : renderViewMode();
 }
