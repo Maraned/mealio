@@ -74,13 +74,14 @@
   width: 100%;
   padding: .5rem;
   cursor: pointer;
+  position: relative;
 }
 
 .modal__sideMenu__option:not(:last-child) {
   border-bottom: var(--modal-side-menu-border);
 }
 
-.modal__sideMenu__option:hover {
+.modal__sideMenu__option:hover > * {
   opacity: .7;
 
 }

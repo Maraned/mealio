@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import cc from 'classcat';
 import posed from 'react-pose';
+import { FaTimes } from 'react-icons/fa';
 
 import { EditableContext } from 'contexts/editable';
 
@@ -32,6 +33,8 @@ const EditableField = ({
   onOptionClick,
   optionText,
   titleField = false,
+  onRemove,
+  showRemove,
 }) => {
   const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
@@ -95,39 +98,57 @@ const EditableField = ({
     }
   };
 
+  const renderRemoveButton = () => (onRemove && showRemove) ? (
+    <div className="removeButton" onClick={onRemove}>
+      <FaTimes />
+    </div>
+  ) : '';
+
   const renderEditMode = () => {
     return type === 'text' ? (
-      <div
-        contentEditable
-        className={cc(["editableField editableField__edit", className, {
-          'editableField--center': center
-        }])}
-        onChange={onChange || fallbackOnChange}
-        placeholder={placeholder}
-        onPaste={onPaste}
-        onFocus={focus}
-        suppressContentEditableWarning={true}
-        ref={node} 
-      >
-        {value || fallbackValue}
-      </div>
-    ) : (
-      <div ref={node} className={cc(["editableField__container", {
-        'editableField__container--center': center
-      }])}>
-        <input
+      <>
+        <div
+          contentEditable
           className={cc(["editableField editableField__edit", className, {
             'editableField--center': center
           }])}
           onChange={onChange || fallbackOnChange}
-          value={value || fallbackValue}
           placeholder={placeholder}
           onPaste={onPaste}
           onFocus={focus}
-        />
+          suppressContentEditableWarning={true}
+          ref={node} 
+        >
+          {value || fallbackValue}
+        </div>
+
+        {renderRemoveButton()}
+      </>
+    ) : (
+      <div ref={node} className={cc(["editableField__container", {
+        'editableField__container--center': center
+      }])}>
+        <div className="editableField__innerContainer">
+          <input
+            className={cc(["editableField editableField__edit", className, {
+              'editableField--center': center
+            }])}
+            onChange={onChange || fallbackOnChange}
+            value={value || fallbackValue}
+            placeholder={placeholder}
+            onPaste={onPaste}
+            onFocus={focus}
+          />
+
+          {renderRemoveButton()}
+        </div>
 
         {searchOptions && (
-          <OptionsContainer className="editableField__options" pose={open ? "open" : "closed"} initialPose="closed">
+          <OptionsContainer 
+            className="editableField__options" 
+            pose={open ? "open" : "closed"} 
+            initialPose="closed"
+          >
             {filteredOptions.map(option => (
               <div className="editableField__option" onClick={optionClick(option)}>
                 {optionText(option)}

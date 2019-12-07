@@ -7,7 +7,7 @@ import { GroceryListContext } from 'contexts/groceryList';
 import { UserContext } from 'contexts/user';
 import GroceryList from './GroceryList';
 
-import { FaCartPlus } from 'react-icons/fa';
+import { FaCartPlus, FaTrash } from 'react-icons/fa';
 
 import './groceryLists.css';
 
@@ -108,24 +108,32 @@ const GroceryLists = ({ data }) => {
     return new Date(createdAt).toLocaleDateString(locale, options);
   };
 
-  const removeList = (index, listId) => () => {
+  const removeList = (index, listId) => {
     groceryListDispatch({ type: 'remove', index, listId, userId: user.id });
   };
 
   return (
     <div className="groceryLists">
       <div className="modal__sideMenu">
+        <div className="groceryLists__create" onClick={createNewGroceryList}>
+          <div className="groceryLists__create__inner">
+            {recipeData && recipeData.recipeName || t('GroceryList:CreateNew')}
+          </div>
+        </div>
+
         {groceryLists && groceryLists.map((list, index) => (  
-          <div className="modal__sideMenu__option" onClick={() => setActiveList(list)}>
+          <div key={list.id} className="modal__sideMenu__option" onClick={() => setActiveList(list)}>
+            <div className="groceryLists__removeIcon" onClick={() => removeList(index, list.id)}>
+              <FaTrash />
+            </div>
+            
             <div className="groceryLists__listName">{list.name}</div>
+            
             <div className="groceryLists__createdAt">
               ({createdAtDate(list.createdAt)})
             </div>            
           </div>
         ))}
-        <div className="groceryLists__create" onClick={createNewGroceryList}>
-          {t('GroceryList:CreateNew')}
-        </div>
       </div>
 
       {activeList && (

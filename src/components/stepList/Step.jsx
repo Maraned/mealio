@@ -8,7 +8,6 @@ import { EditableContext } from 'contexts/editable';
 
 import { 
   FaBurn, 
-  FaTimes, 
   FaIndent,
   FaOutdent, 
   FaListOl, 
@@ -164,14 +163,6 @@ const Step = ({
     }
   }
 
-  useEffect(() => {
-    if (showEditButtons) {
-      setTimeout(() => {
-        document.addEventListener('click', documentClick, { once: true });
-      }, 500)
-    }
-  }, [showEditButtons]);
-
   const openStepTools = () => {
     setShowEditButtons(true);
   }
@@ -268,14 +259,12 @@ const Step = ({
         value={step.text}
         onChange={updateText}
         onPaste={onPaste}
+        onBlur={() => setShowEditButtons(false)}
         onFocus={openStepTools}
         type="text"
+        showRemove={showEditButtons}
+        onRemove={removeStep}
       />
-        {showEditButtons && (
-          <div className="step__remove">
-            <FaTimes onClick={removeStep} />
-          </div>
-        )}
     </>
   );
 

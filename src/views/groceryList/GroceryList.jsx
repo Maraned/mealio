@@ -94,7 +94,7 @@ const GroceryList = ({ list, listIndex }) => {
 
       {editable && (
         <div 
-          className="groceryLists__addItem flex center vcenter"
+          className="groceryList__addItem flex center vcenter"
           onClick={addGroceryListItem}
         >
           <FaPlusCircle />

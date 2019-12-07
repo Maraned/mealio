@@ -19,6 +19,7 @@
 
 .editableField__container {
   position: relative;
+  margin-bottom: .25rem;
 }
 
 .editableField__options {
@@ -41,3 +42,6 @@
   background-color: var(--text-hover);
 }
 
+.editableField__innerContainer {
+  display: flex;
+}

@@ -1,8 +1,6 @@
 * {
   box-sizing: border-box;
   font-family: 'Noto Sans HK', Arial, Helvetica, sans-serif;
-  /* font-family: 'Quicksand', sans-serif; */
-  /* font-weight: 300; */
 }
 
 html, 
@@ -13,8 +11,6 @@ body,
 }
 
 a {
-  /* color: var(--primary-color) !important; */
-  /* font-size: .8rem; */
   color: black !important;
   cursor: pointer;
 }
@@ -47,9 +43,7 @@ h4,
 h5, 
 h6 {
   margin: 0;
-  /* font-family: 'Montserrat Alternates', sans-serif; */
   font-family: 'Lato', serif;
-  /* font-weight: 500; */
 }
 
 h2 {
@@ -125,7 +119,6 @@ input,
 textarea {
   border: none;
   padding: .5rem 0rem; 
-  /* box-shadow: 0px 4px 2px -2px rgba(0, 0, 0, .07); */
   transition: border-bottom .5s;
 }
 
@@ -141,7 +134,6 @@ input:focus,
 textarea:focus {
   outline-style: none;
   border-bottom: 1px solid rgba(0, 0, 0, 1);
-  /* box-shadow: 0px 4px 2px -2px rgba(73, 100, 255, .5); */
 }
 
 input[type=number]::-webkit-inner-spin-button {
@@ -170,6 +162,21 @@ button:hover {
   color: #fff;
   padding: .25rem;
   display: flex;
+  align-items: center;
+  transition: opacity .1s;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  opacity: .7;
+}
+
+.removeButton svg {
+  transition: transform .1s;
+}
+
+.removeButton:hover svg {
+  transform: scale(1.15);
 }
 
 .removeButton--inverted {
@@ -237,7 +244,6 @@ a:hover {
 }
 
 .shadow {
-  /* box-shadow: 0 1px 2px rgba(0,0,0,0.16), 0 1px 4px rgba(0,0,0,0.23); */
   box-shadow: 1px 1px 2px 1px  rgba(0, 0, 0, .15);
 }
 

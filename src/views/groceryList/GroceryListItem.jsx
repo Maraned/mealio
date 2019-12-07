@@ -62,7 +62,10 @@ const GroceryListItem = ({
         onChange={changeValue}
         onBlur={onBlur} // changeItem 
         onClick={() => onChecked(!item.checked)} 
+        onRemove={removeItem}
+        showRemove
       />
+
     </div>
   )
 };

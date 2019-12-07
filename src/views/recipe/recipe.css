@@ -27,6 +27,7 @@
 .recipe__time {
   display: flex;
   align-items: center;
+  line-height: 1.2;
 }
 
 .recipe__time svg {
