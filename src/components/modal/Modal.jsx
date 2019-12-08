@@ -20,7 +20,24 @@ const PosedModal = posed.div({
     transition: {
     }
   },
-})
+});
+
+export const ModalSideOption = ({
+  key,
+  onClick,
+  selected,
+  children
+}) => (
+  <div 
+    key={key} 
+    className={cc(['modal__sideMenu__option', {
+      'modal__sideMenu__option--selected': selected
+    }])}
+    onClick={onClick}
+  >
+    {children}
+  </div>
+);
 
 const Modal = ({ children, ref }) => {
   const modalRef = useRef(null);

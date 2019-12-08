@@ -60,7 +60,7 @@ const GroceryListItem = ({
       <EditableField
         value={itemValue} 
         onChange={changeValue}
-        onBlur={onBlur} // changeItem 
+        onBlur={changeItem} // changeItem 
         onClick={() => onChecked(!item.checked)} 
         onRemove={removeItem}
         showRemove

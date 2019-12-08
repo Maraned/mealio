@@ -75,15 +75,21 @@
   padding: .5rem;
   cursor: pointer;
   position: relative;
+  transition: transform .1s;
+}
+
+.modal__sideMenu__option--selected {
+  background-color: #fff;
+  color: #333;
+  box-shadow: inset 1px 1px 4px rgba(0,0,0,0.15);
 }
 
 .modal__sideMenu__option:not(:last-child) {
   border-bottom: var(--modal-side-menu-border);
 }
 
-.modal__sideMenu__option:hover > * {
-  opacity: .7;
-
+.modal__sideMenu__option:not(.modal__sideMenu__option--selected):hover {
+  transform: scale(0.95);
 }
 
 .modal__content {

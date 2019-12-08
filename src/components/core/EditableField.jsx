@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect, useRef, useCallback } from 'react';
 import cc from 'classcat';
 import posed from 'react-pose';
 import { FaTimes } from 'react-icons/fa';
@@ -19,6 +19,7 @@ const OptionsContainer = posed.div({
 });
 
 const EditableField = ({
+  viewValue,
   value,
   onChange,
   onClick,
@@ -38,7 +39,9 @@ const EditableField = ({
 }) => {
   const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
-  const [fallbackValue, setFallbackValue] = useState(value || '');
+  const [fallbackValue, setFallbackValue] = useState(
+    !onChange ? value : ''
+  );
   const [filteredOptions, setFilteredOptions] = useState([]);
   const node = useRef();
   const isFocused = useRef(null);
@@ -47,15 +50,16 @@ const EditableField = ({
     setFallbackValue(event.target.value);
   };
 
-  const handleClick = e => {
+  const handleClick = useCallback(e => {
     if (node.current && !node.current.contains(e.target)) {
       setOpen(false);
       
       if (isFocused.current && onBlur) {
-        onBlur(e);
+        const currentValue = onChange ? value : fallbackValue;
+        onBlur(currentValue);
       }
     }
-  };
+  }, [value, fallbackValue, onChange, node, isFocused]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -63,7 +67,7 @@ const EditableField = ({
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, []);
+  }, [handleClick]);
 
   const focus = () => {
     setOpen(true);
@@ -119,7 +123,7 @@ const EditableField = ({
           suppressContentEditableWarning={true}
           ref={node} 
         >
-          {value || fallbackValue}
+          {fallbackValue || value}
         </div>
 
         {renderRemoveButton()}
@@ -134,7 +138,7 @@ const EditableField = ({
               'editableField--center': center
             }])}
             onChange={onChange || fallbackOnChange}
-            value={value || fallbackValue}
+            value={fallbackValue || value}
             placeholder={placeholder}
             onPaste={onPaste}
             onFocus={focus}

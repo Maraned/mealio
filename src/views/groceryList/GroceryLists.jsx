@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { get } from 'lodash';
 import { postRequest, getRequest } from 'utils/request';
+import cc from 'classcat';
 
 import { GroceryListContext } from 'contexts/groceryList';
 import { UserContext } from 'contexts/user';
 import GroceryList from './GroceryList';
 
 import { FaCartPlus, FaTrash } from 'react-icons/fa';
+
+import { ModalSideOption } from 'components/modal/Modal';
 
 import './groceryLists.css';
 
@@ -71,33 +73,6 @@ const GroceryLists = ({ data }) => {
     setRecipeData(new RecipeData());
   };
 
-  const updateGroceryListName = event => {
-    groceryLists[activeListIndex].name = event.target.value;
-    groceryListDispatch({ 
-      type: 'updateListIndex', 
-      index: activeListIndex, 
-      value: groceryLists[activeListIndex] 
-    });
-  };
-
-  const addDataItemsToGroceryList = index => event => {
-    event.preventDefault();
-    event.stopPropagation();
-    groceryLists[index].items = [...groceryLists[index].items, ...recipeData.items];
-    groceryListDispatch({ type: 'updateListIndex', index, value: groceryLists[index] });
-    setRecipeData(new RecipeData());
-  };
-
-  const addToCartIcon = index => () => {
-    if (!recipeData || !recipeData.items.length) {
-      return '';
-    }
-
-    return (
-      <FaCartPlus onClick={addDataItemsToGroceryList(index)} />
-    );
-  };
-
   const createdAtDate = createdAt => {
     var options = { 
       year: 'numeric', 
@@ -122,7 +97,11 @@ const GroceryLists = ({ data }) => {
         </div>
 
         {groceryLists && groceryLists.map((list, index) => (  
-          <div key={list.id} className="modal__sideMenu__option" onClick={() => setActiveList(list)}>
+          <ModalSideOption
+            key={list.id}
+            onClick={() => setActiveList(list)}
+            selected={activeList && (list.id === activeList.id)}
+          >
             <div className="groceryLists__removeIcon" onClick={() => removeList(index, list.id)}>
               <FaTrash />
             </div>
@@ -131,8 +110,8 @@ const GroceryLists = ({ data }) => {
             
             <div className="groceryLists__createdAt">
               ({createdAtDate(list.createdAt)})
-            </div>            
-          </div>
+            </div>         
+          </ModalSideOption>   
         ))}
       </div>
 

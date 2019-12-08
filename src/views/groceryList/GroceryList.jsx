@@ -5,6 +5,8 @@ import { FaPen, FaPlusCircle } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next';
 
 import GroceryListItem from './GroceryListItem';
+import EditableField from 'components/core/EditableField';
+
 import { GroceryListContext } from 'contexts/groceryList';
 import { EditableContext } from 'contexts/editable';
 
@@ -31,6 +33,13 @@ const GroceryList = ({ list, listIndex }) => {
     });
   };
 
+  const changeName = name => {
+    if (name && name !== list.name) {
+      list.name = name;
+      dispatch({ type: 'updateListIndex', index: listIndex, value: list });
+    }
+  };
+
   const changeItem = index => event => {
     const text = event.target.value;
     if (text && text !== list.items[index].text) {
@@ -53,7 +62,11 @@ const GroceryList = ({ list, listIndex }) => {
     <div className="groceryList">
       <div className="groceryList__header">
         <div className="flex vcenter">
-          <h3>{list.name}</h3>
+          <EditableField
+            viewValue={<h3>{list.name}</h3>}
+            value={list.name}
+            onBlur={changeName}
+          />
           <FaPen 
             className="groceryLists__editListIcon" 
             onClick={() => setEditMode({ type: editable ? 'view' : 'edit' })} 
