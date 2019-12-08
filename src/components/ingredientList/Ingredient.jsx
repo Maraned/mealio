@@ -62,6 +62,7 @@ const Ingredient = ({
   }
 
   const onAddIngredient = () => {
+    console.log('onAddIngredient')
     route({ type: 'newIngredient', value: groups, size: 'auto', allIngredients, });
   };
 
@@ -94,6 +95,7 @@ const Ingredient = ({
         addable
         onAddItem={onAddIngredient}
         addItemText={t('Ingredient:NewIngredient')}
+        searchable
       />
 
       <div className="ingredient__remove__container">

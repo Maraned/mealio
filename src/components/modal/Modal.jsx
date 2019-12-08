@@ -86,7 +86,7 @@ const Modal = ({ children, ref }) => {
             </div>
           </div>
 
-          <ModalView data={ModalData} />
+          <ModalView data={ModalData} closeModal={closeModal} />
         </div>
       </PosedModal>
     )}

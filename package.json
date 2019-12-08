@@ -6,6 +6,7 @@
     "classcat": "^3.2.5",
     "express": "^4.17.1",
     "i18next": "^15.0.6",
+    "minisearch": "^2.1.3",
     "react": "^16.8.4",
     "react-anime": "^2.2.0",
     "react-dom": "^16.8.4",

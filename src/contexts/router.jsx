@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useEffect } from 'react';
 
 import Settings from 'views/settings/Settings';
 import GroceryLists from 'views/groceryList/GroceryListsWrapper';
+import NewIngredient from 'components/ingredientList/NewIngredientWrapper';
 
 const modalView = view => ({
   ModalView: view
@@ -11,15 +12,23 @@ const modalView = view => ({
 const pages = {
   closeModal: modalView(null),
   settings: modalView(Settings),
-  groceryLists: modalView(GroceryLists)
+  groceryLists: modalView(GroceryLists),
+  newIngredient: modalView(NewIngredient),
 }
 
 const routerReducer = (state, action) => {
+  console.log('got router way', state, action)
+
   if (action.type === 'closeModal') {
     return { ...state, ModalView: null };
   }
 
-  return { ...state, ...pages[action.type], ModalData: action.value };
+  return { 
+    ...state, 
+    ...pages[action.type], 
+    ModalSize: action.size,
+    ModalData: { ...action },
+  };
 };
 
 const initialState = { ModalView: null, breadcrumbs: [] };

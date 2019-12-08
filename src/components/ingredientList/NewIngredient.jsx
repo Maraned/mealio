@@ -1,19 +1,31 @@
 import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { postRequest } from 'utils/request';
+import { postRequest, getRequest } from 'utils/request';
 
 import EditableField from 'components/core/EditableField';
 
 import { UserContext } from 'contexts/user';
+import { AllIngredientsContext } from 'contexts/allIngredients';
 
 import './newIngredient.css';
 
-const NewIngredient = ({ groups, allIngredients }) => {
+const NewIngredient = ({ groups, closeModal }) => {
   const [ingredientName, setIngredientName] = useState('');
   const [ingredientGroup, setIngredientGroup] = useState({ name: '' });
   const [ingredientAlternatives, setIngredientAlternatives] = useState([]);
   const { t } = useTranslation();
   const { state: user } = useContext(UserContext);
+  const { 
+    state: allIngredients, 
+    dispatch: allIngredientsDispatch 
+  } = useContext(AllIngredientsContext);
+
+  const updateAllIngredients = async () => {
+    const updatedIngredients = await getRequest('ingredients');
+    console.log('updatedIngredients', updatedIngredients)
+
+    allIngredientsDispatch({ type: 'update', value: updatedIngredients });
+  }
 
   const addIngredient = async () => {
     let groupId = ingredientGroup.id;
@@ -31,6 +43,11 @@ const NewIngredient = ({ groups, allIngredients }) => {
       alternatives: ingredientAlternatives.map(alternative => alternative.id),
       userId: user.id,
     }, true);
+
+    if (ingredientId) {
+      await updateAllIngredients();
+      closeModal();
+    }
   };
 
   const onGroupChange = event => {
@@ -46,7 +63,6 @@ const NewIngredient = ({ groups, allIngredients }) => {
   }
 
   const onAlternativeSelect = alternative => {
-    console.log('alternative')
     addAlternative(alternative);
   };
 
@@ -76,7 +92,6 @@ const NewIngredient = ({ groups, allIngredients }) => {
     </div>
   );
 
-
   const onGroupSelect = group => {
     setIngredientGroup(group);
   };
@@ -85,11 +100,13 @@ const NewIngredient = ({ groups, allIngredients }) => {
     <div className="newIngredient">
       <h2>{t('Ingredient:NewIngredient')}</h2>
 
-      <input 
+      <EditableField
         placeholder={t('Ingredient:Name')} 
         onChange={event => setIngredientName(event.target.value)}  
         value={ingredientName}
+        center
       />
+
       <EditableField 
         value={t(`Group:${ingredientGroup.name}`)}
         onChange={onGroupChange}

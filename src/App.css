@@ -8,6 +8,7 @@ body,
 #root {
   height: 100%;
   background-color: var(--primary-background);
+  overflow-x: hidden;
 }
 
 a {
@@ -211,6 +212,7 @@ a:hover {
   background-color: white;
   box-shadow: var(--box-shadow);
   border-radius: 10px;
+  max-width: 1024px;
 }
 
 .box {

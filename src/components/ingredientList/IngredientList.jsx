@@ -134,17 +134,13 @@ const IngredientList = () => {
           </div>
         
           {state.editable && (
-            <div>
-              <input 
-                className="ingredientList__portions"
-                type="number" 
-                value={defaultPortions} 
-                max={10} 
-                min={1} 
-                onChange={updateDefaultPortions}  
-              />
-              <label>{t('Recipe:Portion_plural')}</label>
-            </div>
+            <RangeSlider 
+              value={portionsAmount}
+              min={1} 
+              max={8} 
+              label={t('Recipe:Portion', { count: portionsAmount })} 
+              onChange={updatePortions}
+            />
           )}
         </div>
 

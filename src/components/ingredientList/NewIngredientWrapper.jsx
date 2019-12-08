@@ -4,9 +4,9 @@ import { EditableProvider } from 'contexts/editable';
 
 import NewIngredient from './NewIngredient';
 
-const NewIngredientWrapper = ({ data }) => (
+const NewIngredientWrapper = ({ data, closeModal }) => (
   <EditableProvider editable={true}>
-    <NewIngredient {...data} />
+    <NewIngredient {...data} closeModal={closeModal} />
   </EditableProvider>
 );
 

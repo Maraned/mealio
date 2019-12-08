@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react'; 
 
 const reducer = (state, action) => {
+  console.log('allIngredients context', state, action)
   switch (action.type) {
     case 'add':
       const { name, group } = action;

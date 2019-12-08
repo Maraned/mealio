@@ -7,7 +7,6 @@ import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
 import RecipeList from 'views/recipeList/RecipeListWrapper';
 import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
 import GroceryLists from 'views/groceryList/GroceryListsWrapper';
-import NewIngredient from 'components/ingredientList/NewIngredientWrapper';
 import AdminPage from 'views/admin/AdminPage';
 import AdminDashboard from 'views/admin/Dashboard';
 import RecipeCollection from 'views/recipeCollection/RecipeCollection';

@@ -65,3 +65,9 @@
 .select__caret--open {
   transform: 
 }
+
+.select__search {
+  width: 75%;
+  box-shadow: 0px 1px 0px rgba(0,0,0,0.15);
+  text-align: center;
+}
