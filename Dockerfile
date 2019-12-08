@@ -1,6 +1,5 @@
 FROM node:10
 WORKDIR /usr/src/app
-USER 1000
 
 COPY config config 
 COPY lib lib

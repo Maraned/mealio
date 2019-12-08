@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
   try {
     const { name, group, userId, alternatives } = req.body;
 
-    const user = await rdb.find('user', userId);
+    const user = await rdb.find('users', userId);
     const status = user.isAdmin ? 'active' : 'pending';
     const response = await rdb.save('ingredients', { name, group, status, alternatives });
     const ingredientId = response.generated_keys[0];
