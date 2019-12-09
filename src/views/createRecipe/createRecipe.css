@@ -18,5 +18,12 @@
 }
 
 .createRecipe .ingredientList {
-  width: auto;
+  width: 100%;
 }
+
+@media all and (min-width: 1024px) {
+  .createRecipe .ingredientList {
+    width: auto;
+  }
+}
+

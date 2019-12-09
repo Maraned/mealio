@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SideMenuLayout from 'components/layouts/SideMenuLayout';
 import { UserContext } from 'contexts/user';
@@ -55,6 +55,7 @@ const MyRecipes = () => {
     <SideMenuLayout 
       views={views} 
       defaultView="allRecipes" 
+      grid
     />
   );
 };

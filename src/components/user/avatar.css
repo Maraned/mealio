@@ -1,5 +1,6 @@
 .avatar {
-  height: 100%;
+  height: 2rem;
+  width: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;

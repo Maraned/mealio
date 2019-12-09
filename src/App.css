@@ -213,6 +213,7 @@ a:hover {
   box-shadow: var(--box-shadow);
   border-radius: 10px;
   max-width: 1024px;
+  margin-bottom: .5rem;
 }
 
 .box {
@@ -280,6 +281,7 @@ a:hover {
 .viewMaxWidth {
   max-width: 1024px;
   width: 100%;
+  flex: 1;
 }
 
 .marginBottom {

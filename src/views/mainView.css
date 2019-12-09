@@ -7,8 +7,6 @@
 .mainView__content {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
-  /* padding-top: var(--header-height); */
   position: relative;
 }
 
@@ -19,7 +17,8 @@
   }
 }
 
-.mainView__content > *:not(.alertBannerView):not(.modalWrapper) {
-  /* margin-top: 2rem; */
-  margin-right: 1rem;
+@media all and (min-width: 1025px) {
+  .mainView__content > *:not(.alertBannerView):not(.modalWrapper) {
+    margin-right: 1rem;
+  }
 }

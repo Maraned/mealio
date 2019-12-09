@@ -1,7 +1,8 @@
 .fullWidthContainer {
   width: 100%;
   display: flex;
-  margin: 0 auto;
+  flex-wrap: wrap;
+  max-width: 1024px;
 }
 
 .fullWidthContainer--centered:not(.fullWidthContainer--stack) {

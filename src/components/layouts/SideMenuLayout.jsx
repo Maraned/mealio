@@ -10,7 +10,7 @@ import { FaPlusCircle } from 'react-icons/fa';
   @param defaultView: String
 */
 
-const SideMenuLayout = ({ views, defaultView }) => {
+const SideMenuLayout = ({ views, defaultView, grid }) => {
   const [activeView, setActiveView] = useState(defaultView);
   const { t } = useTranslation();
 
@@ -23,10 +23,6 @@ const SideMenuLayout = ({ views, defaultView }) => {
   }) => (
     <button 
       key={viewName}
-      // className={cc(['sideMenuLayout__sideMenuOption', {
-      //   'sideMenuLayout__sideMenuOption--selected': viewName === activeView,
-      //   'sideMenuLayout__sideMenuOption--disabled': disabled
-      // }])}
       className={cc(['fullWidth', {
         'selected': viewName === activeView,
         'disabled': disabled,
@@ -53,12 +49,16 @@ const SideMenuLayout = ({ views, defaultView }) => {
         <div className="background box">
           <h2 className="center">{t(`MyRecipes:${activeView}`)}</h2>
           <div className="boxDivider" />
-          {views.map(view => renderSideMenuOption({
-            viewName: view.name,
-            text: t(`MyRecipes:${view.text}`),
-            count: view.data && view.data.length,
-            ...view
-          }))}
+          <div className={cc(['sideMenuLayout__content', {
+            'sideMenuLayout__content--grid': grid
+          }])}>
+            {views.map(view => renderSideMenuOption({
+              viewName: view.name,
+              text: t(`MyRecipes:${view.text}`),
+              count: view.data && view.data.length,
+              ...view
+            }))}
+          </div>
         </div>
       </div>
 

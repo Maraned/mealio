@@ -1,16 +1,21 @@
 .sideMenuLayout {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .sideMenuLayout__sideMenu {
-  padding-right: 1rem;
-  width: 20rem;
+  width: 100%;
+  min-width: 20rem;
+  flex: 1 1 30%;
+  padding: 0 .5rem;
 }
 
 .sideMenuLayout__activeView {
   display: flex;
   justify-content: center;
+  flex: 1 1 70%;
+  padding: 0 .5rem;
 }
 
 .sideMenuLayout__sideMenuOption__count {
@@ -34,4 +39,18 @@
   border: 1px solid #fff;
   background: #fff;
   color: var(--primary-color);
+}
+
+.sideMenuLayout__content--grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sideMenuLayout__content--grid > * {
+  height: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: .5rem;
+  width: calc(50% - 1rem) !important;
 }

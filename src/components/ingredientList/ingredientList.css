@@ -1,5 +1,6 @@
 .ingredientList {
   height: 100%;
+  flex-grow: 1;
 }
 
 @media all and (min-width: 640px) {
