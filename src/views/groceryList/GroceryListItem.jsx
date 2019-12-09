@@ -1,39 +1,18 @@
-import React, { useState, useContext } from 'react';
+import './groceryListItem.css';
 
-import { FaTrash } from 'react-icons/fa';
-import posed from 'react-pose';
+import React, { useState } from 'react';
+
 import cc from 'classcat';
-import { GroceryListContext } from 'contexts/groceryList';
 import EditableField from 'components/core/EditableField';
 
 import Checkbox from 'components/core/Checkbox';
 
-import './groceryListItem.css'
-
-const ButtonsContainer = posed.div({
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0
-    }
-  },
-  hidden: {
-    opacity: 0,
-    transition: {
-      duration: 0
-    }
-  }
-})
-
-
 const GroceryListItem = ({ 
   item, 
   removeItem, 
-  index, 
   changeItem,
-  listIndex, 
+  onCheckedChange,
 }) => {
-  const { dispatch } = useContext(GroceryListContext);
   const [itemValue, setItemValue] = useState(item.text);
 
   const changeValue = event => {
@@ -42,12 +21,8 @@ const GroceryListItem = ({
 
   const onChecked = checked => {
     item.checked = checked;
-    dispatch({ type: 'updateListItem', listIndex, index, value: item })
+    onCheckedChange(checked);
   };
-
-  const onBlur = (event) => {
-    console.log('blurring', event)
-  }
 
   return (
     <div 
@@ -60,7 +35,7 @@ const GroceryListItem = ({
       <EditableField
         value={itemValue} 
         onChange={changeValue}
-        onBlur={changeItem} // changeItem 
+        onBlur={changeItem}  
         onClick={() => onChecked(!item.checked)} 
         onRemove={removeItem}
         showRemove

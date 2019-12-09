@@ -20,14 +20,14 @@ const GroceryList = ({ list, listIndex }) => {
 
   const removeItem = index => () => {
     list.items.splice(index, 1);
-    dispatch({ type: 'updateListIndex', index: listIndex, value: list });
+    dispatch({ type: 'updateList', id: list.id, value: list });
   };
 
   const addGroceryListItem = () => {
     list.items.push({ text: '', checked: false });
     updateList({ 
-      type: 'updateListIndex', 
-      index: listIndex, 
+      type: 'updateList', 
+      id: list.id, 
       value: list, 
       silent: true 
     });
@@ -36,16 +36,20 @@ const GroceryList = ({ list, listIndex }) => {
   const changeName = name => {
     if (name && name !== list.name) {
       list.name = name;
-      dispatch({ type: 'updateListIndex', index: listIndex, value: list });
+      dispatch({ type: 'updateList', id: list.id, value: list });
     }
   };
 
-  const changeItem = index => event => {
-    const text = event.target.value;
+  const changeItem = index => text => {
     if (text && text !== list.items[index].text) {
-      list.items[index].text = event.target.value;
-      dispatch({ type: 'updateListIndex', index: listIndex, value: list });
+      list.items[index].text = text;
+      dispatch({ type: 'updateList', id: list.id, value: list });
     }
+  };
+
+  const onCheckedChange = index => checked => {
+    list.items[index].checked = checked;
+    dispatch({ type: 'updateList', id: list.id, value: list });
   };
 
   const createdAtDate = createdAt => {
@@ -88,6 +92,7 @@ const GroceryList = ({ list, listIndex }) => {
               removeItem={removeItem(index)} 
               index={index} 
               changeItem={changeItem(index)}
+              onCheckedChange={onCheckedChange(index)}
               listIndex={listIndex}
             />
           );
@@ -101,6 +106,7 @@ const GroceryList = ({ list, listIndex }) => {
           removeItem={removeItem(checkedItem.index)} 
           index={checkedItem.index} 
           changeItem={changeItem(checkedItem.index)}
+          onCheckedChange={onCheckedChange(checkedItem.index)}
           listIndex={listIndex}
         />
       ))}

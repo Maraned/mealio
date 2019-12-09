@@ -12,6 +12,14 @@ const sortByCreatedAt = (a, b) => {
   }
 }
 
+const popFind = (list, id) => {
+  for (const [index, item] of list.entries()) {
+    if (item.id === id) {
+      return list.splice(index, 1);
+    }
+  }
+}
+
 const reducer = (state, action) => {
   const groceryListState = [...state];
   switch (action.type) {
@@ -19,23 +27,24 @@ const reducer = (state, action) => {
       return [ ...state, ...action.value ];
     case 'update':
       return action.value;
-    case 'updateListIndex':
-      groceryListState[action.index] = action.value;
+    case 'updateList':
+      let updatedList = popFind(groceryListState, action.id)[0];
+      updatedList = { ...updatedList, ...action.value };
       if (!action.silent) {
-        putRequest(`groceryList/update/${groceryListState[action.index].id}`, groceryListState[action.index]);
+        putRequest(`groceryList/update/${updatedList.id}`, action.value);
       }
-      return groceryListState;
+      return [...groceryListState, updatedList];
     case 'updateListItem':
-      groceryListState[action.listIndex].items[action.index] = action.value;
-      putRequest(`groceryList/update/${groceryListState[action.listIndex].id}`, groceryListState[action.index]);
-      return groceryListState;
+      let list = popFind(groceryListState, action.id)[0];
+      list.items[action.index] = action.value;      
+      putRequest(`groceryList/update/${list.id}`, action.value);
+      return [...groceryListState, list];
     case 'remove':
       groceryListState.splice(action.index, 1);
       deleteRequest(`groceryList/${action.listId}`, {
         userId: action.userId
       });
       return groceryListState;
-      
   }
 };
 

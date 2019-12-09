@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { postRequest, getRequest } from 'utils/request';
-import cc from 'classcat';
 
 import { GroceryListContext } from 'contexts/groceryList';
 import { UserContext } from 'contexts/user';
 import GroceryList from './GroceryList';
 
-import { FaCartPlus, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 
 import { ModalSideOption } from 'components/modal/Modal';
 
