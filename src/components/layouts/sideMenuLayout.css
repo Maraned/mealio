@@ -9,6 +9,7 @@
   min-width: 20rem;
   flex: 1 1 30%;
   padding: 0 .5rem;
+  max-width: 30rem;
 }
 
 .sideMenuLayout__activeView {

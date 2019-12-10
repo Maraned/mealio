@@ -3,7 +3,12 @@
   flex-direction: column;
   width: 50%;
   flex: 1;
-  min-width: 450px;
+}
+
+@media all and (min-width: 640px) {
+  .stepList {
+    min-width: 450px;
+  }
 }
 
 .stepList__popup {

@@ -9,10 +9,12 @@
   margin-bottom: .5rem;
 }
 
-.recipe__description,
-.recipe__imageUpload,
-.recipe__imageGallery {
-  width: 50%;
+@media all and (min-width: 640px) {
+  .recipe__description,
+  .recipe__imageUpload,
+  .recipe__imageGallery {
+    width: 50%;
+  }
 }
 
 .recipe__name,

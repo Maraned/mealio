@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import cc from 'classcat';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
@@ -233,7 +234,9 @@ const CreateRecipe = () => {
   );
 
   return (
-    <div className="createRecipe recipe">
+    <div className={cc(['createRecipe', 'recipe', {
+      'createRecipe--editMode': editState.editable
+    }])}>
       {renderLastSaved()}
 
       <div className="background recipe__main">

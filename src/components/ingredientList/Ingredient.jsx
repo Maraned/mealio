@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
+import cc from 'classcat';
 
 import { RouterContext } from 'contexts/router';
 import { AllIngredientsContext } from 'contexts/allIngredients';
+import { EditableContext } from 'contexts/editable';
 
 import EditableField from 'components/core/EditableField';
 import Select from 'components/core/Select';
@@ -25,6 +27,7 @@ const Ingredient = ({
   const [showRemove, setShowRemove] = useState(false);
   const { dispatch: route } = useContext(RouterContext);
   const { state: allIngredients } = useContext(AllIngredientsContext);
+  const { state: editState } = useContext(EditableContext);
 
   const amountValue = () => {
     if (ingredient.amount) {
@@ -62,15 +65,17 @@ const Ingredient = ({
   }
 
   const onAddIngredient = () => {
-    console.log('onAddIngredient')
     route({ type: 'newIngredient', value: groups, size: 'auto', allIngredients, });
   };
 
   return (
-    <div className="ingredient">
+    <div className={cc(['ingredient', {
+      'ingredient--editMode': editState.editable
+    }])}>
       <EditableField 
         value={amountValue()} 
         onChange={updateAmount} 
+        type="text"
         placeholder={t('Ingredient:Amount')} 
         onPaste={onPaste}
         onFocus={onFocus}
@@ -80,6 +85,7 @@ const Ingredient = ({
       <EditableField 
         value={ingredient.unit} 
         onChange={updateUnit} 
+        type="text"
         placeholder={t('Ingredient:Unit')} 
         onPaste={onPaste}
         onFocus={onFocus}
@@ -98,13 +104,15 @@ const Ingredient = ({
         searchable
       />
 
-      <div className="ingredient__remove__container">
-        {showRemove && (
-          <div className="ingredient__remove">
-            <FaTimes onClick={removeIngredient} />
-          </div>
-        )}
-      </div>
+      {editState.editable && (
+        <div className="ingredient__remove__container">
+          {showRemove && (
+            <div className="ingredient__remove">
+              <FaTimes onClick={removeIngredient} />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

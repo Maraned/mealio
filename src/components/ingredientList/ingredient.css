@@ -2,6 +2,16 @@
   display: flex;
 }
 
+.ingredient--editMode {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(auto, 140px)) 1.5rem;
+}
+
+.ingredient > * {
+  max-width: 200px;
+  width: auto;
+}
+
 .ingredient > *:not(:last-child) {
   margin-right: .25rem;
 }

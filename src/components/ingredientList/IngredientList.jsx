@@ -1,6 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import './ingredientList.css';
 
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import cc from 'classcat';
 
 import { getRequest } from 'utils/request';
 
@@ -12,8 +14,6 @@ import IngredientModel from 'models/ingredientModel';
 
 import Ingredient from 'components/ingredientList/Ingredient';
 import RangeSlider from 'components/core/rangeSlider/RangeSlider';
-
-import './ingredientList.css';
 
 const IngredientList = () => {
   const { state } = useContext(EditableContext);
@@ -127,32 +127,21 @@ const IngredientList = () => {
 
   return (
     <>
-      <div className="ingredientList list background">
+      <div className={cc(['ingredientList', 'list', 'background', {
+        'ingredientList--editMode': state.editable
+      }])}>
         <div className="ingredientList__header">
-          <div>
-            <h4>{t('Recipe:Ingredients')}</h4>
-          </div>
-        
-          {state.editable && (
-            <RangeSlider 
-              value={portionsAmount}
-              min={1} 
-              max={8} 
-              label={t('Recipe:Portion', { count: portionsAmount })} 
-              onChange={updatePortions}
-            />
-          )}
+          <h4>{t('Recipe:Ingredients')}</h4>
         </div>
 
-        {!state.editable && (
-          <RangeSlider 
-            value={portionsAmount}
-            min={1} 
-            max={8} 
-            label={t('Recipe:Portion', { count: portionsAmount })} 
-            onChange={updatePortions}
-          />
-        )}
+        <RangeSlider 
+          value={portionsAmount}
+          min={1} 
+          max={8} 
+          label={t('Recipe:Portion', { count: portionsAmount })} 
+          onChange={updatePortions}
+          className="center"
+        />
 
         {ingredients && ingredients.map((ingredient, index) => (
           <Ingredient
@@ -172,7 +161,7 @@ const IngredientList = () => {
             {t('Recipe:AddIngredient')}
           </button>
         ) : (
-          <button className="fullWidth" onClick={openGroceryListModal}>
+          <button onClick={openGroceryListModal}>
             {t('Recipe:AddToGroceryList')}
           </button>
         )}

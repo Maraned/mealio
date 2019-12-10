@@ -17,7 +17,7 @@
   position: relative;
 }
 
-.createRecipe .ingredientList {
+.createRecipe--editMode .ingredientList {
   width: 100%;
 }
 
