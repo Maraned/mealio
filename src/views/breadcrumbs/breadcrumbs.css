@@ -2,19 +2,20 @@
   background-color: var(--primary-background);
   font-size: .75rem;
   display: flex;
-  padding: 1rem 0;
+  padding: 0;
   width: 100%;
 }
 
 @media all and (min-width: 1025px) {
   .breadcrumbs {
-    margin-left: calc(var(--main-side-menu-width) + 1rem);
-    padding: 1rem 1rem;
+    padding: 1rem;
+    width: auto;
   }
 }
 
 .breadcrumbs > * {
   width: 100%;
+  height: var(--top-content-height);
 }
 
 @media all and (min-width: 1025px) {

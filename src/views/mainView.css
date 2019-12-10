@@ -2,6 +2,19 @@
   height: auto;
   background-color: var(--primary-background);
   padding: 0 1rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mainView__topContent {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media all and (min-width: 1025px) {
+  .mainView__topContent {
+    flex-wrap: nowrap;
+  }
 }
 
 .mainView__content {

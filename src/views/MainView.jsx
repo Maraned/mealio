@@ -6,6 +6,7 @@ import Modal from 'components/modal/Modal';
 import AlertBannerView from 'views/alertBanner/AlertBannerView';
 import MainSideMenu from './mainSideMenu/MainSideMenu';
 import Breadcrumbs from 'views/breadcrumbs/Breadcrumbs';
+import Logo from 'views/logo/Logo';
 
 import ViewRoutes from './ViewRoutes';
 
@@ -17,7 +18,10 @@ const MainView = () => {
       <div className="mainView">
         <Router>
           
-          <Breadcrumbs />
+          {/* <div className="mainView__topContent"> */}
+            <Logo />
+          {/* </div> */}
+            <Breadcrumbs />
 
           <div className="mainView__content">
             <MainSideMenu />
