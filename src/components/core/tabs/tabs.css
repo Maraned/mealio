@@ -1,0 +1,13 @@
+.tabs__content {
+  max-width: 1024px;
+}
+
+.tabs__tab {
+  padding: .75rem;
+  cursor: pointer;
+}
+
+.tabs__tab--selected {
+  /* background-color: var(--primary-color-lighter); */
+  /* color: var(--primary-color-lighter-text); */
+}

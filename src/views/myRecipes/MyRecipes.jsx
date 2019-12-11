@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SideMenuLayout from 'components/layouts/SideMenuLayout';
 import { UserContext } from 'contexts/user';
+import Tabs from 'components/core/tabs/Tabs';
 
 import RecipeAccordionList from './RecipeAccordionList';
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import FetchMyRecipes from 'utils/fetchMyRecipes';
 
 const MyRecipes = () => {
-  const { state: user } = useContext(UserContext);
   const { t } = useTranslation();
   const {
     draftRecipes,
@@ -17,6 +17,37 @@ const MyRecipes = () => {
     getPublishedRecipes
   } = FetchMyRecipes();
 
+  const allRecipes = [...draftRecipes, ...publishedRecipes];
+
+  const views = [{
+    View: CreateRecipeView,
+    name: 'createRecipe',
+    title: t('MyRecipes:CreateRecipe'),
+    createAction: true,
+  }, {
+    View: RecipeAccordionList,
+    name: 'allRecipes',
+    title: t('MyRecipes:AllRecipes'),
+    data: allRecipes,
+    disabled: !allRecipes.length
+  }, {
+    View: RecipeAccordionList,
+    name: 'draftRecipes',
+    title: t('MyRecipes:DraftRecipes'),
+    data: draftRecipes,
+    disabled: !draftRecipes.length
+  }, {
+    View: RecipeAccordionList,
+    name: 'publishedRecipes',
+    title: t('MyRecipes:PublishedRecipes'),
+    data: publishedRecipes,
+    disabled: !publishedRecipes.length
+  }];
+
+  console.log('views', views)
+
+  const { state: user } = useContext(UserContext);
+
   useEffect(() => {
     if (user.id) {
       getDraftRecipes(user.id);
@@ -24,39 +55,22 @@ const MyRecipes = () => {
     }
   }, [user.id]);
 
-  const allRecipes = [...draftRecipes, ...publishedRecipes];
-
-  const views = [{
-    View: CreateRecipeView,
-    name: 'createRecipe',
-    text: t('MyRecipes:CreateRecipe'),
-    createAction: true,
-  }, {
-    View: RecipeAccordionList,
-    name: 'allRecipes',
-    text: t('MyRecipes:AllRecipes'),
-    data: allRecipes,
-    disabled: !allRecipes.length
-  }, {
-    View: RecipeAccordionList,
-    name: 'draftRecipes',
-    text: t('MyRecipes:DraftRecipes'),
-    data: draftRecipes,
-    disabled: !draftRecipes.length
-  }, {
-    View: RecipeAccordionList,
-    name: 'publishedRecipes',
-    text: t('MyRecipes:PublishedRecipes'),
-    data: publishedRecipes,
-    disabled: !publishedRecipes.length
-  }];
 
   return (
-    <SideMenuLayout 
+    <div className="myRecipes child-flex">
+      <Tabs views={views} />
+      {/* <activeView.View 
+        key={activeView.name} 
+        title={activeView.text} 
+        data={activeView.data} 
+        viewClassName={activeView.className}   
+      /> */}
+    {/* <SideMenuLayout 
       views={views} 
       defaultView="allRecipes" 
       grid
-    />
+    /> */}
+    </div>
   );
 };
 

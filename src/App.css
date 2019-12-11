@@ -274,6 +274,10 @@ a:hover {
   flex-grow: 1;
 }
 
+.child-flex {
+  flex: 1;
+}
+
 .column {
   flex-direction: column;
 }

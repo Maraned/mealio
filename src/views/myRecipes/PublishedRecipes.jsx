@@ -2,7 +2,8 @@ import React from 'react';
 import RecipeAccordion from 'views/myRecipes/RecipeAccordion';
 
 const PublishedRecipes = ({ data: recipes }) => {
-
+  console.log('data', data)
+  console.log('hello!', data)
   return (
     <div className="publishedRecipes">
       {recipes.map((recipe, index) => (

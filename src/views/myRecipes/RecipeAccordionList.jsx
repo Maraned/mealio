@@ -8,8 +8,6 @@ const RecipeAccordionList = ({ title, data: recipes }) => {
 
   return (
     <div className="recipeAccordionList flex grow column">
-      <h2 className="center background box marginBottom">{title}</h2>
-      
       {recipes.map((recipe, index) => (
         <RecipeAccordion 
           recipe={recipe} 
