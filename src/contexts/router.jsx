@@ -27,7 +27,7 @@ const routerReducer = (state, action) => {
     ...state, 
     ...pages[action.type], 
     ModalSize: action.size,
-    ModalData: { ...action },
+    ModalData: { ...action.value },
   };
 };
 
