@@ -14,4 +14,12 @@
   padding: .5rem;
   height: var(--top-content-height);
   text-align: center;
+
+  background-color: rgba(255, 255, 255, .92);
+
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'Fondamento', cursive;
+  font-family: 'La Belle Aurore', cursive;
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 1.75rem;
 }

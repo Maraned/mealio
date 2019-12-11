@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import SideMenuLayout from 'components/layouts/SideMenuLayout';
 import { UserContext } from 'contexts/user';
 import Tabs from 'components/core/tabs/Tabs';
 
@@ -44,8 +43,6 @@ const MyRecipes = () => {
     disabled: !publishedRecipes.length
   }];
 
-  console.log('views', views)
-
   const { state: user } = useContext(UserContext);
 
   useEffect(() => {
@@ -59,17 +56,6 @@ const MyRecipes = () => {
   return (
     <div className="myRecipes child-flex">
       <Tabs views={views} />
-      {/* <activeView.View 
-        key={activeView.name} 
-        title={activeView.text} 
-        data={activeView.data} 
-        viewClassName={activeView.className}   
-      /> */}
-    {/* <SideMenuLayout 
-      views={views} 
-      defaultView="allRecipes" 
-      grid
-    /> */}
     </div>
   );
 };
