@@ -16,6 +16,8 @@ const MyRecipes = () => {
     getPublishedRecipes
   } = FetchMyRecipes();
 
+  const [initialFetchDone, setInitialFetchDone] = useState(false);
+
   const allRecipes = [...draftRecipes, ...publishedRecipes];
 
   const views = [{
@@ -23,39 +25,53 @@ const MyRecipes = () => {
     name: 'createRecipe',
     title: t('MyRecipes:CreateRecipe'),
     createAction: true,
+    route: 'create',
   }, {
     View: RecipeAccordionList,
     name: 'allRecipes',
     title: t('MyRecipes:AllRecipes'),
     data: allRecipes,
-    disabled: !allRecipes.length
+    disabled: !allRecipes.length,
+    route: 'all',
   }, {
     View: RecipeAccordionList,
     name: 'draftRecipes',
     title: t('MyRecipes:DraftRecipes'),
     data: draftRecipes,
-    disabled: !draftRecipes.length
+    disabled: !draftRecipes.length,
+    route: 'draft',
   }, {
     View: RecipeAccordionList,
     name: 'publishedRecipes',
     title: t('MyRecipes:PublishedRecipes'),
     data: publishedRecipes,
-    disabled: !publishedRecipes.length
+    disabled: !publishedRecipes.length,
+    route: 'published',
   }];
 
   const { state: user } = useContext(UserContext);
 
+  const performInitialFetch = async () => {
+    await Promise.all([
+      getDraftRecipes(user.id),
+      getPublishedRecipes(user.id),
+    ]);
+    setInitialFetchDone(true);
+  }
+
   useEffect(() => {
     if (user.id) {
-      getDraftRecipes(user.id);
-      getPublishedRecipes(user.id);
+      performInitialFetch();
     }
   }, [user.id]);
 
+  if (!initialFetchDone) {
+    return '';
+  }
 
   return (
     <div className="myRecipes child-flex">
-      <Tabs views={views} />
+      <Tabs views={views} defaultRoute="all" />
     </div>
   );
 };

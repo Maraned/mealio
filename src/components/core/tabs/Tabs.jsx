@@ -2,6 +2,7 @@ import './tabs.css';
 
 import React, { useState } from 'react';
 import posed from 'react-pose';
+import { Switch, Route, Link, useRouteMatch, Redirect, useLocation } from 'react-router-dom';
 
 const Tab = posed.div({
   enter: {
@@ -23,21 +24,26 @@ const Tab = posed.div({
   }
 });
 
-
 export default function Tabs({
-  views = []
-}) {
-  const [activeView, setActiveView] = useState(views.length 
-    ? views[0]
-    : null
-  );
-  const { View, ...rest } = activeView;
+  views = [],
+  defaultRoute,
+}) {  
+  let match = useRouteMatch();
+  let location = useLocation();
+
+  const [activeView, setActiveView] = useState(views.find(view => {
+    const viewRoute = `${match.path}/${view.route}`;
+    return viewRoute === location.pathname;
+  }));
+
+  const { View, ...rest } = activeView || {};
 
   return (
     <div className="tabs">
       <div className="tabs__header background center flex">
         {views.map(view => {
-          const isSelected = activeView.name === view.name;
+          const viewLink = `${match.path}/${view.route}`;
+          const isSelected = viewLink === location.pathname;
           return (
             <Tab 
               onClick={() => setActiveView(view)}
@@ -45,15 +51,25 @@ export default function Tabs({
               pose={isSelected ? 'enter' : 'exit'}
               className="tabs__tab"
             >
-              <h3>{view.title}</h3>
+              <Link to={viewLink}><h3>{view.title}</h3></Link>
             </Tab>
           )
         })}
       </div>
       <div className="tabs__content">
-        {activeView && (
-          <View {...rest} />
-        )}
+        <Switch>
+          {views.map(view => (
+            <Route key={view.name} path={`${match.path}/${view.route}`}>
+              <view.View {...rest} />
+            </Route>
+          ))}
+
+          {defaultRoute && (
+            <Route path={match.path}>
+              <Redirect to={`${match.path}/${defaultRoute}`} />
+            </Route>
+          )}
+        </Switch>
       </div>
     </div>
   );

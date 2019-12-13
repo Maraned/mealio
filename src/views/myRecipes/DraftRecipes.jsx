@@ -7,7 +7,7 @@ import './draftRecipes.css';
 const DraftRecipes = ({ draftRecipes }) => {
   return (
     <div className="draftRecipes" key="draftRecipes">
-      {draftRecipes.map((recipe, index) => (
+      {draftRecipes && draftRecipes.map((recipe, index) => (
         <RecipeAccordion 
           recipe={recipe} 
           key={index} 

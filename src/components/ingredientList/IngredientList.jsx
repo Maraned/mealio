@@ -26,7 +26,7 @@ const IngredientList = () => {
 
   const fetchIngredients = async () => {
     const newAllIngredients = await getRequest('ingredients');
-    if (!ingredients.error) {
+    if (!newAllIngredients.error) {
       allIngredientsDispatch({ type: 'update', value: newAllIngredients });
     }
   };

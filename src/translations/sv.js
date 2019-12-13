@@ -148,6 +148,9 @@ export default {
     'saved': 'Sparade recept',
     'myRecipes': 'Skapade recept',
     'recipes': 'Sök recept',
+    'all': 'Alla',
+    'draft': 'Utkast',
+    'published': 'Publicerade'
   },
   Select: {
     Search: 'Sök...',

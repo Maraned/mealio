@@ -74,7 +74,7 @@ const StepList = () => {
   return (
     <div className="stepList list background">
       <h4>{t('Recipe:Steps')}</h4>
-      {steps.map((step, index) => (
+      {steps && steps.map((step, index) => (
         <Step
           key={'step' + index}
           updateStep={updateStep} 

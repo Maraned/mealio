@@ -1,9 +1,11 @@
-import React from 'react'; 
+import React, { useContext, useState, useEffect } from 'react'; 
 import RecipeAccordion from 'views/myRecipes/RecipeAccordion';
+import { DraftRecipesContext } from 'contexts/draftRecipes';
+import { PublishedRecipesContext } from 'contexts/publishedRecipes';
 
 import { useTranslation } from 'react-i18next';
 
-const RecipeAccordionList = ({ title, data: recipes }) => {
+const RecipeAccordionList = ({ title, data: recipes = [] }) => {
   const { t } = useTranslation();
 
   return (
