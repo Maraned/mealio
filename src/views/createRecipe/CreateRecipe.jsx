@@ -11,12 +11,10 @@ import StepList from 'components/stepList/StepList';
 import EditableField from 'components/core/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
-import ImageGallery from 'components/core/imageGallery/ImageGallery';
-import ImageOrder from 'components/core/imageOrder/ImageOrder';
 
 import FetchMyRecipes from 'utils/fetchMyRecipes';
 
-import { postRequest, deleteRequest } from 'utils/request';
+import { postRequest, deleteRequest, imageUrl } from 'utils/request';
 
 import 'views/recipe/recipe.css';
 
@@ -41,8 +39,7 @@ const CreateRecipe = () => {
   const { name, description, images, time, id } = state;
 
   const primaryImage = images && images.length && images[0];
-  const primaryImageUrl = primaryImage && 
-    `http://${window.location.hostname}/api/images/${primaryImage}`;
+  const primaryImageUrl = imageUrl(primaryImage);
 
   // STATES
   const autoSave = useRef(null);
@@ -138,8 +135,6 @@ const CreateRecipe = () => {
       id: user.id,
     }, false);
 
-    console.log('responseStatus', responseStatus)
-
     if (state.draft) {
       getDraftRecipes(user.id);
     } else {
@@ -222,6 +217,13 @@ const CreateRecipe = () => {
     setChanged(true);
   };
 
+  const addImageUrl = async imageUrl => {
+    const newImages = [...images, imageUrl];
+    updateRecipe({ type: 'images', value: newImages });
+    resetAutoSaveTimeout();
+    setChanged(true);
+  }
+
   const updateImages = images => {
     updateRecipe({ type: 'images', value: images });
     resetAutoSaveTimeout();
@@ -292,6 +294,7 @@ const CreateRecipe = () => {
               <>
                 <ImageUpload 
                   onDrop={addImages} 
+                  onUrl={addImageUrl}
                   className="recipe__imageUpload" 
                   id="createRecipe"
                   uploadedImage={primaryImageUrl}

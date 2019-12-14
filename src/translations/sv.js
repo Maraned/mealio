@@ -46,6 +46,9 @@ export default {
     Sort: 'Sortering',
     AddToMyCollection: 'Spara recept',
     RemoveFromMyCollection: 'Ta bort från sparade recept',
+    AddFile: 'Bild från fil',
+    AddUrl: 'Bild från url',
+    Done: 'Klar',
   },
   Time: {
     Second: 'sekund',

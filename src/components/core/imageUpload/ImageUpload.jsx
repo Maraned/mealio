@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import cc from 'classcat';
-
 import './imageUpload.css';
 
+import React, { useState } from 'react';
+import cc from 'classcat';
 import { useTranslation } from 'react-i18next';
 
-const ImageUpload = ({ onDrop, className, circle, id, size, uploadedImage }) => {
+import Popup from 'components/core/popup/Popup';
+
+const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const { t } = useTranslation();
+  const [popupOpen, setPopupOpen] = useState(false);
 
   const onDragOver = event => {
     event.preventDefault();
@@ -43,6 +45,14 @@ const ImageUpload = ({ onDrop, className, circle, id, size, uploadedImage }) => 
     height: `${size}px`,
   } : {};
 
+  const closePopup = event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    setPopupOpen(false);
+    return false;
+  }
+
   return (
     <form 
       className={cc(['imageUpload', className, {
@@ -65,15 +75,34 @@ const ImageUpload = ({ onDrop, className, circle, id, size, uploadedImage }) => 
           )}
         </div>
 
-        <input 
-          className="imageUpload__file" 
-          type="file" 
-          id={id}
-          onChange={onChange} 
-          multiple 
-        />
+        {popupOpen && (
+          <Popup onClose={closePopup} className="flex column vcenter">
+            <input 
+              type="text" 
+              className="fullWidth margin--bottom--large"
+              placeholder={t('Recipe:AddUrl')} 
+              onBlur={event => onUrl(event.target.value)} 
+            />
+
+            <input 
+              className="imageUpload__file" 
+              type="file" 
+              id={id}
+              onChange={onChange} 
+              multiple 
+            />
+            <label 
+              className="button primary margin--bottom--large" 
+              htmlFor={id}
+            >
+              {t('Recipe:AddFile')}
+            </label>
+
+            <button onClick={closePopup}>{t('Recipe:Done')}</button>
+          </Popup>
+        )}
         
-        <label htmlFor={id} className="imageUpload__label flex vcenter center">
+        <label className="imageUpload__label flex vcenter center" onClick={() => setPopupOpen(true)}>
           <strong className="imageUpload__chooseImage">{t('Recipe:ChooseImage')}</strong>
           <span className="imageUpload__dragndrop">
             &nbsp;{t('Recipe:OrDragItHere')}

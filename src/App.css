@@ -37,6 +37,11 @@ a:hover {
   padding: 0.5rem;
 }
 
+.primary {
+  color: var(--primary-text-color);
+  background-color: var(--primary-color);
+}
+
 h1, 
 h2, 
 h3, 
@@ -55,7 +60,9 @@ h2 {
   cursor: pointer;
 }
 
-button {
+button,
+input[type=button],
+.button {
   border: none;
   box-sizing: border-box;
   padding: .5rem 1rem;
@@ -70,40 +77,51 @@ button {
 }
 
 button.selected,
-.clickable.selected {
+input[type=button].selected,
+.clickable.selected,
+.button.selected {
   background-color: var(--primary-color);  
   color: var(--primary-text-color);
 }
 
 button.disabled,
-.clickable.selected {
+input[type=button].disabled,
+.clickable.disabled,
+.button.disabled {
   background-color: var(--disabled-color);
   color: var(--disabled-text-color);
   font-style: var(--disabled-text-style);
 }
 
-button:not(:last-child) {
+button:not(:last-child),
+input[type=button]:not(:last-child) {
   margin-bottom: .5rem;
 }
 
-button.create {
+button.create,
+input[type=button].create,
+.button.create {
   background-color: white;
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
 
-button.create svg {
+button.create svg,
+input[type=button].create svg,
+.button.create svg {
   margin-right: .5rem;
   width: 1rem;
   height: 1rem;;
 }
 
-button.remove {
+button.remove,
+input[type=button].remove {
   background-color: var(--alert-color);
   color: var(--alert-text-color);
 }
 
-button.favorite {
+button.favorite,
+input[type=button].remove {
   background-color: var(--favorite-color);
   color: var(--favorite-text-color);
 }
@@ -299,6 +317,10 @@ a:hover {
 
 .margin--bottom {
   margin-bottom: .5rem;
+}
+
+.margin--bottom--large {
+  margin-bottom: 1rem;
 }
 
 .margin--right {

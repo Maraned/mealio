@@ -3,7 +3,7 @@ var host = window.location.hostname;
 // const url = 'http://backend:3001/api';
 const url = `https://${host}/api`
 
-export const imageUrl = image => `${url}/images/${image}`;
+export const imageUrl = image => url.includes('://') ? image : `${url}/images/${image}`;
 
 export const postRequest = async (endpoint, data, expectResponse = true) => {
   try {
