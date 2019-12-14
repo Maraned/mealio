@@ -9,6 +9,7 @@ COPY utils utils
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 COPY server.js server.js
+RUN mkdir -p ~/usr/src/app/images
 
 RUN npm install -g nodemon
 

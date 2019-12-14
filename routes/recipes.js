@@ -22,10 +22,10 @@ const handleImage = async (image, id) => {
       const folderPath = `images/${id}`;
       const imagePath = `${folderPath}/${imageId}.webp`;
       if (!fs.existsSync(folderPath)) {
-        fs.mkdirSync(folderPath);
+        await fs.mkdirSync(folderPath);
       }
       await sharp(imgBuffer)
-        .resize(600)
+        .resize(350)
         .webp({ lossless: true })
         .toFile(imagePath);
 
