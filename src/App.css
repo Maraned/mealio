@@ -220,6 +220,11 @@ a:hover {
   padding: 1rem;
 }
 
+.box.extraPadding--side {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .boxDivider {
   margin: .75rem -1rem;
   height: 1px;
@@ -282,12 +287,25 @@ a:hover {
   flex-direction: column;
 }
 
+.column.child-margins > *:not(:last-child) {
+  margin-bottom: .5rem;
+}
+
 .viewMaxWidth {
   max-width: 1024px;
   width: 100%;
   flex: 1;
 }
 
-.marginBottom {
+.margin--bottom {
   margin-bottom: .5rem;
+}
+
+.margin--right {
+  margin-right: .5rem;
+}
+
+.image--rounded {
+  border-radius: 4rem;
+  margin-right: 1rem;
 }

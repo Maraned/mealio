@@ -40,6 +40,10 @@ const CreateRecipe = () => {
   const { t, i18n } = useTranslation();
   const { name, description, images, time, id } = state;
 
+  const primaryImage = images && images.length && images[0];
+  const primaryImageUrl = primaryImage && 
+    `http://${window.location.hostname}/api/images/${primaryImage}`;
+
   // STATES
   const autoSave = useRef(null);
   const [lastSaved, setLastSaved] = useState(null);
@@ -133,6 +137,9 @@ const CreateRecipe = () => {
       recipeId: state.id,
       id: user.id,
     }, false);
+
+    console.log('responseStatus', responseStatus)
+
     if (state.draft) {
       getDraftRecipes(user.id);
     } else {
@@ -239,18 +246,18 @@ const CreateRecipe = () => {
     }])}>
       {renderLastSaved()}
 
-      <div className="background recipe__main">
+      <div className="background box">
         <FullWidthContainer spaceBetween>
-          <button 
-            className="createRecipe__toggleModeBtn"
-            onClick={toggleViewMode}
-          >
-            {editState.editable 
-              ? t('Recipe:View') 
-              : t('Recipe:Edit')}
-          </button>
-
-          <div>
+          <div className="flex">
+            <button 
+              className="createRecipe__toggleModeBtn margin--right"
+              onClick={toggleViewMode}
+            >
+              {editState.editable 
+                ? t('Recipe:View') 
+                : t('Recipe:Edit')}
+            </button>
+            
             {state.draft && state.id && (
               <button 
                 className="createRecipe__publish"
@@ -268,66 +275,63 @@ const CreateRecipe = () => {
                 {t('Recipe:Update')}
               </button>
             )}
-
-            <button
-              className="createRecipe__delete"
-              onClick={deleteRecipe}
-            >
-              {t('Recipe:Delete')}
-            </button>
           </div>
+
+          <button
+            className="createRecipe__delete remove"
+            onClick={deleteRecipe}
+          >
+            {t('Recipe:Delete')}
+          </button>
 
         </FullWidthContainer>
 
-        <FullWidthContainer center stack>
-        <EditableField 
-          onChange={changeName} 
-          value={name}
-          className="recipe__name" 
-          placeholder={t('Recipe.Name')}
-          titleField
-          center
-        />
+        <div className="flex" >
+          <div>
+            {editState.editable && (
+              <>
+                <ImageUpload 
+                  onDrop={addImages} 
+                  className="recipe__imageUpload" 
+                  id="createRecipe"
+                  uploadedImage={primaryImageUrl}
+                  size={300}
+                />
+              </>
+            )}
 
-        {editState.editable && (
-          <>
-            <ImageUpload 
-              onDrop={addImages} 
-              className="recipe__imageUpload" 
-              id="createRecipe"
+            {!editState.editable && !!primaryImageUrl && (
+              <img className="recipe__image image--rounded" src={primaryImageUrl} /> 
+            )}
+          </div>
+
+          <div className="flex column">
+            <EditableField 
+              onChange={changeName} 
+              value={name}
+              className="recipe__name margin--bottom" 
+              placeholder={t('Recipe.Name')}
+              titleField
             />
-            <ImageOrder 
-              onOrderChange={updateImages}
-              className="recipe__imageGallery" 
-              images={images}
+
+            <EditableField 
+              onChange={changeDescription} 
+              value={description}
+              className="recipe__description margin--bottom" 
+              placeholder={t('Recipe:Description')}
+              type="text"
             />
-          </>
-        )}
 
-        {!editState.editable && images && (
-          <ImageGallery
-          className="recipe__imageGallery" 
-            images={images} 
-          />
-        )}
-
-        <EditableField 
-          onChange={changeDescription} 
-          value={description}
-          className="recipe__description" 
-          placeholder={t('Recipe:Description')}
-          type="text"
-        />
-
-        <div className="recipe__time">
-          <FaRegClock />
-          <EditableField 
-            onChange={changeTime} 
-            value={time}
-            placeholder={t('Recipe:Time')}
-          />
+            <div className="recipe__time">
+              <FaRegClock />
+              <EditableField 
+                onChange={changeTime} 
+                value={time}
+                placeholder={t('Recipe:Time')}
+              />
+            </div>
+          </div>
         </div>
-      </FullWidthContainer>
       </div>
 
       <FullWidthContainer 

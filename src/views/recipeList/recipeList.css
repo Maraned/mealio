@@ -1,6 +1,6 @@
 .recipeList {
   display: grid;
-  grid-template-columns: repeat(6, minmax(250px, 250px) );
+  grid-template-columns: repeat(auto-fill, minmax(200px, 200px) );
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
   grid-template-rows: minmax(50px,250px);

@@ -3,6 +3,8 @@ var host = window.location.hostname;
 // const url = 'http://backend:3001/api';
 const url = `https://${host}/api`
 
+export const imageUrl = image => `${url}/images/${image}`;
+
 export const postRequest = async (endpoint, data, expectResponse = true) => {
   try {
     const response = await request({
@@ -59,6 +61,7 @@ export const deleteRequest = async (endpoint, data, expectResponse = false) => {
     body: data,
     json: true,
   });
+  console.log('delete response', response)
   if (expectResponse && response.status !== 401) { 
     const responseJSON = await response.json();
     return responseJSON;

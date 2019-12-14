@@ -5,15 +5,19 @@
   flex-direction: column;
   cursor: pointer;
   background-color: white;
+  border-radius: .5rem;
 }
 
 .recipeCard__image {
-  height: 125px;
+  height: 150px;
+  
 }
 
 .recipeCard__image img {
   width: 100%;
   height: 100%;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
 }
 
 .recipeCard__image--default {
@@ -26,7 +30,7 @@
 }
 
 .recipeCard__content {
-  padding: .5rem 0;
+  padding-bottom: .5rem;
 }
 
 .recipeCard__content > * {

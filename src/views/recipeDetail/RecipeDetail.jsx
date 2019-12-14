@@ -4,13 +4,13 @@ import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaRegClock, FaStar } from 'react-icons/fa'; 
 
-import { postRequest } from 'utils/request';
+import { postRequest, imageUrl } from 'utils/request';
 
 import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import EditableField from 'components/core/EditableField';
-import ImageGallery from 'components/core/imageGallery/ImageGallery';
+// import ImageGallery from 'components/core/imageGallery/ImageGallery';
 import IngredientList from 'components/ingredientList/IngredientList';
 import StepList from 'components/stepList/StepList';
 
@@ -53,47 +53,49 @@ const RecipeDetail = () => {
 
   return (
     <div className="createRecipe recipe viewMaxWidth">
-      <FullWidthContainer center stack className="background recipe__main">
-        <EditableField 
-          value={name}
-          className="recipe__name" 
-          placeholder={t('Recipe.Name')}
-          titleField
-        />
-
-        {user.recipeCollection
-         && user.recipeCollection.includes(recipe.id) ? (
-          <button className="remove" onClick={removeRecipeFromMyCollection}>
-            <FaStar className="recipe__saveToCollectionIcon" />
-            {t('Recipe:RemoveFromMyCollection')}
-          </button>
-        ) : (
-          <button className="favorite" onClick={addRecipeToMyCollection}>
-            <FaStar className="recipe__saveToCollectionIcon" />
-            {t('Recipe:AddToMyCollection')}
-          </button>
+      <FullWidthContainer className="background box flex">
+        {!!images && !!images.length && (
+          <img className="recipe__image image--rounded" src={imageUrl(images[0])} /> 
         )}
 
-        {images && (
-          <ImageGallery
-            className="recipe__imageGallery" 
-            images={images} 
-          />
-        )}
-
-        <EditableField 
-          value={description}
-          className="recipe__description" 
-          placeholder={t('Recipe:Description')}
-          type="text"
-        />
-
-        <div className="recipe__time">
-          <FaRegClock />
+        <div className="flex column child-flex child-margins">
           <EditableField 
-            value={time}
-            placeholder={t('Recipe:Time')}
+            value={name}
+            className="recipe__name" 
+            placeholder={t('Recipe.Name')}
+            titleField
           />
+
+          <div>
+            {user.recipeCollection
+            && user.recipeCollection.includes(recipe.id) ? (
+              <button className="remove" onClick={removeRecipeFromMyCollection}>
+                <FaStar className="recipe__saveToCollectionIcon" />
+                {t('Recipe:RemoveFromMyCollection')}
+              </button>
+            ) : (
+              <button className="favorite" onClick={addRecipeToMyCollection}>
+                <FaStar className="recipe__saveToCollectionIcon" />
+                {t('Recipe:AddToMyCollection')}
+              </button>
+            )}
+          </div>
+
+
+          <EditableField 
+            value={description}
+            className="recipe__description" 
+            placeholder={t('Recipe:Description')}
+            type="text"
+          />
+
+          <div className="recipe__time">
+            <FaRegClock />
+            <EditableField 
+              value={time}
+              placeholder={t('Recipe:Time')}
+            />
+          </div>
         </div>
       </FullWidthContainer>
 

@@ -5,7 +5,7 @@ import './imageUpload.css';
 
 import { useTranslation } from 'react-i18next';
 
-const ImageUpload = ({ onDrop, className, circle, id }) => {
+const ImageUpload = ({ onDrop, className, circle, id, size, uploadedImage }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const { t } = useTranslation();
 
@@ -36,7 +36,12 @@ const ImageUpload = ({ onDrop, className, circle, id }) => {
     if (onDrop) {
       onDrop(files);
     }
-  }
+  };
+
+  const uploadedImageStyle = size ? {
+    width: `${size}px`,
+    height: `${size}px`,
+  } : {};
 
   return (
     <form 
@@ -53,7 +58,13 @@ const ImageUpload = ({ onDrop, className, circle, id }) => {
       onDragEnd={onDragLeave}
       onDrop={onFilesDrop}
     >
-      <div className="imageUpload__input">
+      <div className="imageUpload__input flex center vcenter">
+        <div className="imageUpload__uploadedImage" style={uploadedImageStyle}>
+          {!!uploadedImage && (
+            <img className="image--rounded" src={uploadedImage} />
+          )}
+        </div>
+
         <input 
           className="imageUpload__file" 
           type="file" 
@@ -62,7 +73,7 @@ const ImageUpload = ({ onDrop, className, circle, id }) => {
           multiple 
         />
         
-        <label htmlFor={id} className="imageUpload__label">
+        <label htmlFor={id} className="imageUpload__label flex vcenter center">
           <strong className="imageUpload__chooseImage">{t('Recipe:ChooseImage')}</strong>
           <span className="imageUpload__dragndrop">
             &nbsp;{t('Recipe:OrDragItHere')}

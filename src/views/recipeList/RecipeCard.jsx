@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { FaUtensils } from 'react-icons/fa';
 import cc from 'classcat';
 import { Link } from 'react-router-dom';
+import { imageUrl } from 'utils/request';
 
 import './recipeCard.css';
 
@@ -10,6 +11,7 @@ import { RecipeContext } from 'contexts/recipe';
 import { RouterContext } from 'contexts/router';
 
 const RecipeCard = ({ recipe }) => {
+  console.log('recipe', recipe)
   const { dispatch: setRecipe } = useContext(RecipeContext);
   const { dispatch: goToPage } = useContext(RouterContext);
 
@@ -26,7 +28,7 @@ const RecipeCard = ({ recipe }) => {
           {!recipe.images.length ? (
             <FaUtensils />
           ) : (
-            <img src={recipe.images[0]} />
+            <img src={imageUrl(recipe.images[0])} />
           )}
         </div>
 

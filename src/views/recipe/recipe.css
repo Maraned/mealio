@@ -9,19 +9,6 @@
   margin-bottom: .5rem;
 }
 
-@media all and (min-width: 640px) {
-  .recipe__description,
-  .recipe__imageUpload,
-  .recipe__imageGallery {
-    width: 50%;
-  }
-}
-
-.recipe__name,
-.recipe__description {
-  text-align: center;
-}
-
 .recipe__saveToCollectionIcon {
   margin-right: .25rem;
 }
@@ -34,4 +21,9 @@
 
 .recipe__time svg {
   margin-right: .5rem;
+}
+
+.recipe__image {
+  width: 300px;
+  height: 300px;
 }
