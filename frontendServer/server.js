@@ -10,21 +10,16 @@ console.log('app running', process.env.PORT || 8800)
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(logger('combined'));
 
-app.get('/ping', function (req, res) {
-    console.log('path /ping')
- return res.send('pong');
-});
-
 app.get('/', function (req, res) {
     console.log('path /')
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.get('/home', function (req, res) {
-    console.log('path /')
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+app.get('/*', function (req, res) {
+  console.log('path /')
+res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(process.env.PORT || 8800, () => {
-  console.log('App listening on port', process.env.PORT || 8800);
+app.listen(8800, () => {
+  console.log('App listening on port', 8800);
 });
