@@ -4,6 +4,7 @@ import cc from 'classcat';
 
 import { EditableProvider } from 'contexts/editable';
 import UserSettings from './UserSettings';
+import { ModalSideMenu } from 'components/modal/Modal';
 
 import './settings.css';
 
@@ -23,10 +24,11 @@ const Settings = () => {
   );
 
   const renderMenu = () => (
-    // <div className="settings__menu">
-    <div className="modal__sideMenu">
-      {renderMenuOption('UserSettings')}
-    </div>
+    <ModalSideMenu>
+      <div className="background list">
+        {renderMenuOption('UserSettings')}
+      </div>
+    </ModalSideMenu>
   );
 
   return (
@@ -45,3 +47,4 @@ const Settings = () => {
 }
 
 export default Settings;
+ 

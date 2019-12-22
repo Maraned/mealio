@@ -8,7 +8,7 @@ import GroceryList from './GroceryList';
 
 import { FaTrash } from 'react-icons/fa';
 
-import { ModalSideOption } from 'components/modal/Modal';
+import { ModalSideOption, ModalSideMenu, ModalContent } from 'components/modal/Modal';
 
 import './groceryLists.css';
 
@@ -88,36 +88,38 @@ const GroceryLists = ({ data }) => {
 
   return (
     <div className="groceryLists">
-      <div className="modal__sideMenu">
-        <div className="groceryLists__create" onClick={createNewGroceryList}>
+      <ModalSideMenu>
+        <div className="groceryLists__create background" onClick={createNewGroceryList}>
           <div className="groceryLists__create__inner">
             {recipeData && recipeData.recipeName || t('GroceryList:CreateNew')}
           </div>
         </div>
-
-        {groceryLists && groceryLists.map((list, index) => (  
-          <ModalSideOption
-            key={list.id}
-            onClick={() => setActiveList(list)}
-            selected={activeList && (list.id === activeList.id)}
-          >
-            <div className="groceryLists__removeIcon" onClick={() => removeList(index, list.id)}>
-              <FaTrash />
-            </div>
-            
-            <div className="groceryLists__listName">{list.name}</div>
-            
-            <div className="groceryLists__createdAt">
-              ({createdAtDate(list.createdAt)})
-            </div>         
-          </ModalSideOption>   
-        ))}
-      </div>
+        
+        <div className="background list">
+          {groceryLists && groceryLists.map((list, index) => (  
+            <ModalSideOption
+              key={list.id}
+              onClick={() => setActiveList(list)}
+              selected={activeList && (list.id === activeList.id)}
+            >
+              <div className="groceryLists__removeIcon" onClick={() => removeList(index, list.id)}>
+                <FaTrash />
+              </div>
+              
+              <div className="groceryLists__listName">{list.name}</div>
+              
+              <div className="groceryLists__createdAt">
+                ({createdAtDate(list.createdAt)})
+              </div>         
+            </ModalSideOption>   
+          ))}
+        </div>
+      </ModalSideMenu>
 
       {activeList && (
-        <div className="modal__content">
+        <ModalContent>
           <GroceryList key={activeList} list={activeList} listIndex={activeListIndex} />          
-        </div>
+        </ModalContent>
       )}
     </div>
   )

@@ -8,6 +8,7 @@ import ImageUpload from 'components/core/imageUpload/ImageUpload'
 import EditableField from 'components/core/EditableField';
 import Avatar from 'components/user/Avatar';
 import ModalButtons from 'components/modal/ModalButtons';
+import { ModalContent } from 'components/modal/Modal';
 
 import './userSettings.css';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +26,7 @@ const ImageUploadPosed = posed.div({
 const UserSettings = () => {
   const { state: user, dispatch: userDispatch } = useContext(UserContext);
   const [showImageUploader, setShowImageUploader] = useState(false);
-  const [displayName, setDisplayName] = useState(user.displayName);
+  const [displayName, setDisplayName] = useState(user.displayName || user.email);
   const [avatar, setAvatar] = useState(user.avatar);
   const { dispatch } = useContext(EditableContext);
   const { t } = useTranslation();
@@ -92,11 +93,11 @@ const UserSettings = () => {
 
   return (
     <>
-      <div className="userSettings">
+      <ModalContent className="userSettings">
         {renderUserAvatar()}
         {renderUserName()}
 
-      </div>
+      </ModalContent>
       <ModalButtons onSave={saveUserSettings} saveDisabled={saveDisabled} />
     </>
   );

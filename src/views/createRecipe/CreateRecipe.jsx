@@ -1,4 +1,9 @@
+import './createRecipe.css';
+import 'views/recipe/recipe.css';
+
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { FaRegClock } from 'react-icons/fa';
 import cc from 'classcat';
 
 import { EditableContext } from 'contexts/editable';
@@ -13,16 +18,7 @@ import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
 
 import FetchMyRecipes from 'utils/fetchMyRecipes';
-
 import { postRequest, deleteRequest, imageUrl } from 'utils/request';
-
-import 'views/recipe/recipe.css';
-
-import { useTranslation } from 'react-i18next';
-import { FaRegClock } from 'react-icons/fa';
-
-import './createRecipe.css';
-import { AllIngredientsContext } from '../../contexts/allIngredients';
 
 const CreateRecipe = () => {
   // CONTEXTS
@@ -30,10 +26,6 @@ const CreateRecipe = () => {
   const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
-  const { 
-    state: allIngredients, 
-    dispatch: allIngredientsDispatch 
-  } = useContext(AllIngredientsContext);
 
   const { t, i18n } = useTranslation();
   const { name, description, images, time, id } = state;
@@ -237,7 +229,7 @@ const CreateRecipe = () => {
   };
 
   const renderLastSaved = () => lastSaved && lastSavedText && (
-    <div className="createRecipe__lastSaved">
+    <div className="createRecipe__lastSaved margin--bottom">
       {t('Recipe:LastSaved')} {lastSavedText}
     </div>
   );
@@ -289,8 +281,8 @@ const CreateRecipe = () => {
 
         </FullWidthContainer>
 
-        <div className="flex" >
-          <div>
+        <div className="flex wrap nowrapMedium">
+          <div className="fullWidth autoWidthMedium center">
             {editState.editable && (
               <>
                 <ImageUpload 
@@ -309,7 +301,7 @@ const CreateRecipe = () => {
             )}
           </div>
 
-          <div className="flex column">
+          <div className="flex column vcenter vMediumLeft">
             <EditableField 
               onChange={changeName} 
               value={name}

@@ -1,8 +1,7 @@
-import React, { useRef, useContext, useState } from 'react';
+import React, { useRef, useContext } from 'react';
 import posed, { PoseGroup } from 'react-pose';
 import { FaTimes } from  'react-icons/fa';
 import cc from 'classcat';
-import { useTranslation } from 'react-i18next';
 
 import { RouterContext } from 'contexts/router';
 
@@ -39,6 +38,28 @@ export const ModalSideOption = ({
   </div>
 );
 
+export const ModalSideMenu = ({
+  children,
+  className
+}) => {
+  return (
+    <div className={cc(['modal__sideMenu', className])}>
+      {children}
+    </div>
+  );
+};
+
+export const ModalContent = ({
+  children,
+  className
+}) => {
+  return (
+    <div className={cc(['modal__content', 'background', className])}>
+      {children}
+    </div>
+  );
+};
+
 const Modal = ({ children, ref }) => {
   const modalRef = useRef(null);
   const { state: router, dispatch } = useContext(RouterContext);
@@ -48,7 +69,6 @@ const Modal = ({ children, ref }) => {
     ModalSize = 'large', 
     WithSideMenu = true 
   } = router;
-  const { t } = useTranslation();
 
   const { headerTitle } = ModalData;
 
@@ -58,7 +78,7 @@ const Modal = ({ children, ref }) => {
     }
   };
 
-  const closeModal = event => {
+  const closeModal = () => {
     dispatch({ type: 'closeModal' });
   };
 
