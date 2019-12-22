@@ -21,16 +21,24 @@ const autoLogin = async (dispatch, userDispatch, pendingRequest) => {
   const email = localStorage.getItem('email');
 
   if (refreshToken) {
-    const response = await postRequest('login/refresh', {
-      refreshToken,
-      email,
-    });
+    try {
+      const response = await postRequest('login/refresh', {
+        refreshToken,
+        email,
+      });
 
-    if (response && response.accessToken) {
-      const { accessToken, user } = response;
-      localStorage.setItem('accessToken', accessToken);
-      dispatch({ type: 'login' });
-      userDispatch({ type: 'user', value: user });
+      if (response && response.accessToken) {
+        const { accessToken, user } = response;
+        localStorage.setItem('accessToken', accessToken);
+        dispatch({ type: 'login' });
+        userDispatch({ type: 'user', value: user });
+      }
+    } catch (err) {
+      if (err.statusCode === 401) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('currentUserValue');
+        localStorage.removeItem('refreshToken');
+      }
     }
   }
   pendingRequest({ type: 'initialLoginFetch', value: false });

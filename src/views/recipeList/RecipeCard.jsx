@@ -8,12 +8,9 @@ import { imageUrl } from 'utils/request';
 import './recipeCard.css';
 
 import { RecipeContext } from 'contexts/recipe';
-import { RouterContext } from 'contexts/router';
 
 const RecipeCard = ({ recipe }) => {
-  console.log('recipe', recipe)
   const { dispatch: setRecipe } = useContext(RecipeContext);
-  const { dispatch: goToPage } = useContext(RouterContext);
 
   const goToRecipeDetail = () => {
     setRecipe({ type: 'recipe', value: recipe });

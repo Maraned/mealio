@@ -17,8 +17,6 @@ const pages = {
 }
 
 const routerReducer = (state, action) => {
-  console.log('got router way', state, action)
-
   if (action.type === 'closeModal') {
     return { ...state, ModalView: null };
   }

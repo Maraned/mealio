@@ -246,10 +246,11 @@ const CreateRecipe = () => {
     <div className={cc(['createRecipe', 'recipe', {
       'createRecipe--editMode': editState.editable
     }])}>
-      {renderLastSaved()}
 
       <div className="background box">
-        <FullWidthContainer spaceBetween>
+        {renderLastSaved()}
+
+        <FullWidthContainer spaceBetween className="margin--bottom--large">
           <div className="flex">
             <button 
               className="createRecipe__toggleModeBtn margin--right"

@@ -1,29 +1,27 @@
+import './login.css';
+
 import React, { useState, useRef, useEffect, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import { LoggedInContext } from 'contexts/login';
 import { UserContext } from 'contexts/user';
 import { PendingRequestContext } from 'contexts/pendingRequests';
 
-import { useTranslation } from 'react-i18next';
-
 import { postRequest } from 'utils/request';
 
-import './login.css';
-
 const Login = () => {
-  const [popupOpen, setPopupOpen] = useState(false);
-  const popupNode = useRef(null);
-  const [email, setEmail] = useState('a@b.com');
-  const [password, setPassword] = useState('a@b.com');
+  const { t } = useTranslation();
   const { dispatch } = useContext(LoggedInContext);
   const { state, dispatch: userDispatch } = useContext(UserContext);
-  const { 
-    state: pendingRequestState, 
-    dispatch: pendingRequestDispatch 
-  } = useContext(PendingRequestContext);
-  const { t } = useTranslation();
+  const { state: pendingRequestState } = useContext(PendingRequestContext);
+  const popupNode = useRef(null);
+
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [email, setEmail] = useState('a@b.com');
+  const [password, setPassword] = useState('a@b.com');
   const [activeView, setActiveView] = useState('login');
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage] = useState('');
 
   useEffect(() => {
     if (state.user && state.user.is) {
@@ -51,6 +49,7 @@ const Login = () => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('currentUserValue', currentUserValue);
     localStorage.setItem('refreshToken', refreshToken);
+    
     if (user) {
       localStorage.setItem('email', user.email);
       userDispatch({ type: 'user', value: user });

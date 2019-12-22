@@ -22,8 +22,6 @@ const NewIngredient = ({ groups, closeModal }) => {
 
   const updateAllIngredients = async () => {
     const updatedIngredients = await getRequest('ingredients');
-    console.log('updatedIngredients', updatedIngredients)
-
     allIngredientsDispatch({ type: 'update', value: updatedIngredients });
   }
 

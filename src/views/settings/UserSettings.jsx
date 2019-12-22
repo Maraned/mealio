@@ -41,13 +41,10 @@ const UserSettings = () => {
       avatar,
       displayName 
     };
-    console.log('newUserData', newUserData)
 
     const response = await postRequest('users/update', {
       user: newUserData
     }, false);
-
-    console.log('usersetting response', response)
 
     userDispatch({ type: 'user', value: newUserData });
   };
