@@ -104,7 +104,7 @@ const Select = ({
 
   const selectedText = selected 
     || (preSelected && preSelected[textAttribute]) 
-    || defaultText
+    || defaultText;
 
   const renderEditableView = () => (
     <div className={cc(['select', className])} ref={node}>
@@ -129,7 +129,7 @@ const Select = ({
                   />
                 )}
                 {filteredOptions && filteredOptions.map(option => (
-                  <div className="select__option" onClick={changeSelected(option)}>
+                  <div key={option.id} className="select__option" onClick={changeSelected(option)}>
                     {option[textAttribute]}
                   </div>
                 ))}

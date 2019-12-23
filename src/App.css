@@ -169,12 +169,12 @@ input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
-.list {
-  /* padding: 1rem; */
+.listSpacing {
+  padding: 1rem;
 }
 
-.list > *:not(:last-child) {
-  /* margin-bottom: .5rem; */
+.listSpacing > *:not(:last-child) {
+  margin-bottom: .5rem;
 }
 
 button:hover {

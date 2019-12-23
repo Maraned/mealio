@@ -44,7 +44,8 @@
   --input-border: 1px solid rgba(0, 0, 0, 0.25);
   --modal-side-menu-border: 1px solid rgba(0, 0, 0, 0.25);
 
-  --primary-background: #6fb3ae;
+  /* --primary-background: #6fb3ae; */
+  --primary-background: #ff6060;
 
   --top-content-height: 50px;
 

@@ -19,29 +19,31 @@ const IngredientList = () => {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: changeView } = useContext(RouterContext);
-  const { dispatch: allIngredientsDispatch } = useContext(AllIngredientsContext);
+  const { state: allIngredients, dispatch: allIngredientsDispatch } = useContext(AllIngredientsContext);
   const { t } = useTranslation();
   const { ingredients, portions, defaultPortions = 4 } = recipe;
   const [ ingredientGroups, setIngredientGroups ] = useState([]); 
 
-  const fetchIngredients = async () => {
-    const newAllIngredients = await getRequest('ingredients');
-    if (!newAllIngredients.error) {
-      allIngredientsDispatch({ type: 'update', value: newAllIngredients });
-    }
-  };
+  console.log('allIngredients', allIngredients)
 
-  const fetchIngredientGroups = async () => {
-    const ingredientGroups = await getRequest('ingredients/groups');
-    setIngredientGroups(ingredientGroups);
-  };
+  // const fetchIngredients = async () => {
+  //   const newAllIngredients = await getRequest('ingredients');
+  //   if (!newAllIngredients.error) {
+  //     allIngredientsDispatch({ type: 'update', value: newAllIngredients });
+  //   }
+  // };
 
-  useEffect(() => {
-    if (state.editable) {
-      fetchIngredients();
-      fetchIngredientGroups();
-    }
-  }, []);
+  // const fetchIngredientGroups = async () => {
+  //   const ingredientGroups = await getRequest('ingredients/groups');
+  //   setIngredientGroups(ingredientGroups);
+  // };
+
+  // useEffect(() => {
+  //   if (state.editable) {
+  //     fetchIngredients();
+  //     fetchIngredientGroups();
+  //   }
+  // }, []);
 
   const updateIngredient = (index, ingredient) => {
     ingredients[index] = ingredient;
@@ -127,7 +129,7 @@ const IngredientList = () => {
 
   return (
     <>
-      <div className={cc(['ingredientList', 'list', 'background', {
+      <div className={cc(['ingredientList', 'list', 'background', 'listSpacing', {
         'ingredientList--editMode': state.editable
       }])}>
         <div className="ingredientList__header">

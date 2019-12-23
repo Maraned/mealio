@@ -3,11 +3,6 @@
   flex-direction: column;
   width: 50%;
   flex: 1;
-  padding: 1rem;
-}
-
-.stepList > *:not(:last-child) {
-  margin-bottom: .5rem;
 }
 
 @media all and (min-width: 640px) {

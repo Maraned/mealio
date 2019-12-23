@@ -12,7 +12,7 @@ import './stepList.css';
 const StepList = () => {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   
   const [popup, setPopup] = useState({
     open: false,
@@ -72,7 +72,7 @@ const StepList = () => {
   }
 
   return (
-    <div className="stepList list background">
+    <div className="stepList list listSpacing background">
       <h4>{t('Recipe:Steps')}</h4>
       {steps && steps.map((step, index) => (
         <Step
