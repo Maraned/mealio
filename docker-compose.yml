@@ -11,8 +11,11 @@ services:
     command: npm start
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=300
     ports:
-      - 8800:8800
+      - 3000:3000
+    volumes:
+      - ./frontend/cibus/src:/src
 ################################
 #   Setup nginx load balancer
 ################################
