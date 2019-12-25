@@ -137,6 +137,6 @@ router.post('/:id/dashboardSettings', async (req, res) => {
   }
   const userResponse = await rdb.find('users', id);
   return res.send(userResponse);
-})
+});
 
 module.exports = router;

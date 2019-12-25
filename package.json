@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "build": "docker build . -t mealio/mealio_backend",
     "push": "docker push mealio/mealio_backend"
   },
@@ -17,7 +17,8 @@
     "jsonwebtoken": "^8.5.0",
     "lodash": "^4.17.15",
     "nodemon": "1.18.10",
-    "sharp": "^0.22.0"
+    "sharp": "^0.22.0",
+    "ws": "^7.2.1"
   },
   "devDependencies": {
     "bcrypt": "^3.0.5",

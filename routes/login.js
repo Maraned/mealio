@@ -47,9 +47,11 @@ router.post('/', async (req, res, next) => {
     const refreshToken = jwtUtils.createRefreshToken(email, currentUserValue);
     res.send({ user: rest, accessToken, refreshToken, currentUserValue })
   } else {
-    const authenticationFailedError = new Error('Authentication failed');
-    authenticationFailedError.status = 401;
-    return next(authenticationFailedError);
+    res.status(401);
+    res.send();
+    // const authenticationFailedError = new Error('Authentication failed');
+    // authenticationFailedError.status = 401;
+    // return next(authenticationFailedError);
   }
 });
 

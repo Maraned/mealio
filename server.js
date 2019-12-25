@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var helmet = require('helmet');
 var jwt = require('express-jwt');
-console.log('server setup')
+const initWsServer = require('./wsServer').initWsServer;
 
 var app = express();
 
@@ -28,22 +28,23 @@ app.use(helmet());
 app.use(jwt({ secret: process.env.SECRET })
   .unless({ 
     path: [
-      '/api/login', 
-      '/api/login/refresh', 
-      '/api/users/create',
+      '/login', 
+      '/login/refresh', 
+      '/users/create',
+      '/'
     ],
     ext: '.webp'
   })
 );
 
-app.use('/api/users', users);
-app.use('/api/login', login);
-app.use('/api/recipes', recipes);
-app.use('/api/groceryList', groceryList);
-app.use('/api/ingredients', ingredients);
-app.use('/api/statistics', statistics);
+app.use('/users', users);
+app.use('/login', login);
+app.use('/recipes', recipes);
+app.use('/groceryList', groceryList);
+app.use('/ingredients', ingredients);
+app.use('/statistics', statistics);
 
-app.get('/api/images/:recipe/:image', function(req, res){
+app.get('/images/:recipe/:image', function(req, res){
   const { recipe, image} = req.params;
   res.sendFile(`${__dirname}/images/${recipe}/${image}`);
 }); 
@@ -64,3 +65,4 @@ var server = app.listen(3001, function () {
   console.log('App is listening on http://%s:%s', host, port);
 });
 
+initWsServer(server);
