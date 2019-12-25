@@ -88,9 +88,10 @@ export const getRequest = async (endpoint, query) => {
       },
       qs: query,
     }));
+    console.log('response', response)
     return response;
   } catch (error) {
-    console.error('getRequest', { endpoint });
+    console.error('getRequest', { endpoint }, error);
     throw { error: 'Something went wrong with getRequests' };
   }
 }

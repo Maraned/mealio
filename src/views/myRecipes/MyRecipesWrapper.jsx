@@ -1,16 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import { DraftRecipesProvider } from 'contexts/draftRecipes';
-import { PublishedRecipesProvider } from 'contexts/publishedRecipes';
+// import { DraftRecipesProvider } from 'contexts/draftRecipes';
+// import { PublishedRecipesProvider } from 'contexts/publishedRecipes';
 import MyRecipes from './MyRecipes';
 
 const MyRecipesWrapper = () => {
   return (
-    <PublishedRecipesProvider>
-      <DraftRecipesProvider>
+    // <PublishedRecipesProvider>
+    //   <DraftRecipesProvider>
         <MyRecipes />
-      </DraftRecipesProvider>
-    </PublishedRecipesProvider>
+    //   </DraftRecipesProvider>
+    // </PublishedRecipesProvider>
   );
 }
 

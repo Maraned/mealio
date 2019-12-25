@@ -63,7 +63,7 @@ export default {
   Ingredient: {
     Amount: 'Mängd',
     Unit: 'Enhet',
-    SelectIngredient: 'Välj ingrediens...',
+    SelectIngredient: 'Ingrediens...',
     NewIngredient: 'Ny ingrediens',
     Name: 'Namn',
     Group: 'Grupp',

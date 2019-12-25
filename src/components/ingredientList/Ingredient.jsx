@@ -36,8 +36,8 @@ const Ingredient = ({
     }
   }
 
-  const updateAmount = event => {
-    ingredient.amount = event.target.value;
+  const updateAmount = value => {
+    ingredient.amount = value;
     updateIngredient(index, ingredient);
   }
 
@@ -47,8 +47,8 @@ const Ingredient = ({
     updateIngredient(index, ingredient);
   }
 
-  const updateUnit = event => {
-    ingredient.unit = event.target.value;
+  const updateUnit = value => {
+    ingredient.unit = value;
     updateIngredient(index, ingredient);
   }
 

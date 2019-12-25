@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import cc from 'classcat';
@@ -17,11 +17,17 @@ const Content = posed.div({
   }
 })
 
-
 const RecipeAccordion = ({ recipe }) => {
   const [open, setOpen] = useState(false);
+  const [delayedOpen, setDelayedOpen] = useState(false);
   const { t } = useTranslation();
 
+  // This delay is to allow the conditional rendering to work with the pose animation
+  useEffect(() => {
+    setTimeout(() => setDelayedOpen(open), 300);
+  }, [open]);
+
+  const useDelay = !open ? delayedOpen : open;
 
   return (
     <div 
@@ -43,7 +49,9 @@ const RecipeAccordion = ({ recipe }) => {
       </div>
 
       <Content className="recipeAccordion__content" initialPose="exit" pose={open ? "enter" : "exit"}>
-        <CreateRecipeView recipe={recipe} />
+        {useDelay && (
+          <CreateRecipeView recipe={recipe} />
+        )}
       </Content>
     </div>
   );

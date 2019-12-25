@@ -1,6 +1,8 @@
-import React, { createContext, useReducer } from 'react'; 
+import React, { createContext, useReducer, useEffect, useState } from 'react'; 
 
 import RecipeModel from 'models/recipeModel';
+import { ArrayEqual } from 'utils/utils';
+import { postRequest } from 'utils/request';
 
 const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
   const isNumber = !isNaN(number);
@@ -10,35 +12,69 @@ const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
   return isNumber && isWithinLowerLimit && isWithinUpperLimit;
 };
 
+const updateRecipe = async (newState, dispatch) => {
+  const newSavedDate = new Date();
+
+  const response = await postRequest('recipes/createUpdate', {
+    recipe: { ...newState, lastUpdate: newSavedDate },
+    id: newState.author.id,
+  });
+
+  const { status, draftId } = response;
+  if (status === 'created') {
+    dispatch({ type: 'id', value: draftId});
+  }
+}
+
 const recipeReducer = (state, action) => {
+  let newState;
+
   switch (action.type) {
     case 'ingredients':
-      return { ...state, ingredients: action.value };
+      newState = { ...state, ingredients: [...action.value] };
+      break;
     case 'name': 
-      return { ...state, name: action.value };
+      newState = { ...state, name: action.value };
+      break;
     case 'steps': 
-      return { ...state,  steps: action.value };
+      newState = { ...state,  steps: action.value };
+      break;
     case 'description': 
-      return { ...state, description: action.value };
+      newState = { ...state, description: action.value };
+      break;
     case 'images':
-      return { ...state, images: action.value };
+      newState = { ...state, images: action.value };
+      break;
     case 'defaultPortions':
-      return isNumberBetweenLimits(action.value, 1, 8) ? { ...state, defaultPortions: action.value } : state;
+      newState = isNumberBetweenLimits(action.value, 1, 8) ? { ...state, defaultPortions: action.value } : state;
+      break;
     case 'portions':
-      return isNumberBetweenLimits(action.value, 1, 8) ? { ...state, portions: action.value } : state;
+      newState = isNumberBetweenLimits(action.value, 1, 8) ? { ...state, portions: action.value } : state;
+      break;
     case 'time':
-      return { ...state, time: action.value };
+      newState = { ...state, time: action.value };
+      break;
     case 'id':
-      return { ...state, id: action.value };
+      newState = { ...state, id: action.value };
+      break;
     case 'draft':
-      return { ...state, draft: action.value };
+      newState = { ...state, draft: action.value };
+      break;
     case 'recipe':
-      return { ...state, ...action.value };
+      newState = { ...state, ...action.value };
+      break;
     case 'reset':
-      return { ...RecipeModel };
+      newState = { ...RecipeModel };
+      break;
     case 'unset':
-      return false;
+      break;
   }
+
+  if (!newState.author && action.author) {
+    newState.author = action.author;
+  }
+
+  return newState;
 };
 
 const initialState = {...RecipeModel};
@@ -46,7 +82,27 @@ const initialState = {...RecipeModel};
 export const RecipeContext = createContext(initialState);
 
 export const RecipeProvider = props => {
-  const [state, dispatch] = useReducer(recipeReducer, props.recipe || initialState);
+  const initialRecipeState = props.recipe || initialState;
+  const [state, dispatch] = useReducer(recipeReducer, initialRecipeState);
+  const [previousState, setPreviousState] = useState({...initialRecipeState});
+
+  useEffect(() => {
+    const { 
+      ingredients, 
+      name 
+    } = state;
+    const { 
+      ingredients: prevIngredients,
+      name: prevName
+    } = previousState;
+
+    const ingredientsChanged = !ArrayEqual(ingredients, prevIngredients);
+    const nameChanged = name !== prevName;
+    if (nameChanged || ingredientsChanged) {
+      updateRecipe(state, dispatch);
+      setPreviousState(state);
+    }
+  }, [state, previousState]);
 
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>

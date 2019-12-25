@@ -27,7 +27,7 @@ COPY package.json package.json
 COPY package-lock.json package-lock.json
 COPY public public
 COPY src src
-COPY .env .env
+COPY jsconfig.json jsconfig.json
 COPY server.js server.js
 
 COPY build build

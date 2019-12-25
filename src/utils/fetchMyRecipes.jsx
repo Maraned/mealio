@@ -3,7 +3,6 @@ import { DraftRecipesContext } from 'contexts/draftRecipes';
 import { PublishedRecipesContext } from 'contexts/publishedRecipes';
 import { getRequest } from 'utils/request'; 
 
-
 const FetchMyRecipes = () => {
   const { 
     state: draftRecipes, 
@@ -14,7 +13,6 @@ const FetchMyRecipes = () => {
     state: publishedRecipes,
     dispatch: publishedRecipesDispatch
   } = useContext(PublishedRecipesContext);
-
 
   const getDraftRecipes = async (userId) => {
     const recipes = await getRequest(`users/${userId}/draftRecipes`);

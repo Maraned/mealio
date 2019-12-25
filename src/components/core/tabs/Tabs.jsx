@@ -1,6 +1,6 @@
 import './tabs.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 import { Switch, Route, Link, useRouteMatch, Redirect, useLocation } from 'react-router-dom';
 
@@ -31,17 +31,30 @@ export default function Tabs({
   let match = useRouteMatch();
   let location = useLocation();
 
-  const [activeView, setActiveView] = useState(views.find(view => {
-    const viewRoute = `${match.path}/${view.route}`;
-    return viewRoute === location.pathname;
-  }));
+  const [tabViews, setTabViews] = useState(views);
 
+  const [activeView, setActiveView] = useState(null);
   const { View, ...rest } = activeView || {};
+
+  useEffect(() => {
+    setActiveView(
+      views.find(view => {
+        const viewRoute = `${match.path}/${view.route}`;
+        return viewRoute === location.pathname;
+      })
+    )
+  }, [tabViews]);
+
+  useEffect(() => {
+    if (views) {
+      setTabViews(views);
+    }
+  }, [views])
 
   return (
     <div className="tabs">
       <div className="tabs__header background center flex">
-        {views.map(view => {
+        {tabViews.map(view => {
           const viewLink = `${match.path}/${view.route}`;
           const isSelected = viewLink === location.pathname;
           return (
@@ -58,7 +71,7 @@ export default function Tabs({
       </div>
       <div className="tabs__content">
         <Switch>
-          {views.map(view => (
+          {tabViews.map(view => (
             <Route key={view.name} path={`${match.path}/${view.route}`}>
               <view.View {...rest} />
             </Route>

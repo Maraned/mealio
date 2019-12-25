@@ -1,7 +1,27 @@
 import React, { createContext, useReducer } from 'react'; 
 
+const updateDraftRecipe = (recipes, updatedRecipe) => {
+  const nonUpdatedRecipes = recipes.filter(recipe => {
+    return updatedRecipe.id !== recipe.id;
+  });
+
+  return [...nonUpdatedRecipes, updatedRecipe];
+}
+
+const removeRecipeFromDrafts = (recipes, removedRecipe) => {
+  return recipes.filter(recipe => {
+    return removedRecipe.id !== recipe.id;
+  });
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'added':
+      return [...state, action.value];
+    case 'updated':
+      return updateDraftRecipe(state, action.value);
+    case 'removed':
+      return removeRecipeFromDrafts(state, action.value);
     case 'update':
       return action.value;
   }

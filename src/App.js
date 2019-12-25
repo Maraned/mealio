@@ -1,6 +1,5 @@
 import React from 'react';
 import './translations/i18n';
-import { Router } from 'react-router-dom';
 
 import { LoggedInProvider } from 'contexts/login';
 import { UserProvider } from 'contexts/user';
@@ -10,7 +9,9 @@ import { PendingRequestProvider } from 'contexts/pendingRequests';
 import { AlertBannerProvider } from 'contexts/alertBanner';
 import { AllIngredientsProvider } from 'contexts/allIngredients';
 import { FacebookProvider } from 'thirdParty/facebook/facebookProvider';
-
+import { WebSocketProvider } from 'contexts/webSocket';
+import { DraftRecipesProvider } from 'contexts/draftRecipes';
+import { PublishedRecipesProvider } from 'contexts/publishedRecipes';
 
 import MainView from 'views/MainView';
 
@@ -25,11 +26,17 @@ const App = () => {
           <LoggedInProvider>
             <RouterProvider>
               <RecipeProvider>
-                <AlertBannerProvider>
-                  <AllIngredientsProvider>
-                    <MainView />  
-                  </AllIngredientsProvider>
-                </AlertBannerProvider>
+                <DraftRecipesProvider>
+                  <PublishedRecipesProvider>
+                    <AlertBannerProvider>
+                      <AllIngredientsProvider>
+                        <WebSocketProvider>
+                          <MainView />  
+                        </WebSocketProvider>
+                      </AllIngredientsProvider>
+                    </AlertBannerProvider>
+                  </PublishedRecipesProvider>
+                </DraftRecipesProvider>
               </RecipeProvider>
             </RouterProvider>
           </LoggedInProvider>

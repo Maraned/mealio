@@ -1,15 +1,12 @@
 import './ingredientList.css';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import cc from 'classcat';
-
-import { getRequest } from 'utils/request';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { RouterContext } from 'contexts/router';
-import { AllIngredientsContext } from 'contexts/allIngredients';
 import IngredientModel from 'models/ingredientModel';
 
 import Ingredient from 'components/ingredientList/Ingredient';
@@ -19,31 +16,8 @@ const IngredientList = () => {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: changeView } = useContext(RouterContext);
-  const { state: allIngredients, dispatch: allIngredientsDispatch } = useContext(AllIngredientsContext);
   const { t } = useTranslation();
   const { ingredients, portions, defaultPortions = 4 } = recipe;
-  const [ ingredientGroups, setIngredientGroups ] = useState([]); 
-
-  console.log('allIngredients', allIngredients)
-
-  // const fetchIngredients = async () => {
-  //   const newAllIngredients = await getRequest('ingredients');
-  //   if (!newAllIngredients.error) {
-  //     allIngredientsDispatch({ type: 'update', value: newAllIngredients });
-  //   }
-  // };
-
-  // const fetchIngredientGroups = async () => {
-  //   const ingredientGroups = await getRequest('ingredients/groups');
-  //   setIngredientGroups(ingredientGroups);
-  // };
-
-  // useEffect(() => {
-  //   if (state.editable) {
-  //     fetchIngredients();
-  //     fetchIngredientGroups();
-  //   }
-  // }, []);
 
   const updateIngredient = (index, ingredient) => {
     ingredients[index] = ingredient;
@@ -53,10 +27,6 @@ const IngredientList = () => {
   const addIngredient = () => {
     ingredients.push({...IngredientModel});
     updateRecipe({ type: 'ingredients', value: ingredients });
-  }
-
-  const updateDefaultPortions = event => {
-    updateRecipe({ type: 'defaultPortions', value: event.target.value });
   }
 
   const updatePortions = event => {
@@ -155,7 +125,6 @@ const IngredientList = () => {
             portions={portionsAmount}
             onPaste={pasteIngredients}
             onRemove={removeIngredient}
-            groups={ingredientGroups}
           />
         ))}
         {state.editable ? (

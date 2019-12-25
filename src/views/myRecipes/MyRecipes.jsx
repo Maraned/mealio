@@ -1,22 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UserContext } from 'contexts/user';
 import Tabs from 'components/core/tabs/Tabs';
 
 import RecipeAccordionList from './RecipeAccordionList';
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
-import FetchMyRecipes from 'utils/fetchMyRecipes';
+import { DraftRecipesContext } from 'contexts/draftRecipes';
+import { PublishedRecipesContext } from 'contexts/publishedRecipes';
 
 const MyRecipes = () => {
   const { t } = useTranslation();
-  const {
-    draftRecipes,
-    publishedRecipes,
-    getDraftRecipes,
-    getPublishedRecipes
-  } = FetchMyRecipes();
-
-  const [initialFetchDone, setInitialFetchDone] = useState(false);
+  const { state: draftRecipes } = useContext(DraftRecipesContext);
+  const { state: publishedRecipes } = useContext(PublishedRecipesContext);
 
   const allRecipes = [...draftRecipes, ...publishedRecipes];
 
@@ -48,26 +42,6 @@ const MyRecipes = () => {
     disabled: !publishedRecipes.length,
     route: 'published',
   }];
-
-  const { state: user } = useContext(UserContext);
-
-  const performInitialFetch = async () => {
-    await Promise.all([
-      getDraftRecipes(user.id),
-      getPublishedRecipes(user.id),
-    ]);
-    setInitialFetchDone(true);
-  }
-
-  useEffect(() => {
-    if (user.id) {
-      performInitialFetch();
-    }
-  }, [user.id]);
-
-  if (!initialFetchDone) {
-    return '';
-  }
 
   return (
     <div className="myRecipes child-flex">

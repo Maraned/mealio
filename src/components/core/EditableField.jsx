@@ -2,6 +2,8 @@ import React, { useContext, useState, useEffect, useRef, useCallback } from 'rea
 import cc from 'classcat';
 import posed from 'react-pose';
 import { FaTimes } from 'react-icons/fa';
+import Editor from '@stfy/react-editor.js';
+import DraftEditor from 'components/core/DraftEditor';
 
 import { EditableContext } from 'contexts/editable';
 
@@ -19,7 +21,6 @@ const OptionsContainer = posed.div({
 });
 
 const EditableField = ({
-  viewValue,
   value,
   onChange,
   onClick,
@@ -46,8 +47,8 @@ const EditableField = ({
   const node = useRef();
   const isFocused = useRef(null);
 
-  const fallbackOnChange = event => {
-    setFallbackValue(event.target.value);
+  const fallbackOnChange = value => {
+    setFallbackValue(value);
   };
 
   const handleClick = useCallback(e => {
@@ -108,15 +109,30 @@ const EditableField = ({
     </div>
   ) : '';
 
+  const handleOnChange = value => {
+    if (onChange) {
+      onChange(value);
+    } else {
+      fallbackOnChange(value);
+    }
+  }
+
   const renderEditMode = () => {
     return type === 'text' ? (
       <>
-        <div
+        <DraftEditor 
+          className={cc(["editableField editableField__edit", className, {
+            'editableField--center': center
+          }])}
+          onChange={value => handleOnChange(value)}
+          value={fallbackValue || value}
+        />
+        {/* <div
           contentEditable
           className={cc(["editableField editableField__edit", className, {
             'editableField--center': center
           }])}
-          onChange={onChange || fallbackOnChange}
+          onInput={event => handleOnChange(event.currentTarget.textContent)}
           placeholder={placeholder}
           onPaste={onPaste}
           onFocus={focus}
@@ -124,7 +140,7 @@ const EditableField = ({
           ref={node} 
         >
           {fallbackValue || value}
-        </div>
+        </div> */}
 
         {renderRemoveButton()}
       </>
@@ -137,7 +153,7 @@ const EditableField = ({
             className={cc(["editableField editableField__edit", className, {
               'editableField--center': center
             }])}
-            onChange={onChange || fallbackOnChange}
+            onChange={event => handleOnChange(event.target.value)}
             value={fallbackValue || value}
             placeholder={placeholder}
             onPaste={onPaste}

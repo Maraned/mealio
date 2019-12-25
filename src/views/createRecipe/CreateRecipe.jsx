@@ -26,9 +26,10 @@ const CreateRecipe = () => {
   const { dispatch, state: editState } = useContext(EditableContext);
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
+  const mounted = useRef(false);
 
   const { t, i18n } = useTranslation();
-  const { name, description, images, time, id } = state;
+  const { name, description, images, time, id, ingredients } = state;
 
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
@@ -38,6 +39,21 @@ const CreateRecipe = () => {
   const [lastSaved, setLastSaved] = useState(null);
   const [lastSavedText, setLastSavedText] = useState('');
   const [changed, setChanged] = useState(false);
+
+  const onRecipeChange = (type, value) => {
+    const author = {
+      id: user.id,
+      name: user.displayName
+    };
+
+    updateRecipe({ type, value, author });
+  }
+
+  useEffect(() => {
+    if (mounted.current) {
+      setChanged(true);
+    }
+  }, [ingredients]);
 
   const {
     getDraftRecipes,
@@ -63,55 +79,56 @@ const CreateRecipe = () => {
     setLastSavedText(date.toLocaleDateString(locale, options));
   };
 
-  const autoSaveDraft = async () => {
-    const newSavedDate = new Date();
-    setLastSaved(newSavedDate);
-    updateLastSaved(newSavedDate);
-    setChanged(false);
+  // const autoSaveDraft = async () => {
+  //   const newSavedDate = new Date();
+  //   setLastSaved(newSavedDate);
+  //   updateLastSaved(newSavedDate);
+  //   setChanged(false);
 
-    const response = await postRequest('recipes/createUpdate', {
-      recipe: { ...state, draft: true },
-      id: user.id,
-    });
+  //   const response = await postRequest('recipes/createUpdate', {
+  //     recipe: { ...state, draft: true },
+  //     id: user.id,
+  //   });
 
-    const { status, draftId, recipe } = response;
-    if (status === 'created') {
-      updateRecipe({ type: 'id', value: draftId });      
-    }
+  //   const { status, draftId, recipe } = response;
+  //   if (status === 'created') {
+  //     updateRecipe({ type: 'id', value: draftId });
+  //   }
 
-    getDraftRecipes(user.id);
-    getPublishedRecipes(user.id);
+  //   getDraftRecipes(user.id);
+  //   getPublishedRecipes(user.id);
 
-    updateRecipe({ type: 'recipe', value: recipe });
-  };
+  //   updateRecipe({ type: 'recipe', value: recipe });
+  // };
 
-  const resetAutoSaveTimeout = () => {
-    if (autoSave.current) {
-      clearTimeout(autoSave.current);
-    }
-    autoSave.current = setTimeout(autoSaveDraft, 5000);
-  };
+  // const resetAutoSaveTimeout = () => {
+  //   if (autoSave.current) {
+  //     clearTimeout(autoSave.current);
+  //   }
+  //   autoSave.current = setTimeout(autoSaveDraft, 5000);
+  // };
 
   useEffect(() => {
     updateLastSaved();
   }, [i18n.language]);
 
-  useEffect(() => {
-    if (changed) {
-      resetAutoSaveTimeout();
-    }
-  }, [changed, state])
+  // useEffect(() => {
+  //   if (changed) {
+  //     resetAutoSaveTimeout();
+  //   }
+  // }, [changed, state])
 
   useEffect(() => {
     if (changed) {
       if (state.draft == null) {
-        updateRecipe({ type: 'draft', value: true });
+        onRecipeChange('draft', true);
       } 
     }
   }, [changed]);
 
   useEffect(() => {
-    dispatch({ type: 'edit' })
+    dispatch({ type: 'edit' });
+    mounted.current = true;
   }, []);
 
   const toggleViewMode = () => {
@@ -126,24 +143,12 @@ const CreateRecipe = () => {
       recipeId: state.id,
       id: user.id,
     }, false);
-
-    if (state.draft) {
-      getDraftRecipes(user.id);
-    } else {
-      getPublishedRecipes(user.id);
-    }
-    if (responseStatus === 200) {
-      updateRecipe({ type: 'reset' });
-    }
   };
 
   const publishRecipe = async () => {
     const response = await postRequest('recipes/publish', {
       id: user.id,
-      recipe: { ...state, draft: false, author: {
-        id: user.id,
-        name: user.displayName
-      } },
+      recipe: { ...state, draft: false },
     }, false);
 
     if (!isNaN(response) && response !== 200) {
@@ -157,7 +162,7 @@ const CreateRecipe = () => {
           text: t('Recipe:PublishSuccess'), 
           type: 'success', 
         } });
-        updateRecipe({ type: 'draft', value: false });
+        onRecipeChange('draft', false);
         getDraftRecipes(user.id);
         getPublishedRecipes(user.id);
       }
@@ -171,15 +176,15 @@ const CreateRecipe = () => {
     }, false);
   };
   
-  const changeName = event => {
-    updateRecipe({ type: 'name', value: event.target.value });
-    resetAutoSaveTimeout();
+  const changeName = value => {
+    onRecipeChange('name', value);
+    // resetAutoSaveTimeout();
     setChanged(true);
   };
 
-  const changeDescription = event => {
-    updateRecipe({ type: 'description', value: event.target.value });
-    resetAutoSaveTimeout();
+  const changeDescription = value => {
+    onRecipeChange('description', value);
+    // resetAutoSaveTimeout();
     setChanged(true);
   };
 
@@ -204,27 +209,27 @@ const CreateRecipe = () => {
     const uploadedImages = await Promise.all(promises);
 
     const newImages = [...images, ...uploadedImages];
-    updateRecipe({ type: 'images', value: newImages });
-    resetAutoSaveTimeout();
+    onRecipeChange('images', newImages);
+    // resetAutoSaveTimeout();
     setChanged(true);
   };
 
   const addImageUrl = async imageUrl => {
     const newImages = [...images, imageUrl];
-    updateRecipe({ type: 'images', value: newImages });
-    resetAutoSaveTimeout();
+    onRecipeChange('images', newImages);
+    // resetAutoSaveTimeout();
     setChanged(true);
   }
 
   const updateImages = images => {
-    updateRecipe({ type: 'images', value: images });
-    resetAutoSaveTimeout();
+    onRecipeChange('images', images);
+    // resetAutoSaveTimeout();
     setChanged(true);
   };
 
   const changeTime = event => {
-    updateRecipe({ type: 'time', value: event.target.value });
-    resetAutoSaveTimeout();    
+    onRecipeChange('time', event.target.value);
+    // resetAutoSaveTimeout();    
     setChanged(true);
   };
 
