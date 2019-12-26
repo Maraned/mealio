@@ -6,25 +6,44 @@ const updateDraftRecipe = (recipes, updatedRecipe) => {
   });
 
   return [...nonUpdatedRecipes, updatedRecipe];
-}
+};
 
 const removeRecipeFromDrafts = (recipes, removedRecipe) => {
   return recipes.filter(recipe => {
     return removedRecipe.id !== recipe.id;
   });
+};
+
+const recipeOrder = (a, b) => {
+  const aDate = new Date(a.lastUpdate).getTime();
+  const bDate = new Date(b.lastUpdate).getTime();
+
+  if (aDate < bDate) return 1;
+  if (aDate > bDate) return -1;
+  return 0;
 }
 
 const reducer = (state, action) => {
+  let recipes = state;
   switch (action.type) {
     case 'added':
-      return [...state, action.value];
+      recipes = [...state, action.value];
+      break;
     case 'updated':
-      return updateDraftRecipe(state, action.value);
+      recipes = updateDraftRecipe(state, action.value);
+      break;
     case 'removed':
-      return removeRecipeFromDrafts(state, action.value);
+      recipes = removeRecipeFromDrafts(state, action.value);
+      break;
     case 'update':
-      return action.value;
+      recipes = action.value;
+      break;
+    case 'set':
+      recipes = action.value;
+      break;
   }
+
+  return recipes.sort(recipeOrder);
 };
 
 const initialState = [];

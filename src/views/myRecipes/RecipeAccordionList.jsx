@@ -13,7 +13,7 @@ const RecipeAccordionList = ({ title, data: recipes = [] }) => {
       {recipes.map((recipe, index) => (
         <RecipeAccordion 
           recipe={recipe} 
-          key={index} 
+          key={recipe.id} 
           index={index} 
         />
       ))}

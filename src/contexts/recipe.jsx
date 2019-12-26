@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useState } from 'react'; 
+import React, { createContext, useReducer, useEffect, useState, useRef } from 'react'; 
 
 import RecipeModel from 'models/recipeModel';
 import { ArrayEqual } from 'utils/utils';
@@ -85,6 +85,7 @@ export const RecipeProvider = props => {
   const initialRecipeState = props.recipe || initialState;
   const [state, dispatch] = useReducer(recipeReducer, initialRecipeState);
   const [previousState, setPreviousState] = useState({...initialRecipeState});
+  const updateTimer = useRef(null);
 
   useEffect(() => {
     const { 
@@ -99,7 +100,9 @@ export const RecipeProvider = props => {
     const ingredientsChanged = !ArrayEqual(ingredients, prevIngredients);
     const nameChanged = name !== prevName;
     if (nameChanged || ingredientsChanged) {
-      updateRecipe(state, dispatch);
+      clearTimeout(updateTimer.current);
+      updateTimer.current = setTimeout(() => updateRecipe(state, dispatch), 5000);
+      // updateRecipe(state, dispatch);
       setPreviousState(state);
     }
   }, [state, previousState]);

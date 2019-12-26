@@ -1,8 +1,28 @@
 import React, { createContext, useReducer } from 'react'; 
 
+const updatePublishedRecipe = (recipes, updatedRecipe) => {
+  const nonUpdatedRecipes = recipes.filter(recipe => {
+    return updatedRecipe.id !== recipe.id;
+  });
+
+  return [...nonUpdatedRecipes, updatedRecipe];
+};
+
+const removeRecipeFromPublishedRecipes = (recipes, removedRecipe) => {
+  return recipes.filter(recipe => {
+    return removedRecipe.id !== recipe.id;
+  });
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'update':
+    case 'added':
+      return [...state, action.value];
+    case 'updated':
+      return updatePublishedRecipe(state, action.value);
+    case 'removed':
+      return removeRecipeFromPublishedRecipes(state, action.value);
+    case 'set':
       return action.value;
   }
 };

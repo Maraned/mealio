@@ -29,14 +29,12 @@ const CreateRecipe = () => {
   const mounted = useRef(false);
 
   const { t, i18n } = useTranslation();
-  const { name, description, images, time, id, ingredients } = state;
+  const { name, description, images, time, id, ingredients, lastUpdate } = state;
 
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
 
   // STATES
-  const autoSave = useRef(null);
-  const [lastSaved, setLastSaved] = useState(null);
   const [lastSavedText, setLastSavedText] = useState('');
   const [changed, setChanged] = useState(false);
 
@@ -55,18 +53,10 @@ const CreateRecipe = () => {
     }
   }, [ingredients]);
 
-  const {
-    getDraftRecipes,
-    getPublishedRecipes
-  } = FetchMyRecipes();
-
   const updateLastSaved = date => {
     if (!date) {
-      if (!lastSaved) {
-        return;   
-      }
-      date = lastSaved;
-    }
+      return;
+    } 
     var options = { 
       year: 'numeric', 
       month: 'long', 
@@ -79,44 +69,9 @@ const CreateRecipe = () => {
     setLastSavedText(date.toLocaleDateString(locale, options));
   };
 
-  // const autoSaveDraft = async () => {
-  //   const newSavedDate = new Date();
-  //   setLastSaved(newSavedDate);
-  //   updateLastSaved(newSavedDate);
-  //   setChanged(false);
-
-  //   const response = await postRequest('recipes/createUpdate', {
-  //     recipe: { ...state, draft: true },
-  //     id: user.id,
-  //   });
-
-  //   const { status, draftId, recipe } = response;
-  //   if (status === 'created') {
-  //     updateRecipe({ type: 'id', value: draftId });
-  //   }
-
-  //   getDraftRecipes(user.id);
-  //   getPublishedRecipes(user.id);
-
-  //   updateRecipe({ type: 'recipe', value: recipe });
-  // };
-
-  // const resetAutoSaveTimeout = () => {
-  //   if (autoSave.current) {
-  //     clearTimeout(autoSave.current);
-  //   }
-  //   autoSave.current = setTimeout(autoSaveDraft, 5000);
-  // };
-
   useEffect(() => {
-    updateLastSaved();
-  }, [i18n.language]);
-
-  // useEffect(() => {
-  //   if (changed) {
-  //     resetAutoSaveTimeout();
-  //   }
-  // }, [changed, state])
+    updateLastSaved(new Date(lastUpdate));
+  }, [i18n.language, lastUpdate]);
 
   useEffect(() => {
     if (changed) {
@@ -162,9 +117,7 @@ const CreateRecipe = () => {
           text: t('Recipe:PublishSuccess'), 
           type: 'success', 
         } });
-        onRecipeChange('draft', false);
-        getDraftRecipes(user.id);
-        getPublishedRecipes(user.id);
+        // onRecipeChange('draft', false);
       }
     }
   };
@@ -178,13 +131,11 @@ const CreateRecipe = () => {
   
   const changeName = value => {
     onRecipeChange('name', value);
-    // resetAutoSaveTimeout();
     setChanged(true);
   };
 
   const changeDescription = value => {
     onRecipeChange('description', value);
-    // resetAutoSaveTimeout();
     setChanged(true);
   };
 
@@ -210,30 +161,21 @@ const CreateRecipe = () => {
 
     const newImages = [...images, ...uploadedImages];
     onRecipeChange('images', newImages);
-    // resetAutoSaveTimeout();
     setChanged(true);
   };
 
   const addImageUrl = async imageUrl => {
     const newImages = [...images, imageUrl];
     onRecipeChange('images', newImages);
-    // resetAutoSaveTimeout();
     setChanged(true);
   }
 
-  const updateImages = images => {
-    onRecipeChange('images', images);
-    // resetAutoSaveTimeout();
-    setChanged(true);
-  };
-
   const changeTime = event => {
     onRecipeChange('time', event.target.value);
-    // resetAutoSaveTimeout();    
     setChanged(true);
   };
 
-  const renderLastSaved = () => lastSaved && lastSavedText && (
+  const renderLastSaved = () => lastSavedText && (
     <div className="createRecipe__lastSaved margin--bottom">
       {t('Recipe:LastSaved')} {lastSavedText}
     </div>

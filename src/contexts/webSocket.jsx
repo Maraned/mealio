@@ -22,6 +22,10 @@ export const WebSocketProvider = props => {
   };
 
   const updater = ({ type, data }) => {
+    if (Array.isArray(data)) {
+      return updateFunction[type]({ type: 'set', value: data });
+    }
+
     const newData = !data.old_val && !!data.new_val;
     const modifiedData = !!data.old_val && !!data.new_val;
     const deletedData = !!data.old_val && !data.new_val;
@@ -44,7 +48,6 @@ export const WebSocketProvider = props => {
       try {
         const json = JSON.parse(message.data);
         updater(json);
-        console.log('websocket message', json)
       } catch (e) {
         return;
       }

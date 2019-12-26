@@ -1,9 +1,10 @@
+import './recipeAccordion.css';
+
 import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import cc from 'classcat';
 
-import './recipeAccordion.css'
 import { useTranslation } from 'react-i18next';
 
 const Content = posed.div({
