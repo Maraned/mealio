@@ -1,7 +1,13 @@
 const WebSocket = require('ws');
+const Connections = require('./utils/Connections');
+var rdb = require('./lib/rethink');
 
-// list of currently connected clients (users)
-const clients = [];
+const initConnection = async client => {
+  const draftRecipes = await rdb.findAll('draftRecipes');
+  client.send(JSON.stringify({ type: 'draft', data: draftRecipes }));
+  const publishedRecipes = await rdb.findAll('publishedRecipes');
+  client.send(JSON.stringify({ type: 'published', data: publishedRecipes }));
+}
 
 const initWsServer = server => {
   var wsServer = new WebSocket.Server({
@@ -13,18 +19,12 @@ const initWsServer = server => {
       console.log('received: %s', message);
     });
 
-    clients.push(ws);
+    Connections.addClient(ws);
+
+    initConnection(ws);
   });
 };
 
-const broadcast = data => {
-  for (const client of clients) {
-    client.send(JSON.stringify(data));
-  }
-};
-
-
 module.exports = {
   initWsServer,
-  broadcast,
 };
