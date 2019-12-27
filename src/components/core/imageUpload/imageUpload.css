@@ -8,9 +8,8 @@
 
 .imageUpload:not(.imageUpload--circle) {
   background-color: white;
-  outline: 2px dashed black;
+  border: 2px dashed var(--grey);
   outline-offset: -10px;
-  padding: 1rem;
 }
 
 .imageUpload--circle {
@@ -22,6 +21,14 @@
   align-items: center;
   text-align: center;
   border-radius: 50%;
+}
+
+.imageUpload {
+  transition: background-color .5s;
+}
+
+.imageUpload--hovering  {
+  background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
 .imageUpload__label {

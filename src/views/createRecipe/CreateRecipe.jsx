@@ -17,7 +17,6 @@ import EditableField from 'components/core/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
 
-import FetchMyRecipes from 'utils/fetchMyRecipes';
 import { postRequest, deleteRequest, imageUrl } from 'utils/request';
 
 const CreateRecipe = () => {
@@ -161,6 +160,7 @@ const CreateRecipe = () => {
 
     const newImages = [...images, ...uploadedImages];
     onRecipeChange('images', newImages);
+    console.log('newImages', newImages)
     setChanged(true);
   };
 
@@ -235,7 +235,7 @@ const CreateRecipe = () => {
                 <ImageUpload 
                   onDrop={addImages} 
                   onUrl={addImageUrl}
-                  className="recipe__imageUpload" 
+                  className="recipe__imageUpload image--rounded" 
                   id="createRecipe"
                   uploadedImage={primaryImageUrl}
                   size={300}

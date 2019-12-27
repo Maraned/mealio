@@ -10,6 +10,7 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const { t } = useTranslation();
   const [popupOpen, setPopupOpen] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   const onDragOver = event => {
     event.preventDefault();
@@ -51,13 +52,17 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
 
     setPopupOpen(false);
     return false;
-  }
+  };
+
+  const onMouseEnter = () => setHovering(true);
+  const onMouseLeave = () => setHovering(false);
 
   return (
     <form 
       className={cc(['imageUpload', className, {
         'imageUpload--isDragOver': isDraggingOver,
-        'imageUpload--circle': circle
+        'imageUpload--circle': circle,
+        'imageUpload--hovering': hovering
       }])}
       method="post" 
       action="" 
@@ -67,6 +72,8 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
       onDragLeave={onDragLeave}
       onDragEnd={onDragLeave}
       onDrop={onFilesDrop}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       <div className="imageUpload__input flex center vcenter">
         <div className="imageUpload__uploadedImage" style={uploadedImageStyle}>
@@ -75,11 +82,10 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
           )}
         </div>
 
-        {popupOpen && (
-          <Popup onClose={closePopup} className="flex column vcenter">
+          <Popup id={id} onClose={closePopup} className="flex column vcenter" show={hovering}>
             <input 
               type="text" 
-              className="fullWidth margin--bottom--large"
+              className="fullWidth margin--bottom--large center"
               placeholder={t('Recipe:AddUrl')} 
               onBlur={event => onUrl(event.target.value)} 
             />
@@ -97,12 +103,9 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
             >
               {t('Recipe:AddFile')}
             </label>
-
-            <button onClick={closePopup}>{t('Recipe:Done')}</button>
           </Popup>
-        )}
         
-        <label className="imageUpload__label flex vcenter center" onClick={() => setPopupOpen(true)}>
+        <label className="imageUpload__label flex vcenter center"> 
           <strong className="imageUpload__chooseImage">{t('Recipe:ChooseImage')}</strong>
           <span className="imageUpload__dragndrop">
             &nbsp;{t('Recipe:OrDragItHere')}

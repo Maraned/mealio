@@ -90,16 +90,23 @@ export const RecipeProvider = props => {
   useEffect(() => {
     const { 
       ingredients, 
-      name 
+      name,
+      images,
     } = state;
     const { 
       ingredients: prevIngredients,
-      name: prevName
+      name: prevName,
+      images: prevImages,
     } = previousState;
 
     const ingredientsChanged = !ArrayEqual(ingredients, prevIngredients);
     const nameChanged = name !== prevName;
-    if (nameChanged || ingredientsChanged) {
+    const imagesChanged = !ArrayEqual(images, prevImages);
+
+    console.log('images', images)
+    console.log('prevImages', prevImages)
+
+    if (nameChanged || ingredientsChanged || imagesChanged) {
       clearTimeout(updateTimer.current);
       updateTimer.current = setTimeout(() => updateRecipe(state, dispatch), 5000);
       // updateRecipe(state, dispatch);

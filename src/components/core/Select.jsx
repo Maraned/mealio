@@ -5,10 +5,12 @@ import posed from 'react-pose';
 import { FaPlus, FaCaretDown } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import MiniSearch from 'minisearch';
+
+import ReactDOM from 'react-dom';
  
 import { EditableContext } from 'contexts/editable';
 
-const SelectContent = posed.div({
+const SelectContentPose = posed.div({
   open: {
     height: 'auto',
     opacity: 1,
@@ -18,6 +20,34 @@ const SelectContent = posed.div({
     opacity: 0,
   },
 });
+
+const SelectContent = ({
+  children,
+  className,
+  open,
+  anchorElement,
+  contentRef,
+}) => {
+  useEffect(() => {
+    if (open && contentRef.current && anchorElement) {
+      const anchorRect = anchorElement.getBoundingClientRect();
+      contentRef.current.style.top = `${anchorRect.y + anchorRect.height}px`;
+      contentRef.current.style.left = `${anchorRect.x}px`;
+      contentRef.current.style.width = `${anchorRect.width}px`;
+    }
+  }, [open]);
+
+  const content = (
+    <SelectContentPose className={className} ref={contentRef} pose={open ? 'open' : 'closed'}>
+      {children}
+    </SelectContentPose>
+  );
+
+  return ReactDOM.createPortal(
+    content,
+    document.getElementById('root')
+  );
+}
 
 const Select = ({
   onChange,
@@ -38,10 +68,12 @@ const Select = ({
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const node = useRef();
+  const contentRef = useRef(null);
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(options);
   const miniSearch = useRef(null);
+  const inputRef = useRef(null);
  
   const changeSelected = option => () => {
     setSelected(option[textAttribute]);
@@ -52,7 +84,11 @@ const Select = ({
     }
   };
   const handleClick = e => {
-    if (!node.current.contains(e.target) || closeOnSelect) {
+    if ((
+        !node.current.contains(e.target) 
+        && !contentRef.current.contains(e.target)
+      ) || closeOnSelect
+    ) {
       setOpen(false);
     }
   };
@@ -108,14 +144,14 @@ const Select = ({
 
   const renderEditableView = () => (
     <div className={cc(['select', className])} ref={node}>
-      <div className="select__input" onClick={() => setOpen(!open)}>
+      <div ref={inputRef} className="select__input" onClick={() => setOpen(!open)}>
         <span className="select__inputText">{selectedText}</span>
         <FaCaretDown className={cc(['select__caret', {
           'select__caret--open': open
         }])} />
       </div>
 
-      <SelectContent className="select__content" pose={open ? 'open' : 'closed'}>
+      <SelectContent contentRef={contentRef} anchorElement={inputRef.current} open={open} className="select__content">
           {OptionMarkup ? (
             <OptionMarkup />
           ) : (
