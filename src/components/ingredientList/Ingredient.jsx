@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
 import cc from 'classcat';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { RouterContext } from 'contexts/router';
 import { AllIngredientsContext } from 'contexts/allIngredients';
@@ -9,6 +10,7 @@ import { EditableContext } from 'contexts/editable';
 
 import EditableField from 'components/core/EditableField';
 import Select from 'components/core/Select';
+import { ModalRouteHandler } from 'components/modal/Modal';
 
 
 import './ingredient.css';
@@ -28,6 +30,8 @@ const Ingredient = ({
   const { dispatch: route } = useContext(RouterContext);
   const { state: allIngredients } = useContext(AllIngredientsContext);
   const { state: editState } = useContext(EditableContext);
+  const history = useHistory();
+  const location = useLocation();
 
   const amountValue = () => {
     if (ingredient.amount) {
@@ -65,7 +69,10 @@ const Ingredient = ({
   }
 
   const onAddIngredient = () => {
-    route({ type: 'newIngredient', value: groups, size: 'auto', allIngredients, });
+    history.push({
+      pathname: '/newIngredient',
+      state: { groups, modal: true, previousLocation: location }
+    });
   };
 
   return (

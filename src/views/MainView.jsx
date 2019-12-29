@@ -1,16 +1,35 @@
-import React, { useContext } from 'react';
+import './mainView.css';
 
-import { BrowserRouter as Router } from 'react-router-dom';
+import React from 'react';
 
-import Modal from 'components/modal/Modal';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import cc from 'classcat';
+
 import AlertBannerView from 'views/alertBanner/AlertBannerView';
 import MainSideMenu from './mainSideMenu/MainSideMenu';
 import Breadcrumbs from 'views/breadcrumbs/Breadcrumbs';
 import Logo from 'views/logo/Logo';
 
 import ViewRoutes from './ViewRoutes';
+import ModalRoutes from './ModalRoutes';
 
-import './mainView.css';
+const MainContentView = () => {
+  const location = useLocation();
+  const modalIsOpen = location.state && location.state.modal;
+
+  return (
+    <div className={cc(['mainView__content', {
+      'disablePointerEvents': modalIsOpen
+    }])}>
+      <MainSideMenu />
+
+      <ViewRoutes />
+      <ModalRoutes />
+
+      <AlertBannerView />
+    </div>
+  );
+}
 
 const MainView = () => {
   return (
@@ -18,20 +37,10 @@ const MainView = () => {
       <div className="mainView">
         <Router>
           
-          {/* <div className="mainView__topContent"> */}
-            <Logo />
-          {/* </div> */}
-            <Breadcrumbs />
+          <Logo />
+          <Breadcrumbs />
 
-          <div className="mainView__content">
-            <MainSideMenu />
-
-            <ViewRoutes />
-
-            <AlertBannerView />
-          </div>
-          
-          <Modal />
+          <MainContentView />
         </Router>
       </div>
     </>

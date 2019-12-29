@@ -75,17 +75,24 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="imageUpload__input flex center vcenter">
+      <div className="imageUpload__input flex center vcenter grow">
         <div className="imageUpload__uploadedImage" style={uploadedImageStyle}>
           {!!uploadedImage && (
             <img className="image--rounded" src={uploadedImage} />
           )}
         </div>
 
-          <Popup id={id} onClose={closePopup} className="flex column vcenter" show={hovering}>
+          <Popup 
+            id={id} 
+            onClose={closePopup} 
+            className={cc(['flex', 'column', 'vcenter', {
+              'popup--circle': circle
+            }])} 
+            show={hovering}
+          >
             <input 
               type="text" 
-              className="fullWidth margin--bottom--large center"
+              className="imageUpload__urlInput fullWidth margin--bottom--large center"
               placeholder={t('Recipe:AddUrl')} 
               onBlur={event => onUrl(event.target.value)} 
             />

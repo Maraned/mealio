@@ -1,3 +1,5 @@
+import './newIngredient.css';
+
 import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { postRequest, getRequest } from 'utils/request';
@@ -6,8 +8,7 @@ import EditableField from 'components/core/EditableField';
 
 import { UserContext } from 'contexts/user';
 import { AllIngredientsContext } from 'contexts/allIngredients';
-
-import './newIngredient.css';
+import { ModalContent, ModalButtons } from 'components/modal/Modal';
 
 const NewIngredient = ({ groups, closeModal }) => {
   const [ingredientName, setIngredientName] = useState('');
@@ -95,32 +96,39 @@ const NewIngredient = ({ groups, closeModal }) => {
   };
 
   return (
-    <div className="newIngredient">
-      <h2>{t('Ingredient:NewIngredient')}</h2>
+    <>
+      <div className="newIngredient box">
+        <ModalContent>
+        {/* <div className="background box"> */}
+          <h2>{t('Ingredient:NewIngredient')}</h2>
 
-      <EditableField
-        placeholder={t('Ingredient:Name')} 
-        onChange={event => setIngredientName(event.target.value)}  
-        value={ingredientName}
-        center
-      />
+          <EditableField
+            placeholder={t('Ingredient:Name')} 
+            onChange={event => setIngredientName(event.target.value)}  
+            value={ingredientName}
+            center
+          />
 
-      <EditableField 
-        value={t(`Group:${ingredientGroup.name}`)}
-        onChange={onGroupChange}
-        placeholder={t('Ingredient:Group')} 
-        searchOptions={groups}
-        onOptionClick={onGroupSelect}    
-        optionText={option => t(`Group:${option.name}`)}
-        center
-      />
+          <EditableField 
+            value={t(`Group:${ingredientGroup.name}`)}
+            onChange={onGroupChange}
+            placeholder={t('Ingredient:Group')} 
+            searchOptions={groups}
+            onOptionClick={onGroupSelect}    
+            optionText={option => t(`Group:${option.name}`)}
+            center
+          />
 
-      {renderIngredientAlternatives()}
+          {renderIngredientAlternatives()}
 
-      <button className="ingredient__saveNewIngredient success" onClick={addIngredient}>
-        {t('Common:Save')}
-      </button>
-    </div>
+        </ModalContent>
+        {/* </div> */}
+          {/* <button className="ingredient__saveNewIngredient success" onClick={addIngredient}> */}
+            {/* {t('Common:Save')} */}
+          {/* </button> */}
+      </div>
+      <ModalButtons onSave={addIngredient} />
+    </>
   );
 }
 

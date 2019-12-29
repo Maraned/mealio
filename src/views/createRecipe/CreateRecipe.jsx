@@ -52,8 +52,11 @@ const CreateRecipe = () => {
     }
   }, [ingredients]);
 
+  console.log('render state', state)
+
   const updateLastSaved = date => {
-    if (!date) {
+    console.log('date', date, date instanceof Date, isNaN(date))
+    if (!date || (date instanceof Date && isNaN(date))) {
       return;
     } 
     var options = { 
@@ -116,7 +119,6 @@ const CreateRecipe = () => {
           text: t('Recipe:PublishSuccess'), 
           type: 'success', 
         } });
-        // onRecipeChange('draft', false);
       }
     }
   };
@@ -160,7 +162,6 @@ const CreateRecipe = () => {
 
     const newImages = [...images, ...uploadedImages];
     onRecipeChange('images', newImages);
-    console.log('newImages', newImages)
     setChanged(true);
   };
 

@@ -333,6 +333,10 @@ a:hover {
   flex-grow: 1;
 }
 
+.noShrink {
+  flex-shrink: 0;
+}
+
 .child-flex {
   flex: 1;
 }
@@ -366,4 +370,9 @@ a:hover {
 .image--rounded {
   border-radius: 4rem;
   margin-right: 1rem;
+}
+
+
+.disablePointerEvents {
+  pointer-events: none;
 }

@@ -85,7 +85,9 @@ const Select = ({
   };
   const handleClick = e => {
     if ((
-        !node.current.contains(e.target) 
+        node.current
+        && !node.current.contains(e.target) 
+        && contentRef.current
         && !contentRef.current.contains(e.target)
       ) || closeOnSelect
     ) {

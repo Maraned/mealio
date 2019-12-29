@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from 'contexts/user';
+import React from 'react';
 import RecipeAccordion from 'views/myRecipes/RecipeAccordion'
 
 import './draftRecipes.css';

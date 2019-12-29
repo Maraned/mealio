@@ -6,3 +6,7 @@
   background: #fff;
   width: 90%;
 }
+
+.popup--circle {
+  border-radius: 50%;
+}

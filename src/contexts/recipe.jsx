@@ -1,8 +1,10 @@
-import React, { createContext, useReducer, useEffect, useState, useRef } from 'react'; 
+import React, { createContext, useReducer, useEffect, useState, useRef, useContext } from 'react'; 
 
 import RecipeModel from 'models/recipeModel';
 import { ArrayEqual } from 'utils/utils';
 import { postRequest } from 'utils/request';
+import { DraftRecipesContext } from 'contexts/draftRecipes';
+import { PublishedRecipesContext } from 'contexts/publishedRecipes';
 
 const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
   const isNumber = !isNaN(number);
@@ -20,9 +22,9 @@ const updateRecipe = async (newState, dispatch) => {
     id: newState.author.id,
   });
 
-  const { status, draftId } = response;
+  const { status, draftId, recipe: { lastUpdate } } = response;
   if (status === 'created') {
-    dispatch({ type: 'id', value: draftId});
+    dispatch({ type: 'update', value: { id: draftId, lastUpdate } });
   }
 }
 
@@ -57,6 +59,9 @@ const recipeReducer = (state, action) => {
     case 'id':
       newState = { ...state, id: action.value };
       break;
+    case 'update':
+      newState = { ...state, ...action.value };
+      break;
     case 'draft':
       newState = { ...state, draft: action.value };
       break;
@@ -82,6 +87,8 @@ const initialState = {...RecipeModel};
 export const RecipeContext = createContext(initialState);
 
 export const RecipeProvider = props => {
+  const { state: draftRecipes } = useContext(DraftRecipesContext);
+  const { state: publishedRecipes } = useContext(PublishedRecipesContext);
   const initialRecipeState = props.recipe || initialState;
   const [state, dispatch] = useReducer(recipeReducer, initialRecipeState);
   const [previousState, setPreviousState] = useState({...initialRecipeState});
@@ -103,16 +110,27 @@ export const RecipeProvider = props => {
     const nameChanged = name !== prevName;
     const imagesChanged = !ArrayEqual(images, prevImages);
 
-    console.log('images', images)
-    console.log('prevImages', prevImages)
-
     if (nameChanged || ingredientsChanged || imagesChanged) {
       clearTimeout(updateTimer.current);
       updateTimer.current = setTimeout(() => updateRecipe(state, dispatch), 5000);
-      // updateRecipe(state, dispatch);
       setPreviousState(state);
     }
   }, [state, previousState]);
+
+  useEffect(() => {
+    if (draftRecipes 
+      && draftRecipes.length
+      && publishedRecipes 
+      && publishedRecipes.length
+    ) {
+      const recipe = [...draftRecipes, ...publishedRecipes].find(existingRecipe => {
+        return existingRecipe.id === state.id
+      });
+      if (recipe) {
+        dispatch({ type: 'update', value: recipe });
+      }
+    }
+  }, [draftRecipes, publishedRecipes]);
 
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>

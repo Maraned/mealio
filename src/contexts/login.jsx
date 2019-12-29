@@ -17,7 +17,6 @@ const loginReducer = (state, action) => {
 };
 
 const autoLogin = async (dispatch, userDispatch, pendingRequest) => {
-  console.log('autoLogin')
   const refreshToken = localStorage.getItem('refreshToken');
   const email = localStorage.getItem('email');
 
@@ -28,8 +27,6 @@ const autoLogin = async (dispatch, userDispatch, pendingRequest) => {
         email,
       });
 
-      console.log('login response', response)
-
       if (response && response.accessToken) {
         const { accessToken, user } = response;
         localStorage.setItem('accessToken', accessToken);
@@ -37,7 +34,6 @@ const autoLogin = async (dispatch, userDispatch, pendingRequest) => {
         userDispatch({ type: 'user', value: user });
       }
     } catch (err) {
-      console.log('login response err', err)
       if (err.statusCode === 401 || err.status === 401) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('currentUserValue');

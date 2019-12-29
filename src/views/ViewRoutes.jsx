@@ -1,20 +1,22 @@
 import React from 'react';
 
-import { Switch, Route } from 'react-router-dom';
+  import { Switch, Route, useLocation } from 'react-router-dom';
 
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
 import RecipeList from 'views/recipeList/RecipeListWrapper';
 import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
-import GroceryLists from 'views/groceryList/GroceryListsWrapper';
-import AdminPage from 'views/admin/AdminPage';
-import AdminDashboard from 'views/admin/Dashboard';
 import RecipeCollection from 'views/recipeCollection/RecipeCollection';
 import WelcomePage from 'views/welcomePage/WelcomePage';
 
 export default function ViewRoutes() {
+  const location = useLocation();
+
+  const isModal = location.state && location.state.modal;
+  const previousLocation = location.state && location.state.previousLocation;
+
   return (
-    <Switch>
+    <Switch location={isModal ? previousLocation : location}>
       <Route path="/recipes/create">
         <CreateRecipeView />
       </Route>

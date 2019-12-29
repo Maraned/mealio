@@ -1,3 +1,5 @@
+import './groceryLists.css';
+
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { postRequest, getRequest } from 'utils/request';
@@ -9,8 +11,6 @@ import GroceryList from './GroceryList';
 import { FaTrash } from 'react-icons/fa';
 
 import { ModalSideOption, ModalSideMenu, ModalContent } from 'components/modal/Modal';
-
-import './groceryLists.css';
 
 class RecipeData {
   constructor(props) {

@@ -1,9 +1,10 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
+import { createPortal } from 'react-dom';
 import posed, { PoseGroup } from 'react-pose';
 import { FaTimes } from  'react-icons/fa';
 import cc from 'classcat';
-
-import { RouterContext } from 'contexts/router';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import './modal.css';
 
@@ -18,8 +19,30 @@ const PosedModal = posed.div({
     opacity: 0,
     transition: {
     }
-  },
+  }
 });
+
+export function ModalButtons({
+  onSave,
+  saveText,
+  saveDisabled,
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="modalButtons">
+      {onSave && (
+        <button 
+          className={cc({ 'disabled': saveDisabled })} 
+          disabled={saveDisabled} 
+          onClick={onSave}
+        >
+          {saveText || t('Modal:Save')}
+        </button>
+      )}
+    </div>
+  )
+};
 
 export const ModalSideOption = ({
   key,
@@ -54,37 +77,29 @@ export const ModalContent = ({
   className
 }) => {
   return (
-    <div className={cc(['modal__content', 'background', className])}>
+    <div className={cc(['modal__content', 'background', 'box', className])}>
       {children}
     </div>
   );
 };
 
-const Modal = ({ children, ref }) => {
+const Modal = ({ children, ref, ModalSize = 'large', WithSideMenu = true, headerTitle }) => {
   const modalRef = useRef(null);
-  const { state: router, dispatch } = useContext(RouterContext);
-  const { 
-    ModalView, 
-    ModalData = {}, 
-    ModalSize = 'large', 
-    WithSideMenu = true 
-  } = router;
-
-  const { headerTitle } = ModalData;
+  const history = useHistory();
 
   const outsideClick = event => {
     if (!modalRef.current.contains(event.target)) {
-      dispatch({ type: 'closeModal' });
+      history.goBack();
     }
   };
 
   const closeModal = () => {
-    dispatch({ type: 'closeModal' });
+    history.goBack();
   };
+  
 
-  return (
+  const ModalView = (
     <PoseGroup enterPose="enter">
-    {!!ModalView && (
       <PosedModal 
         key="modal" 
         className="modalWrapper" 
@@ -105,12 +120,16 @@ const Modal = ({ children, ref }) => {
               <FaTimes onClick={closeModal} />
             </div>
           </div>
-
-          <ModalView data={ModalData} closeModal={closeModal} />
+          
+          {children}
         </div>
       </PosedModal>
-    )}
   </PoseGroup>
+  );
+
+  return createPortal(
+    ModalView,
+    document.getElementById('root')
   );
 }
 

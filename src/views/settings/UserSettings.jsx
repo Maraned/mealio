@@ -1,16 +1,16 @@
+import './userSettings.css';
+
 import React, { useState, useContext, useEffect } from 'react';
 
-import posed, { PoseGroup } from 'react-pose';
+import posed from 'react-pose';
 
 import { UserContext } from 'contexts/user';
 import { EditableContext } from 'contexts/editable';
 import ImageUpload from 'components/core/imageUpload/ImageUpload'
 import EditableField from 'components/core/EditableField';
 import Avatar from 'components/user/Avatar';
-import ModalButtons from 'components/modal/ModalButtons';
-import { ModalContent } from 'components/modal/Modal';
+import { ModalContent, ModalButtons } from 'components/modal/Modal';
 
-import './userSettings.css';
 import { useTranslation } from 'react-i18next';
 import { postRequest } from 'utils/request';
 
@@ -69,14 +69,14 @@ const UserSettings = () => {
     >
       <Avatar />
 
-      <ImageUploadPosed initialPose='hide' pose={showImageUploader ? 'show' : 'hide'}>
+      {/* <ImageUploadPosed initialPose='hide' pose={showImageUploader ? 'show' : 'hide'}> */}
         <ImageUpload 
           onDrop={selectAvatar} 
           className="userSettings__imageUploader" 
           circle 
           id="userSettings"
         />
-      </ImageUploadPosed>
+      {/* </ImageUploadPosed> */}
     </div>
   );
 

@@ -47,6 +47,7 @@ export const WebSocketProvider = props => {
     connection.onmessage = function (message) {
       try {
         const json = JSON.parse(message.data);
+        console.log('websocket json', json)
         updater(json);
       } catch (e) {
         return;

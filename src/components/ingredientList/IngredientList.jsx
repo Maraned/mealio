@@ -3,6 +3,7 @@ import './ingredientList.css';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import cc from 'classcat';
+import { Link, useLocation } from 'react-router-dom';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
@@ -18,6 +19,7 @@ const IngredientList = () => {
   const { dispatch: changeView } = useContext(RouterContext);
   const { t } = useTranslation();
   const { ingredients, portions, defaultPortions = 4 } = recipe;
+  const location = useLocation();
 
   const updateIngredient = (index, ingredient) => {
     ingredients[index] = ingredient;
@@ -132,9 +134,23 @@ const IngredientList = () => {
             {t('Recipe:AddIngredient')}
           </button>
         ) : (
-          <button onClick={openGroceryListModal}>
-            {t('Recipe:AddToGroceryList')}
-          </button>
+          <Link to={{ 
+            pathname: '/grocerylists', 
+            state: { 
+              modal: true, 
+              previousLocation: location, 
+              data: {
+                items: ingredientsToGroceryListItems(ingredients), 
+                recipeId: recipe.id,
+                recipeName: recipe.name,
+                headerTitle: t('GroceryList:Title'),
+              }
+            }
+          }}>
+            <button onClick={openGroceryListModal}>
+              {t('Recipe:AddToGroceryList')}
+            </button>
+          </Link>
         )}
       </div>
     </>
