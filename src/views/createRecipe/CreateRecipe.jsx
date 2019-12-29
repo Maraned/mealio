@@ -52,10 +52,7 @@ const CreateRecipe = () => {
     }
   }, [ingredients]);
 
-  console.log('render state', state)
-
   const updateLastSaved = date => {
-    console.log('date', date, date instanceof Date, isNaN(date))
     if (!date || (date instanceof Date && isNaN(date))) {
       return;
     } 

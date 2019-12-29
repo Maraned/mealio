@@ -140,9 +140,11 @@ const Select = ({
     };
   }, []);
 
-  const selectedText = selected 
-    || (preSelected && preSelected[textAttribute]) 
-    || defaultText;
+  const selectedText = !editableState.editable 
+    ? selected || (preSelected && preSelected[textAttribute])
+    : selected 
+      || (preSelected && preSelected[textAttribute]) 
+      || defaultText;
 
   const renderEditableView = () => (
     <div className={cc(['select', className])} ref={node}>

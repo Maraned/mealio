@@ -96,6 +96,8 @@ const IngredientList = () => {
       headerTitle: t('GroceryList:Title'),
     } });
   };
+
+  console.log('ingredients', ingredients)
   
   const portionsAmount = parseInt(portions, 10) || parseInt(defaultPortions, 10);
 
