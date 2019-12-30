@@ -1,19 +1,16 @@
+import './ingredient.css';
+
 import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
 import cc from 'classcat';
 import { useHistory, useLocation } from 'react-router-dom';
 
-import { RouterContext } from 'contexts/router';
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { EditableContext } from 'contexts/editable';
 
 import EditableField from 'components/core/EditableField';
 import Select from 'components/core/Select';
-import { ModalRouteHandler } from 'components/modal/Modal';
-
-
-import './ingredient.css';
 
 const Ingredient = ({ 
   ingredient, 
@@ -27,7 +24,6 @@ const Ingredient = ({
 }) => {
   const { t } = useTranslation();
   const [showRemove, setShowRemove] = useState(false);
-  const { dispatch: route } = useContext(RouterContext);
   const { state: allIngredients } = useContext(AllIngredientsContext);
   const { state: editState } = useContext(EditableContext);
   const history = useHistory();
@@ -45,9 +41,9 @@ const Ingredient = ({
     updateIngredient(index, ingredient);
   }
 
-  const updateName = ingredient => {
-    ingredient.name = ingredient.name;
-    ingredient.ingredientId = ingredient.id;
+  const updateName = ingredientOption => {
+    ingredient.name = ingredientOption.name;
+    ingredient.ingredientId = ingredientOption.id;
     updateIngredient(index, ingredient);
   }
 
