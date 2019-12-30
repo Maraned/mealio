@@ -118,11 +118,7 @@ export const RecipeProvider = props => {
   }, [state, previousState]);
 
   useEffect(() => {
-    if (draftRecipes 
-      && draftRecipes.length
-      && publishedRecipes 
-      && publishedRecipes.length
-    ) {
+    if (draftRecipes && publishedRecipes) {
       const recipe = [...draftRecipes, ...publishedRecipes].find(existingRecipe => {
         return existingRecipe.id === state.id
       });

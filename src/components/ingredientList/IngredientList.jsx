@@ -8,6 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { RouterContext } from 'contexts/router';
+import { UserContext } from 'contexts/user';
 import IngredientModel from 'models/ingredientModel';
 
 import Ingredient from 'components/ingredientList/Ingredient';
@@ -15,34 +16,42 @@ import RangeSlider from 'components/core/rangeSlider/RangeSlider';
 
 const IngredientList = () => {
   const { state } = useContext(EditableContext);
+  const { state: user } = useContext(UserContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: changeView } = useContext(RouterContext);
   const { t } = useTranslation();
   const { ingredients, portions, defaultPortions = 4 } = recipe;
   const location = useLocation();
 
+  const author = {
+    id: user.id,
+    name: user.displayName
+  };
+
   const updateIngredient = (index, ingredient) => {
-    ingredients[index] = ingredient;
-    updateRecipe({ type: 'ingredients', value: ingredients });
+    const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
+    modifiedIngredients[index] = ingredient;
+    updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
   }
 
   const addIngredient = () => {
-    ingredients.push({...IngredientModel});
-    updateRecipe({ type: 'ingredients', value: ingredients });
+    const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
+    modifiedIngredients.push({...IngredientModel});
+    updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
   }
 
   const updatePortions = event => {
-    updateRecipe({ type: 'portions', value: event.target.value });
+    updateRecipe({ type: 'update', value: { portions: event.target.value, author }});
   }
 
   const updateIngredients = ingredients => {
-    updateRecipe({ type: 'ingredients', value: ingredients });
+    updateRecipe({ type: 'update', value: { ingredients, author }});
   }
 
   const removeIngredient = (index, ingredient) => {
     const modifiedIngredients = [...ingredients];
     modifiedIngredients.splice(index, 1);
-    updateRecipe({ type: 'ingredients', value: modifiedIngredients });
+    updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
   }
 
   const parseIngredientText = ingredientText => {
@@ -97,8 +106,6 @@ const IngredientList = () => {
     } });
   };
 
-  console.log('ingredients', ingredients)
-  
   const portionsAmount = parseInt(portions, 10) || parseInt(defaultPortions, 10);
 
   return (
@@ -124,7 +131,7 @@ const IngredientList = () => {
             key={'ingredient' + index}
             updateIngredient={updateIngredient} 
             index={index} 
-            ingredient={ingredient}
+            ingredient={{...ingredient}}
             defaultPortions={defaultPortions}
             portions={portionsAmount}
             onPaste={pasteIngredients}
