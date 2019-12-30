@@ -99,18 +99,21 @@ export const RecipeProvider = props => {
       ingredients, 
       name,
       images,
+      steps,
     } = state;
     const { 
       ingredients: prevIngredients,
       name: prevName,
       images: prevImages,
+      steps: prevSteps,
     } = previousState;
 
     const ingredientsChanged = !ArrayEqual(ingredients, prevIngredients);
     const nameChanged = name !== prevName;
     const imagesChanged = !ArrayEqual(images, prevImages);
+    const stepsChanged = !ArrayEqual(steps, prevSteps);
 
-    if (nameChanged || ingredientsChanged || imagesChanged) {
+    if (nameChanged || ingredientsChanged || imagesChanged || stepsChanged) {
       clearTimeout(updateTimer.current);
       updateTimer.current = setTimeout(() => updateRecipe(state, dispatch), 5000);
       setPreviousState(state);

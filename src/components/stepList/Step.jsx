@@ -133,8 +133,8 @@ const Step = ({
     parseStep();
   }, [ingredients])
 
-  const updateText = event => {
-    step.text = event.target.value;
+  const updateText = text => {
+    step.text = text;
     updateStep(index, step);
   }
 

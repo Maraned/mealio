@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import { RecipeContext } from 'contexts/recipe';
 import { EditableContext } from 'contexts/editable';
+import { UserContext } from 'contexts/user';
 
 import Step from 'components/stepList/Step';
 
@@ -11,6 +12,7 @@ import './stepList.css';
 
 const StepList = () => {
   const { state } = useContext(EditableContext);
+  const { state: user } = useContext(UserContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { t } = useTranslation();
   
@@ -21,24 +23,31 @@ const StepList = () => {
 
   const { steps, ingredients } = recipe;
 
+  const author = {
+    id: user.id,
+    name: user.displayName
+  };
+
   const updateStep = (index, step) => {
-    steps[index] = step;
-    updateRecipe({ type: 'steps', value: steps })
+    const modifiedSteps = JSON.parse(JSON.stringify(steps));
+    modifiedSteps[index] = step;
+    updateRecipe({ type: 'update', value: { steps: modifiedSteps, author }});
   }
 
   const addStep = () => {
-    steps.push('');
-    updateRecipe({ type: 'steps', value: steps })
+    const modifiedSteps = JSON.parse(JSON.stringify(steps));
+    modifiedSteps.push('');
+    updateRecipe({ type: 'update', value: { steps: modifiedSteps, author }});
   }
 
-  const updateSteps = steps => {
-    updateRecipe({ type: 'steps', value: steps });
+  const updateSteps = updatedSteps => {
+    updateRecipe({ type: 'update', value: { steps: updatedSteps, author }});
   }
 
   const removeStep = (step, index) => {
     const modifiedSteps = [...steps];
     modifiedSteps.splice(index, 1);
-    updateRecipe({ type: 'steps', value: modifiedSteps });
+    updateRecipe({ type: 'update', value: { steps: modifiedSteps, author }});
   }
 
   const hoverStep = ingredient => event => {
@@ -79,7 +88,7 @@ const StepList = () => {
           key={'step' + index}
           updateStep={updateStep} 
           index={index} 
-          step={step}
+          step={{...step}}
           ingredients={ingredients}
           onMouseOver={hoverStep}
           onMouseLeave={closePopup}
