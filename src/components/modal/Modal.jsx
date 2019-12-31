@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import posed, { PoseGroup } from 'react-pose';
 import { FaTimes } from  'react-icons/fa';
@@ -85,7 +85,16 @@ export const ModalContent = ({
 
 const Modal = ({ children, ref, ModalSize = 'large', WithSideMenu = true, headerTitle }) => {
   const modalRef = useRef(null);
+  const wrapperRef = useRef(null);
   const history = useHistory();
+
+  useEffect(() => {
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+
+    wrapperRef.current.style.top = `${window.scrollY}px`;
+
+    return () => document.getElementsByTagName('body')[0].style.overflow = 'auto';
+  }, []);
 
   const outsideClick = event => {
     if (!modalRef.current.contains(event.target)) {
@@ -104,6 +113,7 @@ const Modal = ({ children, ref, ModalSize = 'large', WithSideMenu = true, header
         key="modal" 
         className="modalWrapper" 
         onClick={outsideClick}
+        ref={wrapperRef}
       >
         <div 
           className={cc(['modal', {
