@@ -31,7 +31,8 @@ const SelectContent = ({
   useEffect(() => {
     if (open && contentRef.current && anchorElement) {
       const anchorRect = anchorElement.getBoundingClientRect();
-      contentRef.current.style.top = `${anchorRect.y + anchorRect.height}px`;
+      const yPos = window.scrollY + anchorRect.y;
+      contentRef.current.style.top = `${yPos + anchorRect.height}px`;
       contentRef.current.style.left = `${anchorRect.x}px`;
       contentRef.current.style.width = `${anchorRect.width}px`;
     }
@@ -63,6 +64,7 @@ const Select = ({
   searchable,
   searchPlaceholder,
   searchFields = ['name'],
+  error
 }) => {
   const { state: editableState } = useContext(EditableContext);
   const [selected, setSelected] = useState(null);
@@ -147,7 +149,12 @@ const Select = ({
       || defaultText;
 
   const renderEditableView = () => (
-    <div className={cc(['select', className])} ref={node}>
+    <div 
+      className={cc(['select', className, {
+        'select--error': error
+      }])} 
+      ref={node}
+    >
       <div ref={inputRef} className="select__input" onClick={() => setOpen(!open)}>
         <span className="select__inputText">{selectedText}</span>
         <FaCaretDown className={cc(['select__caret', {

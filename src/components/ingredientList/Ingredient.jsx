@@ -1,6 +1,6 @@
 import './ingredient.css';
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
 import cc from 'classcat';
@@ -28,41 +28,61 @@ const Ingredient = ({
   const { state: editState } = useContext(EditableContext);
   const history = useHistory();
   const location = useLocation();
+  const onPasteCalled = useRef(false);
 
   const amountValue = () => {
     if (ingredient.amount) {
       const factor = portions / defaultPortions;
       return parseFloat(ingredient.amount) * factor;
     }
-  }
+  };
 
   const updateAmount = value => {
+    if (onPasteCalled.current) {
+      onPasteCalled.current = false;
+      return;
+    }
     ingredient.amount = value;
     updateIngredient(index, ingredient);
-  }
+  };
 
   const updateName = ingredientOption => {
+    if (onPasteCalled.current) {
+      onPasteCalled.current = false;
+      return;
+    }
     ingredient.name = ingredientOption.name;
     ingredient.ingredientId = ingredientOption.id;
     updateIngredient(index, ingredient);
-  }
+  };
 
   const updateUnit = value => {
+    if (onPasteCalled.current) {
+      onPasteCalled.current = false;
+      return;
+    }
     ingredient.unit = value;
     updateIngredient(index, ingredient);
-  }
+  };
 
   const removeIngredient = () => {
     onRemove(index, ingredient);
-  }
+  };
 
   const onFocus = () => {
     setShowRemove(true);
-  }
+  };
 
   const onBlur = () => {
     setShowRemove(false);
-  }
+  };
+
+  const onPasteHandler = text => {
+    onPasteCalled.current = true;
+    if (onPaste) {
+      onPaste(text);
+    }
+  };
 
   const onAddIngredient = () => {
     history.push({
@@ -70,6 +90,12 @@ const Ingredient = ({
       state: { groups, modal: true, previousLocation: location }
     });
   };
+
+  const showNameError = useCallback(() => {
+    return !allIngredients.find(existingIngredient => {
+      return existingIngredient.name === ingredient.name
+    });
+  }, [ingredient, allIngredients]);
 
   return (
     <div className={cc(['ingredient', {
@@ -80,9 +106,10 @@ const Ingredient = ({
         onChange={updateAmount} 
         type="text"
         placeholder={t('Ingredient:Amount')} 
-        onPaste={onPaste}
+        onPaste={onPasteHandler}
         onFocus={onFocus}
         onBlur={onBlur}
+        autoWidth
       />
 
       <EditableField 
@@ -90,9 +117,10 @@ const Ingredient = ({
         onChange={updateUnit} 
         type="text"
         placeholder={t('Ingredient:Unit')} 
-        onPaste={onPaste}
+        onPaste={onPasteHandler}
         onFocus={onFocus}
         onBlur={onBlur}
+        autoWidth
       />
       
       <Select 
@@ -105,6 +133,7 @@ const Ingredient = ({
         onAddItem={onAddIngredient}
         addItemText={t('Ingredient:NewIngredient')}
         searchable
+        error={showNameError()}
       />
 
       {editState.editable && (

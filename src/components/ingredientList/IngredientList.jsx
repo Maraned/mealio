@@ -14,6 +14,8 @@ import IngredientModel from 'models/ingredientModel';
 import Ingredient from 'components/ingredientList/Ingredient';
 import RangeSlider from 'components/core/rangeSlider/RangeSlider';
 
+import { Capitalize } from 'utils/utils';
+
 const IngredientList = () => {
   const { state } = useContext(EditableContext);
   const { state: user } = useContext(UserContext);
@@ -68,22 +70,24 @@ const IngredientList = () => {
             ...IngredientModel,
             amount: parseFloat(amount.replace(',', '.')), 
             unit, 
-            name
+            name: Capitalize(name)
           });
         }
       }
     }
 
-    if (parsedIngredients.length) {
-      const newIngredients = [...ingredients, ...parsedIngredients];
-      updateIngredients(newIngredients);
-    }
+    return parsedIngredients;
   }
 
-  const pasteIngredients = event => {
-    event.preventDefault();
-    const pastedText = event.clipboardData.getData('Text');
-    parseIngredientText(pastedText)
+  const pasteIngredients = pastedText => {
+    const parsedIngredients = parseIngredientText(pastedText);
+    if (parsedIngredients.length) {
+      const ingredientRowToRemove = ingredients.length - 1;
+      const modifiedIngredients = [...ingredients];
+      modifiedIngredients.splice(ingredientRowToRemove, 1);
+      const newIngredients = [...modifiedIngredients, ...parsedIngredients];
+      updateIngredients(newIngredients);
+    }
   };
 
   const ingredientsToGroceryListItems = ingredients => {

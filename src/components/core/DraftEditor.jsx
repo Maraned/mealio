@@ -1,6 +1,6 @@
 import 'draft-js/dist/Draft.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Editor, EditorState, ContentState, convertToRaw } from 'draft-js';
 import DraftPasteProcessor from 'draft-js/lib/DraftPasteProcessor';
@@ -10,7 +10,8 @@ export default function DraftEditor({
   onChange,
   className,
   placeholder,
-  textTag
+  textTag,
+  onPaste
 }) {
   const createContent = () => {
     if (textTag) {
@@ -26,6 +27,13 @@ export default function DraftEditor({
     EditorState.createWithContent(createContent())
   );
 
+  useEffect(() => {
+    const currentValue = editorState.getCurrentContent().getPlainText();
+    if (currentValue !== value) {
+      setEditorState(EditorState.createWithContent(createContent()));
+    }
+  }, [value]);
+
   const handleOnChange = editorState => {
     const changedValue = editorState.getCurrentContent().getPlainText();
     if (changedValue !== value && onChange) {
@@ -40,6 +48,7 @@ export default function DraftEditor({
         editorState={editorState}
         onChange={handleOnChange}
         placeholder={placeholder}
+        handlePastedText={onPaste}
       />
     </div>
   );

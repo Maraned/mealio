@@ -37,6 +37,7 @@ const EditableField = ({
   textTag,
   onRemove,
   showRemove,
+  autoWidth,
 }) => {
   const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
@@ -115,6 +116,13 @@ const EditableField = ({
     } else {
       fallbackOnChange(value);
     }
+  };
+
+  const handleOnPaste = event => {
+    const value = event.clipboardData.getData('Text');
+    if (onPaste) {
+      onPaste(value);
+    }
   }
 
   const renderEditMode = () => {
@@ -124,12 +132,14 @@ const EditableField = ({
           className={cc(["editableField editableField__edit", className, {
             'editableField--center': center,
             [`editableField--${textTag}`]: textTag,
-            'editableField--text': !textTag
+            'editableField--text': !textTag,
+            'editableField--autoWidth': autoWidth,
           }])}
           onChange={value => handleOnChange(value)}
           value={fallbackValue || value}
           placeholder={placeholder}
           textTag={textTag}
+          onPaste={onPaste}
         />
 
         {renderRemoveButton()}
@@ -137,6 +147,7 @@ const EditableField = ({
     ) : (
       <div ref={node} className={cc(["editableField__container", {
         'editableField__container--center': center,
+        'editableField--autoWidth': autoWidth,
         }])}>
         <div className="editableField__innerContainer">
           <input
@@ -146,7 +157,7 @@ const EditableField = ({
             onChange={event => handleOnChange(event.target.value)}
             value={fallbackValue || value}
             placeholder={placeholder}
-            onPaste={onPaste}
+            onPaste={handleOnPaste}
             onFocus={focus}
           />
 
@@ -172,7 +183,8 @@ const EditableField = ({
 
   const renderViewMode = () => {
     const classes = cc(['editableField', className, { 
-      'editableField--clickable': onClick 
+      'editableField--clickable': onClick,
+      'editableField--autoWidth': autoWidth,
     }]);
 
     return titleField ? (
