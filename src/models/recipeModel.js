@@ -22,12 +22,23 @@ const step3 = {
 const description = 'Denna goda sockerkaka är riktigt underbar, speciellt tillsammans med grädde och bär.';
 
 
+// const RecipeModel = {
+//   name: 'Sockerkaka',
+//   description,
+//   time: '30 min',
+//   steps: [step1, step2, step3],
+//   ingredients: [ing1, ing2, ing3, ing4],
+//   images: [], 
+//   draft: true,
+// }
+
+
 const RecipeModel = {
-  name: 'Sockerkaka',
-  description,
-  time: '30 min',
-  steps: [step1, step2, step3],
-  ingredients: [ing1, ing2, ing3, ing4],
+  name: '',
+  description: '',
+  time: '',
+  steps: [],
+  ingredients: [],
   images: [], 
   draft: true,
 }

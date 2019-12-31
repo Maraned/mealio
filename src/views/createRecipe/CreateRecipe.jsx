@@ -246,13 +246,15 @@ const CreateRecipe = () => {
             )}
           </div>
 
-          <div className="flex column vcenter vMediumLeft">
+          <div className="flex column vcenter vMediumLeft grow">
             <EditableField 
               onChange={changeName} 
               value={name}
               className="recipe__name margin--bottom" 
-              placeholder={t('Recipe.Name')}
+              placeholder={t('Recipe:Name')}
               titleField
+              type="text"
+              textTag="h1"
             />
 
             <EditableField 

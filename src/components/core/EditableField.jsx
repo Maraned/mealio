@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect, useRef, useCallback } from 'rea
 import cc from 'classcat';
 import posed from 'react-pose';
 import { FaTimes } from 'react-icons/fa';
-import Editor from '@stfy/react-editor.js';
 import DraftEditor from 'components/core/DraftEditor';
 
 import { EditableContext } from 'contexts/editable';
@@ -35,6 +34,7 @@ const EditableField = ({
   onOptionClick,
   optionText,
   titleField = false,
+  textTag,
   onRemove,
   showRemove,
 }) => {
@@ -122,36 +122,26 @@ const EditableField = ({
       <>
         <DraftEditor 
           className={cc(["editableField editableField__edit", className, {
-            'editableField--center': center
+            'editableField--center': center,
+            [`editableField--${textTag}`]: textTag,
+            'editableField--text': !textTag
           }])}
           onChange={value => handleOnChange(value)}
           value={fallbackValue || value}
-        />
-        {/* <div
-          contentEditable
-          className={cc(["editableField editableField__edit", className, {
-            'editableField--center': center
-          }])}
-          onInput={event => handleOnChange(event.currentTarget.textContent)}
           placeholder={placeholder}
-          onPaste={onPaste}
-          onFocus={focus}
-          suppressContentEditableWarning={true}
-          ref={node} 
-        >
-          {fallbackValue || value}
-        </div> */}
+          textTag={textTag}
+        />
 
         {renderRemoveButton()}
       </>
     ) : (
       <div ref={node} className={cc(["editableField__container", {
-        'editableField__container--center': center
-      }])}>
+        'editableField__container--center': center,
+        }])}>
         <div className="editableField__innerContainer">
           <input
-            className={cc(["editableField editableField__edit", className, {
-              'editableField--center': center
+            className={cc(['editableField editableField__edit', className, {
+              'editableField--center': center,
             }])}
             onChange={event => handleOnChange(event.target.value)}
             value={fallbackValue || value}

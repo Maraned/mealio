@@ -49,6 +49,8 @@ export default {
     AddFile: 'Bild från fil',
     AddUrl: 'Bild från url',
     Done: 'Klar',
+    Description: 'Beskrivning av receptet...',
+    Name: 'Receptets namn...'
   },
   Time: {
     Second: 'sekund',

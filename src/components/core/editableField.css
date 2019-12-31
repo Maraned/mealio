@@ -1,3 +1,16 @@
+.editableField {
+  min-width: 160px;
+}
+
+.editableField--text {
+  line-height: 1.2rem;
+}
+
+.editableField--h1 {
+  height: 75px;
+  line-height: 2rem;;
+}
+
 .editableField__edit {
   border: var(--input-border);
   padding: .5rem .25rem;
