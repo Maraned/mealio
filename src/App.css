@@ -8,7 +8,23 @@ body,
 #root {
   height: 100%;
   background-color: var(--primary-background);
-  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+    width: .75rem;
+  /* background-color: #fff; */
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  /* box-shadow: inset 0 0 6px rgba(255,255,255,0.9); */
+}
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  background-color: #fefefe;
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  outline: 1px solid slategrey;
 }
 
 a {
