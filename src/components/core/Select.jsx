@@ -140,7 +140,7 @@ const Select = ({
     };
   }, []);
 
-  const selectedText = !editableState.editable 
+  const selectedText = editableState && !editableState.editable 
     ? selected || (preSelected && preSelected[textAttribute])
     : selected 
       || (preSelected && preSelected[textAttribute]) 
