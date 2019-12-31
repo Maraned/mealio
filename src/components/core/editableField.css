@@ -7,14 +7,12 @@
 }
 
 .editableField--h1 {
-  height: 75px;
   line-height: 2rem;;
 }
 
 .editableField__edit {
   border: var(--input-border);
   padding: .5rem .25rem;
-  min-height: var(--edit-field-min-height);
 }
 
 .editableField__container--center {

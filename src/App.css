@@ -3,6 +3,10 @@
   font-family: 'Noto Sans HK', Arial, Helvetica, sans-serif;
 }
 
+div[contenteditable] {
+  font-size: 1rem !important;
+}
+
 html, 
 body,
 #root {
