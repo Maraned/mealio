@@ -1,3 +1,5 @@
+import './stepList.css';
+
 import React, { useContext, useState } from 'react';
 
 import { RecipeContext } from 'contexts/recipe';
@@ -7,8 +9,6 @@ import { UserContext } from 'contexts/user';
 import Step from 'components/stepList/Step';
 
 import { useTranslation } from 'react-i18next';
-
-import './stepList.css';
 
 const StepList = () => {
   const { state } = useContext(EditableContext);
@@ -67,18 +67,15 @@ const StepList = () => {
   }
 
   const parseStepText = stepText => {
-    const lines = stepText.split('\n');
+    const lines = stepText.split('\n').map(text => ({ text }));
     if (lines.length) {
-      const newSteps = [...steps, ...lines];
+      const stepToRemove = steps.length - 1;
+      const modifiedSteps = [...ingredients];
+      modifiedSteps.splice(stepToRemove, 1);
+      const newSteps = [...modifiedSteps, ...lines];
       updateSteps(newSteps);
     }
-  }
-
-  const pasteSteps = event => {
-    event.preventDefault();
-    const pastedText = event.clipboardData.getData('Text');
-    parseStepText(pastedText)
-  }
+  };
 
   return (
     <div className="stepList list listSpacing background">
@@ -92,7 +89,7 @@ const StepList = () => {
           ingredients={ingredients}
           onMouseOver={hoverStep}
           onMouseLeave={closePopup}
-          onPaste={pasteSteps}
+          onPaste={parseStepText}
           onRemove={removeStep}
         />
       ))}

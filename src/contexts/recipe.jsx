@@ -61,6 +61,7 @@ const recipeReducer = (state, action) => {
       break;
     case 'update':
       newState = { ...state, ...action.value };
+      console.log('newState', newState)
       break;
     case 'draft':
       newState = { ...state, draft: action.value };

@@ -33,6 +33,7 @@ const Step = ({
   const [oven, setOven] = useState(0);
   const [showEditButtons, setShowEditButtons] = useState(false);
   const toolsRef = useRef(null);
+  const onPasteCalled = useRef(false);
 
   const includesDegrees = () => {
     const regex = new RegExp(`(\\d+)\\s*${t('Recipe:Degrees')}`, 'g');
@@ -134,6 +135,10 @@ const Step = ({
   }, [ingredients])
 
   const updateText = text => {
+    if (onPasteCalled.current) {
+      onPasteCalled.current = false;
+      return;
+    }
     step.text = text;
     updateStep(index, step);
   }
@@ -152,6 +157,14 @@ const Step = ({
     onRemove(step, index);
   }
 
+  const onPasteHandler = text => {
+    onPasteCalled.current = true;
+    console.log('onPaste');
+    if (onPaste) {
+      onPaste(text);
+    }
+  }
+
   const documentClick = event => {
     event.preventDefault();
     const isTarget = event.target.classList.contains('step__tools__option')
@@ -165,7 +178,7 @@ const Step = ({
 
   const openStepTools = () => {
     setShowEditButtons(true);
-  }
+  };
 
   const viewMode = () => (
     <>
@@ -258,7 +271,7 @@ const Step = ({
       <EditableField
         value={step.text}
         onChange={updateText}
-        onPaste={onPaste}
+        onPaste={onPasteHandler}
         onBlur={() => setShowEditButtons(false)}
         onFocus={openStepTools}
         type="text"

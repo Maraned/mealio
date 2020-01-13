@@ -87,7 +87,7 @@ const Ingredient = ({
   const onAddIngredient = () => {
     history.push({
       pathname: '/newIngredient',
-      state: { groups, modal: true, previousLocation: location }
+      state: { name: ingredient.name, groups, modal: true, previousLocation: location }
     });
   };
 

@@ -10,8 +10,9 @@ import { UserContext } from 'contexts/user';
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { ModalContent, ModalButtons } from 'components/modal/Modal';
 
-const NewIngredient = ({ groups, closeModal }) => {
-  const [ingredientName, setIngredientName] = useState('');
+const NewIngredient = ({ name, groups, closeModal }) => {
+  console.log('name', name)
+  const [ingredientName, setIngredientName] = useState(name);
   const [ingredientGroup, setIngredientGroup] = useState({ name: '' });
   const [ingredientAlternatives, setIngredientAlternatives] = useState([]);
   const { t } = useTranslation();
