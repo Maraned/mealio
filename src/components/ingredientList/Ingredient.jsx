@@ -9,7 +9,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { EditableContext } from 'contexts/editable';
 
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 import Select from 'components/core/Select';
 
 const Ingredient = ({ 

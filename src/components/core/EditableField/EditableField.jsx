@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef, useCallback } from 'rea
 import cc from 'classcat';
 import posed from 'react-pose';
 import { FaTimes } from 'react-icons/fa';
-import DraftEditor from 'components/core/DraftEditor';
+import DraftEditor from 'components/core/EditableField/DraftEditor';
 
 import { EditableContext } from 'contexts/editable';
 
@@ -38,6 +38,7 @@ const EditableField = ({
   onRemove,
   showRemove,
   autoWidth,
+  toolbarButtons,
 }) => {
   const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
@@ -140,9 +141,10 @@ const EditableField = ({
           placeholder={placeholder}
           textTag={textTag}
           onPaste={onPaste}
+          onFocus={onFocus}
+          toolbarButtons={toolbarButtons}
+          onRemove={onRemove}
         />
-
-        {renderRemoveButton()}
       </>
     ) : (
       <div ref={node} className={cc(["editableField__container", {

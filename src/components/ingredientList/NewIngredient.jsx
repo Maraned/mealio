@@ -4,14 +4,13 @@ import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { postRequest, getRequest } from 'utils/request';
 
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 
 import { UserContext } from 'contexts/user';
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { ModalContent, ModalButtons } from 'components/modal/Modal';
 
 const NewIngredient = ({ name, groups, closeModal }) => {
-  console.log('name', name)
   const [ingredientName, setIngredientName] = useState(name);
   const [ingredientGroup, setIngredientGroup] = useState({ name: '' });
   const [ingredientAlternatives, setIngredientAlternatives] = useState([]);

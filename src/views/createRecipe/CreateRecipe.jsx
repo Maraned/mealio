@@ -13,7 +13,7 @@ import { AlertBannerContext } from 'contexts/alertBanner';
 
 import IngredientList from 'components/ingredientList/IngredientList';
 import StepList from 'components/stepList/StepList';
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
 

@@ -9,7 +9,7 @@ import { postRequest, imageUrl } from 'utils/request';
 import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
 import FullWidthContainer from 'components/core/FullWidthContainer';
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 // import ImageGallery from 'components/core/imageGallery/ImageGallery';
 import IngredientList from 'components/ingredientList/IngredientList';
 import StepList from 'components/stepList/StepList';

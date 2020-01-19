@@ -15,8 +15,6 @@ export default function ModalRoutes({
   const location = useLocation();
   const { t } = useTranslation();
 
-  console.log('location state data', location.state && location.state.data)
-
   return (
     <Switch>
       <Route path="/newIngredient">

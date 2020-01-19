@@ -3,7 +3,7 @@ import './groceryListItem.css';
 import React, { useState } from 'react';
 
 import cc from 'classcat';
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 
 import Checkbox from 'components/core/Checkbox';
 

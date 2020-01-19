@@ -67,7 +67,7 @@ const StepList = () => {
   }
 
   const parseStepText = stepText => {
-    const lines = stepText.split('\n').map(text => ({ text }));
+    const lines = stepText.split('\n').map(text => ({ text, indentation: 0 }));
     if (lines.length) {
       const stepToRemove = steps.length - 1;
       const modifiedSteps = [...ingredients];

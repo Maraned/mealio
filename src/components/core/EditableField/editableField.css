@@ -60,3 +60,35 @@
 .editableField__innerContainer {
   display: flex;
 }
+
+.editableField__toolbar {
+  position: absolute;
+  height: 35px;
+  top: -36px;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+  display: flex;
+  box-shadow: var(--box-shadow);
+  border-radius: .25rem;
+}
+
+.editableField__toolbar__option {
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: .25rem;
+}
+
+.editableField__toolbar__option:hover {
+  background-color: var(--primary-color-lighter);
+}
+
+.editableField__toolbar__option * {
+  pointer-events: none;
+}
+
+.editableField__toolbar__option--selected {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+}
+

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import cc from 'classcat';
 
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 import TimerButton from 'components/core/TimerButton';
 
 import { EditableContext } from 'contexts/editable';
@@ -159,7 +159,6 @@ const Step = ({
 
   const onPasteHandler = text => {
     onPasteCalled.current = true;
-    console.log('onPaste');
     if (onPaste) {
       onPaste(text);
     }
@@ -174,10 +173,6 @@ const Step = ({
     } else {
       setShowEditButtons(false);
     }
-  }
-
-  const openStepTools = () => {
-    setShowEditButtons(true);
   };
 
   const viewMode = () => (
@@ -221,49 +216,28 @@ const Step = ({
     </>
   );
 
-  const renderStepTools = () => (
-    <div className="step__tools" ref={toolsRef}>
-      {step.indentation > 0 && (
-        <div 
-          title={t('Recipe:DecreaseIndent')}
-          className="step__tools__option step__tools__indent"
-          onClick={updateIndentation(step.indentation - 1)}
-        >
-          <FaOutdent />
-        </div>
-      )}
-
-      {step.indentation < 2 && (
-        <div 
-          title={t('Recipe:IncreaseIndent')}
-          className="step__tools__option step__tools__indent"
-          onClick={updateIndentation(step.indentation + 1)}
-        >
-          <FaIndent />
-        </div>
-      )}
-      
-      <div 
-        className="step__tools__option step__tools__listNumber"
-        title={step.showNumber 
-          ? t('Recipe:HideStepNumbers') 
-          : t('Recipe:ShowStepNumbers')}
-        onClick={updateShowNumbers}
-        
-      >
-        {step.showNumber ? (
-          <FaBars />
-        ) : (
-          <FaListOl />
-        )}
-      </div>
-    </div>
-  );
+  const toolbarButtons = [
+    { 
+      icon: <FaOutdent />, 
+      onClick: updateIndentation(step.indentation - 1),
+      hide: step.indentation < 1,
+    },
+    { 
+      icon: <FaIndent />, 
+      onClick: updateIndentation(step.indentation + 1),
+      hide: step.indentation > 1
+    },
+    { 
+      icon: step.showNumber ? <FaBars /> : <FaListOl />, 
+      onClick: updateShowNumbers,
+    },
+    {
+      type: 'bold'
+    }
+  ];
 
   const editMode = () => (
     <>
-      {showEditButtons && renderStepTools()}
-
       {step.showNumber && (
         <span className="step__number">{index + 1}.&nbsp;</span>
       )}
@@ -273,7 +247,7 @@ const Step = ({
         onChange={updateText}
         onPaste={onPasteHandler}
         onBlur={() => setShowEditButtons(false)}
-        onFocus={openStepTools}
+        toolbarButtons={toolbarButtons}
         type="text"
         showRemove={showEditButtons}
         onRemove={removeStep}

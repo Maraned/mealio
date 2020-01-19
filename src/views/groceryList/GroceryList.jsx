@@ -5,7 +5,7 @@ import { FaPen, FaPlusCircle } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next';
 
 import GroceryListItem from './GroceryListItem';
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 
 import { GroceryListContext } from 'contexts/groceryList';
 import { EditableContext } from 'contexts/editable';

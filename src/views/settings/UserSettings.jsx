@@ -7,7 +7,7 @@ import posed from 'react-pose';
 import { UserContext } from 'contexts/user';
 import { EditableContext } from 'contexts/editable';
 import ImageUpload from 'components/core/imageUpload/ImageUpload'
-import EditableField from 'components/core/EditableField';
+import EditableField from 'components/core/EditableField/EditableField';
 import Avatar from 'components/user/Avatar';
 import { ModalContent, ModalButtons } from 'components/modal/Modal';
 
