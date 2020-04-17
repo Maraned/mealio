@@ -9,9 +9,7 @@ import GroceryLists from 'views/groceryList/GroceryListsWrapper';
 
 import Modal from 'components/modal/Modal';
 
-export default function ModalRoutes({
-
-}) {
+export default function ModalRoutes() {
   const location = useLocation();
   const { t } = useTranslation();
 

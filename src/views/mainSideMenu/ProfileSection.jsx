@@ -7,35 +7,23 @@ import {
   FaCogs, 
   FaUtensils, 
   FaListUl, 
-  FaUsersCog,
   FaStar 
 } from 'react-icons/fa';
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { UserContext } from 'contexts/user';
 import { RouterContext } from 'contexts/router';
 import { LoggedInContext } from 'contexts/login';
 
-
 import Avatar from 'components/user/Avatar';
 import MenuOption from 'components/core/MenuOption';
 
-export default function ProfileSection({
-
-}) {
+export default function ProfileSection() {
   const { state: user } = useContext(UserContext);
   const { dispatch: route } = useContext(RouterContext)
   const { dispatch } = useContext(LoggedInContext);
   const { t } = useTranslation();
   const location = useLocation();
-  const history = useHistory();
-
-  const openSettings = () => {
-    history.push({
-      pathname: '/settings',
-      state: { modal: true, previousLocation: location }
-    })
-  }
 
   return (
     <div className="profileSection box background">

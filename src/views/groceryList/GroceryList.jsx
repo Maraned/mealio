@@ -10,7 +10,7 @@ import EditableField from 'components/core/EditableField/EditableField';
 import { GroceryListContext } from 'contexts/groceryList';
 import { EditableContext } from 'contexts/editable';
 
-const GroceryList = ({ list, listIndex }) => {
+const GroceryList = ({ list }) => {
   const { dispatch } = useContext(GroceryListContext);
   const { state: { editable }, dispatch: setEditMode } = useContext(EditableContext);
   const { dispatch: updateList } = useContext(GroceryListContext);
@@ -84,6 +84,7 @@ const GroceryList = ({ list, listIndex }) => {
       {list.items.map((item, index) => {
         if (item.checked) {
           checkedList.push({ item, index });
+          return null;
         } else {
           return (
             <GroceryListItem 
@@ -93,7 +94,6 @@ const GroceryList = ({ list, listIndex }) => {
               index={index} 
               changeItem={changeItem(index)}
               onCheckedChange={onCheckedChange(index)}
-              listIndex={listIndex}
             />
           );
         }
@@ -107,7 +107,6 @@ const GroceryList = ({ list, listIndex }) => {
           index={checkedItem.index} 
           changeItem={changeItem(checkedItem.index)}
           onCheckedChange={onCheckedChange(checkedItem.index)}
-          listIndex={listIndex}
         />
       ))}
 

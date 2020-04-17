@@ -18,7 +18,7 @@ export default function MainDashboard() {
   );
 
   const renderModalSquare = (text, page) => (
-    <a>
+    <button className="link">
       <div 
         className="square shadow center" 
         onClick={() => {
@@ -32,7 +32,7 @@ export default function MainDashboard() {
       >
         {text}
       </div>
-    </a>
+    </button>
   );
 
   return (

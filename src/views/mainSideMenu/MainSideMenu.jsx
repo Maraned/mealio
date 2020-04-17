@@ -7,9 +7,7 @@ import LogInSection from './LogInSection';
 
 import { LoggedInContext } from 'contexts/login';
 
-export default function MainSideMenu({
-
-}) {
+export default function MainSideMenu() {
   const { state } = useContext(LoggedInContext);
 
   return (

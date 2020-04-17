@@ -6,9 +6,7 @@ import { UserContext } from 'contexts/user';
 import RecipeList from 'views/recipeList/RecipeList';
 import { useTranslation } from 'react-i18next';
 
-export default function RecipeCollection({
-
-}) {
+export default function RecipeCollection() {
   const { state: user } = useContext(UserContext);
   const [recipes, setRecipes] = useState([]);
   const { t } = useTranslation();
@@ -22,6 +20,7 @@ export default function RecipeCollection({
 
   useEffect(() => {
     fetchRecipeCollection();
+    // eslint-disable-next-line
   }, []);
 
   return (

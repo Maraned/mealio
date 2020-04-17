@@ -11,7 +11,7 @@ const AlertBanner = ({
 }) => {
   useEffect(() => {
     setTimeout(() => onRemove(), delay);
-  }, []);
+  }, [onRemove, delay]);
 
   return (
     <div className={cc(['alertBanner', {

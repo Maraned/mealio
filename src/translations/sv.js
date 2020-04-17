@@ -50,7 +50,9 @@ export default {
     AddUrl: 'Bild från url',
     Done: 'Klar',
     Description: 'Beskrivning av receptet...',
-    Name: 'Receptets namn...'
+    Name: 'Receptets namn...',
+    Url: 'Webbress...',
+    CreateFromUrl: 'Skapa från webbadress',
   },
   Time: {
     Second: 'sekund',
@@ -71,7 +73,6 @@ export default {
     Group: 'Grupp',
     Alternatives: 'Alternativ',
     Alternative: 'Alternativ',
-    NewIngredient: 'Ny Ingrediens'
   },
   Menu: {
     Logout: 'Logga ut',

@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import './recipeList.css';
+
+import React from 'react';
 
 import RecipeCard from './RecipeCard';
 import RecipeFilter from './RecipeFilter';
-
-import './recipeList.css';
 
 const RecipeList = ({
   recipes

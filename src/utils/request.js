@@ -35,9 +35,9 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
     } else {
       return response.status;
     }
-  } catch (err) {
-    console.error('POST ERROR', err);
-    throw { error: err.error.error, status: err.statusCode };
+  } catch (error) {
+    console.error('POST ERROR', error);
+    throw error;
   }
 };
 
@@ -91,7 +91,7 @@ export const getRequest = async (endpoint, query) => {
     return response;
   } catch (error) {
     console.error('getRequest', { endpoint }, error);
-    throw { error: 'Something went wrong with getRequests' };
+    throw error;
   }
 }
 

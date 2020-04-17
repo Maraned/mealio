@@ -45,6 +45,8 @@ const reducer = (state, action) => {
         userId: action.userId
       });
       return groceryListState;
+    default:
+      return state;
   }
 };
 

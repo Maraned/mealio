@@ -36,7 +36,7 @@ const SelectContent = ({
       contentRef.current.style.left = `${anchorRect.x}px`;
       contentRef.current.style.width = `${anchorRect.width}px`;
     }
-  }, [open]);
+  }, [open, contentRef, anchorElement]);
 
   const content = (
     <SelectContentPose className={className} ref={contentRef} pose={open ? 'open' : 'closed'}>
@@ -113,7 +113,7 @@ const Select = ({
       miniSearch.current.addAll(options)
     } 
     setFilteredOptions(options);
-  }, [options]); 
+  }, [options, searchable, searchFields]); 
 
   useEffect(() => {
     if (searchable) {
@@ -132,7 +132,7 @@ const Select = ({
         setFilteredOptions(options);
       }
     }
-  }, [query, miniSearch]);
+  }, [query, miniSearch, options, searchable]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -140,6 +140,7 @@ const Select = ({
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
+    // eslint-disable-next-line 
   }, []);
 
   const selectedText = editableState && !editableState.editable 

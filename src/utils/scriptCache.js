@@ -22,31 +22,31 @@ class ScriptCache {
 
   scriptTag(src) {
     return new Promise((resolve, reject) => {
-      let resolved = false;
-      let errored = false;
+      // let resolved = false;
+      // let errored = false;
       let body = document.getElementsByTagName('body')[0];
       let tag = document.createElement('script');
 
       tag.type = 'text/javascript';
       tag.async = false; // Load in order
 
-      const handleCallback = tag.onreadystatechange = () =>  {
-        if (resolved) return handleLoad();
-        if (errored) return handleReject();
-        const state = tag.readyState;
-        if (state === 'complete') {
-          handleLoad()
-        } else if (state === 'error') {
-          handleReject()
-        }
-      }
+      // const handleCallback = tag.onreadystatechange = () =>  {
+      //   if (resolved) return handleLoad();
+      //   if (errored) return handleReject();
+      //   const state = tag.readyState;
+      //   if (state === 'complete') {
+      //     handleLoad()
+      //   } else if (state === 'error') {
+      //     handleReject()
+      //   }
+      // }
 
       const handleLoad = () => {
-        resolved = true;
+        // resolved = true;
         resolve(src);
       }
       const handleReject = () => {
-        errored = true; 
+        // errored = true; 
         reject(src) 
       }
 

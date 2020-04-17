@@ -3,7 +3,7 @@ import 'draft-js/dist/Draft.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
-import { Editor, EditorState, ContentState, RichUtils, convertToRaw, convertFromRaw, SelectionState } from 'draft-js';
+import { Editor, EditorState, ContentState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import posed from 'react-pose';
 import DraftPasteProcessor from 'draft-js/lib/DraftPasteProcessor';
 import Toolbar from './Toolbar';
@@ -36,8 +36,13 @@ export default function DraftEditor({
       );
       return ContentState.createFromBlockArray(processedHTML);
     }
+    console.log('value', value)
     if (value) {
-      return convertFromRaw(JSON.parse(value) );
+      try {
+        return convertFromRaw(JSON.parse(value));
+      } catch (err) {
+        return ContentState.createFromText(`${value}`);    
+      }
     }
     return ContentState.createFromText(`${value}`);
   }
@@ -51,6 +56,7 @@ export default function DraftEditor({
     if (currentValue !== value) {
       setEditorState(EditorState.createWithContent(createContent()));
     }
+    // eslint-disable-next-line 
   }, [value]);
 
   const handleOnChange = changedEditorState => {

@@ -24,6 +24,8 @@ const reducer = (state, action) => {
       return removeRecipeFromPublishedRecipes(state, action.value);
     case 'set':
       return action.value;
+    default:
+      return state;
   }
 };
 

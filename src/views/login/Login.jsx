@@ -27,6 +27,7 @@ const Login = () => {
     if (state.user && state.user.is) {
       dispatch({ type: 'login' })
     }
+    // eslint-disable-next-line
   }, [state.user]);
   
   const handleClick = event => {
@@ -75,6 +76,7 @@ const Login = () => {
   }
 
   const validEmail = email => {
+    // eslint-disable-next-line
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return email.match(emailRegex);
   }
@@ -145,7 +147,7 @@ const Login = () => {
         {btnText}
       </button>
 
-      <a className="login__link" onClick={onClickChangeView}>{changeViewText}</a>
+      <button className="link login__link" onClick={onClickChangeView}>{changeViewText}</button>
     </>
   );
   
@@ -179,6 +181,8 @@ const Login = () => {
         return renderRegister();
       case 'userCreated':
         return renderUserCreated();
+      default:
+        return '';
     }
   }
 

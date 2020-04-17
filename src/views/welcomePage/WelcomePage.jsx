@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LoggedInContext } from 'contexts/login';
 import { UserContext } from 'contexts/user';
@@ -6,17 +6,6 @@ import { UserContext } from 'contexts/user';
 import posed, { PoseGroup } from 'react-pose';
 
 import MainDashboard from 'views/mainDashboard/MainDashboard';
-
-const WelcomePose = posed.div({
-  enter: { 
-    opacity: 1,
-    y: '0',
-  },
-  exit: { 
-    opacity: 0,
-    y: '-100%',
-  },
-});
 
 const SlideInOut = posed.div({
   enter: { 

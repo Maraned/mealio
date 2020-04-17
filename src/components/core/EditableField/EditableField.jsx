@@ -62,7 +62,7 @@ const EditableField = ({
         onBlur(currentValue);
       }
     }
-  }, [value, fallbackValue, onChange, node, isFocused]);
+  }, [value, fallbackValue, onChange, node, isFocused, onBlur]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClick);
@@ -96,6 +96,7 @@ const EditableField = ({
       }
     }
     setFilteredOptions(alteredFilteredOptions);
+    // eslint-disable-next-line 
   }, [value, fallbackValue])
 
   const optionClick = option => () => {

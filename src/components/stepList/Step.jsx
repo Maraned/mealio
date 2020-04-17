@@ -32,7 +32,6 @@ const Step = ({
   const { t } = useTranslation();
   const [oven, setOven] = useState(0);
   const [showEditButtons, setShowEditButtons] = useState(false);
-  const toolsRef = useRef(null);
   const onPasteCalled = useRef(false);
 
   const includesDegrees = () => {
@@ -45,6 +44,7 @@ const Step = ({
 
   useEffect(() => {
     includesDegrees();
+    // eslint-disable-next-line
   }, [step])
 
   const wordContainsIngredient = (word, ingredient) => {
@@ -99,7 +99,7 @@ const Step = ({
       || isDay();
   }
 
-  const [timer, setTimer] = useState(getTimers())
+  const [timer] = useState(getTimers())
   
   const parseStep = () => {
     if (!step.text) {
@@ -132,6 +132,7 @@ const Step = ({
 
   useEffect(() => {
     parseStep();
+    // eslint-disable-next-line 
   }, [ingredients])
 
   const updateText = text => {
@@ -163,7 +164,8 @@ const Step = ({
       onPaste(text);
     }
   }
-
+  
+  // eslint-disable-next-line 
   const documentClick = event => {
     event.preventDefault();
     const isTarget = event.target.classList.contains('step__tools__option')

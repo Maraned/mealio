@@ -49,6 +49,8 @@ const TimerButton = ({ time, unit, text }) => {
       case 'day':
         milliseconds = time * 1000 * 60 * 60 * 24;
         break;
+      default:
+        break;
     }
     setTimerTime(milliseconds);
     
@@ -67,10 +69,12 @@ const TimerButton = ({ time, unit, text }) => {
 
   useEffect(() => {
     timeToDateType();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     updateTimerText(timerTime);
+    // eslint-disable-next-line
   }, [timerTime])
 
   const updateTimeLeft = () => {
@@ -98,6 +102,7 @@ const TimerButton = ({ time, unit, text }) => {
 
   useEffect(() => {
     updateTimeLeft();
+    // eslint-disable-next-line 
   }, [timerTime, timerStarted, timerPaused]);
 
   return (

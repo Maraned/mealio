@@ -73,6 +73,8 @@ const recipeReducer = (state, action) => {
       break;
     case 'unset':
       break;
+    default:
+      return state;
   }
 
   if (!newState.author && action.author) {
@@ -129,7 +131,7 @@ export const RecipeProvider = props => {
         dispatch({ type: 'update', value: recipe });
       }
     }
-  }, [draftRecipes, publishedRecipes]);
+  }, [draftRecipes, publishedRecipes, state.id]);
 
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>

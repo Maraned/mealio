@@ -35,7 +35,6 @@ const GroceryLists = ({ data }) => {
 
   const [recipeData, setRecipeData] = useState(data);
   const [activeList, setActiveList] = useState(null);
-  const [activeListIndex, setActiveListIndex] = useState(0);
 
   const { t, i18n } = useTranslation();
 
@@ -52,19 +51,21 @@ const GroceryLists = ({ data }) => {
 
   useEffect(() => {
     fetchGroceryLists();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (groceryLists && groceryLists.length && !activeList) {
       setActiveList(groceryLists[0]);
     }
+    // eslint-disable-next-line
   }, [groceryLists]);
 
   const createNewGroceryList = async () => {
     const newGroceryList = await postRequest('groceryList/create', {
       items: (recipeData && recipeData.items) || [],
       recipeId: (recipeData && recipeData.recipeId) || '',
-      name: recipeData && recipeData.recipeName || t('GroceryList:NewGroceryList'),
+      name: recipeData && (recipeData.recipeName || t('GroceryList:NewGroceryList')),
       userId: user.id,
     });
 
@@ -91,7 +92,7 @@ const GroceryLists = ({ data }) => {
       <ModalSideMenu>
         <div className="groceryLists__create background" onClick={createNewGroceryList}>
           <div className="groceryLists__create__inner">
-            {recipeData && recipeData.recipeName || t('GroceryList:CreateNew')}
+            {recipeData && (recipeData.recipeName || t('GroceryList:CreateNew'))}
           </div>
         </div>
         
@@ -118,7 +119,7 @@ const GroceryLists = ({ data }) => {
 
       {activeList && (
         <ModalContent>
-          <GroceryList key={activeList} list={activeList} listIndex={activeListIndex} />          
+          <GroceryList key={activeList} list={activeList} />          
         </ModalContent>
       )}
     </div>

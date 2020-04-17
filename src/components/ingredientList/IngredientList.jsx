@@ -1,6 +1,6 @@
 import './ingredientList.css';
 
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import cc from 'classcat';
 import { Link, useLocation } from 'react-router-dom';
@@ -57,7 +57,7 @@ const IngredientList = () => {
   }
 
   const parseIngredientText = ingredientText => {
-    const fullIngredientRegex = /([\d,\.]+)\s(.+?)\s(.+)/;
+    const fullIngredientRegex = /([\d,.]+)\s(.+?)\s(.+)/;
     const lines = ingredientText.split('\n');
     const parsedIngredients = [];
 

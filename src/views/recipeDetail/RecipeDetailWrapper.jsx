@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import RecipeDetail from './RecipeDetail';
 import { EditableProvider } from 'contexts/editable';

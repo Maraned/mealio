@@ -55,7 +55,7 @@ const RecipeDetail = () => {
     <div className="createRecipe recipe viewMaxWidth">
       <FullWidthContainer className="background box flex">
         {!!images && !!images.length && (
-          <img className="recipe__image image--rounded" src={imageUrl(images[0])} /> 
+          <img className="recipe__image image--rounded" src={imageUrl(images[0])} alt="" /> 
         )}
 
         <div className="flex column child-flex child-margins">

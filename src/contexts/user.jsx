@@ -8,6 +8,8 @@ const userReducer = (state, action) => {
       return { ...state, ...action.value };
     case 'draftRecipes': 
       return { ...state, draftRecipes: action.value }
+    default:
+      return state;
   }
 };
 

@@ -41,6 +41,8 @@ const reducer = (state, action) => {
     case 'set':
       recipes = action.value;
       break;
+    default:
+      return state;
   }
 
   return recipes.sort(recipeOrder);

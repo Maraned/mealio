@@ -2,15 +2,18 @@ import React, { createContext, useReducer, useEffect } from 'react';
 import { getRequest } from 'utils/request';
 
 const reducer = (state, action) => {
-    switch (action.type) {
+  switch (action.type) {
     case 'add':
       const { name, group } = action;
       if (name && group) {
         const newIngredient = { name, group };
         return [...state, newIngredient ];
       }
+      break;
     case 'update':
       return action.value;
+    default:
+      return state;
   }
 };
 

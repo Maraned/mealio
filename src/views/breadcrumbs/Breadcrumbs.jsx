@@ -1,6 +1,6 @@
 import './breadcrumbs.css';
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import cc from 'classcat';
 import { useHistory, useLocation } from "react-router-dom";

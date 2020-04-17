@@ -1,5 +1,5 @@
-import './createRecipe.css';
 import 'views/recipe/recipe.css';
+import './createRecipe.css';
 
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,7 @@ import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
 
 import { postRequest, deleteRequest, imageUrl } from 'utils/request';
+import UrlInput from './UrlInput';
 
 const CreateRecipe = () => {
   // CONTEXTS
@@ -28,7 +29,7 @@ const CreateRecipe = () => {
   const mounted = useRef(false);
 
   const { t, i18n } = useTranslation();
-  const { name, description, images, time, id, ingredients, lastUpdate } = state;
+  const { name, description, images, time, ingredients, lastUpdate } = state;
 
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
@@ -70,6 +71,7 @@ const CreateRecipe = () => {
 
   useEffect(() => {
     updateLastSaved(new Date(lastUpdate));
+    // eslint-disable-next-line
   }, [i18n.language, lastUpdate]);
 
   useEffect(() => {
@@ -78,11 +80,13 @@ const CreateRecipe = () => {
         onRecipeChange('draft', true);
       } 
     }
+    // eslint-disable-next-line
   }, [changed]);
 
   useEffect(() => {
     dispatch({ type: 'edit' });
     mounted.current = true;
+    // eslint-disable-next-line
   }, []);
 
   const toggleViewMode = () => {
@@ -92,7 +96,7 @@ const CreateRecipe = () => {
   };
 
   const deleteRecipe = async () => {
-    const responseStatus = await deleteRequest('recipes', {
+    await deleteRequest('recipes', {
       type: state.draft ? 'draftRecipes' : 'publishedRecipes',
       recipeId: state.id,
       id: user.id,
@@ -193,11 +197,11 @@ const CreateRecipe = () => {
               className="createRecipe__toggleModeBtn margin--right"
               onClick={toggleViewMode}
             >
-              {editState.editable 
-                ? t('Recipe:View') 
-                : t('Recipe:Edit')}
+              {editState.editable ? t('Recipe:View') : t('Recipe:Edit')}
             </button>
-            
+
+            <UrlInput />
+
             {state.draft && state.id && (
               <button 
                 className="createRecipe__publish"
@@ -223,7 +227,6 @@ const CreateRecipe = () => {
           >
             {t('Recipe:Delete')}
           </button>
-
         </FullWidthContainer>
 
         <div className="flex wrap nowrapMedium">
@@ -242,7 +245,7 @@ const CreateRecipe = () => {
             )}
 
             {!editState.editable && !!primaryImageUrl && (
-              <img className="recipe__image image--rounded" src={primaryImageUrl} /> 
+              <img className="recipe__image image--rounded" src={primaryImageUrl} alt="" /> 
             )}
           </div>
 

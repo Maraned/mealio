@@ -9,7 +9,6 @@ import Popup from 'components/core/popup/Popup';
 const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage }) => {
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const { t } = useTranslation();
-  const [popupOpen, setPopupOpen] = useState(false);
   const [hovering, setHovering] = useState(false);
 
   const onDragOver = event => {
@@ -50,7 +49,6 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
     event.preventDefault();
     event.stopPropagation();
 
-    setPopupOpen(false);
     return false;
   };
 
@@ -78,7 +76,7 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
       <div className="imageUpload__input flex center vcenter grow">
         <div className="imageUpload__uploadedImage" style={uploadedImageStyle}>
           {!!uploadedImage && (
-            <img className="image--rounded" src={uploadedImage} />
+            <img className="image--rounded" src={uploadedImage} alt="" />
           )}
         </div>
 

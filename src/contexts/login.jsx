@@ -3,7 +3,6 @@ import React, { createContext, useReducer, useContext, useEffect } from 'react';
 import { postRequest } from 'utils/request';
 import { UserContext } from 'contexts/user';
 import { PendingRequestContext } from 'contexts/pendingRequests';
-import { access } from 'fs';
 
 const loginReducer = (state, action) => {
   switch (action.type) {
@@ -12,7 +11,7 @@ const loginReducer = (state, action) => {
     case "logout":
       return { ...state, loggedIn: false };
     default:
-      return;
+      return state;
   }
 };
 
@@ -55,6 +54,7 @@ export function LoggedInProvider(props) {
 
   useEffect(() => {
     autoLogin(dispatch, userDispatch, pendingRequest);
+    // eslint-disable-next-line 
   }, [])
 
   return (

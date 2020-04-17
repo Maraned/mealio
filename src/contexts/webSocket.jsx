@@ -65,6 +65,7 @@ export const WebSocketProvider = props => {
   
 
     return () => connection.close();
+    // eslint-disable-next-line 
   }, []);
 
   return (

@@ -14,7 +14,7 @@ const Avatar = ({ onClick }) => {
   return (
     <div className="avatar" onClick={onClick}>
       {avatar ? (
-        <img src={url + avatar} className="avatar__image" />
+        <img src={url + avatar} className="avatar__image" alt="" />
       ) : (
         <FaUser className="avatar__image avatar__image--default" />
       )}

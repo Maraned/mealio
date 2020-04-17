@@ -25,7 +25,7 @@ const RecipeCard = ({ recipe }) => {
           {!recipe.images.length ? (
             <FaUtensils />
           ) : (
-            <img src={imageUrl(recipe.images[0])} />
+            <img src={imageUrl(recipe.images[0])} alt="" />
           )}
         </div>
 

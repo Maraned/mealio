@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
-import AlertBanner from './AlertBanner';
-
 import './alertBannerView.css';
 
-import { AlertBannerContext } from 'contexts/alertBanner';
+import React, { useContext } from 'react';
+import AlertBanner from './AlertBanner';
 
+import { AlertBannerContext } from 'contexts/alertBanner';
 
 import posed, { PoseGroup } from 'react-pose';
 const AlertBannerPose = posed.div({

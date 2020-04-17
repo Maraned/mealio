@@ -43,7 +43,7 @@ export default function Tabs({
         return viewRoute === location.pathname;
       })
     )
-  }, [tabViews]);
+  }, [tabViews, location.pathname, match.path, views]);
 
   useEffect(() => {
     if (views) {

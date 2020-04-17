@@ -2,7 +2,7 @@ import './userSettings.css';
 
 import React, { useState, useContext, useEffect } from 'react';
 
-import posed from 'react-pose';
+// import posed from 'react-pose';
 
 import { UserContext } from 'contexts/user';
 import { EditableContext } from 'contexts/editable';
@@ -14,25 +14,26 @@ import { ModalContent, ModalButtons } from 'components/modal/Modal';
 import { useTranslation } from 'react-i18next';
 import { postRequest } from 'utils/request';
 
-const ImageUploadPosed = posed.div({
-  show: {
-    opacity: 1,
-  },
-  hide: {
-    opacity: 0
-  }
-})
+// const ImageUploadPosed = posed.div({
+//   show: {
+//     opacity: 1,
+//   },
+//   hide: {
+//     opacity: 0
+//   }
+// })
 
 const UserSettings = () => {
   const { state: user, dispatch: userDispatch } = useContext(UserContext);
-  const [showImageUploader, setShowImageUploader] = useState(false);
+  // const [showImageUploader, setShowImageUploader] = useState(false);
   const [displayName, setDisplayName] = useState(user.displayName || user.email);
   const [avatar, setAvatar] = useState(user.avatar);
   const { dispatch } = useContext(EditableContext);
   const { t } = useTranslation();
 
   useEffect(() => {
-    dispatch({ type: 'edit' })
+    dispatch({ type: 'edit' });
+    // eslint-disable-next-line 
   }, []);
 
 
@@ -43,7 +44,7 @@ const UserSettings = () => {
       displayName 
     };
 
-    const response = await postRequest('users/update', {
+    await postRequest('users/update', {
       user: newUserData
     }, false);
 
@@ -64,8 +65,8 @@ const UserSettings = () => {
   const renderUserAvatar = () => (
     <div 
       className="userSettings__avatar"
-      onMouseOver={() => setShowImageUploader(true)}
-      onMouseLeave={() => setShowImageUploader(false)}
+      // onMouseOver={() => setShowImageUploader(true)}
+      // onMouseLeave={() => setShowImageUploader(false)}
     >
       <Avatar />
 
