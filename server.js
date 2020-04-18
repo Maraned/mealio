@@ -6,6 +6,7 @@ var cors = require('cors');
 var helmet = require('helmet');
 var jwt = require('express-jwt');
 const initWsServer = require('./wsServer').initWsServer;
+const webParser = require('./parsers/webParser');
 
 var app = express();
 
@@ -48,6 +49,11 @@ app.get('/images/:recipe/:image', function(req, res){
   const { recipe, image} = req.params;
   res.sendFile(`${__dirname}/images/${recipe}/${image}`);
 }); 
+
+app.get('/parse', async function(req, res) {
+  const recipe = await webParser(req.query);
+  res.json(recipe);
+})
 
 app.use(express.static('images'))
 
