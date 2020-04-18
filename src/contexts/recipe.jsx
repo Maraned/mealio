@@ -19,7 +19,7 @@ const updateRecipe = async (newState, dispatch) => {
 
   const response = await postRequest('recipes/createUpdate', {
     recipe: { ...newState, lastUpdate: newSavedDate },
-    id: newState.author.id,
+    id: newState.author && newState.author.id,
   });
 
   const { status, draftId, recipe: { lastUpdate } } = response;

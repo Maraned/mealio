@@ -166,6 +166,10 @@ div[contenteditable] {
   font-size: 13.3333px;
 }
 
+input {
+  height: 2.75rem;
+}
+
 input,
 textarea {
   border: none;
@@ -189,6 +193,16 @@ textarea:focus {
 
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+
+.sideSpacing--normal {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.sideSpacing--extra {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .listSpacing {
@@ -323,6 +337,14 @@ a:hover {
   display: flex;
 }
 
+.flex.spaceBetween {
+  justify-content: space-between;
+}
+
+.flex.fullGrow {
+  flex: 1 0 100%;
+}
+
 .flex.center {
   justify-content: center;
 } 
@@ -375,6 +397,10 @@ a:hover {
   max-width: 1024px;
   width: 100%;
   flex: 1;
+}
+
+.preserveWhitespace {
+  white-space: pre-wrap;
 }
 
 .margin--bottom {

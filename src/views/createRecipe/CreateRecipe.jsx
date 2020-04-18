@@ -2,6 +2,7 @@ import 'views/recipe/recipe.css';
 import './createRecipe.css';
 
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FaRegClock } from 'react-icons/fa';
 import cc from 'classcat';
@@ -16,6 +17,7 @@ import StepList from 'components/stepList/StepList';
 import EditableField from 'components/core/EditableField/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
+import Author from 'components/core/Author';
 
 import { postRequest, deleteRequest, imageUrl } from 'utils/request';
 import UrlInput from './UrlInput';
@@ -29,7 +31,19 @@ const CreateRecipe = () => {
   const mounted = useRef(false);
 
   const { t, i18n } = useTranslation();
-  const { name, description, images, time, ingredients, lastUpdate } = state;
+
+  const {
+    name, 
+    description, 
+    images, 
+    time, 
+    ingredients, 
+    lastUpdate, 
+    origin, 
+    originUrl, 
+    author,
+    authorUrl,
+  } = state;
 
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
@@ -176,10 +190,70 @@ const CreateRecipe = () => {
     onRecipeChange('time', event.target.value);
     setChanged(true);
   };
-
+                                                                                                                                                     
   const renderLastSaved = () => lastSavedText && (
     <div className="createRecipe__lastSaved margin--bottom">
       {t('Recipe:LastSaved')} {lastSavedText}
+    </div>
+  );
+
+  const renderActionbar = () => (
+    <FullWidthContainer spaceBetween className="margin--bottom--large">
+      <div className="flex spaceBetween fullWidth">
+        <button 
+          className="createRecipe__toggleModeBtn margin--right"
+          onClick={toggleViewMode}
+        >
+          {editState.editable ? t('Recipe:View') : t('Recipe:Edit')}
+        </button>
+
+        <UrlInput />
+
+        {state.draft && state.id && (
+          <button 
+            className="createRecipe__publish"
+            onClick={publishRecipe}
+          >
+            {t('Recipe:Publish')}
+          </button>
+        )}
+
+        {state.draft != null && !state.draft && (
+          <button 
+            className="createRecipe__update"
+            onClick={editRecipe}
+          >
+            {t('Recipe:Update')}
+          </button>
+        )}
+          
+        <button
+          className="createRecipe__delete remove"
+          onClick={deleteRecipe}
+        >
+          {t('Recipe:Delete')}
+        </button>
+      </div>
+
+    </FullWidthContainer>
+  );
+
+  const renderBottomRow = () => (
+    <div className="flex vcenter">
+      <div className="recipe__time margin--right">
+        <FaRegClock />
+        <EditableField 
+          onChange={changeTime} 
+          value={time}
+          placeholder={t('Recipe:Time')}
+        />
+      </div>
+
+      {author && (
+        <Author author={author} authorUrl={authorUrl} origin={origin} originUrl={originUrl} />
+      )}
+      
+      
     </div>
   );
 
@@ -191,43 +265,7 @@ const CreateRecipe = () => {
       <div className="background box">
         {renderLastSaved()}
 
-        <FullWidthContainer spaceBetween className="margin--bottom--large">
-          <div className="flex">
-            <button 
-              className="createRecipe__toggleModeBtn margin--right"
-              onClick={toggleViewMode}
-            >
-              {editState.editable ? t('Recipe:View') : t('Recipe:Edit')}
-            </button>
-
-            <UrlInput />
-
-            {state.draft && state.id && (
-              <button 
-                className="createRecipe__publish"
-                onClick={publishRecipe}
-              >
-                {t('Recipe:Publish')}
-              </button>
-            )}
-
-            {state.draft != null && !state.draft && (
-              <button 
-                className="createRecipe__update"
-                onClick={editRecipe}
-              >
-                {t('Recipe:Update')}
-              </button>
-            )}
-          </div>
-
-          <button
-            className="createRecipe__delete remove"
-            onClick={deleteRecipe}
-          >
-            {t('Recipe:Delete')}
-          </button>
-        </FullWidthContainer>
+        {renderActionbar()}
 
         <div className="flex wrap nowrapMedium">
           <div className="fullWidth autoWidthMedium center">
@@ -268,14 +306,7 @@ const CreateRecipe = () => {
               type="text"
             />
 
-            <div className="recipe__time">
-              <FaRegClock />
-              <EditableField 
-                onChange={changeTime} 
-                value={time}
-                placeholder={t('Recipe:Time')}
-              />
-            </div>
+            {renderBottomRow()}
           </div>
         </div>
       </div>

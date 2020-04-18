@@ -33,7 +33,7 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "start": "PORT=8800 HTTPS=true ./node_modules/.bin/react-scripts start",
+    "start": "PORT=8800 ./node_modules/.bin/react-scripts start",
     "build": "./node_modules/.bin/react-scripts build",
     "test": "./node_modules/.bin/react-scripts test",
     "eject": "./node_modules/.bin/react-scripts eject",

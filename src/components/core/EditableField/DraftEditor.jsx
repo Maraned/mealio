@@ -36,7 +36,7 @@ export default function DraftEditor({
       );
       return ContentState.createFromBlockArray(processedHTML);
     }
-    console.log('value', value)
+
     if (value) {
       try {
         return convertFromRaw(JSON.parse(value));

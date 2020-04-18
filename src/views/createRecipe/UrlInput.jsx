@@ -16,10 +16,11 @@ export default function UrlInput() {
   };
 
   return (
-    <div className="createRecipe__fromUrl">
+    <div className="createRecipe__fromUrl flex grow sideSpacing--extra">
       {showInput ? (
         <>
           <input 
+            className="sideSpacing--normal flex grow  margin--right"
             value={url} 
             onChange={event => setUrl(event.target.value)} 
             placeholder={t('Recipe:Url')} 

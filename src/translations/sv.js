@@ -53,6 +53,10 @@ export default {
     Name: 'Receptets namn...',
     Url: 'Webbress...',
     CreateFromUrl: 'Skapa från webbadress',
+    Author: 'Recept av: {{author}} ',
+    AuthorUrlWithOriginUrl: 'Recept av: <0>{{author}}</0>, från <2>{{origin}}</2>',
+    AuthorUrl: 'Recept av: <1>{{author}}<1>',
+    AuthorWithOrigin: 'Recept av: {{author}}, från <2>{{origin}}</2>'
   },
   Time: {
     Second: 'sekund',
