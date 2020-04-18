@@ -27,6 +27,8 @@ export default {
     Steps: 'Steg',
     Portion: 'Portion',
     Portion_plural: 'Portioner',
+    Sats: 'Sats',
+    Sats_plural: 'Satser',
     Paste: 'Klista in',
     IncreaseIndent: 'Öka indentera',
     DecreaseIndent: 'Minska indentera',

@@ -2,7 +2,6 @@ import './ingredientList.css';
 
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import cc from 'classcat';
 import { Link, useLocation } from 'react-router-dom';
 
 import { EditableContext } from 'contexts/editable';
@@ -12,18 +11,19 @@ import { UserContext } from 'contexts/user';
 import IngredientModel from 'models/ingredientModel';
 
 import Ingredient from 'components/ingredientList/Ingredient';
-import RangeSlider from 'components/core/rangeSlider/RangeSlider';
 
 import { Capitalize } from 'utils/utils';
 
-const IngredientList = () => {
+const IngredientList = ({ groupIngredients, marginBottom }) => {
   const { state } = useContext(EditableContext);
   const { state: user } = useContext(UserContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: changeView } = useContext(RouterContext);
   const { t } = useTranslation();
-  const { ingredients, portions, defaultPortions = 4 } = recipe;
+  const { ingredients: recipeIngredients, portions, defaultPortions = 4 } = recipe;
   const location = useLocation();
+
+  const ingredients = groupIngredients || recipeIngredients;
 
   const author = {
     id: user.id,
@@ -40,10 +40,6 @@ const IngredientList = () => {
     const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
     modifiedIngredients.push({...IngredientModel});
     updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
-  }
-
-  const updatePortions = event => {
-    updateRecipe({ type: 'update', value: { portions: event.target.value, author }});
   }
 
   const updateIngredients = ingredients => {
@@ -110,63 +106,48 @@ const IngredientList = () => {
     } });
   };
 
-  const portionsAmount = parseInt(portions, 10) || parseInt(defaultPortions, 10);
+  const portionsAmount = portions 
+    ? parseInt(portions, 10) 
+    : parseInt(defaultPortions, 10);
 
   return (
-    <>
-      <div className={cc(['ingredientList', 'list', 'background', 'listSpacing', {
-        'ingredientList--editMode': state.editable
-      }])}>
-        <div className="ingredientList__header">
-          <h4>{t('Recipe:Ingredients')}</h4>
-        </div>
-
-        <RangeSlider 
-          value={portionsAmount}
-          min={1} 
-          max={8} 
-          label={t('Recipe:Portion', { count: portionsAmount })} 
-          onChange={updatePortions}
-          className="center"
+    <div className={marginBottom && 'margin--bottom--xlarge'}>
+      {ingredients && ingredients.map((ingredient, index) => (
+        <Ingredient
+          key={'ingredient' + index}
+          updateIngredient={updateIngredient} 
+          index={index} 
+          ingredient={{...ingredient}}
+          defaultPortions={defaultPortions}
+          portions={portionsAmount}
+          onPaste={pasteIngredients}
+          onRemove={removeIngredient}
         />
-
-        {ingredients && ingredients.map((ingredient, index) => (
-          <Ingredient
-            key={'ingredient' + index}
-            updateIngredient={updateIngredient} 
-            index={index} 
-            ingredient={{...ingredient}}
-            defaultPortions={defaultPortions}
-            portions={portionsAmount}
-            onPaste={pasteIngredients}
-            onRemove={removeIngredient}
-          />
-        ))}
-        {state.editable ? (
-          <button onClick={addIngredient}>
-            {t('Recipe:AddIngredient')}
-          </button>
-        ) : (
-          <Link to={{ 
-            pathname: '/grocerylists', 
-            state: { 
-              modal: true, 
-              previousLocation: location, 
-              data: {
-                items: ingredientsToGroceryListItems(ingredients), 
-                recipeId: recipe.id,
-                recipeName: recipe.name,
-                headerTitle: t('GroceryList:Title'),
-              }
+      ))}
+      {state.editable ? (
+        <button onClick={addIngredient}>
+          {t('Recipe:AddIngredient')}
+        </button>
+      ) : (
+        <Link to={{ 
+          pathname: '/grocerylists', 
+          state: { 
+            modal: true, 
+            previousLocation: location, 
+            data: {
+              items: ingredientsToGroceryListItems(ingredients), 
+              recipeId: recipe.id,
+              recipeName: recipe.name,
+              headerTitle: t('GroceryList:Title'),
             }
-          }}>
-            <button onClick={openGroceryListModal}>
-              {t('Recipe:AddToGroceryList')}
-            </button>
-          </Link>
-        )}
-      </div>
-    </>
+          }
+        }}>
+          <button onClick={openGroceryListModal}>
+            {t('Recipe:AddToGroceryList')}
+          </button>
+        </Link>
+      )}
+    </div>
   )
 }
 

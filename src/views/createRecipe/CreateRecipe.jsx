@@ -12,7 +12,7 @@ import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
 import { AlertBannerContext } from 'contexts/alertBanner';
 
-import IngredientList from 'components/ingredientList/IngredientList';
+import IngredientListWrapper from 'components/ingredientList/IngredientListWrapper';
 import StepList from 'components/stepList/StepList';
 import EditableField from 'components/core/EditableField/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
@@ -315,7 +315,7 @@ const CreateRecipe = () => {
         center={!editState.editable} 
         spaceBetween={editState.editable}
       >
-        <IngredientList />
+        <IngredientListWrapper />
         <StepList />
       </FullWidthContainer>
     </div>

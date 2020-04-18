@@ -61,7 +61,7 @@
 .step__oven span {
   position: absolute;
   bottom: 0;
-  top: 1rem;
+  top: .75rem;
   font-size: .75rem;
   left: 50%;
   transform: translateX(-50%);

@@ -77,6 +77,8 @@ const StepList = () => {
     }
   };
 
+  console.log('steps', steps)
+
   return (
     <div className="stepList list listSpacing background">
       <h4>{t('Recipe:Steps')}</h4>
