@@ -1,26 +1,31 @@
 const cheerio = require('cheerio');
+const { IngredientMatcher } = require('./ingredientMatcher');
+const { capitalize, uuid } = require('../utils/stringUtils');
 
 function TastelineParser(htmlPage, url) {
   const $ = cheerio.load(htmlPage);
 
-  const ingredientGroups = [];
+  let ingredientGroups = [];
 
   const name = $('.recipe-description h1').text();
   const description = $('.recipe-ingress').text();
   const portions = $('.portions').data('portions');
+  const portionsType = $('.portions').data('unit');
   const ingredientGroupElements = $('.ingredient-group');
+  const image = $('.recipe-header-image img').attr('src');
+
   ingredientGroupElements.each(function(index, elem) {
     const ingredientGroupTitle = $(elem).find('h3').text();
     const ingredientElements = $(elem).find('ul').children();
     const ingredients = [];
     ingredientElements.each((i, ingredientElem) => {
       ingredients.push({
-        quantity: $(ingredientElem).find('.quantity').text(),
+        amount: $(ingredientElem).find('.quantity').text(),
         unit: $(ingredientElem).find('.unit').text(),
-        name: $(ingredientElem).find('.ingredient').text()
+        name: capitalize($(ingredientElem).find('.ingredient').text())
       });
     });
-    ingredientGroups.push({ name: ingredientGroupTitle, ingredients });
+    ingredientGroups.push({ name: ingredientGroupTitle, ingredients, id: uuid() });
   });
 
   const stepGroupElements = $('.step-group');
@@ -39,19 +44,20 @@ function TastelineParser(htmlPage, url) {
   const author = $('.recipe-author-text-inner span').text();
   const authorUrl = $('.recipe-author a').attr('href');
 
-  console.log('authorUrl', authorUrl)
-  
+  IngredientMatcher(ingredientGroups);
 
   const recipe = {
     name,
     description,
     portions,
+    portionsType,
     ingredientGroups,
     steps,
     author,
     authorUrl,
     origin: 'Tasteline',
     originUrl: url,
+    images: [image]
   };
 
   console.log('recipe', recipe)
