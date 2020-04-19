@@ -14,6 +14,16 @@ function TastelineParser(htmlPage, url) {
   const ingredientGroupElements = $('.ingredient-group');
   const image = $('.recipe-header-image img').attr('src');
 
+  const descriptionChildren = Array.from($('.recipe-description').contents());
+  let timeElem = null;
+  for (const child of descriptionChildren) {
+    if (child.attribs && child.attribs.class && child.attribs.class.includes('fa-clock-o'))  {
+      timeElem = child.next;
+      break;
+    }
+  };
+  const time = timeElem && timeElem.data && timeElem.data.replace('\t', '').trim();
+
   ingredientGroupElements.each(function(index, elem) {
     const ingredientGroupTitle = $(elem).find('h3').text();
     const ingredientElements = $(elem).find('ul').children();
@@ -53,14 +63,13 @@ function TastelineParser(htmlPage, url) {
     portionsType,
     ingredientGroups,
     steps,
+    time,
     author,
     authorUrl,
     origin: 'Tasteline',
     originUrl: url,
     images: [image]
   };
-
-  console.log('recipe', recipe)
 
   return recipe;
 };
