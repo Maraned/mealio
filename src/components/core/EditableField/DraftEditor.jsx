@@ -1,12 +1,13 @@
 import 'draft-js/dist/Draft.css';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import { Editor, EditorState, ContentState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import posed from 'react-pose';
 import DraftPasteProcessor from 'draft-js/lib/DraftPasteProcessor';
 import Toolbar from './Toolbar';
+import uuid from 'utils/uuid';
 
 const RemoveButton = posed.div({
   show: { x: 0, opacity: 1 },
@@ -27,6 +28,8 @@ export default function DraftEditor({
   const editorFieldRef = useRef(null);
   const editorRef = useRef(null);
   const [showToolbar, setShowToolbar] = useState(false);
+
+  const keyId = useMemo(() => uuid(), []);
 
   // TEXT HANDLING  
   const createContent = () => {
@@ -90,7 +93,7 @@ export default function DraftEditor({
 
   return (
     <>
-    <div className={className} ref={editorFieldRef}>
+    <div className={className} ref={editorFieldRef} key={`draftEditor-${keyId}`}>
       <Toolbar 
         showToolbar={showToolbar} 
         toolbarButtons={toolbarButtons} 

@@ -19,7 +19,6 @@ export default function UrlInput() {
     setShowLoader(true);
     const recipe = await getRequest(`parse`, { url });
     setShowLoader(false);
-    console.log('getRecipeFromUrl', recipe)
     setRecipe({ type: 'recipe', value: recipe });
   };
 

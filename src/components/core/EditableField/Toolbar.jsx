@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect, useMemo} from 'react';
 import { FaBold, FaItalic, FaUnderline } from 'react-icons/fa';
 import cc from 'classcat';
 import { EditorState, RichUtils, SelectionState } from 'draft-js';
 import posed from 'react-pose';
 import useOutsideClick from 'utils/useOutsideClick';
+import uuid from 'utils/uuid';
 
 const ToolbarContainer = posed.div({
   show: { y: 0, opacity: 1, delay: 100 },
@@ -18,7 +19,12 @@ export default function Toolbar({
 }) {
   const [internalShowToolbar, setInternalShowToolbar] = useState(false);
   const toolbarContainerRef = useRef(null);
-  useOutsideClick(toolbarContainerRef, () => setInternalShowToolbar(true));
+  
+  useOutsideClick(internalShowToolbar && toolbarContainerRef, () => {
+    setInternalShowToolbar(false)
+  });
+
+  const keyId = useMemo(() => uuid(), []);
 
   useEffect(() => {
     setInternalShowToolbar(showToolbar);
@@ -72,13 +78,14 @@ export default function Toolbar({
   };
 
   return (
-    <div ref={toolbarContainerRef}>
+    <div ref={toolbarContainerRef} id={`tool-${keyId}`}>
       {!!toolbarButtons.length && (
         <ToolbarContainer
           end={toolbarContainerRef}
           initialPose="hide" 
           pose={internalShowToolbar ? 'show' : 'hide'} 
           className="editableField__toolbar"
+          key={`toolbar-${keyId}`}
         >
           {toolbarButtons.map(button => button.type 
             ? renderToolbarOption(builtInOptions[button.type])
