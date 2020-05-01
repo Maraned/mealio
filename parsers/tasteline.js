@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const { IngredientMatcher } = require('./ingredientMatcher');
 const { capitalize, uuid } = require('../utils/stringUtils');
 
-function TastelineParser(htmlPage, url) {
+async function TastelineParser(htmlPage, url) {
   const $ = cheerio.load(htmlPage);
 
   let ingredientGroups = [];
@@ -54,7 +54,7 @@ function TastelineParser(htmlPage, url) {
   const author = $('.recipe-author-text-inner span').text();
   const authorUrl = $('.recipe-author a').attr('href');
 
-  IngredientMatcher(ingredientGroups);
+  ingredientGroups = await IngredientMatcher(ingredientGroups);
 
   const recipe = {
     name,

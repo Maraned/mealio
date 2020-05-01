@@ -23,13 +23,15 @@ const IngredientMatcher = async (ingredientGroups) => {
       });
 
       if (matchedIngredient) {
-        ingredientGroup.ingredients[i] = matchedIngredient;
+        ingredientGroup.ingredients[i] = { ...ingredient, ...matchedIngredient };
       } else {
         const createdIngredient = await newIngredient(ingredient.name);
-        ingredientGroup.ingredients[i] = createdIngredient;
+        ingredientGroup.ingredients[i] = { ...ingredient, ...createdIngredient };
       }
     }
   }
+
+  return ingredientGroups;
 };
 
 module.exports = {
