@@ -4,11 +4,11 @@
   z-index: 10;
 }
 
-@media all and (min-width: 1025px) {
+/* @media all and (min-width: 1025px) {
   .logo {
     padding: 1rem 0;
   }
-}
+} */
 
 .logoTitle {
   padding: .5rem;

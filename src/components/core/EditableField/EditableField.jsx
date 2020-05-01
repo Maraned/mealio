@@ -39,6 +39,7 @@ const EditableField = ({
   showRemove,
   autoWidth,
   toolbarButtons,
+  hideIfEmpty = false,
 }) => {
   const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
@@ -201,7 +202,11 @@ const EditableField = ({
     );
   }
 
-  return state.editable ? renderEditMode() : renderViewMode();
+  return state.editable 
+    ? renderEditMode() 
+    : hideIfEmpty 
+      ? !!value && renderViewMode()
+      : renderViewMode();
 }
 
 export default EditableField;

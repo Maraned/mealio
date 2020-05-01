@@ -239,13 +239,14 @@ const CreateRecipe = () => {
   );
 
   const renderBottomRow = () => (
-    <div className="flex vcenter">
+    <>
       <div className="recipe__time margin--right">
         <FaRegClock />
         <EditableField 
           onChange={changeTime} 
           value={time}
           placeholder={t('Recipe:Time')}
+          hideIfEmpty
         />
       </div>
 
@@ -254,7 +255,7 @@ const CreateRecipe = () => {
       )}
       
       
-    </div>
+    </>
   );
 
   return (

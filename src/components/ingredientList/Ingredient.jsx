@@ -91,11 +91,16 @@ const Ingredient = ({
     });
   };
 
-  const showNameError = useCallback(() => {
-    return !allIngredients.find(existingIngredient => {
-      return existingIngredient.name === ingredient.name
-    });
-  }, [ingredient, allIngredients]);
+  // const showNameError = useCallback(() => {
+  //   return !
+  //   return !allIngredients.find(existingIngredient => {
+  //     return existingIngredient.name === ingredient.name
+  //   });
+  // }, [ingredient, allIngredients]);
+
+  const showNameError = () => {
+    return !ingredient.id;
+  }
 
   return (
     <div className={cc(['ingredient', {
