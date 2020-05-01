@@ -20,7 +20,6 @@ const initWsServer = server => {
     });
 
     Connections.addClient(ws);
-
     initConnection(ws);
   });
 };

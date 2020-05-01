@@ -16,6 +16,8 @@ router.post('/refresh', async (req, res, next) => {
     const userResult = await rdb.findBy('users', 'email', email);
     const user = userResult[0];
     const { password, ...rest } = user; 
+
+    rdb.subscribeWithId('users', user.id, 'user');
     
     res.status = 200;
     res.send({ accessToken, user: rest });
@@ -45,6 +47,7 @@ router.post('/', async (req, res, next) => {
     const accessToken = jwtUtils.createAccessToken(email);
     const currentUserValue = 1;
     const refreshToken = jwtUtils.createRefreshToken(email, currentUserValue);
+    rdb.subscribeWithId('users', user.id, 'user');
     res.send({ user: rest, accessToken, refreshToken, currentUserValue })
   } else {
     res.status(401);
