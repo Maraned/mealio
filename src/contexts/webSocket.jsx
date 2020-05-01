@@ -2,6 +2,8 @@ import React, { createContext, useReducer, useContext, useEffect } from 'react';
 
 import { DraftRecipesContext } from 'contexts/draftRecipes';
 import { PublishedRecipesContext } from 'contexts/publishedRecipes';
+import { UserContext } from 'contexts/user';
+import { AllIngredientsContext } from 'contexts/allIngredients';
 
 const initialState = { };
 
@@ -15,10 +17,14 @@ export const WebSocketProvider = props => {
   const [state, dispatch] = useReducer(webSocketReducer, initialState);
   const { dispatch: draftRecipesDispatch } = useContext(DraftRecipesContext);
   const { dispatch: publishedRecipesDispatch } = useContext(PublishedRecipesContext);
+  const { dispatch: userDispatch } = useContext(UserContext);
+  const { dispatch: ingredientDispatch } = useContext(AllIngredientsContext);
 
   const updateFunction = {
     draft: draftRecipesDispatch,
     published: publishedRecipesDispatch,
+    user: userDispatch,
+    ingredient: ingredientDispatch,
   };
 
   const updater = ({ type, data }) => {

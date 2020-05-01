@@ -7,7 +7,9 @@ const userReducer = (state, action) => {
     case 'user':
       return { ...state, ...action.value };
     case 'draftRecipes': 
-      return { ...state, draftRecipes: action.value }
+      return { ...state, draftRecipes: action.value };
+    case 'updated':
+      return { ...state, ...action.value };
     default:
       return state;
   }

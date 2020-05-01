@@ -86,7 +86,9 @@ export default {
     UserSettings: 'Profil',
     MyRecipeCollection: 'Sparade recept',
     MyRecipes: 'Mina recept',
-    GroceryLists: 'Mina inköpslistor'
+    GroceryLists: 'Mina inköpslistor',
+    Dashboard: 'Dashboard',
+    NewIngredients: 'Nya ingredienser',
   },
   UserSettings: {
     DisplayName: 'Namn'
