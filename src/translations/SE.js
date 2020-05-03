@@ -165,7 +165,18 @@ export default {
     'all': 'Alla',
     'draft': 'Utkast',
     'published': 'Publicerade',
-    'savedRecipes': 'Sparade recept'
+    'savedRecipes': 'Sparade recept',
+    'newIngredients': 'Nya ingredienser',
+  },
+  NewIngredients: {
+    Title: 'Nya Ingredienser',
+    Name: 'Namn',
+    Group: 'Grupp',
+    Alternatives: 'Alternativ',
+    Tips: 'Tips',
+    Status: 'Status',
+    Singular: 'Singular: ',
+    Plural: 'Plural: ',
   },
   Select: {
     Search: 'Sök...',

@@ -12,6 +12,7 @@ import { FacebookProvider } from 'thirdParty/facebook/facebookProvider';
 import { WebSocketProvider } from 'contexts/webSocket';
 import { DraftRecipesProvider } from 'contexts/draftRecipes';
 import { PublishedRecipesProvider } from 'contexts/publishedRecipes';
+import { IngredientGroupsProvider } from 'contexts/ingredientGroups';
 
 import MainView from 'views/MainView';
 
@@ -29,11 +30,13 @@ const App = () => {
                 <DraftRecipesProvider>
                   <PublishedRecipesProvider>
                     <AlertBannerProvider>
-                      <AllIngredientsProvider>
-                        <WebSocketProvider>
-                          <MainView />  
-                        </WebSocketProvider>
-                      </AllIngredientsProvider>
+                      <IngredientGroupsProvider>
+                        <AllIngredientsProvider>
+                          <WebSocketProvider>
+                            <MainView />  
+                          </WebSocketProvider>
+                        </AllIngredientsProvider>
+                      </IngredientGroupsProvider>
                     </AlertBannerProvider>
                   </PublishedRecipesProvider>
                 </DraftRecipesProvider>

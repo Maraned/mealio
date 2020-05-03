@@ -155,7 +155,7 @@ export default function Dashboard() {
 
 
   return (
-    <div className="adminDashboard">
+    <div className="adminDashboard background box">
       {renderViewModeOptions()}
       {renderSettings()}
       {settings.pieMode && renderPieMode()}

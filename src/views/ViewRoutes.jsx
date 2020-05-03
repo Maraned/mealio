@@ -1,6 +1,6 @@
 import React from 'react';
 
-  import { Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 
 import CreateRecipeView from 'views/createRecipe/CreateRecipeView';
 import MyRecipes from 'views/myRecipes/MyRecipesWrapper';
@@ -8,6 +8,8 @@ import RecipeList from 'views/recipeList/RecipeListWrapper';
 import RecipeDetail from 'views/recipeDetail/RecipeDetailWrapper';
 import RecipeCollection from 'views/recipeCollection/RecipeCollection';
 import WelcomePage from 'views/welcomePage/WelcomePage';
+import Dashboard from 'views/admin/Dashboard';
+import NewIngredients from 'views/admin/newIngredients/NewIngredients';
 
 export default function ViewRoutes() {
   const location = useLocation();
@@ -35,6 +37,14 @@ export default function ViewRoutes() {
 
       <Route path="/recipes">
         <RecipeList />
+      </Route>
+
+      <Route path="/dashboard">
+        <Dashboard />
+      </Route>
+
+      <Route path="/newIngredients">
+        <NewIngredients />
       </Route>
 
       <Route path="/">

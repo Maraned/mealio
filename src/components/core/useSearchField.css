@@ -1,0 +1,18 @@
+.searchField {
+  max-width: 164px;
+  position: relative;
+}
+
+.searchField__input {
+  max-width: 164px;
+  border-bottom: 1px solid #333;
+  padding-left: 2rem;
+}
+
+.searchField__icon {
+  width: 1rem;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%); 
+}

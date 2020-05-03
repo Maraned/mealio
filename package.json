@@ -5,8 +5,10 @@
   "dependencies": {
     "@stfy/react-editor.js": "^1.0.3",
     "classcat": "^3.2.5",
+    "country-flag-icons": "^1.2.1",
     "draft-js": "^0.11.3",
     "express": "^4.17.1",
+    "fuse": "^0.4.0",
     "i18next": "^15.0.6",
     "minisearch": "^2.1.3",
     "react": "^16.12.0",

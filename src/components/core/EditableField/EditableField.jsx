@@ -40,12 +40,12 @@ const EditableField = ({
   autoWidth,
   toolbarButtons,
   hideIfEmpty = false,
+  manualStateMode = false,
+  manualEditState = false,
 }) => {
   const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
-  const [fallbackValue, setFallbackValue] = useState(
-    !onChange ? value : ''
-  );
+  const [fallbackValue, setFallbackValue] = useState(!onChange ? value : '');
   const [filteredOptions, setFilteredOptions] = useState([]);
   const node = useRef();
   const isFocused = useRef(null);
@@ -202,7 +202,9 @@ const EditableField = ({
     );
   }
 
-  return state.editable 
+  const editState = manualStateMode ? manualEditState : state.editable;
+
+  return editState
     ? renderEditMode() 
     : hideIfEmpty 
       ? !!value && renderViewMode()

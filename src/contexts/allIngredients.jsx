@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react'; 
+import React, { createContext, useReducer } from 'react'; 
 import { getRequest } from 'utils/request';
 
 const updateIngredient = (ingredients, updatedIngredient) => {
@@ -16,7 +16,11 @@ const removeIngredient = (ingredients, removedIngredient) => {
 };
 
 const reducer = (state, action) => {
+  console.log('Groups action', action)
+
   switch (action.type) {
+    case 'set':
+      return action.value;
     case 'add':
       const { name, group } = action;
       if (name && group) {
@@ -51,17 +55,6 @@ export const AllIngredientsContext = createContext(initialState);
 
 export const AllIngredientsProvider = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const initialFetch = async () => {
-    const ingredients = await fetchAllIngredients();
-    if (ingredients) {
-      dispatch({ type: 'update', value: ingredients });
-    }
-  }
-
-  useEffect(() => {
-    initialFetch();
-  }, []);
 
   return (
     <AllIngredientsContext.Provider value={{ state, dispatch }}>

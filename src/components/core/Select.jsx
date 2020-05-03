@@ -64,7 +64,9 @@ const Select = ({
   searchable,
   searchPlaceholder,
   searchFields = ['name'],
-  error
+  error,
+  manualStateMode,
+  manualEditState,
 }) => {
   const { state: editableState } = useContext(EditableContext);
   const [selected, setSelected] = useState(null);
@@ -118,7 +120,7 @@ const Select = ({
   useEffect(() => {
     if (searchable) {
       const searchOptions = {
-        fuzzy: 1,
+        fuzzy: 0.2,
         prefix: true
       };
       const searchResult = miniSearch.current.search(query, searchOptions);
@@ -199,8 +201,12 @@ const Select = ({
       {selectedText}
     </div>
   );
+
+  const editState = manualStateMode 
+    ? manualEditState
+    : editableState && editableState.editable;
   
-  return editableState && editableState.editable 
+  return editState
     ? renderEditableView() 
     : renderReadonlyView();
 };

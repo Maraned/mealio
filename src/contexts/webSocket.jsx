@@ -4,6 +4,7 @@ import { DraftRecipesContext } from 'contexts/draftRecipes';
 import { PublishedRecipesContext } from 'contexts/publishedRecipes';
 import { UserContext } from 'contexts/user';
 import { AllIngredientsContext } from 'contexts/allIngredients';
+import { IngredientGroupsContext } from 'contexts/ingredientGroups';
 
 const initialState = { };
 
@@ -19,12 +20,14 @@ export const WebSocketProvider = props => {
   const { dispatch: publishedRecipesDispatch } = useContext(PublishedRecipesContext);
   const { dispatch: userDispatch } = useContext(UserContext);
   const { dispatch: ingredientDispatch } = useContext(AllIngredientsContext);
+  const { dispatch: ingredientGroupDispatch } = useContext(IngredientGroupsContext);
 
   const updateFunction = {
     draft: draftRecipesDispatch,
     published: publishedRecipesDispatch,
     user: userDispatch,
     ingredient: ingredientDispatch,
+    ingredientGroup: ingredientGroupDispatch,
   };
 
   const updater = ({ type, data }) => {
