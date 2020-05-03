@@ -16,6 +16,7 @@ export default function NewIngredients() {
 
   const [sortAttribute, setSortAttribute] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
+  const [filters, setFilters] = useState(['pending']);
 
   const changeSortDirection = () => {
     setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
@@ -31,8 +32,8 @@ export default function NewIngredients() {
 
 
   const pendingIngredients = useMemo(() => {
-    return allIngredients.filter(ingredient => ingredient.status === 'pending');
-  }, [allIngredients]);
+    return allIngredients.filter(ingredient => filters.includes(ingredient.status));
+  }, [allIngredients, filters]);
 
   const [SearchField, filteredIngredients] = useSearchField(pendingIngredients, ['name'], 'grow');
 
@@ -72,6 +73,32 @@ export default function NewIngredients() {
     }
   };
 
+  const toggleFilter = filterName => {
+    if (filters.includes(filterName)) {
+      setFilters(filters.filter(existingFilter => existingFilter !== filterName));
+    } else {
+      setFilters([...filters, filterName]);
+    }
+  }
+
+  const renderFilter = (filterName, ) => (
+    <div 
+      onClick={() => toggleFilter(filterName)}
+      className={cc(['filter margin--right', {
+        'filter--selected': filters.includes(filterName),
+      }])}
+    >
+      {filterName}
+    </div>
+  );
+
+  const renderFilters = () => (
+    <div className="flex">
+      {renderFilter('pending')}
+      {renderFilter('active')}
+    </div>
+  );
+
   const renderLanguageOption = language => {
     const Flag = Flags[language];
     const isCurrentLanguage = language === i18n.language;
@@ -95,6 +122,8 @@ export default function NewIngredients() {
   const renderHeader = () => (
     <div className="flex vcenter spaceBetween">
       <h2 className="margin--right noShrink">{t('NewIngredients:Title')}</h2>
+      {renderFilters()}
+
       {renderLanguageOptions()}
     </div>
   );
@@ -115,15 +144,15 @@ export default function NewIngredients() {
     </span>
   );
 
-  const renderLine = () => (
+  const renderLine = id => (
     <>
-      <div className="line" />
-      <div className="line" />
-      <div className="line" />
-      <div className="line" />
-      <div className="line" />
-      <div className="line" />
-      <div className="line" />
+      <div className="line" key={`line1-${id}`} />
+      <div className="line" key={`line2-${id}`} />
+      <div className="line" key={`line3-${id}`} />
+      <div className="line" key={`line4-${id}`} />
+      <div className="line" key={`line5-${id}`} />
+      <div className="line" key={`line6-${id}`} />
+      <div className="line" key={`line7-${id}`} />
     </>
   );
 
@@ -145,8 +174,8 @@ export default function NewIngredients() {
         {sortedIngredients.map((newIngredient, index) => {
           return (
             <>
-              <NewIngredient newIngredient={newIngredient} />
-              {index !== sortedIngredients.length - 1 && renderLine()}
+              <NewIngredient newIngredient={newIngredient} key={newIngredient.id} />
+              {index !== sortedIngredients.length - 1 && renderLine(newIngredient.id)}
             </>
           )
         })}

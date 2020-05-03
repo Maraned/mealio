@@ -2,7 +2,7 @@ import './select.css';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import cc from 'classcat';
 import posed from 'react-pose';
-import { FaPlus, FaCaretDown } from 'react-icons/fa';
+import { FaPlus, FaCaretDown, FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import MiniSearch from 'minisearch';
 
@@ -53,6 +53,7 @@ const SelectContent = ({
 const Select = ({
   onChange,
   preSelected,
+  selectedText,
   options,
   defaultText,
   className,
@@ -67,9 +68,9 @@ const Select = ({
   error,
   manualStateMode,
   manualEditState,
+  multiSelect,
 }) => {
   const { state: editableState } = useContext(EditableContext);
-  const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const node = useRef();
   const contentRef = useRef(null);
@@ -80,10 +81,12 @@ const Select = ({
   const inputRef = useRef(null);
  
   const changeSelected = option => () => {
-    setSelected(option[textAttribute]);
-    setOpen(false);
+    if (!multiSelect) {
+      setOpen(false);
+    }
 
     if (onChange) {
+      option.selected = !option.selected;
       onChange(option);
     }
   };
@@ -145,11 +148,23 @@ const Select = ({
     // eslint-disable-next-line 
   }, []);
 
-  const selectedText = editableState && !editableState.editable 
-    ? selected || (preSelected && preSelected[textAttribute])
-    : selected 
-      || (preSelected && preSelected[textAttribute]) 
+
+  const editState = manualStateMode 
+    ? manualEditState
+    : editableState && editableState.editable;
+
+  const renderCheckbox = option => {
+    const className = "absolute left margin--left vcenter";
+    return option.selected
+      ? <FaCheckSquare className={className} />
+      : <FaRegSquare className={className} />;
+  };
+
+  const getSelectedText = () => {
+    return selectedText 
+      || (preSelected && preSelected[textAttribute])
       || defaultText;
+  };
 
   const renderEditableView = () => (
     <div 
@@ -159,10 +174,15 @@ const Select = ({
       ref={node}
     >
       <div ref={inputRef} className="select__input" onClick={() => setOpen(!open)}>
-        <span className="select__inputText">{selectedText}</span>
-        <FaCaretDown className={cc(['select__caret', {
-          'select__caret--open': open
-        }])} />
+        <span className="select__inputText text--ellipsisOverflow">
+          {getSelectedText()}
+        </span>
+
+        <FaCaretDown 
+          className={cc(['select__caret', {
+            'select__caret--open': open
+          }])} 
+        />
       </div>
 
       <SelectContent contentRef={contentRef} anchorElement={inputRef.current} open={open} className="select__content">
@@ -179,7 +199,12 @@ const Select = ({
                   />
                 )}
                 {filteredOptions && filteredOptions.map(option => (
-                  <div key={option.id} className="select__option" onClick={changeSelected(option)}>
+                  <div 
+                    key={option.id} 
+                    className="select__option relative clickable text--ellipsisOverflow" 
+                    onClick={changeSelected(option)}
+                  >
+                    {multiSelect && renderCheckbox(option)}
                     {option[textAttribute]}
                   </div>
                 ))}
@@ -201,10 +226,6 @@ const Select = ({
       {selectedText}
     </div>
   );
-
-  const editState = manualStateMode 
-    ? manualEditState
-    : editableState && editableState.editable;
   
   return editState
     ? renderEditableView() 

@@ -52,6 +52,7 @@ export const putRequest = async (endpoint, data, expectResponse = false) => {
     body: data,
     json: true,
   });
+  console.log('response', response)
   if (expectResponse && response.status !== 401) { 
     return response;
   } else {

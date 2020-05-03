@@ -43,6 +43,7 @@ const EditableField = ({
   manualStateMode = false,
   manualEditState = false,
 }) => {
+  const [editedValue, setEditedValue] = useState(false);
   const [open, setOpen] = useState(false);
   const { state } = useContext(EditableContext);
   const [fallbackValue, setFallbackValue] = useState(!onChange ? value : '');
@@ -114,12 +115,16 @@ const EditableField = ({
   ) : '';
 
   const handleOnChange = value => {
-    if (onChange) {
-      onChange(value);
-    } else {
-      fallbackOnChange(value);
-    }
+    setEditedValue(value);
   };
+
+  const handleOnBlur = () => {
+    if (onChange) {
+      onChange(editedValue || value);
+    } else {
+      fallbackOnChange(editedValue || value);
+    }
+  }
 
   const handleOnPaste = event => {
     const value = event.clipboardData.getData('Text');
@@ -139,7 +144,8 @@ const EditableField = ({
             'editableField--autoWidth': autoWidth,
           }])}
           onChange={value => handleOnChange(value)}
-          value={fallbackValue || value}
+          onBlur={handleOnBlur}
+          value={editedValue || fallbackValue || value}
           placeholder={placeholder}
           textTag={textTag}
           onPaste={onPaste}
@@ -159,10 +165,11 @@ const EditableField = ({
               'editableField--center': center,
             }])}
             onChange={event => handleOnChange(event.target.value)}
-            value={fallbackValue || value}
+            value={editedValue || fallbackValue || value}
             placeholder={placeholder}
             onPaste={handleOnPaste}
             onFocus={focus}
+            onBlur={handleOnBlur}
           />
 
           {renderRemoveButton()}

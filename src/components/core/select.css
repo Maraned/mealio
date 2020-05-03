@@ -42,12 +42,7 @@
 }
 
 .select__option {
-  padding: .5rem 1rem;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: center;
+  padding: .5rem 1rem .5rem 2rem;
 }
 
 .select__option:hover,
@@ -69,10 +64,6 @@
 
 .select__caret--open {
   transform: rotate(180deg); 
-}
-
-.select__caret--open {
-  transform: 
 }
 
 .select__search {

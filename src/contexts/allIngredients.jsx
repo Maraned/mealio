@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react'; 
-import { getRequest } from 'utils/request';
+import { getRequest, putRequest } from 'utils/request';
 
 const updateIngredient = (ingredients, updatedIngredient) => {
   const nonUpdatedIngredients = ingredients.filter(ingredient => {
@@ -27,11 +27,14 @@ const reducer = (state, action) => {
         const newIngredient = { name, group };
         return [...state, newIngredient ];
       }
-      break;
+      return state;
     case 'added':
       return [...state, action.value];
     case 'update':
       return action.value;
+    case 'updateIngredient':
+      putRequest(`ingredients/${action.value.id}`, action.value);
+      return state;
     case 'updated':
       return updateIngredient(state, action.value);
     case 'removed':

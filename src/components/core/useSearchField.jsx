@@ -8,8 +8,6 @@ import cc from 'classcat';
  
 export default function SearchField(items, fields = [], className) {
   const [query, setQuery] = useState('');
-  console.log('query, query')
-
   const searchEngine = useMemo(() => {
     const fieldsToReturn = items[0] ? Object.keys(items[0]) : [];
     // return new Fuse(items, { keys: fields });

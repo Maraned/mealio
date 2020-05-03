@@ -175,8 +175,8 @@ export default {
     Alternatives: 'Alternativ',
     Tips: 'Tips',
     Status: 'Status',
-    Singular: 'Singular: ',
-    Plural: 'Plural: ',
+    Singular: 'Singular:',
+    Plural: 'Plural:',
   },
   Select: {
     Search: 'Sök...',
