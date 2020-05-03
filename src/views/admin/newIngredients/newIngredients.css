@@ -3,7 +3,6 @@
   grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr auto;
   row-gap: .5rem;
   margin-top: 1rem;
-  align-items: center;
 }
 
 .newIngredients__title {

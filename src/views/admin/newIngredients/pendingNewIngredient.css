@@ -4,6 +4,12 @@
   cursor: pointer;
 }
 
+.pendingNewIngredient__name,
+.pendingNewIngredient__group,
+.pendingNewIngredient__alternatives {
+  padding-right: .5rem;
+}
+
 .pendingNewIngredient__status {
   cursor: pointer;
 }

@@ -36,7 +36,7 @@
   box-shadow: var(--select-shadow);
 }
 
-.select-options {
+.select__options {
   max-height: 300px;
   overflow-y: auto;
 }
@@ -44,8 +44,10 @@
 .select__option {
   padding: .5rem 1rem;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
 }
 
 .select__option:hover,

@@ -14,7 +14,7 @@ import { Capitalize } from 'utils/utils';
 
 export default function PendingNewIngredient({ newIngredient }) {
   const [editMode, setEditMode] = useState(false);
-  const { dispatch } = useContext(AllIngredientsContext);
+  const { dispatch, state: allIngredients } = useContext(AllIngredientsContext);
   const { state: ingredientGroups } = useContext(IngredientGroupsContext);
   const { t, i18n } = useTranslation();
 
@@ -34,7 +34,7 @@ export default function PendingNewIngredient({ newIngredient }) {
   return (
     <>      
       <span 
-        className="pendingNewIngredient__edit" 
+        className="pendingNewIngredient__edit flex vcenter" 
         key={`edit-${newIngredient.id}`}
         onClick={() => setEditMode(!editMode)}
       >
@@ -91,6 +91,13 @@ export default function PendingNewIngredient({ newIngredient }) {
 
       <span className="pendingNewIngredient__alternatives" key={`alternatives-${newIngredient.id}`}>
         {newIngredient.alternatives}
+        <Select
+          textAttribute="name"
+          onChange={updateNewIngredient}
+          manualStateMode
+          manualEditState={editMode}
+          options={allIngredients}
+        />
       </span>
 
       <span className="pendingNewIngredient__tips" key={`tops-${newIngredient.id}`}>
@@ -104,7 +111,7 @@ export default function PendingNewIngredient({ newIngredient }) {
         {Capitalize(newIngredient.status)}
       </span>
 
-      <span className="pendingNewIngredient__remove flex center">
+      <span className="pendingNewIngredient__remove flex center vcenter">
         <FaTrash />
       </span>
     </>
