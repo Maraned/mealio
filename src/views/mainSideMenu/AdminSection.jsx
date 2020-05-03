@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -8,12 +8,18 @@ import {
 } from 'react-icons/fa';
 
 import { RouterContext } from 'contexts/router';
+import { AllIngredientsContext } from 'contexts/allIngredients';
 import MenuOption from 'components/core/MenuOption';
 
 export default function AdminSection() {
   const { dispatch: route } = useContext(RouterContext)
+  const { state: allIngredients } = useContext(AllIngredientsContext);
   const { t } = useTranslation();
   const location = useLocation();
+
+  const newIngredientsCount = useMemo(() => {
+    return allIngredients.filter(ingredient => ingredient.status === 'pending').length;
+  }, [allIngredients]);
 
   return (
     <div className="adminSection box background">
@@ -29,6 +35,7 @@ export default function AdminSection() {
           <MenuOption 
             text={t('Menu:NewIngredients')}
             Icon={FaCarrot}
+            notificationCount={newIngredientsCount}
           />
         </Link>
     </div>

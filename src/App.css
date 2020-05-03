@@ -517,3 +517,11 @@ a:hover {
   color: white;
   border-radius: 1rem;
 }
+
+.notificationBubble {
+  padding: .25rem .5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  font-size: .75rem;
+}

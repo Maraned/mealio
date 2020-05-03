@@ -8,6 +8,7 @@ export default function MenuOption({
   text, 
   Icon,
   selected,
+  notificationCount
 }) {
   return (
     <div 
@@ -18,7 +19,11 @@ export default function MenuOption({
       onClick={onClick}
     >
       <Icon className="menuOption__icon" />
-      <span>{text}</span>
+      <span className="margin--right">{text}</span>
+
+      {notificationCount && (
+        <span className="notificationBubble">{notificationCount}</span>
+      )} 
     </div>
   );
 }
