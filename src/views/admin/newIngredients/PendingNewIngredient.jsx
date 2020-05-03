@@ -32,17 +32,25 @@ export default function PendingNewIngredient({ newIngredient }) {
 
   const [alternativeOptions, selectedAlternatives] = useMemo(() => {
     const selected = [];
-    const options = allIngredients.map(ingredient => {
+    const options = [];
+    // const options = allIngredients.map(ingredient => {
+    for (let ingredient of allIngredients) {
+      if (ingredient.id === newIngredient.id) {
+        continue;
+      }
+
       const isSelected = newIngredient.alternatives.includes(ingredient.id);
       if (isSelected) {
         selected.push(ingredient.name);
       }
 
-      return { 
+      options.push({ 
         ...ingredient, 
         selected: isSelected,
-      }
-    });
+      })
+    }
+
+    
 
     return [sortOptions(options), selected];
   }, [allIngredients, newIngredient.alternatives]);
