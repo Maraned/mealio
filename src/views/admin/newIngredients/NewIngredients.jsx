@@ -4,6 +4,7 @@ import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCaretDown, FaPen, FaTrash } from 'react-icons/fa';
 import cc from 'classcat';
+import Flags from 'country-flag-icons/react/3x2';
 
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import NewIngredient from 'views/admin/newIngredients/PendingNewIngredient';
@@ -11,7 +12,7 @@ import useSearchField from 'components/core/useSearchField';
 
 export default function NewIngredients() {
   const { state: allIngredients } = useContext(AllIngredientsContext);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [sortAttribute, setSortAttribute] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
@@ -65,6 +66,32 @@ export default function NewIngredients() {
     })
   }, [sortAttribute, sortDirection, filteredIngredients]);
 
+  const changeLanguage = language => {
+    if (language !== i18n.language) {
+      i18n.changeLanguage(language);
+    }
+  };
+
+  const renderLanguageOption = language => {
+    const Flag = Flags[language];
+    const isCurrentLanguage = language === i18n.language;
+    return (
+      <Flag 
+        className={cc(['flag margin--right clickable', {
+          'flag--nonSelected': !isCurrentLanguage
+        }])}
+        onClick={() => changeLanguage(language)} 
+      />
+    )
+  };
+
+  const renderLanguageOptions = () => (
+    <div className="flex">
+      {renderLanguageOption('SE')}
+      {renderLanguageOption('GB')}
+    </div>
+  );
+
   const renderColumnTitle = (title, attribute) => (
     <span className={cc(['newIngredients__title', { 
       'newIngredients__title--selected': attribute === sortAttribute 
@@ -95,7 +122,10 @@ export default function NewIngredients() {
 
   return (
     <div className="newIngredients background fullWidth box">
-      <h2>{t('NewIngredients:Title')}</h2>
+      <div className="flex vcenter">
+        <h2 className="margin--right">{t('NewIngredients:Title')}</h2>
+        {renderLanguageOptions()}
+      </div>
 
       {SearchField}
 

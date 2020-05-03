@@ -17,7 +17,7 @@ i18n
     resources,
     lng: 'SE',
     debug: true,
-
+    parseMissingKeyHandler: key => '',
     keySeparator: false, // we do not use keys in form messages.welcome
 
     interpolation: {
