@@ -7,15 +7,19 @@ services:
   frontend:
     # image: mealio/mealio_frontend:latest
     # container_name: frontend
-    build: ./frontend/cibus
-    command: npm start
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - CHOKIDAR_INTERVAL=300
+    # build: ./frontend/cibus
+    build:
+      context: ./frontend/cibus
+      dockerfile: Dockerfile
+    # command: npm start
+    # environment:
+    #   - CHOKIDAR_USEPOLLING=true
+    #   - CHOKIDAR_INTERVAL=300
     ports:
       - 3000:3000
+      - 35729:35729
     volumes:
-      - ./frontend/cibus/src:/src
+      - ./frontend/cibus/src:/app/src
 ################################
 #   Setup nginx load balancer
 ################################
