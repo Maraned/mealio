@@ -16,6 +16,7 @@ var login = require('./routes/login');
 var recipes = require('./routes/recipes');
 var groceryList = require('./routes/groceryList');
 var ingredients = require('./routes/ingredients');
+var ingredientGroups = require('./routes/ingredientGroups');
 var statistics = require('./routes/statistics');
 
 // HTTP REQUEST HANDLING
@@ -32,7 +33,10 @@ app.use(jwt({ secret: process.env.SECRET })
       '/login', 
       '/login/refresh', 
       '/users/create',
-      '/'
+      '/',
+      '/ingredients',
+      '/ingredientGroups',
+      '/recipes',
     ],
     ext: '.webp'
   })
@@ -43,6 +47,7 @@ app.use('/login', login);
 app.use('/recipes', recipes);
 app.use('/groceryList', groceryList);
 app.use('/ingredients', ingredients);
+app.use('/ingredientGroups', ingredientGroups);
 app.use('/statistics', statistics);
 
 app.get('/images/:recipe/:image', function(req, res){
