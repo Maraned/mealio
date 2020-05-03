@@ -1,12 +1,17 @@
 .searchField {
-  max-width: 164px;
   position: relative;
+  width: 100%;
 }
 
 .searchField__input {
-  max-width: 164px;
   border-bottom: 1px solid #333;
   padding-left: 2rem;
+  width: 100%;
+}
+
+.searchField:not(.grow),
+.searchField:not(.grow) .searchField__input {
+  max-width: 164px;
 }
 
 .searchField__icon {

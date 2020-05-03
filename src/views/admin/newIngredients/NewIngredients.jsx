@@ -34,7 +34,7 @@ export default function NewIngredients() {
     return allIngredients.filter(ingredient => ingredient.status === 'pending');
   }, [allIngredients]);
 
-  const [SearchField, filteredIngredients] = useSearchField(pendingIngredients, ['name']);
+  const [SearchField, filteredIngredients] = useSearchField(pendingIngredients, ['name'], 'grow');
 
   const getSortAttribute = item => {
     const itemAttribute = item[sortAttribute];
@@ -92,6 +92,13 @@ export default function NewIngredients() {
     </div>
   );
 
+  const renderHeader = () => (
+    <div className="flex vcenter spaceBetween">
+      <h2 className="margin--right noShrink">{t('NewIngredients:Title')}</h2>
+      {renderLanguageOptions()}
+    </div>
+  );
+
   const renderColumnTitle = (title, attribute) => (
     <span className={cc(['newIngredients__title', { 
       'newIngredients__title--selected': attribute === sortAttribute 
@@ -122,14 +129,11 @@ export default function NewIngredients() {
 
   return (
     <div className="newIngredients background fullWidth box">
-      <div className="flex vcenter">
-        <h2 className="margin--right">{t('NewIngredients:Title')}</h2>
-        {renderLanguageOptions()}
-      </div>
+      {renderHeader()}
 
       {SearchField}
 
-      <div className="newIngredients__list">    
+      <div className="newIngredients__list scrollable">    
         <span className="newIngredients__titleIcon" />
         {renderColumnTitle(t('NewIngredients:Name'), 'name')}
         {renderColumnTitle(t('NewIngredients:Group'), 'group')}

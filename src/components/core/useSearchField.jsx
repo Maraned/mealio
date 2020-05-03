@@ -4,8 +4,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 // import Fuse from 'fuse';
 import Miniserach from 'minisearch';
 import { FaSearch } from 'react-icons/fa';
+import cc from 'classcat';
  
-export default function SearchField(items, fields = []) {
+export default function SearchField(items, fields = [], className) {
   const [query, setQuery] = useState('');
   console.log('query, query')
 
@@ -38,7 +39,7 @@ export default function SearchField(items, fields = []) {
   }, [items, query]);
   
   const searchField = (
-    <div className="searchField">
+    <div className={cc(['searchField', className])}>
       <input 
         className="searchField__input" 
         value={query} 

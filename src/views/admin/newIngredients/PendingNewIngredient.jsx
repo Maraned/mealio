@@ -18,16 +18,12 @@ export default function PendingNewIngredient({ newIngredient }) {
   const { state: ingredientGroups } = useContext(IngredientGroupsContext);
   const { t, i18n } = useTranslation();
 
-  console.log('i18n', i18n)
-
   const updateNewIngredient = value => {
     console.log('updateNewIngredient', {
       value,
       id: newIngredient.id,
     })
   }
-
-  console.log('ingredientGroups', ingredientGroups)
 
   const toggleChecked = () => {
     
@@ -53,9 +49,11 @@ export default function PendingNewIngredient({ newIngredient }) {
           onChange={updateNewIngredient}
         />
         
-        <div className="flex vcenter">
-          <Flag className="flag--small margin--right noShrink" />
-          <span className="noShrink">{t('NewIngredients:Singular')} &nbsp;</span>
+        <div className={cc(['flex', { 'column center': editMode } ])}>
+          <div className="flex vcenter">
+            <Flag className="flag--small margin--right noShrink" />
+            <span className="noShrink">{t('NewIngredients:Singular')} &nbsp;</span>
+          </div>
           <EditableField 
             manualStateMode 
             manualEditState={editMode} 
@@ -64,9 +62,11 @@ export default function PendingNewIngredient({ newIngredient }) {
           />
         </div>
 
-        <div className="flex vcenter">
-          <Flag className="flag--small margin--right noShrink" />
-          <span className="noShrink">{t('NewIngredients:Plural')} &nbsp;</span>
+        <div className={cc(['flex', { 'column center': editMode } ])}>
+          <div className="flex vcenter">
+            <Flag className="flag--small margin--right noShrink" />
+            <span className="noShrink">{t('NewIngredients:Plural')} &nbsp;</span>
+          </div>
           <EditableField 
             manualStateMode 
             manualEditState={editMode} 
@@ -104,7 +104,7 @@ export default function PendingNewIngredient({ newIngredient }) {
         {Capitalize(newIngredient.status)}
       </span>
 
-      <span className="pendingNewIngredient__remove">
+      <span className="pendingNewIngredient__remove flex center">
         <FaTrash />
       </span>
     </>
