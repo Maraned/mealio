@@ -52,7 +52,7 @@ const GroceryLists = ({ data }) => {
   useEffect(() => {
     fetchGroceryLists();
     // eslint-disable-next-line
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (groceryLists && groceryLists.length && !activeList) {
@@ -86,13 +86,13 @@ const GroceryLists = ({ data }) => {
   const removeList = (index, listId) => {
     groceryListDispatch({ type: 'remove', index, listId, userId: user.id });
   };
-
+  
   return (
     <div className="groceryLists">
       <ModalSideMenu>
         <div className="groceryLists__create background" onClick={createNewGroceryList}>
           <div className="groceryLists__create__inner">
-            {recipeData && (recipeData.recipeName || t('GroceryList:CreateNew'))}
+            {(recipeData && recipeData.recipeName) || t('GroceryList:NewGroceryList')}
           </div>
         </div>
         
@@ -102,16 +102,19 @@ const GroceryLists = ({ data }) => {
               key={list.id}
               onClick={() => setActiveList(list)}
               selected={activeList && (list.id === activeList.id)}
+              flexOption
             >
-              <div className="groceryLists__removeIcon" onClick={() => removeList(index, list.id)}>
+              <div className="groceryLists__removeIcon icon icon--clickable" onClick={() => removeList(index, list.id)}>
                 <FaTrash />
               </div>
-              
-              <div className="groceryLists__listName">{list.name}</div>
-              
-              <div className="groceryLists__createdAt">
-                ({createdAtDate(list.createdAt)})
-              </div>         
+
+              <div className="flexAuto">
+                <div className="groceryLists__listName">{list.name}</div>
+                
+                <div className="groceryLists__createdAt">
+                  ({createdAtDate(list.createdAt)})
+                </div>         
+              </div>
             </ModalSideOption>   
           ))}
         </div>

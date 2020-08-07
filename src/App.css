@@ -359,6 +359,10 @@ a:hover {
   flex: 1 0 100%;
 }
 
+.flexAuto {
+  flex: 1;
+}
+
 .flex.center {
   justify-content: center;
 } 
@@ -524,4 +528,13 @@ a:hover {
   color: white;
   border-radius: 50%;
   font-size: .75rem;
+}
+
+.icon {
+  transition: transform .1s;
+}
+
+.icon--clickable:hover {
+  transform-origin: center;
+  transform: scale(0.85);
 }

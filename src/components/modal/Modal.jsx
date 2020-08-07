@@ -48,12 +48,14 @@ export const ModalSideOption = ({
   key,
   onClick,
   selected,
-  children
+  children,
+  flexOption,
 }) => (
   <div 
     key={key} 
     className={cc(['modal__sideMenu__option', {
-      'modal__sideMenu__option--selected': selected
+      'modal__sideMenu__option--selected': selected,
+      'flex center vcenter': flexOption
     }])}
     onClick={onClick}
   >

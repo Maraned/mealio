@@ -3,26 +3,45 @@ import './tabs.css';
 import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 import { Switch, Route, Link, useRouteMatch, Redirect, useLocation } from 'react-router-dom';
+import classcat from 'classcat';
 
-const Tab = posed.div({
-  enter: {
-    opacity: 1,
-    borderColor: 'red',
-    delay: 150,
-    transition: {
-      y: { type: 'spring', stiffness: 1000, damping: 15 },
-      borderColor: { ease: 'easeOut', duration: 150 },
-    }
-  },
-  exit: {
-    opacity: 0.3,
-    borderColor: 'none',
-    transition: { 
-      duration: 150,
-      borderColor: { ease: 'easeOut', duration: 300 },
-    }
-  }
-});
+// const Tab = posed.div({
+//   hoverable: true,
+//   hover: {
+//     scale: 0.95,
+//   },
+//   init: {
+//     scale: 1,
+//   },
+//   enter: {
+//     opacity: 1,
+//     borderColor: 'red',
+//     delay: 150,
+//     transition: {
+//       y: { type: 'spring', stiffness: 1000, damping: 15 },
+//       borderColor: { ease: 'easeOut', duration: 150 },
+//     }
+//   },
+//   exit: {
+//     opacity: 0.3,
+//     borderColor: 'none',
+//     transition: { 
+//       duration: 150,
+//       borderColor: { ease: 'easeOut', duration: 300 },
+//     }
+//   }
+// });
+
+export const Tab = ({ children, isSelected, onClick }) => (
+  <div 
+    onClick={onClick}
+      className={classcat(['tab', {
+      'tab--selected': isSelected
+    }])}
+  >
+    {children}
+  </div>
+);
 
 export default function Tabs({
   views = [],
@@ -59,9 +78,9 @@ export default function Tabs({
           const isSelected = viewLink === location.pathname;
           return (
             <Tab 
+              key={view}
               onClick={() => setActiveView(view)}
-              key={view.name}
-              pose={isSelected ? 'enter' : 'exit'}
+              isSelected={isSelected}
               className="tabs__tab"
             >
               <Link to={viewLink}><h3>{view.title}</h3></Link>

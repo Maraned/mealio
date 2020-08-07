@@ -21,7 +21,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "request-promise-native": "^1.0.7",
-    "sharp": "0.23.2"
+    "sharp": "^0.25.4"
   },
   "devDependencies": {
     "@editorjs/editorjs": "^2.16.1",

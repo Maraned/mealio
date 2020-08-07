@@ -13,10 +13,6 @@
   border-bottom: var(--modal-side-menu-border);
 }
 
-.groceryLists__create:hover {
-  background-color: var(--light-hover);
-}
-
 .groceryLists__create__inner {
   padding: .5rem;
   transition: transform .1s;
@@ -73,12 +69,6 @@
 }
 
 .groceryLists__removeIcon {
-  position: absolute;
-  left: 0;
-  transform: translateY(-50%);
-  top: 50%;
-  left: .75rem;
-  transition: transform .1s; 
   z-index: 1;
 }
 
@@ -88,8 +78,4 @@
 
 .groceryLists__removeIcon svg {
   transition: transform .1s; 
-}
-
-.groceryLists__removeIcon:hover svg {
-  transform: scale(1.15);
 }
