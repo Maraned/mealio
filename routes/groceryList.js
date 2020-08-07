@@ -5,7 +5,7 @@ var rdb = require('../lib/rethink');
 
 router.post('/create', async (req, res) => {
   try {
-    const { items, name, userId } = req.body;
+    const { items = [], name = '', userId } = req.body;
     
     const response = await rdb.save('groceryLists', { items, name, createdAt: new Date() });
     const groceryListId = response.generated_keys[0];

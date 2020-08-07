@@ -19,11 +19,10 @@
     "lodash": "^4.17.15",
     "nodemon": "1.18.10",
     "request-promise": "^4.2.5",
-    "sharp": "^0.22.0",
+    "sharp": "^0.25.4",
     "ws": "^7.2.1"
   },
   "devDependencies": {
-    "bcrypt": "^3.0.5",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
