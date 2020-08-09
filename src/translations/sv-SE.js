@@ -54,11 +54,12 @@ export default {
     Description: 'Beskrivning av receptet...',
     Name: 'Receptets namn...',
     Url: 'Webbress...',
-    CreateFromUrl: 'Skapa från webbadress',
+    ImportFromUrl: 'Importera från webbadress',
     Author: 'Recept av: {{author}} ',
     AuthorUrlWithOriginUrl: 'Recept av: <0>{{author}}</0>, från <2>{{origin}}</2>',
     AuthorUrl: 'Recept av: <1>{{author}}<1>',
-    AuthorWithOrigin: 'Recept av: {{author}}, från <2>{{origin}}</2>'
+    AuthorWithOrigin: 'Recept av: {{author}}, från <2>{{origin}}</2>',
+    Import: 'Importera',
   },
   Time: {
     Second: 'sekund',

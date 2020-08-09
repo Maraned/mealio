@@ -19,8 +19,8 @@ export default function IngredientListWrapper() {
     updateRecipe({ type: 'update', value: { portions: event.target.value }});
   }
 
-  const portionsAmount = portions 
-    ? parseInt(portions, 10) 
+  const portionsAmount = portions
+    ? parseInt(portions, 10)
     : parseInt(defaultPortions, 10);
 
   const getPortionsTypeKey = () => {
@@ -40,22 +40,22 @@ export default function IngredientListWrapper() {
         <h4>{t('Recipe:Ingredients')}</h4>
       </div>
 
-      <RangeSlider 
+      <RangeSlider
         value={portionsAmount}
-        min={1} 
-        max={8} 
-        label={t(`Recipe:${getPortionsTypeKey()}`, { count: portionsAmount })} 
+        min={1}
+        max={8}
+        label={t(`Recipe:${getPortionsTypeKey()}`, { count: portionsAmount })}
         onChange={updatePortions}
         className="center"
       />
 
-      {ingredientGroups 
+      {ingredientGroups
         ? ingredientGroups.map(({ name, ingredients }, index) => (
           <>
             <h3>{name}</h3>
-            <IngredientList 
-              groupIngredients={ingredients} 
-              marginBottom={index !== (ingredientGroups.length - 1)} 
+            <IngredientList
+              groupIngredients={ingredients}
+              marginBottom={index !== (ingredientGroups.length - 1)}
             />
           </>
         )

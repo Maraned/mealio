@@ -39,11 +39,11 @@ export default function UrlInput() {
                   onChange={event => setUrl(event.target.value)} 
                   placeholder={t('Recipe:Url')} 
                 />
-                <button onClick={getRecipeFromUrl}>{t('Recipe:Create')}</button>
+                <button onClick={getRecipeFromUrl}>{t('Recipe:Import')}</button>
               </>
             ) : (
               <button onClick={() => setShowInput(!showInput)}>
-                {t('Recipe:CreateFromUrl')}
+                {t('Recipe:ImportFromUrl')}
               </button>
             )}
         </FadeIn>
