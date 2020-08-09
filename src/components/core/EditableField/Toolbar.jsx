@@ -19,7 +19,7 @@ export default function Toolbar({
 }) {
   const [internalShowToolbar, setInternalShowToolbar] = useState(false);
   const toolbarContainerRef = useRef(null);
-  
+
   useOutsideClick(internalShowToolbar && toolbarContainerRef, () => {
     setInternalShowToolbar(false)
   });
@@ -46,7 +46,7 @@ export default function Toolbar({
     });
 
     const updatedState = EditorState.acceptSelection(editorState, selection);
-    onChange(RichUtils.toggleInlineStyle(updatedState, style));    
+    onChange(RichUtils.toggleInlineStyle(updatedState, style));
   };
 
   const toolbarOption = (style, icon) => ({
@@ -64,9 +64,10 @@ export default function Toolbar({
 
   const currentStyle = editorState.getCurrentInlineStyle();
 
-  const renderToolbarOption = button => {
+  const renderToolbarOption = (button, keyId) => {
     return !button.hide && (
-      <div 
+      <div
+        key={`tool-${keyId}-${button.name}`}
         className={cc(['editableField__toolbar__option', {
           'editableField__toolbar__option--selected': button.isSelected && button.isSelected(currentStyle)
         }])}
@@ -82,14 +83,14 @@ export default function Toolbar({
       {!!toolbarButtons.length && (
         <ToolbarContainer
           end={toolbarContainerRef}
-          initialPose="hide" 
-          pose={internalShowToolbar ? 'show' : 'hide'} 
+          initialPose="hide"
+          pose={internalShowToolbar ? 'show' : 'hide'}
           className="editableField__toolbar"
           key={`toolbar-${keyId}`}
         >
-          {toolbarButtons.map(button => button.type 
-            ? renderToolbarOption(builtInOptions[button.type])
-            : renderToolbarOption(button)
+          {toolbarButtons.map(button => button.type
+            ? renderToolbarOption(builtInOptions[button.type], keyId)
+            : renderToolbarOption(button, keyId)
           )}
         </ToolbarContainer>
       )}

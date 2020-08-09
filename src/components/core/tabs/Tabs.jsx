@@ -25,7 +25,7 @@ import classcat from 'classcat';
 //   exit: {
 //     opacity: 0.3,
 //     borderColor: 'none',
-//     transition: { 
+//     transition: {
 //       duration: 150,
 //       borderColor: { ease: 'easeOut', duration: 300 },
 //     }
@@ -33,7 +33,7 @@ import classcat from 'classcat';
 // });
 
 export const Tab = ({ children, isSelected, onClick }) => (
-  <div 
+  <div
     onClick={onClick}
       className={classcat(['tab', {
       'tab--selected': isSelected
@@ -46,7 +46,7 @@ export const Tab = ({ children, isSelected, onClick }) => (
 export default function Tabs({
   views = [],
   defaultRoute,
-}) {  
+}) {
   let match = useRouteMatch();
   let location = useLocation();
 
@@ -77,8 +77,8 @@ export default function Tabs({
           const viewLink = `${match.path}/${view.route}`;
           const isSelected = viewLink === location.pathname;
           return (
-            <Tab 
-              key={view}
+            <Tab
+              key={view.title}
               onClick={() => setActiveView(view)}
               isSelected={isSelected}
               className="tabs__tab"

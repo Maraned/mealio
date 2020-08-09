@@ -21,6 +21,7 @@ export default {
     Edit: 'Editera',
     AddStep: 'Lägg till steg',
     AddIngredient: 'Lägg till ingrediens',
+    AddIngredientGroup: 'Lägg till ingrediensgrupp',
     ChooseImage: 'Välj bild',
     OrDragItHere: 'eller dra den hit',
     Ingredients: 'Ingredienser',
@@ -69,7 +70,7 @@ export default {
     Hour: 'timme',
     Hour_plural: 'timmar',
     Day: 'dag',
-    Day_plural: 'dagar', 
+    Day_plural: 'dagar',
   },
   Ingredient: {
     Amount: 'Mängd',
@@ -135,11 +136,11 @@ export default {
     Welcome: 'Welcome',
     ToMealio: 'to Mealio!',
     WelcomeToMealio: 'Välkommen till Mealio!',
-    WelcomeUSP: `Mealio är sidan där du verkligen kan finna matinspiration, 
-      vare sig det gäller att finna nya recept (som även tar hänsyn till inlagda allergener), 
-      planera och skapa inköpslistor för veckans måltider, bli en bättre kock genom våra samlade tips och tricks, 
-      eller göra dig ett namn inom receptvärlden genom att dela med dig av dina 
-      kreationer i en smidig receptskapar studio. 
+    WelcomeUSP: `Mealio är sidan där du verkligen kan finna matinspiration,
+      vare sig det gäller att finna nya recept (som även tar hänsyn till inlagda allergener),
+      planera och skapa inköpslistor för veckans måltider, bli en bättre kock genom våra samlade tips och tricks,
+      eller göra dig ett namn inom receptvärlden genom att dela med dig av dina
+      kreationer i en smidig receptskapar studio.
       \n Oavsett vad du söker inom matlagning, så är det vår ambition att du ska kunna hitta det här!`,
     RegistrationPerks: 'Fördelar som medlem',
     RegistrationPerksList: {
@@ -153,9 +154,9 @@ export default {
     SearchRecipes: 'Sök på recept',
     CreateRecipe: 'Skapa recept',
     SavedRecipes: 'Sparade recept',
-    BecomeMember: 'Bli medlem!',    
+    BecomeMember: 'Bli medlem!',
     GroceryLists: 'Inköpslistor',
-    MyCreatedRecipes: 'Mina skapade recept',    
+    MyCreatedRecipes: 'Mina skapade recept',
   },
   Breadcrumbs: {
     '/': 'Startsida',

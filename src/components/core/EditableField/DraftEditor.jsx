@@ -24,6 +24,7 @@ export default function DraftEditor({
   onFocus,
   onRemove,
   toolbarButtons,
+  textAlignment,
 }) {
   const editorFieldRef = useRef(null);
   const editorRef = useRef(null);
@@ -31,7 +32,7 @@ export default function DraftEditor({
 
   const keyId = useMemo(() => uuid(), []);
 
-  // TEXT HANDLING  
+  // TEXT HANDLING
   const createContent = () => {
     if (textTag) {
       const processedHTML = DraftPasteProcessor.processHTML(
@@ -44,7 +45,7 @@ export default function DraftEditor({
       try {
         return convertFromRaw(JSON.parse(value));
       } catch (err) {
-        return ContentState.createFromText(`${value}`);    
+        return ContentState.createFromText(`${value}`);
       }
     }
     return ContentState.createFromText(`${value}`);
@@ -59,11 +60,11 @@ export default function DraftEditor({
     if (currentValue !== value) {
       setEditorState(EditorState.createWithContent(createContent()));
     }
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [value]);
 
   const handleOnChange = changedEditorState => {
-    setEditorState(changedEditorState); 
+    setEditorState(changedEditorState);
   };
 
   const onBlur = () => {
@@ -89,15 +90,15 @@ export default function DraftEditor({
     if (onFocus) {
       onFocus(event);
     }
-  };  
+  };
 
   return (
     <>
     <div className={className} ref={editorFieldRef} key={`draftEditor-${keyId}`}>
-      <Toolbar 
-        showToolbar={showToolbar} 
-        toolbarButtons={toolbarButtons} 
-        editorState={editorState} 
+      <Toolbar
+        showToolbar={showToolbar}
+        toolbarButtons={toolbarButtons}
+        editorState={editorState}
         onChange={handleOnChange}
       />
       <Editor
@@ -109,6 +110,7 @@ export default function DraftEditor({
         handlePastedText={onPaste}
         handleKeyCommand={handleKeyCommand}
         ref={editorRef}
+        textAlignment={textAlignment}
       />
 
     </div>

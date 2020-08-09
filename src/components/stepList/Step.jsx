@@ -6,20 +6,20 @@ import TimerButton from 'components/core/TimerButton';
 
 import { EditableContext } from 'contexts/editable';
 
-import { 
-  FaBurn, 
+import {
+  FaBurn,
   FaIndent,
-  FaOutdent, 
-  FaListOl, 
+  FaOutdent,
+  FaListOl,
   FaBars,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 
 import './step.css';
 
-const Step = ({ 
-  step, 
-  updateStep, 
+const Step = ({
+  step,
+  updateStep,
   index,
   ingredients,
   onMouseOver,
@@ -51,8 +51,8 @@ const Step = ({
     const ingredientInWord = word.includes(ingredient);
     const wordContainsIngredient = word.length > 3 && ingredient.includes(word);
 
-    return ingredientInWord 
-      || wordContainsIngredient; 
+    return ingredientInWord
+      || wordContainsIngredient;
   }
 
   const getTimer = (timeUnit, timeUnitPlural, type) => {
@@ -100,7 +100,7 @@ const Step = ({
   }
 
   const [timer] = useState(getTimers())
-  
+
   const parseStep = () => {
     if (!step.text) {
       return;
@@ -132,7 +132,7 @@ const Step = ({
 
   useEffect(() => {
     parseStep();
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [ingredients])
 
   const updateText = text => {
@@ -164,8 +164,8 @@ const Step = ({
       onPaste(text);
     }
   }
-  
-  // eslint-disable-next-line 
+
+  // eslint-disable-next-line
   const documentClick = event => {
     event.preventDefault();
     const isTarget = event.target.classList.contains('step__tools__option')
@@ -194,8 +194,8 @@ const Step = ({
 
       <div className="step__content">
         {parsedStep.map((word, wordIndex) => (
-          <span 
-            key={word.text + wordIndex} 
+          <span
+            key={word.text + wordIndex}
             className={word.ingredient && 'highlightedWord'}
             onMouseOver={word.ingredient && onMouseOver(word.ingredient)}
             onMouseLeave={onMouseLeave}
@@ -207,10 +207,10 @@ const Step = ({
 
         {timer && (
           <div className="step__timerButtonContainer">
-            <TimerButton 
-              unit={timer.type} 
-              text={timer.timeText} 
-              time={timer.time} 
+            <TimerButton
+              unit={timer.type}
+              text={timer.timeText}
+              time={timer.time}
             />
           </div>
         )}
@@ -219,22 +219,26 @@ const Step = ({
   );
 
   const toolbarButtons = [
-    { 
-      icon: <FaOutdent />, 
+    {
+      icon: <FaOutdent />,
       onClick: updateIndentation(step.indentation - 1),
       hide: step.indentation < 1,
-    },
-    { 
-      icon: <FaIndent />, 
-      onClick: updateIndentation(step.indentation + 1),
-      hide: step.indentation > 1
-    },
-    { 
-      icon: step.showNumber ? <FaBars /> : <FaListOl />, 
-      onClick: updateShowNumbers,
+      name: 'outdent',
     },
     {
-      type: 'bold'
+      icon: <FaIndent />,
+      onClick: updateIndentation(step.indentation + 1),
+      hide: step.indentation > 1,
+      name: 'indent',
+    },
+    {
+      icon: step.showNumber ? <FaBars /> : <FaListOl />,
+      onClick: updateShowNumbers,
+      name: 'list',
+    },
+    {
+      type: 'bold',
+      name: 'bold',
     }
   ];
 
@@ -262,7 +266,7 @@ const Step = ({
       'step--edit': state.editable,
       [`step__content--indentation-${step.indentation}`]: step.indentation
     }])}>
-      {state.editable ? editMode() : viewMode()}     
+      {state.editable ? editMode() : viewMode()}
     </div>
   )
 }

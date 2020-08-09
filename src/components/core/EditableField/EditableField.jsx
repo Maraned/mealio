@@ -42,6 +42,7 @@ const EditableField = ({
   hideIfEmpty = false,
   manualStateMode = false,
   manualEditState = false,
+  textAlignment,
 }) => {
   const [editedValue, setEditedValue] = useState(false);
   const [open, setOpen] = useState(false);
@@ -58,7 +59,7 @@ const EditableField = ({
   const handleClick = useCallback(e => {
     if (node.current && !node.current.contains(e.target)) {
       setOpen(false);
-      
+
       if (isFocused.current && onBlur) {
         const currentValue = onChange ? value : fallbackValue;
         onBlur(currentValue);
@@ -98,7 +99,7 @@ const EditableField = ({
       }
     }
     setFilteredOptions(alteredFilteredOptions);
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [value, fallbackValue])
 
   const optionClick = option => () => {
@@ -136,7 +137,7 @@ const EditableField = ({
   const renderEditMode = () => {
     return type === 'text' ? (
       <>
-        <DraftEditor 
+        <DraftEditor
           className={cc(["editableField editableField__edit", className, {
             'editableField--center': center,
             [`editableField--${textTag}`]: textTag,
@@ -152,6 +153,7 @@ const EditableField = ({
           onFocus={onFocus}
           toolbarButtons={toolbarButtons}
           onRemove={onRemove}
+          textAlignment={textAlignment}
         />
       </>
     ) : (
@@ -176,9 +178,9 @@ const EditableField = ({
         </div>
 
         {searchOptions && (
-          <OptionsContainer 
-            className="editableField__options" 
-            pose={open ? "open" : "closed"} 
+          <OptionsContainer
+            className="editableField__options"
+            pose={open ? "open" : "closed"}
             initialPose="closed"
           >
             {filteredOptions.map(option => (
@@ -193,27 +195,31 @@ const EditableField = ({
   };
 
   const renderViewMode = () => {
-    const classes = cc(['editableField', className, { 
+    const classes = cc(['editableField', className, {
       'editableField--clickable': onClick,
       'editableField--autoWidth': autoWidth,
     }]);
 
-    return titleField ? (
-      <h1 className={classes} onClick={onClick}>
+    const Tag = textTag || titleField ? 'h1' : 'div';
+
+    console.log('editableField', {
+      value,
+      textTag,
+      titleField
+    });
+
+    return (
+      <Tag className={classes} onClick={onClick}>
         {value}
-      </h1>
-    ) : (
-      <div className={classes} onClick={onClick}>
-        {value}
-      </div>
+      </Tag>
     );
   }
 
   const editState = manualStateMode ? manualEditState : state.editable;
 
   return editState
-    ? renderEditMode() 
-    : hideIfEmpty 
+    ? renderEditMode()
+    : hideIfEmpty
       ? !!value && renderViewMode()
       : renderViewMode();
 }

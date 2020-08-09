@@ -7,6 +7,7 @@ import { RecipeContext } from 'contexts/recipe';
 
 import IngredientList from 'components/ingredientList/IngredientList';
 import RangeSlider from 'components/core/rangeSlider/RangeSlider';
+import EditableField from 'components/core/EditableField/EditableField';
 
 export default function IngredientListWrapper() {
   const { state } = useContext(EditableContext);
@@ -32,6 +33,10 @@ export default function IngredientListWrapper() {
     }
   }
 
+  const addIngredientGroup = () => {
+
+  }
+
   return (
     <div className={cc(['ingredientList', 'list', 'background', 'listSpacing', {
       'ingredientList--editMode': state.editable
@@ -49,15 +54,26 @@ export default function IngredientListWrapper() {
         className="center"
       />
 
+    {state.editable && (
+      <button onClick={addIngredientGroup}>
+        {t('Recipe:AddIngredientGroup')}
+      </button>
+    )}
+
       {ingredientGroups
         ? ingredientGroups.map(({ name, ingredients }, index) => (
-          <>
-            <h3>{name}</h3>
+          <React.Fragment key={`ingredientGroup-${index}`}>
+            <EditableField
+              value={name}
+              textTag="h3"
+              type="text"
+              textAlignment="center"
+            />
             <IngredientList
               groupIngredients={ingredients}
               marginBottom={index !== (ingredientGroups.length - 1)}
             />
-          </>
+          </React.Fragment>
         )
 
       ) : (

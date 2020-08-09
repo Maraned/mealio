@@ -64,8 +64,8 @@ const IngredientList = ({ groupIngredients, marginBottom }) => {
         if (amount && unit && name) {
           parsedIngredients.push({
             ...IngredientModel,
-            amount: parseFloat(amount.replace(',', '.')), 
-            unit, 
+            amount: parseFloat(amount.replace(',', '.')),
+            unit,
             name: Capitalize(name)
           });
         }
@@ -98,25 +98,25 @@ const IngredientList = ({ groupIngredients, marginBottom }) => {
   }
 
   const openGroceryListModal = () => {
-    changeView({ type: 'groceryLists', value: { 
-      items: ingredientsToGroceryListItems(ingredients), 
+    changeView({ type: 'groceryLists', value: {
+      items: ingredientsToGroceryListItems(ingredients),
       recipeId: recipe.id,
       recipeName: recipe.name,
       headerTitle: t('GroceryList:Title'),
     } });
   };
 
-  const portionsAmount = portions 
-    ? parseInt(portions, 10) 
+  const portionsAmount = portions
+    ? parseInt(portions, 10)
     : parseInt(defaultPortions, 10);
 
   return (
-    <div className={marginBottom && 'margin--bottom--xlarge'}>
+    <div className={marginBottom ? 'margin--bottom--xlarge' : ''}>
       {ingredients && ingredients.map((ingredient, index) => (
         <Ingredient
           key={'ingredient' + index}
-          updateIngredient={updateIngredient} 
-          index={index} 
+          updateIngredient={updateIngredient}
+          index={index}
           ingredient={{...ingredient}}
           defaultPortions={defaultPortions}
           portions={portionsAmount}
@@ -129,13 +129,13 @@ const IngredientList = ({ groupIngredients, marginBottom }) => {
           {t('Recipe:AddIngredient')}
         </button>
       ) : (
-        <Link to={{ 
-          pathname: '/grocerylists', 
-          state: { 
-            modal: true, 
-            previousLocation: location, 
+        <Link to={{
+          pathname: '/grocerylists',
+          state: {
+            modal: true,
+            previousLocation: location,
             data: {
-              items: ingredientsToGroceryListItems(ingredients), 
+              items: ingredientsToGroceryListItems(ingredients),
               recipeId: recipe.id,
               recipeName: recipe.name,
               headerTitle: t('GroceryList:Title'),
