@@ -5,6 +5,7 @@ services:
 #   Setup react js container
 ################################
   frontend:
+    stdin_open: true
     build:
       context: ./frontend/cibus
       dockerfile: Dockerfile
@@ -39,7 +40,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=300
-    ports: 
+    ports:
       - 3001:3001
     volumes:
       - ./backend/cibus-backend/config:/usr/src/app/config
