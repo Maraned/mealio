@@ -2,7 +2,7 @@ const request = require('request-promise');
 
 const TastelineParser = require('./tasteline');
 
-async function WebParser({ url }) {
+async function WebParser({ url, userId }) {
   try {
     console.log('url', url);
     // const domainRegex = /https?:\/\/(.*?)\//;
@@ -15,7 +15,7 @@ async function WebParser({ url }) {
     const htmlPage = await request(url);
 
     if (domain.includes('tasteline')) {
-      return TastelineParser(htmlPage, url);
+      return TastelineParser(htmlPage, url, userId);
     }
 
     return {};

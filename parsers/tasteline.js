@@ -2,7 +2,10 @@ const cheerio = require('cheerio');
 const { IngredientMatcher } = require('./ingredientMatcher');
 const { capitalize, uuid } = require('../utils/stringUtils');
 
-async function TastelineParser(htmlPage, url) {
+const { findByArray } = require('../lib/rethink');
+const { createUser, uuidv4 } = require('../routes/users');
+
+async function TastelineParser(htmlPage, url, userId) {
   const $ = cheerio.load(htmlPage);
 
   let ingredientGroups = [];
@@ -47,12 +50,33 @@ async function TastelineParser(htmlPage, url) {
     stepElements.children().each((i, stepElem) => {
       const newlineAndWhitespaceRegex = /[\\n|\s]{3,}/g;
       const step = $(stepElem).text().replace(newlineAndWhitespaceRegex, '');
-      steps.push({ text: step }); 
+      steps.push({ text: step });
     })
   });
 
-  const author = $('.recipe-author-text-inner span').text();
+  const authorName = $('.recipe-author-text-inner span').text();
   const authorUrl = $('.recipe-author a').attr('href');
+
+  const existingAuthorByUrl = await findByArray('users', 'urls', authorUrl);
+
+  let authorId;
+  let author;
+  if (!existingAuthorByUrl.length) {
+    const createdUser = await createUser(
+      authorUrl,
+      uuidv4(),
+      { urls: [authorUrl], displayName: authorName }
+    );
+    author = createdUser;
+    authorId = createdUser.id;
+  } else {
+    author = existingAuthorByUrl[0];
+    authorId = existingAuthorByUrl[0].id;
+  }
+
+  if (author) {
+    delete author.password;
+  }
 
   ingredientGroups = await IngredientMatcher(ingredientGroups);
 
@@ -64,14 +88,14 @@ async function TastelineParser(htmlPage, url) {
     ingredientGroups,
     steps,
     time,
-    author,
-    authorUrl,
+    author: userId,
+    originalAuthor: authorId,
     origin: 'Tasteline',
     originUrl: url,
     images: [image]
   };
 
-  return recipe;
+  return { recipe, originalAuthorUser: author };
 };
 
 module.exports = TastelineParser;

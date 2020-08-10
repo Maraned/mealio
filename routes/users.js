@@ -7,8 +7,14 @@ const rdb = require('../lib/rethink');
 const auth = require('../lib/auth');
 const jwt = require('../utils/jwt');
 
-router.post('/create', async (req, res, next) => {
-  const { email, password } = req.body;
+module.exports.uuidv4 = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+module.exports.createUser = async (email, password, extraAttributes = {}) => {
   const existingUser = await rdb.findBy('users', 'email', email);
 
   if (existingUser.length) {
@@ -21,7 +27,7 @@ router.post('/create', async (req, res, next) => {
   try {
     const hashedPassword = await auth.hashPassword(password);
     user = {
-      email, 
+      email,
       password: hashedPassword,
     };
   } catch (error) {
@@ -29,30 +35,43 @@ router.post('/create', async (req, res, next) => {
     res.send({ error: 'COULDNOTCREATEUSER' })
   }
 
-  const userInfo = { 
-    ...user, 
-    draftRecipes: [], 
-    publishedRecipes: [],  
+  const userInfo = {
+    ...user,
+    ...extraAttributes,
+    draftRecipes: [],
+    publishedRecipes: [],
     groceryLists: [],
     recipeCollection: [],
   };
 
   const result = await rdb.save('users', userInfo);
   if (!result.inserted) {
-    const userNotCreated = new Error('User could not be created');
-    userNotCreated.status = 500;
-    return next(userNotCreated);
+    return null;
   }
 
   const createdUserId = result.generated_keys[0];
   const createdUser = await rdb.find('users', createdUserId);
   const { password: userPassword, ...rest } = createdUser;
 
+  return rest;
+}
+
+router.post('/create', async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const createdUser = await createUser(email, password);
+
+  if (!createdUser) {
+    const userNotCreated = new Error('User could not be created');
+    userNotCreated.status = 500;
+    return next(userNotCreated);
+  }
+
   const accessToken = jwt.createAccessToken(email);
   const refreshToken = jwt.createRefreshToken(email, 1);
 
   res.status = 201;
-  res.send({ accessToken, refreshToken, currentUserValue: 1, user: rest });
+  res.send({ accessToken, refreshToken, currentUserValue: 1, user: createdUser });
 });
 
 const updateAvatar = async userAvatar => {
@@ -69,8 +88,8 @@ const updateAvatar = async userAvatar => {
         .resize(200, 200)
         .webp({ lossless: true })
         .toFile(imagePath);
-      
-      return avatar = `${id}/avatar.webp`; 
+
+      return avatar = `${id}/avatar.webp`;
 
     } catch (error) {
       console.error('Sharp error: ', error);
@@ -86,7 +105,7 @@ router.post('/update', async (req, res, next) => {
   if (avatar) {
     rest.avatar = avatar;
   }
-  
+
   await rdb.edit('users', id, rest);
   res.sendStatus(200);
 });
@@ -133,10 +152,10 @@ router.post('/:id/dashboardSettings', async (req, res) => {
   if (dashboardSettings) {
     const dashboardSettingsResponse = await rdb.edit('users', id, {
       dashboardSettings,
-    });  
+    });
   }
   const userResponse = await rdb.find('users', id);
   return res.send(userResponse);
 });
 
-module.exports = router;
+module.exports.router = router;

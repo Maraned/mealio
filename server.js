@@ -6,18 +6,20 @@ var cors = require('cors');
 var helmet = require('helmet');
 var jwt = require('express-jwt');
 const initWsServer = require('./wsServer').initWsServer;
-const webParser = require('./parsers/webParser');
 
 var app = express();
 
-// ROUTES 
-var users = require('./routes/users');
+// ROUTES
+var { router: users } = require('./routes/users');
 var login = require('./routes/login');
 var recipes = require('./routes/recipes');
 var groceryList = require('./routes/groceryList');
 var ingredients = require('./routes/ingredients');
 var ingredientGroups = require('./routes/ingredientGroups');
 var statistics = require('./routes/statistics');
+
+// PARSERS
+const webParser = require('./parsers/webParser');
 
 // HTTP REQUEST HANDLING
 app.use(express.static('images'))
@@ -28,10 +30,10 @@ app.use(cors());
 app.use(helmet());
 
 app.use(jwt({ secret: process.env.SECRET })
-  .unless({ 
+  .unless({
     path: [
-      '/login', 
-      '/login/refresh', 
+      '/login',
+      '/login/refresh',
       '/users/create',
       '/',
       '/ingredients',
@@ -53,11 +55,11 @@ app.use('/statistics', statistics);
 app.get('/images/:recipe/:image', function(req, res){
   const { recipe, image} = req.params;
   res.sendFile(`${__dirname}/images/${recipe}/${image}`);
-}); 
+});
 
 app.get('/parse', async function(req, res) {
-  const recipe = await webParser(req.query);
-  res.json(recipe);
+  const parseResult = await webParser(req.query);
+  res.json(parseResult);
 })
 
 app.use(express.static('images'))

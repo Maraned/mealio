@@ -2,13 +2,16 @@ const WebSocket = require('ws');
 const Connections = require('./utils/Connections');
 var rdb = require('./lib/rethink');
 
+const { mapRecipeUsers } = require('./utils/utils');
+
 const initConnection = async client => {
-  
+
   console.log('initconnections')
-  const draftRecipes = await rdb.findAll('draftRecipes');
+  const draftRecipes = await mapRecipeUsers(await rdb.findAll('draftRecipes'));
+  console.log('draftRecipes', draftRecipes)
   client.send(JSON.stringify({ type: 'draft', data: draftRecipes }));
 
-  const publishedRecipes = await rdb.findAll('publishedRecipes');
+  const publishedRecipes = await mapRecipeUsers(await rdb.findAll('publishedRecipes'));
   client.send(JSON.stringify({ type: 'published', data: publishedRecipes }));
 
   const ingredients = await rdb.findAll('ingredients');
