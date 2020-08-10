@@ -33,17 +33,20 @@ const CreateRecipe = () => {
   const { t, i18n } = useTranslation();
 
   const {
-    name, 
-    description, 
-    images, 
-    time, 
-    ingredients, 
-    lastUpdate, 
-    origin, 
-    originUrl, 
+    name,
+    description,
+    images,
+    time,
+    ingredients,
+    lastUpdate,
+    origin,
+    originUrl,
     author,
-    authorUrl,
+    authorUser,
+    originalAuthorUser,
   } = state;
+
+  console.log('recipe state', state)
 
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
@@ -53,10 +56,8 @@ const CreateRecipe = () => {
   const [changed, setChanged] = useState(false);
 
   const onRecipeChange = (type, value) => {
-    const author = {
-      id: user.id,
-      name: user.displayName
-    };
+
+    const author = value.author || user.id;
 
     updateRecipe({ type, value, author });
   }
@@ -70,12 +71,12 @@ const CreateRecipe = () => {
   const updateLastSaved = date => {
     if (!date || (date instanceof Date && isNaN(date))) {
       return;
-    } 
-    var options = { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric', 
-      hour: 'numeric', 
+    }
+    var options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
       minute: 'numeric',
       second: 'numeric'
     };
@@ -92,7 +93,7 @@ const CreateRecipe = () => {
     if (changed) {
       if (state.draft == null) {
         onRecipeChange('draft', true);
-      } 
+      }
     }
     // eslint-disable-next-line
   }, [changed]);
@@ -104,7 +105,7 @@ const CreateRecipe = () => {
   }, []);
 
   const toggleViewMode = () => {
-    editState.editable 
+    editState.editable
       ? dispatch({ type: 'view' })
       : dispatch({ type: 'edit' })
   };
@@ -124,15 +125,15 @@ const CreateRecipe = () => {
     }, false);
 
     if (!isNaN(response) && response !== 200) {
-      alertBannerDispatch({ type: 'add', value: { 
-        text: t('Recipe:FailedToPublish'), 
-        type: 'error', 
+      alertBannerDispatch({ type: 'add', value: {
+        text: t('Recipe:FailedToPublish'),
+        type: 'error',
       } });
     } else {
       if (state.draft) {
-        alertBannerDispatch({ type: 'add', value: { 
-          text: t('Recipe:PublishSuccess'), 
-          type: 'success', 
+        alertBannerDispatch({ type: 'add', value: {
+          text: t('Recipe:PublishSuccess'),
+          type: 'success',
         } });
       }
     }
@@ -144,7 +145,7 @@ const CreateRecipe = () => {
       recipe: { ...state, draft: false },
     }, false);
   };
-  
+
   const changeName = value => {
     onRecipeChange('name', value);
     setChanged(true);
@@ -190,7 +191,7 @@ const CreateRecipe = () => {
     onRecipeChange('time', event.target.value);
     setChanged(true);
   };
-                                                                                                                                                     
+
   const renderLastSaved = () => lastSavedText && (
     <div className="createRecipe__lastSaved margin--bottom">
       {t('Recipe:LastSaved')} {lastSavedText}
@@ -200,17 +201,17 @@ const CreateRecipe = () => {
   const renderActionbar = () => (
     <FullWidthContainer spaceBetween className="margin--bottom--large">
       <div className="flex spaceBetween fullWidth">
-        <button 
+        <button
           className="createRecipe__toggleModeBtn margin--right"
           onClick={toggleViewMode}
         >
           {editState.editable ? t('Recipe:View') : t('Recipe:Edit')}
         </button>
 
-        <UrlInput />
+        <UrlInput onRecipeFetch={() => {}} />
 
         {state.draft && state.id && (
-          <button 
+          <button
             className="createRecipe__publish"
             onClick={publishRecipe}
           >
@@ -219,14 +220,14 @@ const CreateRecipe = () => {
         )}
 
         {state.draft != null && !state.draft && (
-          <button 
+          <button
             className="createRecipe__update"
             onClick={editRecipe}
           >
             {t('Recipe:Update')}
           </button>
         )}
-          
+
         <button
           className="createRecipe__delete remove"
           onClick={deleteRecipe}
@@ -242,8 +243,8 @@ const CreateRecipe = () => {
     <>
       <div className="recipe__time margin--right">
         <FaRegClock />
-        <EditableField 
-          onChange={changeTime} 
+        <EditableField
+          onChange={changeTime}
           value={time}
           placeholder={t('Recipe:Time')}
           hideIfEmpty
@@ -251,10 +252,10 @@ const CreateRecipe = () => {
       </div>
 
       {author && (
-        <Author author={author} authorUrl={authorUrl} origin={origin} originUrl={originUrl} />
+        <Author authorUser={authorUser} originalAuthorUser={originalAuthorUser} origin={origin} originUrl={originUrl} />
       )}
-      
-      
+
+
     </>
   );
 
@@ -272,10 +273,10 @@ const CreateRecipe = () => {
           <div className="fullWidth autoWidthMedium center">
             {editState.editable && (
               <>
-                <ImageUpload 
-                  onDrop={addImages} 
+                <ImageUpload
+                  onDrop={addImages}
                   onUrl={addImageUrl}
-                  className="recipe__imageUpload image--rounded" 
+                  className="recipe__imageUpload image--rounded"
                   id="createRecipe"
                   uploadedImage={primaryImageUrl}
                   size={300}
@@ -284,25 +285,25 @@ const CreateRecipe = () => {
             )}
 
             {!editState.editable && !!primaryImageUrl && (
-              <img className="recipe__image image--rounded" src={primaryImageUrl} alt="" /> 
+              <img className="recipe__image image--rounded" src={primaryImageUrl} alt="" />
             )}
           </div>
 
           <div className="flex column vcenter vMediumLeft grow">
-            <EditableField 
-              onChange={changeName} 
+            <EditableField
+              onChange={changeName}
               value={name}
-              className="recipe__name margin--bottom" 
+              className="recipe__name margin--bottom"
               placeholder={t('Recipe:Name')}
               titleField
               type="text"
               textTag="h1"
             />
 
-            <EditableField 
-              onChange={changeDescription} 
+            <EditableField
+              onChange={changeDescription}
               value={description}
-              className="recipe__description margin--bottom" 
+              className="recipe__description margin--bottom"
               placeholder={t('Recipe:Description')}
               type="text"
             />
@@ -312,8 +313,8 @@ const CreateRecipe = () => {
         </div>
       </div>
 
-      <FullWidthContainer 
-        center={!editState.editable} 
+      <FullWidthContainer
+        center={!editState.editable}
         spaceBetween={editState.editable}
       >
         <IngredientListWrapper />

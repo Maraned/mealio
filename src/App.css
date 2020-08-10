@@ -7,7 +7,7 @@ div[contenteditable] {
   font-size: 1rem !important;
 }
 
-html, 
+html,
 body,
 #root {
   height: 100%;
@@ -61,7 +61,7 @@ a:hover {
   color: var(--success-text-color);
 }
 
-.error, 
+.error,
 .success {
   font-size: .8rem;
   font-style: italic;
@@ -73,11 +73,11 @@ a:hover {
   background-color: var(--primary-color);
 }
 
-h1, 
-h2, 
-h3, 
-h4, 
-h5, 
+h1,
+h2,
+h3,
+h4,
+h5,
 h6 {
   margin: 0;
   font-family: 'Lato', serif;
@@ -111,7 +111,7 @@ button.selected,
 input[type=button].selected,
 .clickable.selected,
 .button.selected {
-  background-color: var(--primary-color);  
+  background-color: var(--primary-color);
   color: var(--primary-text-color);
 }
 
@@ -187,7 +187,7 @@ input {
 input,
 textarea {
   border: none;
-  padding: .5rem 0rem; 
+  padding: .5rem 0rem;
   transition: border-bottom .5s;
 }
 
@@ -365,7 +365,7 @@ a:hover {
 
 .flex.center {
   justify-content: center;
-} 
+}
 
 .flex.vcenter {
   align-items: center;
@@ -419,6 +419,14 @@ a:hover {
 
 .preserveWhitespace {
   white-space: pre-wrap;
+}
+
+.margin--top {
+  margin-top: .5rem !important;
+}
+
+.margin--top--small {
+  margin-top: .25rem !important;
 }
 
 .margin--bottom {

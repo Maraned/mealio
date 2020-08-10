@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useState, useRef, useContext } from 'react'; 
+import React, { createContext, useReducer, useEffect, useState, useRef, useContext } from 'react';
 
 import RecipeModel from 'models/recipeModel';
 import { ArrayEqual } from 'utils/utils';
@@ -17,12 +17,18 @@ const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
 const updateRecipe = async (newState, dispatch) => {
   const newSavedDate = new Date();
 
+  const { originalAuthorUser, authorUser, ...recipe } = newState;
+
+  console.log('recipe newState', newState)
+
   const response = await postRequest('recipes/createUpdate', {
-    recipe: { ...newState, lastUpdate: newSavedDate },
-    id: newState.author && newState.author.id,
+    recipe: { ...recipe, lastUpdate: newSavedDate },
+    id: newState.author,
   });
 
-  const { status, draftId, recipe: { lastUpdate } } = response;
+  console.log('response', response)
+
+  const { status, draftId, recipe: { lastUpdate }, author } = response;
   if (status === 'created') {
     dispatch({ type: 'update', value: { id: draftId, lastUpdate } });
   }
@@ -35,13 +41,13 @@ const recipeReducer = (state, action) => {
     case 'ingredients':
       newState = { ...state, ingredients: [...action.value] };
       break;
-    case 'name': 
+    case 'name':
       newState = { ...state, name: action.value };
       break;
-    case 'steps': 
+    case 'steps':
       newState = { ...state,  steps: action.value };
       break;
-    case 'description': 
+    case 'description':
       newState = { ...state, description: action.value };
       break;
     case 'images':
@@ -77,9 +83,19 @@ const recipeReducer = (state, action) => {
       return state;
   }
 
+  if (action.authorUser) {
+    newState.authorUser = action.authorUser;
+  }
+
+  if (action.originalAuthorUser) {
+    newState.originalAuthorUser = action.originalAuthorUser;
+  }
+
   if (!newState.author && action.author) {
     newState.author = action.author;
   }
+
+  console.log('recipe newState', newState, action)
 
   return newState;
 };
@@ -97,13 +113,13 @@ export const RecipeProvider = props => {
   const updateTimer = useRef(null);
 
   useEffect(() => {
-    const { 
-      ingredients, 
+    const {
+      ingredients,
       name,
       images,
       steps,
     } = state;
-    const { 
+    const {
       ingredients: prevIngredients,
       name: prevName,
       images: prevImages,
@@ -137,5 +153,5 @@ export const RecipeProvider = props => {
     <RecipeContext.Provider value={{ state, dispatch }}>
       {props.children}
     </RecipeContext.Provider>
-  ) 
+  )
 };
