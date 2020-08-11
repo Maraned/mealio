@@ -1,7 +1,3 @@
-.editableField {
-  min-width: 160px;
-}
-
 .editableField--autoWidth {
   min-width: auto;
 }

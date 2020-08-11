@@ -316,6 +316,7 @@ const CreateRecipe = () => {
       <FullWidthContainer
         center={!editState.editable}
         spaceBetween={editState.editable}
+        wrapOnlyMobile
       >
         <IngredientListWrapper />
         <StepList />

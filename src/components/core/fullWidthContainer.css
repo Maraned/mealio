@@ -24,3 +24,9 @@
 .fullWidthContainer--spaceBetween {
   justify-content: space-between;
 }
+
+@media all and (min-width: 640px) {
+  .fullWidthContainer--wrapOnlyMobile {
+    flex-wrap: nowrap;
+  }
+}

@@ -8,15 +8,17 @@ const FullWidthContainer = ({
   center,
   spaceBetween,
   className,
+  wrapOnlyMobile,
   children
 }) => (
   <div className={cc(['fullWidthContainer', className, {
     'fullWidthContainer--stack': stack,
     'fullWidthContainer--centered': center,
     'fullWidthContainer--spaceBetween': spaceBetween,
+    'fullWidthContainer--wrapOnlyMobile': wrapOnlyMobile,
   }])}>
     {children}
   </div>
 )
-  
+
 export default FullWidthContainer;

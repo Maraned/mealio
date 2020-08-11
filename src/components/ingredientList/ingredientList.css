@@ -1,6 +1,5 @@
 .ingredientList {
   height: 100%;
-  flex-grow: 1;
   width: 100%;
 
   display: flex;
@@ -10,8 +9,12 @@
 
 @media all and (min-width: 640px) {
   .ingredientList {
-    width: 15rem;
     margin-right: .5rem;
+    width: auto;
+  }
+
+  .ingredientList--editMode {
+    min-width: 450px;
   }
 }
 

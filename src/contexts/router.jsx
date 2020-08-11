@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'; 
+import React, { createContext, useReducer } from 'react';
 
 import Settings from 'views/settings/Settings';
 import GroceryLists from 'views/groceryList/GroceryListsWrapper';
@@ -17,13 +17,14 @@ const pages = {
 }
 
 const routerReducer = (state, action) => {
+  console.log('routerReducer', {state, action })
   if (action.type === 'closeModal') {
     return { ...state, ModalView: null };
   }
 
-  return { 
-    ...state, 
-    ...pages[action.type], 
+  return {
+    ...state,
+    ...pages[action.type],
     ModalSize: action.size,
     ModalData: { ...action.value },
   };
@@ -35,6 +36,8 @@ export const RouterContext = createContext(initialState);
 
 export const RouterProvider = props => {
   const [state, dispatch] = useReducer(routerReducer, initialState);
+
+  console.log('routerProvider', { state })
 
   return (
     <RouterContext.Provider value={{ state, dispatch }}>

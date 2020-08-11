@@ -1,13 +1,13 @@
 .stepList {
   display: flex;
   flex-direction: column;
-  width: 50%;
-  flex: 1;
+  /* width: 50%; */
+  flex-grow: 1;
 }
 
 @media all and (min-width: 640px) {
   .stepList {
-    min-width: 450px;
+    /* min-width: 450px; */
   }
 }
 

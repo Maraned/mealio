@@ -18,21 +18,23 @@ export default function MainDashboard() {
   );
 
   const renderModalSquare = (text, page) => (
-    <button className="link">
-      <div 
-        className="square shadow center" 
-        onClick={() => {
-          return dispatch({ 
-            type: page,  
-            value: {
-              headerTitle: t('GroceryList:Title'),
-            }
-          })
-        }}
+    <a
+    onClick={() => {
+      return dispatch({
+        type: page,
+        value: {
+          headerTitle: t('GroceryList:Title'),
+        }
+      })
+    }}
+    >
+      <div
+        className="square shadow center"
+
       >
         {text}
       </div>
-    </button>
+    </a>
   );
 
   return (
