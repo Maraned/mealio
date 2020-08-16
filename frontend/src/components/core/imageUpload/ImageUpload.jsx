@@ -29,7 +29,7 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
       onDrop(files);
     }
     setIsDraggingOver(false);
-  } 
+  }
 
   const onChange = event => {
     event.preventDefault();
@@ -56,14 +56,14 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
   const onMouseLeave = () => setHovering(false);
 
   return (
-    <form 
+    <form
       className={cc(['imageUpload', className, {
         'imageUpload--isDragOver': isDraggingOver,
         'imageUpload--circle': circle,
         'imageUpload--hovering': hovering
       }])}
-      method="post" 
-      action="" 
+      method="post"
+      action=""
       encType="multipart/form-data"
       onDragOver={onDragOver}
       onDragEnter={onDragOver}
@@ -80,37 +80,37 @@ const ImageUpload = ({ onDrop, onUrl, className, circle, id, size, uploadedImage
           )}
         </div>
 
-          <Popup 
-            id={id} 
-            onClose={closePopup} 
+          <Popup
+            id={id}
+            onClose={closePopup}
             className={cc(['flex', 'column', 'vcenter', {
               'popup--circle': circle
-            }])} 
+            }])}
             show={hovering}
           >
-            <input 
-              type="text" 
+            <input
+              type="text"
               className="imageUpload__urlInput fullWidth margin--bottom--large center"
-              placeholder={t('Recipe:AddUrl')} 
-              onBlur={event => onUrl(event.target.value)} 
+              placeholder={t('Recipe:AddUrl')}
+              onBlur={onUrl ? event => onUrl(event.target.value) : null}
             />
 
-            <input 
-              className="imageUpload__file" 
-              type="file" 
+            <input
+              className="imageUpload__file"
+              type="file"
               id={id}
-              onChange={onChange} 
-              multiple 
+              onChange={onChange}
+              multiple
             />
-            <label 
-              className="button primary margin--bottom--large" 
+            <label
+              className="button primary margin--bottom--large"
               htmlFor={id}
             >
               {t('Recipe:AddFile')}
             </label>
           </Popup>
-        
-        <label className="imageUpload__label flex vcenter center"> 
+
+        <label className="imageUpload__label flex vcenter center">
           <strong className="imageUpload__chooseImage">{t('Recipe:ChooseImage')}</strong>
           <span className="imageUpload__dragndrop">
             &nbsp;{t('Recipe:OrDragItHere')}
