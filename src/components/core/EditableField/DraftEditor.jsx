@@ -35,6 +35,10 @@ export default function DraftEditor({
   // TEXT HANDLING
   const createContent = () => {
     if (textTag) {
+      try {
+        return convertFromRaw(JSON.parse(value));
+      } catch (err) {}
+
       const processedHTML = DraftPasteProcessor.processHTML(
         `<${textTag}>${value}</${textTag}>`
       );

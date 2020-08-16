@@ -12,9 +12,9 @@ import { EditableContext } from 'contexts/editable';
 import EditableField from 'components/core/EditableField/EditableField';
 import Select from 'components/core/Select';
 
-const Ingredient = ({ 
-  ingredient, 
-  updateIngredient, 
+const Ingredient = ({
+  ingredient,
+  updateIngredient,
   index,
   defaultPortions,
   portions,
@@ -106,29 +106,31 @@ const Ingredient = ({
     <div className={cc(['ingredient', {
       'ingredient--editMode': editState.editable
     }])}>
-      <EditableField 
-        value={amountValue()} 
-        onChange={updateAmount} 
+      <EditableField
+        value={amountValue()}
+        onChange={updateAmount}
         type="text"
-        placeholder={t('Ingredient:Amount')} 
+        placeholder={t('Ingredient:Amount')}
         onPaste={onPasteHandler}
         onFocus={onFocus}
         onBlur={onBlur}
         autoWidth
+        xSmall
       />
 
-      <EditableField 
-        value={ingredient.unit} 
-        onChange={updateUnit} 
+      <EditableField
+        value={ingredient.unit}
+        onChange={updateUnit}
         type="text"
-        placeholder={t('Ingredient:Unit')} 
+        placeholder={t('Ingredient:Unit')}
         onPaste={onPasteHandler}
         onFocus={onFocus}
         onBlur={onBlur}
         autoWidth
+        small
       />
-      
-      <Select 
+
+      <Select
         onChange={updateName}
         preSelected={ingredient}
         defaultText={t('Ingredient:SelectIngredient')}

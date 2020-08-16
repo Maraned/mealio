@@ -29,22 +29,22 @@ export const FacebookProvider = props => {
         xfbml: true,
         version: 'v4.0'
       });
-        
-      window.FB.AppEvents.logPageView();   
+
+      window.FB.AppEvents.logPageView();
 
       window.FB.getLoginStatus(function(response) {
-        console.log('loginStatus', response)
+        // console.log('loginStatus', response)
     });
     };
   };
 
   useEffect(() => {
-    initFacebook();    
+    initFacebook();
   }, []);
 
   return (
     <FacebookContext.Provider value={{ state, dispatch }}>
       {props.children}
     </FacebookContext.Provider>
-  ) 
+  )
 };

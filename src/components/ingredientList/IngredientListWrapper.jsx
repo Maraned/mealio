@@ -9,12 +9,16 @@ import IngredientList from 'components/ingredientList/IngredientList';
 import RangeSlider from 'components/core/rangeSlider/RangeSlider';
 import EditableField from 'components/core/EditableField/EditableField';
 
+import uuid from 'utils/uuid';
+
 export default function IngredientListWrapper() {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   console.log('recipe', recipe)
-  const { ingredientGroups, portions, portionsType, defaultPortions } = recipe;
+  const { ingredientGroups = [], portions, portionsType, defaultPortions } = recipe;
   const { t } = useTranslation();
+
+  console.log('ingredientGroups', ingredientGroups)
 
   const updatePortions = event => {
     updateRecipe({ type: 'update', value: { portions: event.target.value }});
@@ -34,7 +38,28 @@ export default function IngredientListWrapper() {
   }
 
   const addIngredientGroup = () => {
+    console.log('ingredientGroups before push', ingredientGroups)
+    const updatedIngredientGroups = [...ingredientGroups];
+    updatedIngredientGroups.push({
+      id: uuid(),
+      ingredients: [],
+      name: '',
+    });
 
+    console.log('updatedIngredientGroups', updatedIngredientGroups)
+
+    updateRecipe({
+      type: 'update',
+      value: { ingredientGroups: updatedIngredientGroups }
+    });
+  };
+
+  const updateIngredientGroup = (ingredientGroupId, updatedAttributes) => {
+    console.log('updating ingredient')
+    updateRecipe({
+      type: 'ingredientGroup',
+      value: { ingredientGroupId, updatedAttributes }
+    });
   }
 
   return (
@@ -61,15 +86,17 @@ export default function IngredientListWrapper() {
     )}
 
       {ingredientGroups
-        ? ingredientGroups.map(({ name, ingredients }, index) => (
+        ? ingredientGroups.map(({ id, name, ingredients }, index) => (
           <React.Fragment key={`ingredientGroup-${index}`}>
             <EditableField
               value={name}
               textTag="h3"
               type="text"
               textAlignment="center"
+              onChange={value => updateIngredientGroup(id, { name: value })}
             />
             <IngredientList
+              ingredientGroupId={id}
               groupIngredients={ingredients}
               marginBottom={index !== (ingredientGroups.length - 1)}
             />

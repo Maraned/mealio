@@ -35,6 +35,11 @@ export const WebSocketProvider = props => {
       return updateFunction[type]({ type: 'set', value: data });
     }
 
+    console.log('updated', {
+      type,
+      data
+    })
+
     const newData = !data.old_val && !!data.new_val;
     const modifiedData = !!data.old_val && !!data.new_val;
     const deletedData = !!data.old_val && !data.new_val;
@@ -52,7 +57,7 @@ export const WebSocketProvider = props => {
     const host = window.location.hostname;
     const wsUrl = `wss://${host}/ws`;
     const connection = new WebSocket(wsUrl);
-    
+
     connection.onmessage = function (message) {
       try {
         const json = JSON.parse(message.data);
@@ -66,15 +71,15 @@ export const WebSocketProvider = props => {
     //   // connection is opened and ready to use
     //   console.log('websocket onopen')
     // };
-  
+
     // connection.onerror = function (error) {
     //   // an error occurred when sending/receiving data
     //   console.log('websocket onerror', error)
     // };
-  
+
 
     return () => connection.close();
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -43,6 +43,8 @@ const EditableField = ({
   manualStateMode = false,
   manualEditState = false,
   textAlignment,
+  small,
+  xSmall,
 }) => {
   const [editedValue, setEditedValue] = useState(false);
   const [open, setOpen] = useState(false);
@@ -116,10 +118,16 @@ const EditableField = ({
   ) : '';
 
   const handleOnChange = value => {
+    console.log('handleOnChange')
     setEditedValue(value);
+
+    if (onChange) {
+      onChange(value);
+    }
   };
 
   const handleOnBlur = () => {
+    console.log('handleOnBlur', editedValue)
     if (onChange) {
       onChange(editedValue || value);
     } else {
@@ -138,11 +146,13 @@ const EditableField = ({
     return type === 'text' ? (
       <>
         <DraftEditor
-          className={cc(["editableField editableField__edit", className, {
+          className={cc(["editableField editableField__edit editableField--textField", className, {
             'editableField--center': center,
             [`editableField--${textTag}`]: textTag,
             'editableField--text': !textTag,
             'editableField--autoWidth': autoWidth,
+            'editableField--small': small,
+            'editableField--xSmall': xSmall,
           }])}
           onChange={value => handleOnChange(value)}
           onBlur={handleOnBlur}

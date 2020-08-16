@@ -200,7 +200,7 @@ const CreateRecipe = () => {
 
   const renderActionbar = () => (
     <FullWidthContainer spaceBetween className="margin--bottom--large">
-      <div className="flex spaceBetween fullWidth">
+      <div className="flex spaceBetween fullWidth wrap nowrapMedium">
         <button
           className="createRecipe__toggleModeBtn margin--right"
           onClick={toggleViewMode}

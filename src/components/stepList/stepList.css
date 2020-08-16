@@ -18,3 +18,7 @@
   z-index: 1;
   box-shadow: var(--box-shadow);
 }
+
+.stepList--editMode {
+  flex: 1;
+}

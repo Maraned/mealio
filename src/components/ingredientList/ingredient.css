@@ -4,7 +4,7 @@
 
 .ingredient--editMode {
   display: grid;
-  grid-template-columns: repeat(3, minmax(auto, 140px)) 1.5rem;
+  grid-template-columns: repeat(3, minmax(auto, 60px)) 1.5rem;
 }
 
 .ingredient > * {
@@ -17,7 +17,7 @@
 }
 
 .ingredient__remove__container {
-  width: 1.5rem;  
+  width: 1.5rem;
 }
 
 .ingredient__remove {

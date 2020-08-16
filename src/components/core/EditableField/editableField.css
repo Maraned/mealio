@@ -2,6 +2,10 @@
   min-width: auto;
 }
 
+.editableField--textField {
+  min-width: 160px;
+}
+
 .editableField--text {
   line-height: 1.2rem;
 }
@@ -13,6 +17,16 @@
 .editableField__edit {
   border: var(--input-border);
   padding: .5rem .25rem;
+}
+
+.editableField__edit.editableField--small {
+  min-width: 100px;
+  width: 100px;
+}
+
+.editableField__edit.editableField--xSmall {
+  min-width: 60px;
+  width: 60px;
 }
 
 .editableField__container--center {

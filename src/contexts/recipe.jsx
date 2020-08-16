@@ -79,6 +79,21 @@ const recipeReducer = (state, action) => {
       break;
     case 'unset':
       break;
+    case 'ingredientGroup':
+      const updatedIngredientGroups = state.ingredientGroups || [];
+      const ingredientGroupIndex = state.ingredientGroups.findIndex(ingredientGroup => {
+        return ingredientGroup.id === action.ingredientGroupId;
+      });
+
+      const updatedIngredientGroup = {
+        ...updatedIngredientGroups[ingredientGroupIndex],
+        ...action.updatedAttributes,
+      };
+
+      updatedIngredientGroups[ingredientGroupIndex] = updatedIngredientGroup;
+      console.log('updatedIngredientGroups', updatedIngredientGroups)
+      newState = { ...state, ingredientGroups: updatedIngredientGroups };
+      break;
     default:
       return state;
   }

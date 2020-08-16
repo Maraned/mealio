@@ -14,7 +14,11 @@ import Ingredient from 'components/ingredientList/Ingredient';
 
 import { Capitalize } from 'utils/utils';
 
-const IngredientList = ({ groupIngredients, marginBottom }) => {
+const IngredientList = ({
+  groupIngredients,
+  marginBottom,
+  ingredientGroupId
+}) => {
   const { state } = useContext(EditableContext);
   const { state: user } = useContext(UserContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
@@ -37,9 +41,18 @@ const IngredientList = ({ groupIngredients, marginBottom }) => {
   }
 
   const addIngredient = () => {
-    const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
-    modifiedIngredients.push({...IngredientModel});
-    updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
+    if (ingredientGroupId) {
+      const modifiedIngredients = JSON.parse(JSON.stringify(groupIngredients));
+      modifiedIngredients.push({...IngredientModel});
+      updateRecipe({
+        type: 'updateIngredientGroup',
+        value: { ingredients: modifiedIngredients, ingredientGroupId }
+      });
+    } else {
+      const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
+      modifiedIngredients.push({...IngredientModel});
+      updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
+    }
   }
 
   const updateIngredients = ingredients => {

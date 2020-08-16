@@ -1,6 +1,7 @@
 import './stepList.css';
 
 import React, { useContext, useState } from 'react';
+import cc from 'classcat';
 
 import { RecipeContext } from 'contexts/recipe';
 import { EditableContext } from 'contexts/editable';
@@ -15,7 +16,7 @@ const StepList = () => {
   const { state: user } = useContext(UserContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { t } = useTranslation();
-  
+
   const [popup, setPopup] = useState({
     open: false,
     ingredient: false,
@@ -80,13 +81,17 @@ const StepList = () => {
   console.log('steps', steps)
 
   return (
-    <div className="stepList list listSpacing background">
+    <div
+      className={cc(['stepList list listSpacing background', {
+        'stepList--editMode': state.editable
+      }])}
+    >
       <h4>{t('Recipe:Steps')}</h4>
       {steps && steps.map((step, index) => (
         <Step
           key={'step' + index}
-          updateStep={updateStep} 
-          index={index} 
+          updateStep={updateStep}
+          index={index}
           step={{...step}}
           ingredients={ingredients}
           onMouseOver={hoverStep}
