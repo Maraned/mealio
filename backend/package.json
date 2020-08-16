@@ -1,0 +1,34 @@
+{
+  "name": "mealio-backend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "build": "docker build . -t mealio/mealio_backend",
+    "push": "docker push mealio/mealio_backend"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "bcrypt": "5.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.16.4",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.5.0",
+    "lodash": "^4.17.15",
+    "nodemon": "1.18.10",
+    "request-promise": "^4.2.5",
+    "sharp": "^0.25.4",
+    "ws": "^7.2.1"
+  },
+  "devDependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "helmet": "^3.16.0",
+    "morgan": "^1.9.1",
+    "rethinkdb": "^2.3.3"
+  }
+}
