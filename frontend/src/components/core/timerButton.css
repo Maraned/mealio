@@ -1,0 +1,38 @@
+.timerButton {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timerButton__clockIcon {
+  margin-right: .4rem;
+}
+
+.timerButton--active {
+  background-color: var(--warning-color);
+  color: var(--warning-text-color);
+}
+
+.timerButton--done {
+  background-color: var(--alert-color);
+  color: var(--alert-text-color);
+}
+
+.timerButton--paused {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+}
+
+.timerButton--paused svg {
+  fill: #fff;
+}

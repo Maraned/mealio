@@ -1,0 +1,34 @@
+.imageOrder {
+  display: flex;
+  width: 50%;
+}
+
+.imageOrder__file {
+  flex: 1;
+  padding: .5rem;
+  border: 2px dashed #000;
+  margin: .25rem;
+  user-select: none;
+  position: relative;
+  cursor: move;
+}
+
+.imageOrder__file__name {
+  pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  color: white;
+}
+
+.imageOrder__file img {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.imageOrder__dragging {
+  position: absolute;
+  z-index: 1000;
+}

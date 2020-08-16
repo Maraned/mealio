@@ -1,0 +1,8 @@
+.recipeCollection {
+  width: 100%;
+}
+
+.recipeCollection__noRecipes {
+  width: 100%;
+  text-align: center;
+}

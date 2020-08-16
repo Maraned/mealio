@@ -1,0 +1,13 @@
+.menuOption {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+}
+
+.menuOption.clickable:hover {
+  opacity: .5;
+}
+
+.menuOption__icon {
+  margin-right: .5rem;
+}

@@ -1,0 +1,81 @@
+.groceryLists {
+  width: 100%;
+}
+
+.groceryLists > * {
+  padding-bottom: .5rem;
+}
+
+.groceryLists__create {  
+  cursor: pointer;
+  margin: auto;
+  text-align: center;
+  border-bottom: var(--modal-side-menu-border);
+}
+
+.groceryLists__create__inner {
+  padding: .5rem;
+  transition: transform .1s;
+}
+
+.groceryLists__create__inner:hover {
+  transform: scale(0.95);
+}
+
+.groceryLists__header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  z-index: 2;
+}
+
+.groceryLists__title {
+  margin-bottom: .5rem;
+}
+
+.groceryLists__header {
+  margin-bottom: 1rem;
+}
+
+.groceryLists__createdAt {
+  font-size: .7rem;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.groceryLists__list {
+  padding: .5rem;
+  cursor: pointer;
+  border-bottom: var(--input-border);
+}
+
+.groceryLists__listHeader {
+  margin-bottom: .5rem;
+  position: relative;
+  padding: 0 1rem;
+}
+
+.groceryLists__editListIcon {
+  margin-left: .5rem;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.groceryLists .modal__sideMenu__option:first-child {
+  border-top: var(--modal-side-menu-border);
+}
+
+.groceryLists__removeIcon {
+  z-index: 1;
+}
+
+.groceryLists__removeIcon:hover {
+  opacity: 1 !important;
+}
+
+.groceryLists__removeIcon svg {
+  transition: transform .1s; 
+}

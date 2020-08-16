@@ -1,0 +1,33 @@
+.groceryList {
+  margin-left: 1rem;
+}
+
+.groceryList__ingredient__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.groceryList__checkedItems {
+  opacity: .8;
+}
+
+.groceryList__checkedItems .accordion__header {
+  background-color: var(--secondary-color);
+}
+
+.groceryList__header {
+  margin-bottom: .5rem;
+  position: relative;
+}
+
+.groceryList__addItem {
+  margin-top: .5rem;
+  cursor: pointer;
+  padding: .5rem;
+  border: 2px dashed #333;
+}
+
+.groceryList__addItem > * {
+  margin-right: .5rem;
+}

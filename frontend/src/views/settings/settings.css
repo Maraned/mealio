@@ -1,0 +1,29 @@
+.settings {
+  display: flex;
+  width: 100%;
+}
+
+.settings__activeView {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.settings__menu {
+  box-shadow: inset -2px 0 1px 0px rgba(0,0,0,.03);
+  height: inherit;
+  min-width: var(--modal-side-menu-width);
+}
+
+.settings__menu__option {
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings__menu__option:hover {
+  box-shadow: var(--box-shadow-inset);
+}

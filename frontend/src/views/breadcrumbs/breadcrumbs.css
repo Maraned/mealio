@@ -1,0 +1,37 @@
+.breadcrumbs {
+  background-color: var(--primary-background);
+  font-size: .75rem;
+  display: flex;
+  padding: 0;
+  width: 100%;
+}
+
+@media all and (min-width: 1025px) {
+  .breadcrumbs {
+    padding: 1rem;
+    width: auto;
+  }
+}
+
+.breadcrumbs > * {
+  width: 100%;
+  height: var(--top-content-height);
+}
+
+@media all and (min-width: 1025px) {
+  .breadcrumbs > * {
+    width: auto;
+  }
+}
+
+.breadcrumb--last {
+  font-weight: 700;
+}
+
+.breadcrumb:not(.breadcrumb--last) {
+  cursor: pointer;
+}
+
+.breadcrumb:not(.breadcrumb--last):hover {
+  text-decoration: underline;
+}

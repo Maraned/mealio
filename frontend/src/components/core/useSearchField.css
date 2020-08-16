@@ -1,0 +1,23 @@
+.searchField {
+  position: relative;
+  width: 100%;
+}
+
+.searchField__input {
+  border-bottom: 1px solid #333;
+  padding-left: 2rem;
+  width: 100%;
+}
+
+.searchField:not(.grow),
+.searchField:not(.grow) .searchField__input {
+  max-width: 164px;
+}
+
+.searchField__icon {
+  width: 1rem;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%); 
+}

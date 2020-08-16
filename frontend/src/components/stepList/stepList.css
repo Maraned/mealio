@@ -1,0 +1,24 @@
+.stepList {
+  display: flex;
+  flex-direction: column;
+  /* width: 50%; */
+  flex-grow: 1;
+}
+
+@media all and (min-width: 640px) {
+  .stepList {
+    /* min-width: 450px; */
+  }
+}
+
+.stepList__popup {
+  position: absolute;
+  padding: 1rem;
+  background-color: #fff;
+  z-index: 1;
+  box-shadow: var(--box-shadow);
+}
+
+.stepList--editMode {
+  flex: 1;
+}

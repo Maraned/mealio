@@ -1,0 +1,32 @@
+.checkbox {
+  width: 1.2rem;
+  height: 1.2rem;
+  border: 1px solid #333;
+  border-radius: 4px;
+  position: relative;
+  background-color: var(--backgroundColor);
+}
+
+.checkbox--checked {
+  background-color: var(--checkedBackgroundColor);
+}
+
+.checkbox__wrapper {
+  display: flex;
+  cursor: pointer;
+}
+
+.checkbox__wrapper--disabled {
+  pointer-events: none;
+  opacity: .5;
+}
+
+.checkbox__text {
+  line-height: 1.2rem;
+}
+
+.checkbox__icon {
+  left: 1px;
+  top: 1px;
+  position: absolute;
+}

@@ -1,0 +1,22 @@
+.login {
+  position: relative;
+}
+
+.login__popup {
+  position: absolute;
+  padding: .5rem .75rem;
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  right: 0;
+}
+
+.login > *:not(:last-child) {
+  margin-bottom: .75rem;
+}
+
+.login__link,
+.login__link:hover {
+  color: #000;
+}

@@ -1,0 +1,19 @@
+.recipeList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 200px) );
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+  grid-template-rows: minmax(50px,250px);
+}
+
+.recipeListView {
+  margin: inherit auto;
+}
+
+.recipeFilter__accordion {
+  margin-right: 1rem;
+}
+
+.recipeFilter__accordion .accordion__header {
+  justify-content: center;
+}

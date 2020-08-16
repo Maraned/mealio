@@ -1,0 +1,19 @@
+.tabs__content {
+  max-width: 1024px;
+}
+
+.tab {
+  padding: .75rem;
+  cursor: pointer;
+  opacity: .3;
+  transition: opacity .1s, transform .1s;
+  padding: .5rem;
+}
+
+.tab--selected {
+  opacity: 1;
+}
+
+.tab:hover {
+  transform: scale(0.95);
+}

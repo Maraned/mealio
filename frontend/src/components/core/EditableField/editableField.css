@@ -1,0 +1,104 @@
+.editableField--autoWidth {
+  min-width: auto;
+}
+
+.editableField--textField {
+  min-width: 160px;
+}
+
+.editableField--text {
+  line-height: 1.2rem;
+}
+
+.editableField--h1 {
+  line-height: 2rem;;
+}
+
+.editableField__edit {
+  border: var(--input-border);
+  padding: .5rem .25rem;
+}
+
+.editableField__edit.editableField--small {
+  min-width: 100px;
+  width: 100px;
+}
+
+.editableField__edit.editableField--xSmall {
+  min-width: 60px;
+  width: 60px;
+}
+
+.editableField__container--center {
+  display: flex;
+  justify-content: center;
+}
+
+.editableField--center {
+  text-align: center;
+}
+
+.editableField--clickable {
+  cursor: pointer;
+}
+
+.editableField__container {
+  position: relative;
+  margin-bottom: .25rem;
+}
+
+.editableField__options {
+  position: absolute;
+  background-color: #fff;
+  z-index: 1;
+  box-shadow: var(--box-shadow);
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  top: 100%;
+}
+
+.editableField__option {
+  padding: .5rem .25rem;
+  cursor: pointer;
+}
+
+.editableField__option:hover {
+  background-color: var(--text-hover);
+}
+
+.editableField__innerContainer {
+  display: flex;
+}
+
+.editableField__toolbar {
+  position: absolute;
+  height: 35px;
+  top: -36px;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+  display: flex;
+  box-shadow: var(--box-shadow);
+  border-radius: .25rem;
+}
+
+.editableField__toolbar__option {
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: .25rem;
+}
+
+.editableField__toolbar__option:hover {
+  background-color: var(--primary-color-lighter);
+}
+
+.editableField__toolbar__option * {
+  pointer-events: none;
+}
+
+.editableField__toolbar__option--selected {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+}
+

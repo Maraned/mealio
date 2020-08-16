@@ -1,0 +1,55 @@
+.logoIcon .icon--fork {
+  transform-origin: right;
+  transform: rotate(45deg) translate(50%, 0%);
+  transition: 1s transform;
+}
+
+.logoIcon .icon--knife {
+  transform-origin: left;
+  transform: rotate(-45deg) translate(-50%, 0%);
+  transition: 1s transform;
+}
+
+.logoIcon--animateOnce .icon--fork {
+  animation: forkAnimation 1s linear 3s;
+}
+
+.logoIcon--animateOnce .icon--knife {
+  animation: knifeAnimation 1s linear 3s;
+}
+
+.logoIcon--animate .icon--fork {
+  animation: forkAnimation 1s ease-in-out .5s infinite forwards;
+}
+
+.logoIcon--animate .icon--knife {
+  animation: knifeAnimation 1s ease-in-out .5s infinite forwards;
+}
+
+.logoIcon--animate--pause > * {
+  animation-play-state: paused !important;
+}
+
+@keyframes forkAnimation {
+  0% {
+    transform: rotate(45deg) translate(50%, 0%);
+  }
+  50% {
+    transform: rotate(0) translate(0px, 0px);
+  }
+  100% {
+    transform: rotate(45deg) translate(50%, 0%);
+  }
+}
+
+@keyframes knifeAnimation {
+  0% {
+    transform: rotate(-45deg) translate(-50%, 0%);
+  }
+  50% {
+    transform: rotate(0) translate(0px, 0px);
+  }
+  100% {
+    transform: rotate(-45deg) translate(-50%, 0%);
+  }
+}

@@ -1,0 +1,14 @@
+.draftRecipes__recipe {
+  padding: 1rem;
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  cursor: pointer;
+}
+
+.draftRecipes__recipe:not(:last-child) {
+  margin-bottom: .5rem;
+}
+
+.draftRecipes .recipeAccordion__header {
+  background-color: var(--grey);
+}

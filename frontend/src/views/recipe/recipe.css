@@ -1,0 +1,29 @@
+.recipe {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.recipe__main {
+  padding: 1rem .5rem;
+  margin-bottom: .5rem;
+}
+
+.recipe__saveToCollectionIcon {
+  margin-right: .25rem;
+}
+
+.recipe__time {
+  display: flex;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.recipe__time svg {
+  margin-right: .5rem;
+}
+
+.recipe__image {
+  width: 300px;
+  height: 300px;
+}

@@ -1,0 +1,548 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Noto Sans HK', Arial, Helvetica, sans-serif;
+}
+
+div[contenteditable] {
+  font-size: 1rem !important;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background-color: var(--primary-background);
+}
+
+body::-webkit-scrollbar,
+.scrollable::-webkit-scrollbar,
+.select__options::-webkit-scrollbar {
+  width: .75rem;
+}
+
+body::-webkit-scrollbar-track,
+.scrollable::-webkit-scrollbar-track,
+.select__options::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+body::-webkit-scrollbar-thumb,
+.scrollable::-webkit-scrollbar-thumb,
+.select__options::-webkit-scrollbar-thumb {
+    background-color: #fefefe;
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  outline: 1px solid slategrey;
+}
+
+.scrollable {
+  max-height: 768px;
+  overflow: auto;
+  padding-right: 1rem;
+  box-shadow: inset 0px -10px 15px -15px rgba(0, 0, 0, 0.3);
+  padding-bottom: 1rem;
+}
+
+a {
+  color: black !important;
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--primary-color-lighter);
+}
+
+.error {
+  background-color: var(--alert-color);
+  color: var(--alert-text-color);
+}
+
+.success {
+  background-color: var(--success-color);
+  color: var(--success-text-color);
+}
+
+.error,
+.success {
+  font-size: .8rem;
+  font-style: italic;
+  padding: 0.5rem;
+}
+
+.primary {
+  color: var(--primary-text-color);
+  background-color: var(--primary-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: 'Lato', serif;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+button,
+input[type=button],
+.button {
+  border: none;
+  box-sizing: border-box;
+  padding: .5rem 1rem;
+  height: 2.75rem;
+  font-size: .9rem;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1rem;
+}
+
+button.selected,
+input[type=button].selected,
+.clickable.selected,
+.button.selected {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+}
+
+button.disabled,
+input[type=button].disabled,
+.clickable.disabled,
+.button.disabled {
+  background-color: var(--disabled-color);
+  color: var(--disabled-text-color);
+  font-style: var(--disabled-text-style);
+}
+
+button:not(:last-child),
+input[type=button]:not(:last-child) {
+  margin-bottom: .5rem;
+}
+
+button.create,
+input[type=button].create,
+.button.create {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+button.create svg,
+input[type=button].create svg,
+.button.create svg {
+  margin-right: .5rem;
+  width: 1rem;
+  height: 1rem;;
+}
+
+button.remove,
+input[type=button].remove {
+  background-color: var(--alert-color);
+  color: var(--alert-text-color);
+}
+
+button.favorite,
+input[type=button].remove {
+  background-color: var(--favorite-color);
+  color: var(--favorite-text-color);
+}
+
+button.link {
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.autoWidth {
+  width: auto;
+}
+
+@media all and (min-width: 640px) {
+  .autoWidthMedium {
+    width: auto;
+  }
+}
+
+div[contenteditable] {
+  font-size: 13.3333px;
+}
+
+input {
+  height: 2.75rem;
+}
+
+input,
+textarea {
+  border: none;
+  padding: .5rem 0rem;
+  transition: border-bottom .5s;
+}
+
+input[type=text] {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+textarea {
+  resize: none;
+}
+
+input:focus,
+textarea:focus {
+  outline-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.sideSpacing--normal {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.sideSpacing--extra {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.listSpacing {
+  padding: 1rem;
+}
+
+.listSpacing > *:not(:last-child) {
+  margin-bottom: .5rem;
+}
+
+button:hover {
+  opacity: .7;
+}
+
+.hover:hover {
+  opacity: .7;
+  color: var(--primary-color-lighter);
+}
+
+.removeButton {
+  background-color: var(--alert-color);
+  color: #fff;
+  padding: .25rem;
+  display: flex;
+  align-items: center;
+  transition: opacity .1s;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  opacity: .7;
+}
+
+.removeButton svg {
+  transition: transform .1s;
+}
+
+.removeButton:hover svg {
+  transform: scale(1.15);
+}
+
+.removeButton--inverted {
+  color: var(--alert-color);
+  background-color: transparent;
+  width: 2rem;
+}
+
+.removeButton--inverted svg {
+  transform: translateX(-50%);
+}
+
+.hidden {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+  color:#fff;
+}
+
+a:hover {
+  color:#fff;
+  opacity: .7;
+}
+
+.boxShadow {
+  box-shadow: var(--box-shadow);
+}
+
+.background {
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
+  max-width: 1024px;
+  margin-bottom: .5rem;
+}
+
+.background.list > *:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.background.list > *:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.box {
+  padding: 1rem;
+}
+
+.box.extraPadding--side {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.boxDivider {
+  margin: .75rem -1rem;
+  height: 1px;
+  box-shadow: var(--box-shadow-thin);
+}
+
+.square {
+  height: 5em;
+  width: 10rem;
+  cursor: pointer;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .25rem;
+  margin: .5rem 0;
+}
+
+.square:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.square:hover {
+  opacity: .7;
+}
+
+.shadow {
+  box-shadow: 1px 1px 2px 1px  rgba(0, 0, 0, .15);
+}
+
+.center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex.spaceBetween {
+  justify-content: space-between;
+}
+
+.flex.fullGrow {
+  flex: 1 0 100%;
+}
+
+.flexAuto {
+  flex: 1;
+}
+
+.flex.center {
+  justify-content: center;
+}
+
+.flex.vcenter {
+  align-items: center;
+}
+
+@media all and (min-width: 640px) {
+  .flex.mediumLeft {
+    justify-content: flex-start;
+  }
+
+  .flex.vMediumLeft {
+    align-items: flex-start;
+  }
+}
+
+.flex.wrap {
+  flex-wrap: wrap;
+}
+
+@media all and (min-width: 640px) {
+  .flex.nowrapMedium {
+    flex-wrap: nowrap;
+  }
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.noShrink {
+  flex-shrink: 0;
+}
+
+.child-flex {
+  flex: 1;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.column.child-margins > *:not(:last-child) {
+  margin-bottom: .5rem;
+}
+
+.viewMaxWidth {
+  max-width: 1024px;
+  width: 100%;
+  flex: 1;
+}
+
+.preserveWhitespace {
+  white-space: pre-wrap;
+}
+
+.margin--top {
+  margin-top: .5rem !important;
+}
+
+.margin--top--small {
+  margin-top: .25rem !important;
+}
+
+.margin--bottom {
+  margin-bottom: .5rem !important;
+}
+
+.margin--bottom--large {
+  margin-bottom: 1rem !important;
+}
+
+.margin--bottom--xlarge {
+  margin-bottom: 1.5rem !important;
+}
+
+.margin--right {
+  margin-right: .5rem  !important;
+}
+
+.margin--right--small {
+  margin-right: .25rem  !important;
+}
+
+.margin--left {
+  margin-left: .5rem  !important;
+}
+
+.image--rounded {
+  border-radius: 4rem;
+  margin-right: 1rem;
+}
+
+
+.disablePointerEvents {
+  pointer-events: none;
+}
+
+.flag,
+.flag:hover {
+  height: 1rem;
+  transform: scale(1);
+  transition: transform .25s, opacity .25s;
+}
+
+.flag--nonSelected {
+  opacity: 0.6;
+  transform: scale(0.75);
+}
+
+.flag--small {
+  height: .75rem;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background: #333;
+  opacity: .3;
+}
+
+.square--empty {
+  fill: transparent;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.left {
+  left: 0;
+}
+
+.absolute.vcenter {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.text--ellipsisOverflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.filter {
+  text-transform: capitalize;
+  cursor: pointer;
+  padding: .25rem 1rem;
+}
+
+.filter:hover {
+  opacity: 0.6;
+}
+
+.filter:hover,
+.filter--selected {
+  background: var(--primary-color);
+  color: white;
+  border-radius: 1rem;
+}
+
+.notificationBubble {
+  padding: .25rem .5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  font-size: .75rem;
+}
+
+.icon {
+  transition: transform .1s;
+}
+
+.icon--clickable:hover {
+  transform-origin: center;
+  transform: scale(0.85);
+}

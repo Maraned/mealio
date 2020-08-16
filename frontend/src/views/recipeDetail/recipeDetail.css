@@ -1,0 +1,4 @@
+.recipe__savedInCollectionButton {
+  background-color: var(--favorite-color);
+  color: var(--favorite-text-color);
+}

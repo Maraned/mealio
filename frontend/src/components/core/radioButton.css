@@ -1,0 +1,7 @@
+.radioButton__icon {
+  display: none;
+}
+
+.radioButton input:checked + .radioButton__icon {
+  display: block;
+}

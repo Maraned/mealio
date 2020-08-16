@@ -1,0 +1,32 @@
+.pendingNewIngredient__edit,
+.pendingNewIngredient__remove {
+  width: 2rem;
+  cursor: pointer;
+}
+
+.pendingNewIngredient__name,
+.pendingNewIngredient__group,
+.pendingNewIngredient__alternatives {
+  padding-right: .5rem;
+}
+
+.pendingNewIngredient__status {
+  cursor: pointer;
+}
+
+.pendingNewIngredient__status:hover,
+.pendingNewIngredient__edit:hover,
+.pendingNewIngredient__remove:hover {
+  opacity: .6;
+}
+
+.pendingNewIngredient__statusIcon {
+  opacity: 0.2;
+  margin-right: .25rem;
+  transition: opacity .25s;
+}
+
+.pendingNewIngredient__statusIcon--checked {
+  fill: var(--success-color);
+  opacity: 1;
+}

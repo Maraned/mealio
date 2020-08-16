@@ -1,0 +1,62 @@
+:root {
+  --alpha: 1;
+
+  --primary-color: #1578cd;
+  --primary-text-color: #fff;
+  --primary-color-lighter: #71b6f0; 
+  --primary-color-lighter-text: #fff;
+  --box-shadow-primary: 0px 0px 4px 1px rgba(21, 120, 205, .25);
+
+  --secondary-color: #929A00;
+  --secondary-text-color: #fff;
+  --secondary-color-alpha: rgba(146, 154, 0, var(--alpha));
+
+  --alert-color: #ee6666;
+  --alert-text-color: #fff;
+
+  --warning-color: #ff8f00;
+  --warning-text-color: #fff;
+
+  --success-color: #28a745;
+  --success-text-color: #fff;
+
+  --disabled-color: #efefef;
+  --disabled-text-color: #969696;
+  --disabled-text-style: italic;
+
+  --favorite-color: #E8C70C;
+  --favorite-text-color: white;
+
+  --text-hover: rgba(0, 0, 0, 0.06);
+  --light-hover: rgba(0, 0, 0, 0.03);
+
+  --grey: #ababab;
+  --light-grey: #efefef;
+
+  --box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .15);
+  --box-shadow-thin: 1px 1px 1px 0px rgba(0, 0, 0, .15);
+  --header-height: 50px;
+  --box-shadow-inset: inset 0px 0px 1px 0px rgba(0,0,0,0.25);
+  --modal-side-menu-shadow: 2px 1px 4px 0px rgba(0, 0, 0, 0.2);
+  --select-shadow: 0px 0px 5px rgba(0, 0, 0, .2);
+  --modal-shadow: 0px 0px 10px 2px rgba(0,0,0,.35);
+
+
+  --edit-field-min-height: 2.5rem;
+
+  --input-border: 1px solid rgba(0, 0, 0, 0.25);
+  --modal-side-menu-border: 1px solid rgba(0, 0, 0, 0.25);
+
+  /* --primary-background: #6fb3ae; */
+  --primary-background: rgb(255, 96, 96);
+
+  --top-content-height: 50px;
+
+  --divider-border: 1px solid #e5e5e5;
+
+  --desktop-size: 1025px;
+
+  --modal-side-menu-width: 12rem;
+
+  --main-side-menu-width: 15rem;
+}

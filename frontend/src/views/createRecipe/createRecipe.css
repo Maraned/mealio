@@ -1,0 +1,23 @@
+.createRecipe__publish,
+.createRecipe__update {
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
+  margin-right: .5rem;
+}
+
+.createRecipe__lastSaved {
+  width: 100%;
+  text-align: center;
+  font-size: .8rem;
+  color: var(--grey);
+  font-style: italic;
+}
+
+.createRecipe__recipe {
+  position: relative;
+}
+
+.createRecipe .recipe__description {
+  width: 100%;
+  height: 100%;
+}

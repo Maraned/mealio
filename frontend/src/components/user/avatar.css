@@ -1,0 +1,25 @@
+.avatar {
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar__image {
+  background-color: var(--primary-color-lighter);
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  cursor: pointer; 
+}
+
+.avatar svg {
+  fill: #fff;
+  width: 100%;
+  height: 100%;
+  padding: .5rem;
+}

@@ -1,0 +1,27 @@
+.logo {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 3.25rem;
+  margin-top: 1rem;
+}
+
+/* @media all and (min-width: 1025px) {
+  .logo {
+    padding: 1rem 0;
+  }
+} */
+
+.logoTitle {
+  padding: .5rem;
+  height: var(--top-content-height);
+  text-align: center;
+
+  background-color: rgba(255, 255, 255, .92);
+
+  font-family: 'Permanent Marker', cursive;
+  font-family: 'Fondamento', cursive;
+  font-family: 'La Belle Aurore', cursive;
+  font-family: 'Berkshire Swash', cursive;
+  font-size: 1.75rem;
+}

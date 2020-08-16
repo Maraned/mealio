@@ -1,0 +1,57 @@
+.sideMenuLayout {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sideMenuLayout__sideMenu {
+  width: 100%;
+  min-width: 20rem;
+  flex: 1 1 30%;
+  padding: 0 .5rem;
+  max-width: 30rem;
+}
+
+.sideMenuLayout__activeView {
+  display: flex;
+  justify-content: center;
+  flex: 1 1 70%;
+  padding: 0 .5rem;
+}
+
+.sideMenuLayout__sideMenuOption__count {
+  display: inline-block;
+  border: 1px solid var(--primary-color);
+  border-radius: 50%;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: .5rem;
+  font-weight: 700;
+  background: var(--primary-color);
+  color: #fff;
+  font-size: .9rem;
+}
+
+.sideMenuLayout__sideMenuOption:hover .sideMenuLayout__sideMenuOption__count,
+.sideMenuLayout__sideMenuOption--selected .sideMenuLayout__sideMenuOption__count {
+  border: 1px solid #fff;
+  background: #fff;
+  color: var(--primary-color);
+}
+
+.sideMenuLayout__content--grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sideMenuLayout__content--grid > * {
+  height: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: .5rem;
+  width: calc(50% - 1rem) !important;
+}

@@ -1,0 +1,10 @@
+.recipeFilter {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  padding: .5rem;
+}
+
+.recipeFilter__title {
+  padding: 0 1rem;
+}

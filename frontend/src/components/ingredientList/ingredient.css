@@ -1,0 +1,55 @@
+.ingredient {
+  display: flex;
+}
+
+.ingredient--editMode {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(auto, 60px)) 1.5rem;
+}
+
+.ingredient > * {
+  max-width: 200px;
+  width: auto;
+}
+
+.ingredient > *:not(:last-child) {
+  margin-right: .25rem;
+}
+
+.ingredient__remove__container {
+  width: 1.5rem;
+}
+
+.ingredient__remove {
+  background-color: #ff0000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0 .25rem;
+  height: 100%;
+}
+
+.ingredient__remove svg {
+  fill: white;
+}
+
+.ingredient__saveNewIngredient  {
+  width: 100%;
+}
+
+.ingredient__checkboxContainer {
+  padding: .5rem;
+}
+
+.ingredient .checkbox__wrapper {
+  font-size: .9rem;
+}
+
+.ingredient .checkbox {
+  margin-right: .25rem;
+}
+
+.ingredient .checkbox__wrapper:not(:last-child) {
+  margin-bottom: .5rem;
+}
+

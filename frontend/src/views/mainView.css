@@ -1,0 +1,38 @@
+.mainView {
+  height: auto;
+  background-color: var(--primary-background);
+  padding: 0 1rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mainView__topContent {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media all and (min-width: 1025px) {
+  .mainView__topContent {
+    flex-wrap: nowrap;
+  }
+}
+
+.mainView__content {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+}
+
+@media all and (min-width: 1025px) {
+  .mainView__content {
+    flex-direction: row;
+    padding: 0;
+  }
+}
+
+@media all and (min-width: 1025px) {
+  .mainView__content > *:not(.alertBannerView):not(.modalWrapper) {
+    margin-right: 1rem;
+  }
+}

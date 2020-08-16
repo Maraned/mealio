@@ -1,0 +1,39 @@
+.newIngredients__list {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr auto;
+  row-gap: .5rem;
+  margin-top: 1rem;
+}
+
+.newIngredients__title {
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.newIngredients__titleIcon {
+  width: 2rem;
+}
+
+.newIngredients__title svg {
+  margin-left: .25rem;
+}
+
+.newIngredients__sortCaret {
+  transform: rotate(0);
+  opacity: 0;
+  transition: transform .25s opacity .5s;
+}
+
+.newIngredients__title:hover > * {
+  opacity: .6;
+}
+
+.newIngredients__title--selected .newIngredients__sortCaret {
+  opacity: 1;
+}
+
+.newIngredients__sortCaret--up {
+  transform: rotate(180deg);
+}

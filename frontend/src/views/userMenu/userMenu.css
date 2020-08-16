@@ -1,0 +1,51 @@
+.userMenu {
+  position: relative;
+  height: 100%;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.userMenu__menu {
+  position: absolute;
+  background-color: #fff;
+  z-index: 1;
+  box-shadow: var(--box-shadow);
+  white-space: nowrap;
+  right: 0;
+  top: 100%;
+  overflow: hidden;
+}
+
+.userMenu__menu__option {
+  padding: 1rem 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.userMenu__menu__option:hover {
+  background-color: var(--text-hover);
+}
+
+.userMenu__menu__option svg {
+  margin-right: .5rem;
+}
+
+.userMenu .avatar {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.userMenu .avatar__image--default,
+.userMenu__adminDashboard {
+  height: 2rem;
+  width: 2rem;
+}
+
+.userMenu__adminDashboard {
+  margin-right: .5rem;
+  cursor: pointer;
+}

@@ -1,0 +1,90 @@
+.imageUpload__dragndrop,
+.imageUpload__uploading,
+.imageUpload__success,
+.imageUpload__error,
+.imageUpload__file {
+  display: none;
+}
+
+.imageUpload:not(.imageUpload--circle) {
+  background-color: white;
+  border: 2px dashed var(--grey);
+  outline-offset: -10px;
+}
+
+.imageUpload--circle {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.imageUpload {
+  transition: background-color .5s;
+}
+
+.imageUpload--hovering  {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.imageUpload__label {
+  position: absolute;
+  background-color: rgba(255,255,255,.75);
+  padding: .5rem;
+  border-radius: .5rem;
+  transition: background-color .2s;
+}
+
+.imageUpload__label:hover {
+  background-color: rgba(255,255,255,.85);
+}
+
+.imageUpload--circle .imageUpload__label {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageUpload--circle .imageUpload__dragndrop {
+  margin-top: .5rem;
+}
+
+.imageUpload__circleOutline {
+  position: absolute;
+  pointer-events: none;
+}
+
+.imageUpload__chooseImage {
+  cursor: pointer;
+}
+
+.imageUpload__input {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.imageUpload__dragndrop {
+  display: inline;
+}
+
+.imageUpload--isDragOver {
+  background-color: var(--light-gray);
+}
+
+.imageUpload img {
+  width: 100%;
+  height: 100%;
+}
+
+.imageUpload--circle .imageUpload__urlInput {
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.imageUpload--circle .imageUpload__label {
+  width: calc(100% - 4rem);
+}

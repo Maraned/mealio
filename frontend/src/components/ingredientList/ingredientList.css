@@ -1,0 +1,34 @@
+.ingredientList {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media all and (min-width: 640px) {
+  .ingredientList {
+    margin-right: .5rem;
+    width: auto;
+  }
+
+  .ingredientList--editMode {
+    min-width: 450px;
+  }
+}
+
+.ingredientList__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingredientList__header input {
+  text-align: center;
+}
+
+.ingredientList__portions {
+  border: var(--input-border);
+  margin-right: .25rem;
+}
