@@ -5,11 +5,13 @@ module.exports.mapRecipeUsers = async (recipes) => {
       let originalAuthorUser = null;
       console.log('mapping user', recipe.originalAuthor)
       if (recipe.originalAuthor) {
+        console.log('recipe.originalAuthor', recipe.originalAuthor)
         originalAuthorUser = await rdb.find('users', recipe.originalAuthor);
       }
 
       let authorUser = null;
       if (recipe.author) {
+        console.log('recipe.author', recipe.author)
         authorUser = await rdb.find('users', recipe.author);
       }
 

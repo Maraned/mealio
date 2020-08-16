@@ -10,20 +10,20 @@ router.post('/refresh', async (req, res, next) => {
   if (!refreshToken || !email) {
     return res.sendStatus(400);
   }
-  
+
   try {
     const accessToken = jwtUtils.createAccessTokenFromRefreshToken(refreshToken);
     const userResult = await rdb.findBy('users', 'email', email);
     const user = userResult[0];
-    const { password, ...rest } = user; 
+    const { password, ...rest } = user;
 
     rdb.subscribeWithId('users', user.id, 'user');
-    
+
     res.status = 200;
     res.send({ accessToken, user: rest });
   } catch (error) {
     res.sendStatus(401);
-  } 
+  }
 })
 
 router.post('/', async (req, res, next) => {
@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
     return next(userNotFoundError);
   }
 
-  const { password: userPassword, ...rest } = user; 
+  const { password: userPassword, ...rest } = user;
 
   const authenticated = await auth.authenticate(password, user.password);
   if (authenticated) {

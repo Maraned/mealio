@@ -14,7 +14,7 @@ module.exports.uuidv4 = () => {
   });
 }
 
-module.exports.createUser = async (email, password, extraAttributes = {}) => {
+const createUser = async (email, password, extraAttributes = {}) => {
   const existingUser = await rdb.findBy('users', 'email', email);
 
   if (existingUser.length) {
@@ -55,6 +55,7 @@ module.exports.createUser = async (email, password, extraAttributes = {}) => {
 
   return rest;
 }
+module.exports.createUser = createUser;
 
 router.post('/create', async (req, res, next) => {
   const { email, password } = req.body;
