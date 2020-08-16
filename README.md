@@ -2,7 +2,7 @@
 1. Install Docker and Docker-compose
 2. Install rethink-db
 3. Create self-signed certs and place them in a folder in the main repo called "certs".
-3.1 Name the files "mealio.crt" and "Mealio.key"
+    1. Name the files "mealio.crt" and "Mealio.key"
 4. Run "docker-compose up -d --build" to start everything
 
 # Build for production
