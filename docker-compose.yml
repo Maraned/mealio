@@ -7,13 +7,13 @@ services:
   frontend:
     stdin_open: true
     build:
-      context: ./frontend/cibus
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - 3000:3000
       - 35729:35729
     volumes:
-      - ./frontend/cibus/src:/app/src
+      - ./frontend/src:/app/src
 ################################
 #   Setup nginx load balancer
 ################################
@@ -33,7 +33,7 @@ services:
 ################################
   backend:
     build:
-      context: ./backend/cibus-backend
+      context: ./backend
       dockerfile: Dockerfile
     env_file:
       - environment
@@ -43,13 +43,13 @@ services:
     ports:
       - 3001:3001
     volumes:
-      - ./backend/cibus-backend/config:/usr/src/app/config
-      - ./backend/cibus-backend/lib:/usr/src/app/lib
-      - ./backend/cibus-backend/routes:/usr/src/app/routes
-      - ./backend/cibus-backend/setup:/usr/src/app/setup
-      - ./backend/cibus-backend/utils:/usr/src/app/utils
-      - ./backend/cibus-backend/images:/usr/src/app/images
-      - ./backend/cibus-backend/parsers:/usr/src/app/parsers
+      - ./backend/config:/usr/src/app/config
+      - ./backend/lib:/usr/src/app/lib
+      - ./backend/routes:/usr/src/app/routes
+      - ./backend/setup:/usr/src/app/setup
+      - ./backend/utils:/usr/src/app/utils
+      - ./backend/images:/usr/src/app/images
+      - ./backend/parsers:/usr/src/app/parsers
     depends_on:
       - rethink
 

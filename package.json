@@ -15,5 +15,8 @@
     "stop": "docker-compose -f production.yml stop"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0"
+  }
 }

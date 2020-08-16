@@ -30,8 +30,6 @@ COPY src src
 COPY jsconfig.json jsconfig.json
 COPY server.js server.js
 
-COPY build build
-
 #Installing all dependencies.
 RUN npm install
 

@@ -35,14 +35,14 @@ services:
     #   CHOKIDAR_INTERVAL: 300
     cap_drop:
       - ALL
-    ports: 
+    ports:
       - 3001:3001
     depends_on:
       - rethink
 
   rethink:
     image: rethinkdb
-    volumes: 
+    volumes:
       - rethink_data:/rethink_data
     ports:
       - "8080:8080"
