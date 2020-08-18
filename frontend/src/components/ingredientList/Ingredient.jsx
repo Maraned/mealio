@@ -2,9 +2,10 @@ import './ingredient.css';
 
 import React, { useState, useContext, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaGripVertical } from 'react-icons/fa';
 import cc from 'classcat';
 import { useHistory, useLocation } from 'react-router-dom';
+import { Draggable } from 'react-beautiful-dnd';
 
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { EditableContext } from 'contexts/editable';
@@ -103,56 +104,69 @@ const Ingredient = ({
   }
 
   return (
-    <div className={cc(['ingredient', {
-      'ingredient--editMode': editState.editable
-    }])}>
-      <EditableField
-        value={amountValue()}
-        onChange={updateAmount}
-        type="text"
-        placeholder={t('Ingredient:Amount')}
-        onPaste={onPasteHandler}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        autoWidth
-        xSmall
-      />
+    <Draggable draggableId={ingredient.id} index={index}>
+      {provided => (
+        <div
+          className={cc(['ingredient', {
+            'ingredient--editMode': editState.editable
+          }])}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+            {editState.editable && (
+              <FaGripVertical className="ingredient__dragHandle" />
+            )}
 
-      <EditableField
-        value={ingredient.unit}
-        onChange={updateUnit}
-        type="text"
-        placeholder={t('Ingredient:Unit')}
-        onPaste={onPasteHandler}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        autoWidth
-        small
-      />
+            <EditableField
+              value={amountValue()}
+              onChange={updateAmount}
+              type="text"
+              placeholder={t('Ingredient:Amount')}
+              onPaste={onPasteHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              autoWidth
+              xSmall
+            />
 
-      <Select
-        onChange={updateName}
-        preSelected={ingredient}
-        defaultText={t('Ingredient:SelectIngredient')}
-        textAttribute="name"
-        options={allIngredients}
-        addable
-        onAddItem={onAddIngredient}
-        addItemText={t('Ingredient:NewIngredient')}
-        searchable
-        error={showNameError()}
-      />
+            <EditableField
+              value={ingredient.unit}
+              onChange={updateUnit}
+              type="text"
+              placeholder={t('Ingredient:Unit')}
+              onPaste={onPasteHandler}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              autoWidth
+              small
+            />
 
-      {editState.editable && (
-        <div className="ingredient__remove__container">
-          {showRemove && (
-            <div className="ingredient__remove">
-              <FaTimes onClick={removeIngredient} />
-            </div>
-          )}
+            <Select
+              onChange={updateName}
+              preSelected={ingredient}
+              defaultText={t('Ingredient:SelectIngredient')}
+              textAttribute="name"
+              options={allIngredients}
+              addable
+              onAddItem={onAddIngredient}
+              addItemText={t('Ingredient:NewIngredient')}
+              searchable
+              error={showNameError()}
+            />
+
+            {editState.editable && (
+              <div className="ingredient__remove__container">
+                {showRemove && (
+                  <div className="ingredient__remove">
+                    <FaTimes onClick={removeIngredient} />
+                  </div>
+                )}
+              </div>
+            )}
         </div>
       )}
-    </div>
+    </Draggable>
   )
 }
 

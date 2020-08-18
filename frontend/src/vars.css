@@ -3,7 +3,7 @@
 
   --primary-color: #1578cd;
   --primary-text-color: #fff;
-  --primary-color-lighter: #71b6f0; 
+  --primary-color-lighter: #71b6f0;
   --primary-color-lighter-text: #fff;
   --box-shadow-primary: 0px 0px 4px 1px rgba(21, 120, 205, .25);
 
@@ -48,7 +48,8 @@
   --modal-side-menu-border: 1px solid rgba(0, 0, 0, 0.25);
 
   /* --primary-background: #6fb3ae; */
-  --primary-background: rgb(255, 96, 96);
+  /* --primary-background: rgb(255, 96, 96); */
+  --primary-background: #54756e;
 
   --top-content-height: 50px;
 

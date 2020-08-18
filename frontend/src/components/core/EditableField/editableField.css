@@ -17,6 +17,7 @@
 .editableField__edit {
   border: var(--input-border);
   padding: .5rem .25rem;
+  cursor: auto;
 }
 
 .editableField__edit.editableField--small {

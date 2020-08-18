@@ -9,6 +9,8 @@ import IngredientList from 'components/ingredientList/IngredientList';
 import RangeSlider from 'components/core/rangeSlider/RangeSlider';
 import EditableField from 'components/core/EditableField/EditableField';
 
+import { DragDropContext } from 'react-beautiful-dnd';
+
 import uuid from 'utils/uuid';
 
 export default function IngredientListWrapper() {
@@ -55,10 +57,32 @@ export default function IngredientListWrapper() {
   };
 
   const updateIngredientGroup = (ingredientGroupId, updatedAttributes) => {
-    console.log('updating ingredient')
     updateRecipe({
       type: 'ingredientGroup',
       value: { ingredientGroupId, updatedAttributes }
+    });
+  };
+
+  const onDragEnd = result => {
+    if (!result?.source || !result?.destination) {
+      return;
+    }
+    console.log('onDragEnd result', result)
+    const ingredientId = result.draggableId;
+    const fromIngredientGroup = result.source.droppableId;
+    const fromIndex = result.source.index;
+    const toIngredientGroup = result.destination.droppableId;
+    const toIndex = result.destination.index;
+
+    updateRecipe({
+      type: 'movedIngredient',
+      value: {
+        ingredientId,
+        fromIngredientGroup,
+        fromIndex,
+        toIngredientGroup,
+        toIndex,
+      }
     });
   }
 
@@ -79,34 +103,37 @@ export default function IngredientListWrapper() {
         className="center"
       />
 
-    {state.editable && (
-      <button onClick={addIngredientGroup}>
-        {t('Recipe:AddIngredientGroup')}
-      </button>
-    )}
-
-      {ingredientGroups
-        ? ingredientGroups.map(({ id, name, ingredients }, index) => (
-          <React.Fragment key={`ingredientGroup-${index}`}>
-            <EditableField
-              value={name}
-              textTag="h3"
-              type="text"
-              textAlignment="center"
-              onChange={value => updateIngredientGroup(id, { name: value })}
-            />
-            <IngredientList
-              ingredientGroupId={id}
-              groupIngredients={ingredients}
-              marginBottom={index !== (ingredientGroups.length - 1)}
-            />
-          </React.Fragment>
-        )
-
-      ) : (
-        <IngredientList />
+      {state.editable && (
+        <button onClick={addIngredientGroup}>
+          {t('Recipe:AddIngredientGroup')}
+        </button>
       )}
 
+      <DragDropContext
+        onDragEnd={onDragEnd}
+      >
+        {ingredientGroups
+          ? ingredientGroups.map(({ id, name, ingredients }, index) => (
+            <React.Fragment key={`ingredientGroup-${index}`}>
+              <EditableField
+                value={name}
+                textTag="h3"
+                type="text"
+                textAlignment="center"
+                onChange={value => updateIngredientGroup(id, { name: value })}
+              />
+              <IngredientList
+                ingredientGroupId={id}
+                groupIngredients={ingredients}
+                marginBottom={index !== (ingredientGroups.length - 1)}
+              />
+            </React.Fragment>
+          )
+
+        ) : (
+          <IngredientList />
+        )}
+      </DragDropContext>
     </div>
   );
 }

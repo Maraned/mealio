@@ -94,6 +94,30 @@ const recipeReducer = (state, action) => {
       console.log('updatedIngredientGroups', updatedIngredientGroups)
       newState = { ...state, ingredientGroups: updatedIngredientGroups };
       break;
+    case 'movedIngredient':
+      let fromIngredientGroupIndex;
+      let toIngredientGroupIndex;
+
+      const updatedGroups = state.ingredientGroups || [];
+      for (const [index, ingredientGroup] of state.ingredientGroups.entries()) {
+        if (ingredientGroup.id === action.value.fromIngredientGroup) {
+          fromIngredientGroupIndex = index;
+        }
+        if (ingredientGroup.id === action.value.toIngredientGroup) {
+          toIngredientGroupIndex = index;
+        }
+      }
+
+      const removedIngredient = updatedGroups[fromIngredientGroupIndex]
+        .ingredients
+        .splice(action.value.fromIndex, 1)[0];
+
+      updatedGroups[toIngredientGroupIndex]
+        .ingredients
+        .splice(action.value.toIndex, 0, removedIngredient);
+
+      newState = { ...state, updatedGroups };
+      break;
     default:
       return state;
   }
