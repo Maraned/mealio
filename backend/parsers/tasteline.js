@@ -84,6 +84,7 @@ async function TastelineParser(htmlPage, url, userId) {
     name,
     description,
     portions,
+    defaultPortions: portions,
     portionsType,
     ingredientGroups,
     steps,
