@@ -17,7 +17,6 @@ const pages = {
 }
 
 const routerReducer = (state, action) => {
-  console.log('routerReducer', {state, action })
   if (action.type === 'closeModal') {
     return { ...state, ModalView: null };
   }
@@ -36,8 +35,6 @@ export const RouterContext = createContext(initialState);
 
 export const RouterProvider = props => {
   const [state, dispatch] = useReducer(routerReducer, initialState);
-
-  console.log('routerProvider', { state })
 
   return (
     <RouterContext.Provider value={{ state, dispatch }}>

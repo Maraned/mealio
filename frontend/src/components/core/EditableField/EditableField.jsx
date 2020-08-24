@@ -118,7 +118,6 @@ const EditableField = ({
   ) : '';
 
   const handleOnChange = value => {
-    console.log('handleOnChange')
     setEditedValue(value);
 
     if (onChange) {
@@ -127,7 +126,6 @@ const EditableField = ({
   };
 
   const handleOnBlur = () => {
-    console.log('handleOnBlur', editedValue)
     if (onChange) {
       onChange(editedValue || value);
     } else {
@@ -156,7 +154,7 @@ const EditableField = ({
           }])}
           onChange={value => handleOnChange(value)}
           onBlur={handleOnBlur}
-          value={editedValue || fallbackValue || value}
+          value={`${editedValue || fallbackValue || value}`}
           placeholder={placeholder}
           textTag={textTag}
           onPaste={onPaste}
@@ -211,12 +209,6 @@ const EditableField = ({
     }]);
 
     const Tag = textTag || titleField ? 'h1' : 'div';
-
-    console.log('editableField', {
-      value,
-      textTag,
-      titleField
-    });
 
     return (
       <Tag className={classes} onClick={onClick}>

@@ -46,8 +46,6 @@ const CreateRecipe = () => {
     originalAuthorUser,
   } = state;
 
-  console.log('recipe state', state)
-
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
 

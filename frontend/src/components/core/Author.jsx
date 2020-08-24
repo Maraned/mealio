@@ -12,8 +12,6 @@ export default function Author({
   const { t } = useTranslation();
   const [displayMode, setDisplayMode] = useState('');
 
-  console.log('authorUser', authorUser)
-
   const renderOriginalAuthor = () => {
     const author = originalAuthorUser?.displayName;
     return (

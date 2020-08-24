@@ -35,11 +35,6 @@ export const WebSocketProvider = props => {
       return updateFunction[type]({ type: 'set', value: data });
     }
 
-    console.log('updated', {
-      type,
-      data
-    })
-
     const newData = !data.old_val && !!data.new_val;
     const modifiedData = !!data.old_val && !!data.new_val;
     const deletedData = !!data.old_val && !data.new_val;

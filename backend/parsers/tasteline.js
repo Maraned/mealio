@@ -33,7 +33,7 @@ async function TastelineParser(htmlPage, url, userId) {
     const ingredients = [];
     ingredientElements.each((i, ingredientElem) => {
       ingredients.push({
-        amount: $(ingredientElem).find('.quantity').text(),
+        amount: $(ingredientElem).find('.quantity').text().replace(',', '.'),
         unit: $(ingredientElem).find('.unit').text(),
         name: capitalize($(ingredientElem).find('.ingredient').text())
       });

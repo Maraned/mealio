@@ -56,7 +56,6 @@ router.post('/groups', async (req, res) => {
   try {
     const { name } = req.body;
     const response = await rdb.save('ingredientGroups', { name });
-    console.log('response', response)
     const groupId = response.generated_keys[0];
     res.status(201);
     return res.send(groupId);

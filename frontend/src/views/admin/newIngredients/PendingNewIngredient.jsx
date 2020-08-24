@@ -11,7 +11,7 @@ import { IngredientGroupsContext } from 'contexts/ingredientGroups';
 import { UserContext } from 'contexts/user';
 import EditableField from 'components/core/EditableField/EditableField';
 import Select from 'components/core/Select';
-import { Capitalize } from 'utils/utils'; 
+import { Capitalize } from 'utils/utils';
 
 export default function PendingNewIngredient({ newIngredient }) {
   const [editMode, setEditMode] = useState(false);
@@ -22,9 +22,9 @@ export default function PendingNewIngredient({ newIngredient }) {
 
   const sortOptions = options => {
     return options.sort((a, b) => {
-      if (a.selected && !b.selected) { return -1; } 
-      else if (!a.selected && b.selected) { return 1; } 
-      else if (a.name < b.name) { return -1; } 
+      if (a.selected && !b.selected) { return -1; }
+      else if (!a.selected && b.selected) { return 1; }
+      else if (a.name < b.name) { return -1; }
       else if (a.name > b.name) { return 1; }
       else { return 0 };
     });
@@ -44,13 +44,13 @@ export default function PendingNewIngredient({ newIngredient }) {
         selected.push(ingredient.name);
       }
 
-      options.push({ 
-        ...ingredient, 
+      options.push({
+        ...ingredient,
         selected: isSelected,
       })
     }
 
-    
+
 
     return [sortOptions(options), selected];
   }, [allIngredients, newIngredient.alternatives]);
@@ -74,8 +74,8 @@ export default function PendingNewIngredient({ newIngredient }) {
 
 
   const updateNewIngredient = updatedAttributes => {
-    dispatch({ 
-      type: 'updateIngredient', 
+    dispatch({
+      type: 'updateIngredient',
       value: {
         userId: user.id,
         id: newIngredient.id,
@@ -96,8 +96,6 @@ export default function PendingNewIngredient({ newIngredient }) {
       updatedGroups = updatedGroups.filter(id => id !== value.id);
     }
 
-    console.log('updatedGroups', updatedGroups)
-
     updateNewIngredient({ groups: updatedGroups });
   };
 
@@ -108,8 +106,6 @@ export default function PendingNewIngredient({ newIngredient }) {
     } else {
       updatedAlternatives = updatedAlternatives.filter(id => id !== value.id);
     }
-
-    console.log('updatedAlternatives', updatedAlternatives)
 
     updateNewIngredient({ alternatives: updatedAlternatives });
   };
@@ -124,9 +120,9 @@ export default function PendingNewIngredient({ newIngredient }) {
   const Flag = Flags[i18n.language];
 
   return (
-    <>      
-      <span 
-        className="pendingNewIngredient__edit flex vcenter" 
+    <>
+      <span
+        className="pendingNewIngredient__edit flex vcenter"
         key={`edit-${newIngredient.id}`}
         onClick={() => setEditMode(!editMode)}
       >
@@ -134,21 +130,21 @@ export default function PendingNewIngredient({ newIngredient }) {
       </span>
 
       <span className="pendingNewIngredient__name" key={`name-${newIngredient.id}`}>
-        <EditableField 
-          manualStateMode 
-          manualEditState={editMode} 
+        <EditableField
+          manualStateMode
+          manualEditState={editMode}
           value={newIngredient.name}
           onChange={updateIngredientName}
         />
-        
+
         <div className={cc(['flex', { 'column center': editMode } ])}>
           <div className="flex vcenter">
             <Flag className="flag--small margin--right noShrink" />
             <span className="noShrink">{t('NewIngredients:Singular')} &nbsp;</span>
           </div>
-          <EditableField 
-            manualStateMode 
-            manualEditState={editMode} 
+          <EditableField
+            manualStateMode
+            manualEditState={editMode}
             value={t(`Ingredient:${newIngredient.name}`)}
             // onChange={updateNewIngredient}
           />
@@ -159,9 +155,9 @@ export default function PendingNewIngredient({ newIngredient }) {
             <Flag className="flag--small margin--right noShrink" />
             <span className="noShrink">{t('NewIngredients:Plural')} &nbsp;</span>
           </div>
-          <EditableField 
-            manualStateMode 
-            manualEditState={editMode} 
+          <EditableField
+            manualStateMode
+            manualEditState={editMode}
             value={t(`Ingredient:${newIngredient.name}`)}
             // onChange={updateNewIngredient}
           />
@@ -196,10 +192,10 @@ export default function PendingNewIngredient({ newIngredient }) {
         {newIngredient.tips}
       </span>
 
-      <span 
+      <span
         key={`status-${newIngredient.id}`}
-        className="pendingNewIngredient__status flex vcenter" 
-        onClick={updateIngredientStatus} 
+        className="pendingNewIngredient__status flex vcenter"
+        onClick={updateIngredientStatus}
       >
         <FaCheckCircle className={cc(['pendingNewIngredient__statusIcon', {
           'pendingNewIngredient__statusIcon--checked': newIngredient.status === 'active'

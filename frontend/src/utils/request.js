@@ -26,7 +26,7 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
       body: data,
       json: true,
     });
-    if (expectResponse && response.status !== 401) { 
+    if (expectResponse && response.status !== 401) {
       try {
         return response;
       } catch (error) {
@@ -52,8 +52,7 @@ export const putRequest = async (endpoint, data, expectResponse = false) => {
     body: data,
     json: true,
   });
-  console.log('response', response)
-  if (expectResponse && response.status !== 401) { 
+  if (expectResponse && response.status !== 401) {
     return response;
   } else {
     return response.status;
@@ -72,12 +71,12 @@ export const deleteRequest = async (endpoint, data, expectResponse = false) => {
     json: true,
   });
 
-  if (expectResponse && response.status !== 401) { 
+  if (expectResponse && response.status !== 401) {
     const responseJSON = await response.json();
     return responseJSON;
   } else {
     return response.status;
-  } 
+  }
 };
 
 export const getRequest = async (endpoint, query) => {
@@ -98,7 +97,7 @@ export const getRequest = async (endpoint, query) => {
 
 export const login = async ({ username, password }) => {
   const response = JSON.parse(await request({
-    uri: `${url}/login` 
+    uri: `${url}/login`
   }));
   localStorage.setItem(response.token);
   localStorage.setItem(response.refreshToken);

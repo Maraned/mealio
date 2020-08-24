@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'; 
+import React, { createContext, useReducer } from 'react';
 import { getRequest, putRequest } from 'utils/request';
 
 const updateIngredient = (ingredients, updatedIngredient) => {
@@ -16,8 +16,6 @@ const removeIngredient = (ingredients, removedIngredient) => {
 };
 
 const reducer = (state, action) => {
-  console.log('Groups action', action)
-
   switch (action.type) {
     case 'set':
       return action.value;
@@ -63,6 +61,6 @@ export const AllIngredientsProvider = props => {
     <AllIngredientsContext.Provider value={{ state, dispatch }}>
       {props.children}
     </AllIngredientsContext.Provider>
-  ) 
+  )
 };
 

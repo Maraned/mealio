@@ -19,14 +19,10 @@ const updateRecipe = async (newState, dispatch) => {
 
   const { originalAuthorUser, authorUser, ...recipe } = newState;
 
-  console.log('recipe newState', newState)
-
   const response = await postRequest('recipes/createUpdate', {
     recipe: { ...recipe, lastUpdate: newSavedDate },
     id: newState.author,
   });
-
-  console.log('response', response)
 
   const { status, draftId, recipe: { lastUpdate }, author } = response;
   if (status === 'created') {
@@ -91,7 +87,6 @@ const recipeReducer = (state, action) => {
       };
 
       updatedIngredientGroups[ingredientGroupIndex] = updatedIngredientGroup;
-      console.log('updatedIngredientGroups', updatedIngredientGroups)
       newState = { ...state, ingredientGroups: updatedIngredientGroups };
       break;
     case 'movedIngredient':
@@ -133,8 +128,6 @@ const recipeReducer = (state, action) => {
   if (!newState.author && action.author) {
     newState.author = action.author;
   }
-
-  console.log('recipe newState', newState, action)
 
   return newState;
 };

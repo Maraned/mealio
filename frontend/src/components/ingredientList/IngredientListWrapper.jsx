@@ -16,11 +16,8 @@ import uuid from 'utils/uuid';
 export default function IngredientListWrapper() {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
-  console.log('recipe', recipe)
   const { ingredientGroups = [], portions, portionsType, defaultPortions } = recipe;
   const { t } = useTranslation();
-
-  console.log('ingredientGroups', ingredientGroups)
 
   const updatePortions = event => {
     updateRecipe({ type: 'update', value: { portions: event.target.value }});
@@ -40,15 +37,12 @@ export default function IngredientListWrapper() {
   }
 
   const addIngredientGroup = () => {
-    console.log('ingredientGroups before push', ingredientGroups)
     const updatedIngredientGroups = [...ingredientGroups];
     updatedIngredientGroups.push({
       id: uuid(),
       ingredients: [],
       name: '',
     });
-
-    console.log('updatedIngredientGroups', updatedIngredientGroups)
 
     updateRecipe({
       type: 'update',
@@ -67,7 +61,6 @@ export default function IngredientListWrapper() {
     if (!result?.source || !result?.destination) {
       return;
     }
-    console.log('onDragEnd result', result)
     const ingredientId = result.draggableId;
     const fromIngredientGroup = result.source.droppableId;
     const fromIndex = result.source.index;

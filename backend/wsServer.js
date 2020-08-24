@@ -8,7 +8,6 @@ const initConnection = async client => {
 
   console.log('initconnections')
   const draftRecipes = await mapRecipeUsers(await rdb.findAll('draftRecipes'));
-  console.log('draftRecipes', draftRecipes)
   client.send(JSON.stringify({ type: 'draft', data: draftRecipes }));
 
   const publishedRecipes = await mapRecipeUsers(await rdb.findAll('publishedRecipes'));

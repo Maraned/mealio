@@ -78,8 +78,6 @@ const StepList = () => {
     }
   };
 
-  console.log('steps', steps)
-
   return (
     <div
       className={cc(['stepList list listSpacing background', {

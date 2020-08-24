@@ -17,8 +17,6 @@ const MainContentView = () => {
   const location = useLocation();
   const modalIsOpen = location.state && location.state.modal;
 
-  console.log('location', location)
-
   return (
     <div className={cc(['mainView__content', {
       'disablePointerEvents': modalIsOpen

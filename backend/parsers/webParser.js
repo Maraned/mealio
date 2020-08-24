@@ -4,7 +4,6 @@ const TastelineParser = require('./tasteline');
 
 async function WebParser({ url, userId }) {
   try {
-    console.log('url', url);
     // const domainRegex = /https?:\/\/(.*?)\//;
 
     const domainRegex = new RegExp(/https?:\/\/(.*?)\//);

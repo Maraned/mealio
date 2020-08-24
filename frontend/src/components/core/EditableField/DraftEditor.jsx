@@ -55,9 +55,9 @@ export default function DraftEditor({
     return ContentState.createFromText(`${value}`);
   }
 
-  const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(createContent())
-  );
+  const [editorState, setEditorState] = useState(() => {
+    return EditorState.createWithContent(createContent())
+  });
 
   useEffect(() => {
     const currentValue = editorState.getCurrentContent().getPlainText();
@@ -98,31 +98,31 @@ export default function DraftEditor({
 
   return (
     <>
-    <div className={className} ref={editorFieldRef} key={`draftEditor-${keyId}`}>
-      <Toolbar
-        showToolbar={showToolbar}
-        toolbarButtons={toolbarButtons}
-        editorState={editorState}
-        onChange={handleOnChange}
-      />
-      <Editor
-        editorState={editorState}
-        onChange={handleOnChange}
-        onFocus={focusHandler}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        handlePastedText={onPaste}
-        handleKeyCommand={handleKeyCommand}
-        ref={editorRef}
-        textAlignment={textAlignment}
-      />
+      <div className={className} ref={editorFieldRef} key={`draftEditor-${keyId}`}>
+        <Toolbar
+          showToolbar={showToolbar}
+          toolbarButtons={toolbarButtons}
+          editorState={editorState}
+          onChange={handleOnChange}
+        />
+        <Editor
+          editorState={editorState}
+          onChange={handleOnChange}
+          onFocus={focusHandler}
+          onBlur={onBlur}
+          placeholder={placeholder}
+          handlePastedText={onPaste}
+          handleKeyCommand={handleKeyCommand}
+          ref={editorRef}
+          textAlignment={textAlignment}
+        />
+      </div>
 
-    </div>
-    {onRemove && (
-      <RemoveButton initialPose="hide" pose={showToolbar ? 'show' : 'hide'} className="removeButton" onClick={onRemove}>
-        <FaTimes />
-      </RemoveButton>
-    )}
+      {onRemove && (
+        <RemoveButton initialPose="hide" pose={showToolbar ? 'show' : 'hide'} className="removeButton" onClick={onRemove}>
+          <FaTimes />
+        </RemoveButton>
+      )}
     </>
   );
 }
