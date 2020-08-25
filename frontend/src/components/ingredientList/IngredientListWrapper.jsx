@@ -53,7 +53,8 @@ export default function IngredientListWrapper() {
   const updateIngredientGroup = (ingredientGroupId, updatedAttributes) => {
     updateRecipe({
       type: 'ingredientGroup',
-      value: { ingredientGroupId, updatedAttributes }
+      ingredientGroupId,
+      updatedAttributes,
     });
   };
 

@@ -76,7 +76,7 @@ const recipeReducer = (state, action) => {
     case 'unset':
       break;
     case 'ingredientGroup':
-      const updatedIngredientGroups = state.ingredientGroups || [];
+      const updatedIngredientGroups = [...state.ingredientGroups] || [];
       const ingredientGroupIndex = state.ingredientGroups.findIndex(ingredientGroup => {
         return ingredientGroup.id === action.ingredientGroupId;
       });
@@ -147,23 +147,32 @@ export const RecipeProvider = props => {
   useEffect(() => {
     const {
       ingredients,
+      ingredientGroups,
       name,
       images,
       steps,
     } = state;
     const {
       ingredients: prevIngredients,
+      ingredientGroups: prevIngredientGroups,
       name: prevName,
       images: prevImages,
       steps: prevSteps,
     } = previousState;
 
+
     const ingredientsChanged = !ArrayEqual(ingredients, prevIngredients);
+    const ingredientGroupsChanged = !ArrayEqual(ingredientGroups, prevIngredientGroups);
     const nameChanged = name !== prevName;
     const imagesChanged = !ArrayEqual(images, prevImages);
     const stepsChanged = !ArrayEqual(steps, prevSteps);
 
-    if (nameChanged || ingredientsChanged || imagesChanged || stepsChanged) {
+    if (nameChanged
+      || ingredientsChanged
+      || imagesChanged
+      || stepsChanged
+      || ingredientGroupsChanged
+    ) {
       clearTimeout(updateTimer.current);
       updateTimer.current = setTimeout(() => updateRecipe(state, dispatch), 5000);
       setPreviousState(state);
