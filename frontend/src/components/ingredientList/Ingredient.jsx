@@ -34,8 +34,10 @@ const Ingredient = ({
   const amountValue = () => {
     if (ingredient.amount) {
       const factor = portions / defaultPortions;
-      return parseFloat(ingredient.amount) * factor;
+      const amount = parseFloat(ingredient.amount) * factor;
+      return amount;
     }
+    return ingredient.amount;
   };
 
   const updateAmount = value => {

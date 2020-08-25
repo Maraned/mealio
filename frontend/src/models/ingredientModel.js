@@ -1,6 +1,9 @@
 const IngredientModel = {
-  name: '',
+  alternatives: [],
   amount: '',
+  group: null,
+  name: '',
+  status: 'pending',
   unit: '',
 }
 

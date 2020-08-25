@@ -10,6 +10,7 @@ import { RecipeContext } from 'contexts/recipe';
 import { RouterContext } from 'contexts/router';
 import { UserContext } from 'contexts/user';
 import IngredientModel from 'models/ingredientModel';
+import uuid from 'utils/uuid';
 
 import Ingredient from 'components/ingredientList/Ingredient';
 
@@ -44,10 +45,16 @@ const IngredientList = ({
   const addIngredient = () => {
     if (ingredientGroupId) {
       const modifiedIngredients = JSON.parse(JSON.stringify(groupIngredients));
-      modifiedIngredients.push({...IngredientModel});
+      const newIngredient = {
+        ...IngredientModel,
+        id: uuid(),
+        group: ingredientGroupId
+      };
+      modifiedIngredients.push(newIngredient);
       updateRecipe({
-        type: 'updateIngredientGroup',
-        value: { ingredients: modifiedIngredients, ingredientGroupId }
+        type: 'ingredientGroup',
+        ingredientGroupId,
+        updatedAttributes: { ingredients: modifiedIngredients }
       });
     } else {
       const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
