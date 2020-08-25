@@ -14,6 +14,10 @@ export default function Author({
 
   const renderOriginalAuthor = () => {
     const author = originalAuthorUser?.displayName;
+    if (!author) {
+      return '';
+    }
+
     return (
       <Trans i18nKey="Recipe:OriginalAuthor">
         <a href={authorUrl} target="_blank">{'&nbsp;'}{{author}}</a> <a href={originUrl} target="_blank">{' '}{{origin}}</a>
@@ -23,6 +27,10 @@ export default function Author({
 
   const renderAuthor = () => {
     const author = authorUser?.displayName;
+    if (!author) {
+      return '';
+    }
+
     return (
       <Trans i18nKey="Recipe:Author">
         <a href={authorUrl} target="_blank">{'&nbsp;'}{{author}}</a> <a href={originUrl} target="_blank">{' '}{{origin}}</a>
