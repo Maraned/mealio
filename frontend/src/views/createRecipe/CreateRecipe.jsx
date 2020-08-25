@@ -26,8 +26,10 @@ const CreateRecipe = () => {
   // CONTEXTS
   const { state: user } = useContext(UserContext);
   const { dispatch, state: editState } = useContext(EditableContext);
+
   const { state, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
+
   const mounted = useRef(false);
 
   const { t, i18n } = useTranslation();
@@ -49,24 +51,8 @@ const CreateRecipe = () => {
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
 
-  // STATES
-  const [lastSavedText, setLastSavedText] = useState('');
-  const [changed, setChanged] = useState(false);
 
-  const onRecipeChange = (type, value) => {
-
-    const author = value.author || user.id;
-
-    updateRecipe({ type, value, author });
-  }
-
-  useEffect(() => {
-    if (mounted.current) {
-      setChanged(true);
-    }
-  }, [ingredients]);
-
-  const updateLastSaved = date => {
+  const getLastSavedText = date => {
     if (!date || (date instanceof Date && isNaN(date))) {
       return;
     }
@@ -79,8 +65,31 @@ const CreateRecipe = () => {
       second: 'numeric'
     };
     const locale = i18n.language === 'sv' ? 'sv-SE' : 'en-GB';
-    setLastSavedText(date.toLocaleDateString(locale, options));
+    return date.toLocaleDateString(locale, options);
+  }
+
+  // STATES
+  const [lastSavedText, setLastSavedText] = useState(() => {
+    return getLastSavedText(new Date(lastUpdate));
+  });
+  const [changed, setChanged] = useState(false);
+
+  const updateLastSaved = date => {
+    setLastSavedText(getLastSavedText(date));
   };
+
+
+  const onRecipeChange = (type, value) => {
+    const author = value.author || user.id;
+
+    updateRecipe({ type, value, author });
+  }
+
+  useEffect(() => {
+    if (mounted.current) {
+      setChanged(true);
+    }
+  }, [ingredients]);
 
   useEffect(() => {
     updateLastSaved(new Date(lastUpdate));

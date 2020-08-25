@@ -1,23 +1,12 @@
 import React, { useContext, useState, useEffect, useRef, useCallback } from 'react';
 import cc from 'classcat';
-import posed from 'react-pose';
 import { FaTimes } from 'react-icons/fa';
 import DraftEditor from 'components/core/EditableField/DraftEditor';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { EditableContext } from 'contexts/editable';
 
 import './editableField.css';
-
-const OptionsContainer = posed.div({
-  open: {
-    height: 'auto',
-    opacity: 1,
-  },
-  closed : {
-    height: 0,
-    opacity: 0,
-  },
-});
 
 const EditableField = ({
   value,
@@ -52,35 +41,43 @@ const EditableField = ({
   const [fallbackValue, setFallbackValue] = useState(!onChange ? value : '');
   const [filteredOptions, setFilteredOptions] = useState([]);
   const node = useRef();
-  const isFocused = useRef(null);
+  // const isFocused = useRef(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   const fallbackOnChange = value => {
     setFallbackValue(value);
   };
 
   const handleClick = useCallback(e => {
+    console.log('handleClick', node.current, e.target)
     if (node.current && !node.current.contains(e.target)) {
+      console.log('handleClick inside')
       setOpen(false);
-
-      if (isFocused.current && onBlur) {
-        const currentValue = onChange ? value : fallbackValue;
+      //if (isFocused.current && onBlur) {
+      if (isFocused && onBlur) {
+          const currentValue = onChange ? value : fallbackValue;
         onBlur(currentValue);
       }
     }
   }, [value, fallbackValue, onChange, node, isFocused, onBlur]);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClick);
+    console.log('useEffect isFocused', isFocused)
+    if (isFocused) {
+      document.addEventListener("mousedown", handleClick);
+    }
 
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-  }, [handleClick]);
+  }, [handleClick, isFocused]);
 
   const focus = () => {
+    console.log('focus')
     setOpen(true);
 
-    isFocused.current = true;
+    // isFocused.current = true;
+    setIsFocused(true);
 
     if (onFocus) {
       onFocus();
@@ -111,11 +108,21 @@ const EditableField = ({
     }
   };
 
-  const renderRemoveButton = () => (onRemove && showRemove) ? (
-    <div className="removeButton" onClick={onRemove}>
-      <FaTimes />
-    </div>
-  ) : '';
+  const renderRemoveButton = () => onRemove && (
+    <AnimatePresence>
+      {showRemove && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="removeButton"
+          onClick={onRemove}
+        >
+          <FaTimes />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 
   const handleOnChange = value => {
     setEditedValue(value);
@@ -142,28 +149,31 @@ const EditableField = ({
 
   const renderEditMode = () => {
     return type === 'text' ? (
-      <>
+      <div
+        ref={node}
+        className={cc(["editableField flex editableField--textField", className, {
+          'editableField--center': center,
+          [`editableField--${textTag}`]: textTag,
+          'editableField--text': !textTag,
+          'editableField--autoWidth': autoWidth,
+          'editableField--small': small,
+          'editableField--xSmall': xSmall,
+        }])}
+      >
         <DraftEditor
-          className={cc(["editableField editableField__edit editableField--textField", className, {
-            'editableField--center': center,
-            [`editableField--${textTag}`]: textTag,
-            'editableField--text': !textTag,
-            'editableField--autoWidth': autoWidth,
-            'editableField--small': small,
-            'editableField--xSmall': xSmall,
-          }])}
+          className="flexAuto editableField__edit"
           onChange={value => handleOnChange(value)}
           onBlur={handleOnBlur}
           value={`${editedValue || fallbackValue || value}`}
           placeholder={placeholder}
           textTag={textTag}
           onPaste={onPaste}
-          onFocus={onFocus}
+          onFocus={focus}
           toolbarButtons={toolbarButtons}
           onRemove={onRemove}
           textAlignment={textAlignment}
         />
-      </>
+      </div>
     ) : (
       <div ref={node} className={cc(["editableField__container", {
         'editableField__container--center': center,
@@ -186,7 +196,7 @@ const EditableField = ({
         </div>
 
         {searchOptions && (
-          <OptionsContainer
+          <div
             className="editableField__options"
             pose={open ? "open" : "closed"}
             initialPose="closed"
@@ -196,7 +206,7 @@ const EditableField = ({
                 {optionText(option)}
               </div>
             ))}
-          </OptionsContainer>
+          </div>
         )}
       </div>
     );

@@ -170,17 +170,6 @@ export const RecipeProvider = props => {
     }
   }, [state, previousState]);
 
-  useEffect(() => {
-    if (draftRecipes && publishedRecipes) {
-      const recipe = [...draftRecipes, ...publishedRecipes].find(existingRecipe => {
-        return existingRecipe.id === state.id
-      });
-      if (recipe) {
-        dispatch({ type: 'update', value: recipe });
-      }
-    }
-  }, [draftRecipes, publishedRecipes, state.id]);
-
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>
       {props.children}

@@ -75,6 +75,7 @@ const Ingredient = ({
   };
 
   const onBlur = () => {
+    console.log('onBlur')
     setShowRemove(false);
   };
 

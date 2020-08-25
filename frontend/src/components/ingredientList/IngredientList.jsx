@@ -63,7 +63,7 @@ const IngredientList = ({
   const removeIngredient = (index, ingredient) => {
     const modifiedIngredients = [...ingredients];
     modifiedIngredients.splice(index, 1);
-    updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
+      updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
   }
 
   const parseIngredientText = ingredientText => {
@@ -172,7 +172,6 @@ const IngredientList = ({
 
         </div>
       )}
-
     </Droppable>
   )
 }

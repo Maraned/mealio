@@ -2,33 +2,26 @@ import React, { useState, useRef, useEffect, useMemo} from 'react';
 import { FaBold, FaItalic, FaUnderline } from 'react-icons/fa';
 import cc from 'classcat';
 import { EditorState, RichUtils, SelectionState } from 'draft-js';
-import posed from 'react-pose';
 import useOutsideClick from 'utils/useOutsideClick';
 import uuid from 'utils/uuid';
-
-const ToolbarContainer = posed.div({
-  show: { y: 0, opacity: 1, delay: 100 },
-  hide: { y: 10, opacity: 0 }
-});
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Toolbar({
   toolbarButtons = [],
   showToolbar,
+  onOutsideClick,
   editorState,
   onChange,
 }) {
-  const [internalShowToolbar, setInternalShowToolbar] = useState(false);
   const toolbarContainerRef = useRef(null);
 
-  useOutsideClick(internalShowToolbar && toolbarContainerRef, () => {
-    setInternalShowToolbar(false)
+  useOutsideClick(showToolbar && toolbarContainerRef.current?.parentElement?.parentElement, () => {
+    if (onOutsideClick) {
+      onOutsideClick();
+    }
   });
 
   const keyId = useMemo(() => uuid(), []);
-
-  useEffect(() => {
-    setInternalShowToolbar(showToolbar);
-  }, [showToolbar]);
 
   const changeInlineStyle = style => () => {
     const currentContent = editorState.getCurrentContent();
@@ -79,21 +72,28 @@ export default function Toolbar({
   };
 
   return (
-    <div ref={toolbarContainerRef} id={`tool-${keyId}`}>
-      {!!toolbarButtons.length && (
-        <ToolbarContainer
-          end={toolbarContainerRef}
-          initialPose="hide"
-          pose={internalShowToolbar ? 'show' : 'hide'}
-          className="editableField__toolbar"
-          key={`toolbar-${keyId}`}
+    <AnimatePresence initial={false} key={keyId}>
+      {showToolbar && (
+        <motion.div
+          initial={{ opactiy: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          {toolbarButtons.map(button => button.type
-            ? renderToolbarOption(builtInOptions[button.type], keyId)
-            : renderToolbarOption(button, keyId)
-          )}
-        </ToolbarContainer>
+          <div ref={toolbarContainerRef} id={`tool-${keyId}`}>
+            {!!toolbarButtons.length && (
+              <div
+                className="editableField__toolbar"
+                key={`toolbar-${keyId}`}
+              >
+                {toolbarButtons.map(button => button.type
+                  ? renderToolbarOption(builtInOptions[button.type], keyId)
+                  : renderToolbarOption(button, keyId)
+                )}
+              </div>
+            )}
+          </div>
+        </motion.div>
       )}
-    </div>
+    </AnimatePresence>
   );
 }

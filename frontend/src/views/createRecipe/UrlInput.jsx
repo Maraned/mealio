@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
-import posed, { PoseGroup } from 'react-pose';
+
+import { motion, AnimatePresence } from 'framer-motion';
+
 import { useTranslation } from 'react-i18next';
 
 import { getRequest } from 'utils/request';
 import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
 import Loader from 'components/core/Loader';
-
-import { FadeIn } from 'utils/animations';
 
 export default function UrlInput({ onRecipeFetch }) {
   const { state: user } = useContext(UserContext);
@@ -29,13 +29,23 @@ export default function UrlInput({ onRecipeFetch }) {
 
   return (
     <div className="createRecipe__fromUrl flex grow sideSpacing--extra">
-      <PoseGroup>
+      <AnimatePresence initial={false}>
         {showLoader ? (
-          <FadeIn key="recipe-url-loader" className="flex grow center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex grow center"
+          >
             <Loader />
-          </FadeIn>
+          </motion.div>
         ) : (
-          <FadeIn key="recipe-url-input" className="flex grow">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="flex grow"
+          >
             {showInput ? (
               <>
                 <input
@@ -51,9 +61,9 @@ export default function UrlInput({ onRecipeFetch }) {
                 {t('Recipe:ImportFromUrl')}
               </button>
             )}
-        </FadeIn>
+          </motion.div>
         )}
-      </PoseGroup>
+      </AnimatePresence>
     </div>
   );
 };

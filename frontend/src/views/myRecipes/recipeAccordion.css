@@ -10,6 +10,7 @@
   color: var(--secondary-text-color);
   cursor: pointer;
   border-radius: 10px;
+  z-index: 1;
 }
 
 .recipeAccordion__header--draft {
@@ -18,6 +19,10 @@
 
 .recipeAccordion:not(:last-child) {
   margin-bottom: .5rem;
+}
+
+.recipeAccordion__content {
+  z-index: 0;
 }
 
 .recipeAccordion__recipeStatus {

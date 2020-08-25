@@ -122,7 +122,6 @@ export default function IngredientListWrapper() {
               />
             </React.Fragment>
           )
-
         ) : (
           <IngredientList />
         )}

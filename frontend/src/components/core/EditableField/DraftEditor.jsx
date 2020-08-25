@@ -4,15 +4,9 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import { Editor, EditorState, ContentState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
-import posed from 'react-pose';
 import DraftPasteProcessor from 'draft-js/lib/DraftPasteProcessor';
 import Toolbar from './Toolbar';
 import uuid from 'utils/uuid';
-
-const RemoveButton = posed.div({
-  show: { x: 0, opacity: 1 },
-  hide: { x: '-100%', opacity: 0 },
-});
 
 export default function DraftEditor({
   value = '',
@@ -96,14 +90,20 @@ export default function DraftEditor({
     }
   };
 
+  const onOutsideClick = () => {
+    setShowToolbar(false);
+  }
+
   return (
     <>
       <div className={className} ref={editorFieldRef} key={`draftEditor-${keyId}`}>
         <Toolbar
+          key={`toolbar-${keyId}-${showToolbar}`}
           showToolbar={showToolbar}
           toolbarButtons={toolbarButtons}
           editorState={editorState}
           onChange={handleOnChange}
+          onOutsideClick={onOutsideClick}
         />
         <Editor
           editorState={editorState}
@@ -119,9 +119,9 @@ export default function DraftEditor({
       </div>
 
       {onRemove && (
-        <RemoveButton initialPose="hide" pose={showToolbar ? 'show' : 'hide'} className="removeButton" onClick={onRemove}>
+        <div className="removeButton" onClick={onRemove}>
           <FaTimes />
-        </RemoveButton>
+        </div>
       )}
     </>
   );

@@ -8,6 +8,7 @@
     "country-flag-icons": "^1.2.1",
     "draft-js": "^0.11.6",
     "express": "^4.17.1",
+    "framer-motion": "^2.6.0",
     "fuse": "^0.4.0",
     "i18next": "19.6.3",
     "minisearch": "^2.1.3",
