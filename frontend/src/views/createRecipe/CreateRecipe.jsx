@@ -261,8 +261,6 @@ const CreateRecipe = () => {
       {author && (
         <Author authorUser={authorUser} originalAuthorUser={originalAuthorUser} origin={origin} originUrl={originUrl} />
       )}
-
-
     </>
   );
 

@@ -41,7 +41,6 @@ const EditableField = ({
   const [fallbackValue, setFallbackValue] = useState(!onChange ? value : '');
   const [filteredOptions, setFilteredOptions] = useState([]);
   const node = useRef();
-  // const isFocused = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
 
   const fallbackOnChange = value => {
@@ -49,11 +48,8 @@ const EditableField = ({
   };
 
   const handleClick = useCallback(e => {
-    console.log('handleClick', node.current, e.target)
     if (node.current && !node.current.contains(e.target)) {
-      console.log('handleClick inside')
       setOpen(false);
-      //if (isFocused.current && onBlur) {
       if (isFocused && onBlur) {
           const currentValue = onChange ? value : fallbackValue;
         onBlur(currentValue);
@@ -62,7 +58,6 @@ const EditableField = ({
   }, [value, fallbackValue, onChange, node, isFocused, onBlur]);
 
   useEffect(() => {
-    console.log('useEffect isFocused', isFocused)
     if (isFocused) {
       document.addEventListener("mousedown", handleClick);
     }
@@ -73,10 +68,8 @@ const EditableField = ({
   }, [handleClick, isFocused]);
 
   const focus = () => {
-    console.log('focus')
     setOpen(true);
 
-    // isFocused.current = true;
     setIsFocused(true);
 
     if (onFocus) {
