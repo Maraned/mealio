@@ -37,7 +37,7 @@ const StepList = () => {
 
   const addStep = () => {
     const modifiedSteps = JSON.parse(JSON.stringify(steps));
-    modifiedSteps.push('');
+    modifiedSteps.push({ text: '' });
     updateRecipe({ type: 'update', value: { steps: modifiedSteps, author }});
   }
 

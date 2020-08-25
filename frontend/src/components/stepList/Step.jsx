@@ -25,7 +25,7 @@ const Step = ({
   onMouseOver,
   onMouseLeave,
   onPaste,
-  on,
+  onRemove
 }) => {
   const [parsedStep, setParsedStep] = useState([]);
   const { state } = useContext(EditableContext);
@@ -155,7 +155,7 @@ const Step = ({
   }
 
   const removeStep = () => {
-  //   onRemove(step, index);
+    onRemove(step, index);
   }
 
   const onPasteHandler = text => {
