@@ -129,7 +129,11 @@ router.delete('/', async (req, res, next) => {
   if (recipeId && id && type) {
     try {
       const recipeImages = await rdb.getRecipeImages(type, recipeId);
-      await removeImages(recipeImages, id);
+      const recipeImageFiles = recipeImages.filter(image => !image.startsWith('http'));
+
+      if (recipeImageFiles.length) {
+        await removeImages(recipeImageFiles, id);
+      }
       await rdb.removeFromArray('users', id, type, recipeId);
       await rdb.destroy(type, recipeId);
       return res.sendStatus(200);

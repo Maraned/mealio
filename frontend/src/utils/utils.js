@@ -26,5 +26,8 @@ export const ShowResponseErrorToast = (t, toastDispatch, response, defaultErrorM
 };
 
 export const ShowSuccessToast = (t, toastDispatch, successMessage) => {
-  toastDispatch({ type: 'add', value: { text: t(successMessage), }});
+  toastDispatch({ type: 'add', value: {
+    text: t(successMessage),
+    type: 'success'
+  }});
 };
