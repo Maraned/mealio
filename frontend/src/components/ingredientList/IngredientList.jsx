@@ -131,7 +131,49 @@ const IngredientList = ({
     ? parseInt(portions, 10)
     : parseInt(defaultPortions, 10);
 
-  return (
+  const renderIngredientList = (provided) => (
+    <>
+      {ingredients && ingredients.map((ingredient, index) => (
+        <Ingredient
+          key={'ingredient' + ingredient.id}
+          updateIngredient={updateIngredient}
+          index={index}
+          ingredient={{...ingredient}}
+          defaultPortions={defaultPortions}
+          portions={portionsAmount}
+          onPaste={pasteIngredients}
+          onRemove={removeIngredient}
+        />
+      ))}
+      {provided?.placeholder}
+
+      {state.editable ? (
+        <button onClick={addIngredient}>
+          {t('Recipe:AddIngredient')}
+        </button>
+      ) : (
+        <Link to={{
+          pathname: '/grocerylists',
+          state: {
+            modal: true,
+            previousLocation: location,
+            data: {
+              items: ingredientsToGroceryListItems(ingredients),
+              recipeId: recipe.id,
+              recipeName: recipe.name,
+              headerTitle: t('GroceryList:Title'),
+            }
+          }
+        }}>
+          <button onClick={openGroceryListModal}>
+            {t('Recipe:AddToGroceryList')}
+          </button>
+        </Link>
+      )}
+    </>
+  );
+
+  return !state.editable ? renderIngredientList() : (
     <Droppable droppableId={ingredientGroupId}>
       {provided => (
         <div
@@ -139,44 +181,7 @@ const IngredientList = ({
           {...provided.droppableProps}
           className={marginBottom ? 'margin--bottom--xlarge' : ''}
         >
-          {ingredients && ingredients.map((ingredient, index) => (
-            <Ingredient
-              key={'ingredient' + ingredient.id}
-              updateIngredient={updateIngredient}
-              index={index}
-              ingredient={{...ingredient}}
-              defaultPortions={defaultPortions}
-              portions={portionsAmount}
-              onPaste={pasteIngredients}
-              onRemove={removeIngredient}
-            />
-          ))}
-          {provided.placeholder}
-
-          {state.editable ? (
-            <button onClick={addIngredient}>
-              {t('Recipe:AddIngredient')}
-            </button>
-          ) : (
-            <Link to={{
-              pathname: '/grocerylists',
-              state: {
-                modal: true,
-                previousLocation: location,
-                data: {
-                  items: ingredientsToGroceryListItems(ingredients),
-                  recipeId: recipe.id,
-                  recipeName: recipe.name,
-                  headerTitle: t('GroceryList:Title'),
-                }
-              }
-            }}>
-              <button onClick={openGroceryListModal}>
-                {t('Recipe:AddToGroceryList')}
-              </button>
-            </Link>
-          )}
-
+          {renderIngredientList(provided)}
         </div>
       )}
     </Droppable>

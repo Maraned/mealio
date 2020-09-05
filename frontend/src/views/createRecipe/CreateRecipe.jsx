@@ -4,7 +4,7 @@ import './createRecipe.css';
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { FaRegClock } from 'react-icons/fa';
+import { FaRegClock, FaStar } from 'react-icons/fa';
 import cc from 'classcat';
 
 import { EditableContext } from 'contexts/editable';
@@ -22,12 +22,12 @@ import Author from 'components/core/Author';
 import { postRequest, deleteRequest, imageUrl } from 'utils/request';
 import UrlInput from './UrlInput';
 
-const CreateRecipe = () => {
+const CreateRecipe = ({ publishedMode }) => {
   // CONTEXTS
-  const { state: user } = useContext(UserContext);
+  const { state: user, dispatch: userDispatch } = useContext(UserContext);
   const { dispatch, state: editState } = useContext(EditableContext);
 
-  const { state, dispatch: updateRecipe } = useContext(RecipeContext);
+  const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
 
   const mounted = useRef(false);
@@ -35,6 +35,7 @@ const CreateRecipe = () => {
   const { t, i18n } = useTranslation();
 
   const {
+    id,
     name,
     description,
     images,
@@ -46,7 +47,7 @@ const CreateRecipe = () => {
     author,
     authorUser,
     originalAuthorUser,
-  } = state;
+  } = recipe;
 
   const primaryImage = images && images.length && images[0];
   const primaryImageUrl = imageUrl(primaryImage);
@@ -98,7 +99,7 @@ const CreateRecipe = () => {
 
   useEffect(() => {
     if (changed) {
-      if (state.draft == null) {
+      if (recipe.draft == null) {
         onRecipeChange('draft', true);
       }
     }
@@ -119,8 +120,8 @@ const CreateRecipe = () => {
 
   const deleteRecipe = async () => {
     await deleteRequest('recipes', {
-      type: state.draft ? 'draftRecipes' : 'publishedRecipes',
-      recipeId: state.id,
+      type: recipe.draft ? 'draftRecipes' : 'publishedRecipes',
+      recipeId: recipe.id,
       id: user.id,
     }, false);
   };
@@ -128,7 +129,7 @@ const CreateRecipe = () => {
   const publishRecipe = async () => {
     const response = await postRequest('recipes/publish', {
       id: user.id,
-      recipe: { ...state, draft: false },
+      recipe: { ...recipe, draft: false },
     }, false);
 
     if (!isNaN(response) && response !== 200) {
@@ -137,7 +138,7 @@ const CreateRecipe = () => {
         type: 'error',
       } });
     } else {
-      if (state.draft) {
+      if (recipe.draft) {
         alertBannerDispatch({ type: 'add', value: {
           text: t('Recipe:PublishSuccess'),
           type: 'success',
@@ -149,7 +150,7 @@ const CreateRecipe = () => {
   const editRecipe = async () => {
     await postRequest('recipes/createUpdate', {
       id: user.id,
-      recipe: { ...state, draft: false },
+      recipe: { ...recipe, draft: false },
     }, false);
   };
 
@@ -199,6 +200,26 @@ const CreateRecipe = () => {
     setChanged(true);
   };
 
+  const addRecipeToMyCollection = async () => {
+    const newUserData = await postRequest('recipes/saveToCollection', {
+      id,
+      userId: user.id
+    });
+    if (newUserData.id) {
+      userDispatch({ type: 'user', value: newUserData});
+    }
+  };
+
+  const removeRecipeFromMyCollection = async () => {
+    const newUserData = await postRequest('recipes/removeFromCollection', {
+      id,
+      userId: user.id
+    });
+    if (newUserData.id) {
+      userDispatch({ type: 'user', value: newUserData});
+    }
+  }
+
   const renderLastSaved = () => lastSavedText && (
     <div className="createRecipe__lastSaved margin--bottom">
       {t('Recipe:LastSaved')} {lastSavedText}
@@ -217,7 +238,7 @@ const CreateRecipe = () => {
 
         <UrlInput onRecipeFetch={() => {}} />
 
-        {state.draft && state.id && (
+        {recipe.draft && recipe.id && (
           <button
             className="createRecipe__publish"
             onClick={publishRecipe}
@@ -226,7 +247,7 @@ const CreateRecipe = () => {
           </button>
         )}
 
-        {state.draft != null && !state.draft && (
+        {recipe.draft != null && !recipe.draft && (
           <button
             className="createRecipe__update"
             onClick={editRecipe}
@@ -262,6 +283,23 @@ const CreateRecipe = () => {
         <Author authorUser={authorUser} originalAuthorUser={originalAuthorUser} origin={origin} originUrl={originUrl} />
       )}
     </>
+  );
+
+  const renderSaveRecipe = () => (
+    <div className="margin--bottom">
+      {user.recipeCollection
+      && user.recipeCollection.includes(recipe.id) ? (
+        <button className="remove" onClick={removeRecipeFromMyCollection}>
+          <FaStar className="recipe__saveToCollectionIcon" />
+          {t('Recipe:RemoveFromMyCollection')}
+        </button>
+      ) : (
+        <button className="favorite" onClick={addRecipeToMyCollection}>
+          <FaStar className="recipe__saveToCollectionIcon" />
+          {t('Recipe:AddToMyCollection')}
+        </button>
+      )}
+    </div>
   );
 
   return (
@@ -304,6 +342,8 @@ const CreateRecipe = () => {
               type="text"
               textTag="h1"
             />
+
+            {publishedMode && renderSaveRecipe()}
 
             <EditableField
               onChange={changeDescription}
