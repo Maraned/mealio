@@ -43,7 +43,7 @@ export default {
     Delete: 'Ta bort',
     Update: 'Uppdatera',
     AddToGroceryList: 'Lägg till i inköpslista',
-    FailedToPublish: 'Något gick fel vid publiceringen.',
+    PublishFailed: 'Något gick fel vid publiceringen.',
     PublishSuccess: 'Receptet har publicerats!',
     Filter: 'Filtrera',
     Sort: 'Sortering',
@@ -62,7 +62,9 @@ export default {
     AuthorUrl: 'Recept av: <1>{{author}}<1>',
     AuthorWithOrigin: 'Recept av: {{author}}, från <2>{{origin}}</2>',
     Import: 'Importera',
-    RecipeWithNameExists: 'Ett publicerat recept existerar redan med detta namn. Vänligen ändra det för att kunna publicera.'
+    RecipeWithNameExists: 'Ett publicerat recept existerar redan med detta namn. Vänligen ändra det för att kunna publicera.',
+    DeleteFailed: 'Något gick fel vid borttagandet av receptet.',
+    DeleteSuccess: 'Receptet har tagits bort.'
   },
   Time: {
     Second: 'sekund',

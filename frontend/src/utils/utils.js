@@ -15,4 +15,16 @@ export const GetRecipeNameFromDraftEditorContent = content => {
     console.error('GetRecipeNameFromDraftEditorContent', err);
     return content;
   }
-}
+};
+
+export const ShowResponseErrorToast = (t, toastDispatch, response, defaultErrorMessage) => {
+  const errorMessage = response?.error?.message || defaultErrorMessage;
+  toastDispatch({ type: 'add', value: {
+    text: t(errorMessage),
+    type: 'error',
+  }});
+};
+
+export const ShowSuccessToast = (t, toastDispatch, successMessage) => {
+  toastDispatch({ type: 'add', value: { text: t(successMessage), }});
+};

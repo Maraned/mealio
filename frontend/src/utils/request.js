@@ -55,22 +55,25 @@ export const putRequest = async (endpoint, data, expectResponse = false) => {
 };
 
 export const deleteRequest = async (endpoint, data, expectResponse = false) => {
-  const response = await request({
-    url: `${url}/${endpoint}`,
-    method: 'DELETE',
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
-    },
-    body: data,
-    json: true,
-  });
+  try {
+    const response = await request({
+      url: `${url}/${endpoint}`,
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
+      },
+      body: data,
+      json: true,
+    });
 
-  if (expectResponse && response.status !== 401) {
-    const responseJSON = await response.json();
-    return responseJSON;
-  } else {
-    return response.status;
+    if (typeof response === 'string') {
+      if (response === 'OK') return { statusCode: 200 };
+    }
+
+    return response;
+  } catch (error) {
+    return error;
   }
 };
 

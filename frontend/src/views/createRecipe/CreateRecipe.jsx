@@ -11,7 +11,11 @@ import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
 import { AlertBannerContext } from 'contexts/alertBanner';
 
-import { GetRecipeNameFromDraftEditorContent } from 'utils/utils';
+import {
+  GetRecipeNameFromDraftEditorContent,
+  ShowResponseErrorToast,
+  ShowSuccessToast,
+} from 'utils/utils';
 
 import IngredientListWrapper from 'components/ingredientList/IngredientListWrapper';
 import StepList from 'components/stepList/StepList';
@@ -120,11 +124,17 @@ const CreateRecipe = ({ publishedMode }) => {
   };
 
   const deleteRecipe = async () => {
-    await deleteRequest('recipes', {
+    const response = await deleteRequest('recipes', {
       type: recipe.draft ? 'draftRecipes' : 'publishedRecipes',
       recipeId: recipe.id,
       id: user.id,
     }, false);
+
+    if (response.statusCode !== 200) {
+      ShowResponseErrorToast(t, alertBannerDispatch, response, 'Recipe:DeleteFailed');
+    } else {
+      ShowSuccessToast(t, alertBannerDispatch, 'Recipe:DeleteSuccess')
+    }
   };
 
   const publishRecipe = async () => {
@@ -138,17 +148,10 @@ const CreateRecipe = ({ publishedMode }) => {
     }, false);
 
     if (response.statusCode !== 200) {
-      const errorMessage = response?.error?.message;
-      alertBannerDispatch({ type: 'add', value: {
-        text: t(errorMessage || 'Recipe:FailedToPublish'),
-        type: 'error',
-      } });
+      ShowResponseErrorToast(t, alertBannerDispatch, response, 'Recipe:PublishFailed');
     } else {
       if (recipe.draft) {
-        alertBannerDispatch({ type: 'add', value: {
-          text: t('Recipe:PublishSuccess'),
-          type: 'success',
-        } });
+        ShowSuccessToast(t, alertBannerDispatch, 'Recipe:PublishSuccess')
       }
     }
   };
