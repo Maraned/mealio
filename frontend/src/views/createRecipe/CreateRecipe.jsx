@@ -2,7 +2,6 @@ import 'views/recipe/recipe.css';
 import './createRecipe.css';
 
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FaRegClock, FaStar } from 'react-icons/fa';
 import cc from 'classcat';
@@ -11,6 +10,8 @@ import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
 import { AlertBannerContext } from 'contexts/alertBanner';
+
+import { GetRecipeNameFromDraftEditorContent } from 'utils/utils';
 
 import IngredientListWrapper from 'components/ingredientList/IngredientListWrapper';
 import StepList from 'components/stepList/StepList';
@@ -129,12 +130,17 @@ const CreateRecipe = ({ publishedMode }) => {
   const publishRecipe = async () => {
     const response = await postRequest('recipes/publish', {
       id: user.id,
-      recipe: { ...recipe, draft: false },
+      recipe: {
+        ...recipe,
+        name: GetRecipeNameFromDraftEditorContent(recipe.name),
+        draft: false
+      },
     }, false);
 
-    if (!isNaN(response) && response !== 200) {
+    if (response.statusCode !== 200) {
+      const errorMessage = response?.error?.message;
       alertBannerDispatch({ type: 'add', value: {
-        text: t('Recipe:FailedToPublish'),
+        text: t(errorMessage || 'Recipe:FailedToPublish'),
         type: 'error',
       } });
     } else {

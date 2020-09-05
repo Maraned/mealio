@@ -26,18 +26,13 @@ export const postRequest = async (endpoint, data, expectResponse = true) => {
       body: data,
       json: true,
     });
-    if (expectResponse && response.status !== 401) {
-      try {
-        return response;
-      } catch (error) {
-        console.error(error, response);
-      }
-    } else {
-      return response.status;
+    if (typeof response === 'string') {
+      if (response === 'OK') return { statusCode: 200 };
     }
+
+    return response;
   } catch (error) {
-    console.error('POST ERROR', error);
-    throw error;
+    return error;
   }
 };
 

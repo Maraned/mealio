@@ -7,3 +7,12 @@ export const Capitalize = string => {
   capitalized[0] = capitalized[0].toUpperCase();
   return capitalized.join('');
 };
+
+export const GetRecipeNameFromDraftEditorContent = content => {
+  try {
+    return JSON.parse(content).blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
+  } catch (err) {
+    console.error('GetRecipeNameFromDraftEditorContent', err);
+    return content;
+  }
+}

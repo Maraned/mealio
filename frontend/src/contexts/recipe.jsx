@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useEffect, useState, useRef, useContext } from 'react';
 
 import RecipeModel from 'models/recipeModel';
-import { ArrayEqual } from 'utils/utils';
+import { ArrayEqual, GetRecipeNameFromDraftEditorContent } from 'utils/utils';
 import { postRequest } from 'utils/request';
 import { DraftRecipesContext } from 'contexts/draftRecipes';
 import { PublishedRecipesContext } from 'contexts/publishedRecipes';
@@ -20,7 +20,11 @@ const updateRecipe = async (newState, dispatch) => {
   const { originalAuthorUser, authorUser, ...recipe } = newState;
 
   const response = await postRequest('recipes/createUpdate', {
-    recipe: { ...recipe, lastUpdate: newSavedDate },
+    recipe: {
+      ...recipe,
+      name: GetRecipeNameFromDraftEditorContent(recipe.name),
+      lastUpdate: newSavedDate
+    },
     id: newState.author,
   });
 

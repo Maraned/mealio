@@ -62,6 +62,7 @@ export default {
     AuthorUrl: 'Recept av: <1>{{author}}<1>',
     AuthorWithOrigin: 'Recept av: {{author}}, från <2>{{origin}}</2>',
     Import: 'Importera',
+    RecipeWithNameExists: 'Ett publicerat recept existerar redan med detta namn. Vänligen ändra det för att kunna publicera.'
   },
   Time: {
     Second: 'sekund',

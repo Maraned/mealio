@@ -99,6 +99,17 @@ router.post('/publish', async (req, res, next) => {
 
   if (recipe && id) {
     try {
+      const existingRecipeWithName = await rdb.findBy(
+        'publishedRecipes',
+        'name',
+        recipe.name
+      );
+
+      if (existingRecipeWithName.length) {
+        res.status(400);
+        return res.send({ status: 'error', message: 'Recipe:RecipeWithNameExists'});
+      }
+
       await rdb.save('publishedRecipes', { ...recipe, collectionCount: 0 });
       await rdb.addToArray('users', id, 'publishedRecipes', recipe.id);
       await rdb.destroy('draftRecipes', recipe.id);
@@ -141,8 +152,8 @@ router.post('/saveToCollection', async (req, res) => {
         try {
           const collectionCountResponse = await rdb.increment('publishedRecipes', id, 'collectionCount');
         } catch (error) {
-          logger('POST /saveToCollection increment recipe collectionCount', { 
-            id 
+          logger('POST /saveToCollection increment recipe collectionCount', {
+            id
           }, error);
         }
 
@@ -151,7 +162,7 @@ router.post('/saveToCollection', async (req, res) => {
       }
     } catch (error) {
       logger('POST /saveToCollection addToRecipeCollection', { userId, id }, error);
-    } 
+    }
   } else {
     logger('POST /saveToCollection', { id, userId }, 'No id or userId provided');
     return res.sendStatus(400);
@@ -169,8 +180,8 @@ router.post('/removeFromCollection', async (req, res) => {
         try {
           const collectionCountResponse = await rdb.decrement('publishedRecipes', id, 'collectionCount');
         } catch (error) {
-          logger('POST /saveToCollection increment recipe collectionCount', { 
-            id 
+          logger('POST /saveToCollection increment recipe collectionCount', {
+            id
           }, error);
         }
 
@@ -179,7 +190,7 @@ router.post('/removeFromCollection', async (req, res) => {
       }
     } catch (error) {
       logger('POST /saveToCollection addToRecipeCollection', { userId, id }, error);
-    } 
+    }
   } else {
     logger('POST /saveToCollection', { id, userId }, 'No id or userId provided');
     return res.sendStatus(400);
