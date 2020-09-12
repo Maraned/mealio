@@ -25,8 +25,8 @@ const App = () => {
     <FacebookProvider>
       <PendingRequestProvider>
         <UserProvider>
-          <LoggedInProvider>
-            <RouterProvider>
+          <RouterProvider>
+            <LoggedInProvider>
               <RecipeProvider>
                 <DraftRecipesProvider>
                   <PublishedRecipesProvider>
@@ -42,8 +42,8 @@ const App = () => {
                   </PublishedRecipesProvider>
                 </DraftRecipesProvider>
               </RecipeProvider>
-            </RouterProvider>
-          </LoggedInProvider>
+            </LoggedInProvider>
+          </RouterProvider>
         </UserProvider>
       </PendingRequestProvider>
     </FacebookProvider>

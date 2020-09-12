@@ -2,17 +2,16 @@ import './profileSection.css';
 
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  FaSignOutAlt, 
-  FaCogs, 
-  FaUtensils, 
-  FaListUl, 
-  FaStar 
+import {
+  FaSignOutAlt,
+  FaCogs,
+  FaUtensils,
+  FaListUl,
+  FaStar
 } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 
 import { UserContext } from 'contexts/user';
-import { RouterContext } from 'contexts/router';
 import { LoggedInContext } from 'contexts/login';
 
 import Avatar from 'components/user/Avatar';
@@ -20,7 +19,6 @@ import MenuOption from 'components/core/MenuOption';
 
 export default function ProfileSection() {
   const { state: user } = useContext(UserContext);
-  const { dispatch: route } = useContext(RouterContext)
   const { dispatch } = useContext(LoggedInContext);
   const { t } = useTranslation();
   const location = useLocation();
@@ -35,24 +33,21 @@ export default function ProfileSection() {
 
       <div className="flex column">
         <Link to={{ pathname: '/settings', state: { modal: true, previousLocation: location}}}>
-          <MenuOption 
+          <MenuOption
             text={t('Menu:Settings')}
             Icon={FaCogs}
-            onClick={() => route({ type: 'settings', modalData: {
-              headerTitle: t('Menu:Settings')
-            }})}  
           />
         </Link>
 
         <Link to="/savedRecipes">
-          <MenuOption 
+          <MenuOption
             text={t('Menu:MyRecipeCollection')}
             Icon={FaStar}
           />
         </Link>
 
         <Link to="/myRecipes">
-          <MenuOption 
+          <MenuOption
             text={t('Menu:MyRecipes')}
             Icon={FaUtensils}
           />
@@ -60,18 +55,12 @@ export default function ProfileSection() {
 
         <Link to={{ pathname: '/grocerylists', state: { modal: true, previousLocation: location }}}>
           <MenuOption
-            onClick={() => route({ 
-              type: 'groceryLists', 
-              value: {
-                headerTitle: t('GroceryList:Title'),
-              } 
-            })}
             text={t('Menu:GroceryLists')}
             Icon={FaListUl}
           />
         </Link>
 
-        <MenuOption 
+        <MenuOption
           onClick={() => dispatch({ type: 'logout' })}
           text={t('Menu:Logout')}
           Icon={FaSignOutAlt}

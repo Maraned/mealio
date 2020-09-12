@@ -2,7 +2,7 @@ import './mainView.css';
 
 import React from 'react';
 
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import cc from 'classcat';
 
 import AlertBannerView from 'views/alertBanner/AlertBannerView';
@@ -35,13 +35,10 @@ const MainView = () => {
   return (
     <>
       <div className="mainView">
-        <Router>
+        <Logo />
+        <Breadcrumbs />
 
-          <Logo />
-          <Breadcrumbs />
-
-          <MainContentView />
-        </Router>
+        <MainContentView />
       </div>
     </>
   )

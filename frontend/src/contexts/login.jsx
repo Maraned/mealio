@@ -3,6 +3,7 @@ import React, { createContext, useReducer, useContext, useEffect } from 'react';
 import { postRequest } from 'utils/request';
 import { UserContext } from 'contexts/user';
 import { PendingRequestContext } from 'contexts/pendingRequests';
+import { useHistory, useLocation } from "react-router-dom";
 
 const loginReducer = (state, action) => {
   switch (action.type) {
@@ -51,10 +52,18 @@ export function LoggedInProvider(props) {
   const [state, dispatch] = useReducer(loginReducer, initialState);
   const { dispatch: userDispatch } = useContext(UserContext);
   const { dispatch: pendingRequest } = useContext(PendingRequestContext);
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     autoLogin(dispatch, userDispatch, pendingRequest);
   }, [])
+
+  useEffect(() => {
+    if (!state.loggedIn && location.pathname !== '/') {
+      history.push('/');
+    }
+  }, [state.loggedIn]);
 
   return (
     <LoggedInContext.Provider value={{ state, dispatch }}>

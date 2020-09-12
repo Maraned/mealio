@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LoggedInContext } from 'contexts/login';
-import { RouterContext } from 'contexts/router';
 import { Link } from 'react-router-dom';
 
 export default function MainDashboard() {
   const { t } = useTranslation();
   const { state: { loggedIn } } = useContext(LoggedInContext);
-  const { dispatch } = useContext(RouterContext);
 
   const renderSquare = (text, page) => (
     <Link to={`${page}`}>
@@ -18,16 +16,7 @@ export default function MainDashboard() {
   );
 
   const renderModalSquare = (text, page) => (
-    <a
-    onClick={() => {
-      return dispatch({
-        type: page,
-        value: {
-          headerTitle: t('GroceryList:Title'),
-        }
-      })
-    }}
-    >
+    <a>
       <div
         className="square shadow center"
 

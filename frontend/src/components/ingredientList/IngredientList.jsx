@@ -7,7 +7,6 @@ import { Droppable } from 'react-beautiful-dnd';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
-import { RouterContext } from 'contexts/router';
 import IngredientModel from 'models/ingredientModel';
 import uuid from 'utils/uuid';
 
@@ -22,7 +21,6 @@ const IngredientList = ({
 }) => {
   const { state } = useContext(EditableContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
-  const { dispatch: changeView } = useContext(RouterContext);
   const { t } = useTranslation();
   const { ingredients: recipeIngredients, portions, defaultPortions = 4 } = recipe;
   const location = useLocation();
@@ -111,15 +109,6 @@ const IngredientList = ({
     return groceryListItems;
   }
 
-  const openGroceryListModal = () => {
-    changeView({ type: 'groceryLists', value: {
-      items: ingredientsToGroceryListItems(ingredients),
-      recipeId: recipe.id,
-      recipeName: recipe.name,
-      headerTitle: t('GroceryList:Title'),
-    } });
-  };
-
   const portionsAmount = portions
     ? parseInt(portions, 10)
     : parseInt(defaultPortions, 10);
@@ -159,7 +148,7 @@ const IngredientList = ({
             }
           }
         }}>
-          <button onClick={openGroceryListModal}>
+          <button>
             {t('Recipe:AddToGroceryList')}
           </button>
         </Link>

@@ -3,7 +3,6 @@ import './ingredient.css';
 import React, { useState, useContext, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaTimes, FaGripVertical } from 'react-icons/fa';
-import cc from 'classcat';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Draggable } from 'react-beautiful-dnd';
 
