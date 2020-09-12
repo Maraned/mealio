@@ -5,15 +5,18 @@
 .tab {
   padding: .75rem;
   cursor: pointer;
-  opacity: .3;
-  transition: opacity .1s, transform .1s;
   padding: .5rem;
 }
 
-.tab--selected {
+.tab h3 {
+  opacity: .3;
+  transition: opacity .1s, transform .1s;
+}
+
+.tab--selected h3 {
   opacity: 1;
 }
 
-.tab:hover {
+.tab h3:hover {
   transform: scale(0.95);
 }

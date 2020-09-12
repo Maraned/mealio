@@ -51,7 +51,6 @@ const Tabs = React.memo(({
           return (
             <Tab
               key={view.title}
-              onClick={() => setActiveView(view)}
               isSelected={isSelected}
               className="tabs__tab"
             >
