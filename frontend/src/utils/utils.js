@@ -42,7 +42,7 @@ export const TransformRecipeNameToUrl = name => {
   const transformedName = name
     .toLowerCase()
     .replace(/å|ä/g, 'a')
-    .replace('ö', 'o')
-    .replace(' ', '-');
+    .replace(/ö/g, 'o')
+    .replace(/\s/g, '-');
   return transformedName;
 }

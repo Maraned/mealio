@@ -1,6 +1,7 @@
 import './breadcrumbs.css';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { PublishedRecipesContext } from 'contexts/publishedRecipes';
 import { useTranslation } from 'react-i18next';
 import cc from 'classcat';
 import { useHistory, useLocation } from "react-router-dom";
@@ -9,12 +10,13 @@ export default function Breadcrumbs() {
   const { t } = useTranslation();
   const history = useHistory();
   let location = useLocation();
+  const { state: publishedRecipes } = useContext(PublishedRecipesContext);
   const [breadcrumbs, setBreadcrumbs] = useState(['/']);
 
   useEffect(() => {
     const currentLocation = history.location.pathname;
     const currentLocationBreadcrumbs = currentLocation === '/'
-      ? ['/'] 
+      ? ['/']
       : currentLocation.split('/');
 
     currentLocationBreadcrumbs[0] = '/';
@@ -33,7 +35,17 @@ export default function Breadcrumbs() {
       const splittedBreadcrumd = breadcrumb.split('/');
       breadcrumbName = splittedBreadcrumd[splittedBreadcrumd.length - 1];
     }
-    return breadcrumbName;
+
+    let translation = t(`Breadcrumbs:${breadcrumbName}`);
+    if (!translation) {
+      const foundRecipeForBreadcrumb = publishedRecipes.find(recipe => {
+        return recipe.url === breadcrumbName;
+      });
+      if (foundRecipeForBreadcrumb) {
+        translation = foundRecipeForBreadcrumb.name;
+      }
+    }
+    return translation;
   }
 
   return (
@@ -41,16 +53,15 @@ export default function Breadcrumbs() {
       <div className="background box">
         {breadcrumbs.map((breadcrumb, index) => {
           const lastBreadcrumb = index === (breadcrumbs.length - 1);
-    
           return (
             <span key={breadcrumb + index}>
-              <span 
+              <span
                 className={cc(['breadcrumb', {
                   'breadcrumb--last': lastBreadcrumb
                 }])}
                 onClick={() => !lastBreadcrumb && breadcrumbClick(breadcrumb, index)}
               >
-                {t(`Breadcrumbs:${getBreadcrumbName(breadcrumb)}`)}
+                {getBreadcrumbName(breadcrumb)}
               </span>
 
               {!lastBreadcrumb && (
