@@ -11,10 +11,20 @@
   cursor: pointer;
   border-radius: 10px;
   z-index: 1;
+  transition: opacity .2s, transform .2s;
 }
 
 .recipeAccordion__header--draft {
   background-color: var(--grey);
+}
+
+.recipeAccordion__header--createNew {
+  background-color: var(--primary-color-lighter);
+}
+
+.recipeAccordion__header:hover {
+  opacity: 0.9;
+  transform: scale(0.99);
 }
 
 .recipeAccordion:not(:last-child) {

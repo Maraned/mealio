@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'; 
+import React, { createContext, useReducer } from 'react';
 
 const updateDraftRecipe = (recipes, updatedRecipe) => {
   const nonUpdatedRecipes = recipes.filter(recipe => {
@@ -21,13 +21,13 @@ const recipeOrder = (a, b) => {
   if (aDate < bDate) return 1;
   if (aDate > bDate) return -1;
   return 0;
-}
+};
 
 const reducer = (state, action) => {
   let recipes = state;
   switch (action.type) {
     case 'added':
-      recipes = [...state, action.value];
+      recipes = [action.value, ...state];
       break;
     case 'updated':
       recipes = updateDraftRecipe(state, action.value);
@@ -45,7 +45,8 @@ const reducer = (state, action) => {
       return state;
   }
 
-  return recipes.sort(recipeOrder);
+  const sortedRecipes = recipes.sort(recipeOrder);
+  return sortedRecipes;
 };
 
 const initialState = [];
@@ -58,5 +59,5 @@ export const DraftRecipesProvider = props => {
     <DraftRecipesContext.Provider value={{ state, dispatch }}>
       {props.children}
     </DraftRecipesContext.Provider>
-  ) 
+  )
 };

@@ -90,6 +90,8 @@ router.post('/createUpdate', async (req, res, next) => {
         return res.send({ status: 'updated', recipe: { ...recipe, images }});
       } else {
         const images = await getImages(recipe.images, id);
+        const lastUpdate = new Date();
+        recipe.lastUpdate = lastUpdate;
         const response = await rdb.save('draftRecipes', { ...recipe, images });
         const draftId = response.generated_keys[0];
         await rdb.addToArray('users', id, 'draftRecipes', draftId);

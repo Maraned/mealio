@@ -6,11 +6,11 @@
   cursor: pointer;
   background-color: white;
   border-radius: .5rem;
+  height: 100%;
 }
 
 .recipeCard__image {
   height: 150px;
-  
 }
 
 .recipeCard__image img {
@@ -34,11 +34,12 @@
 }
 
 .recipeCard__content > * {
-  padding: .5rem .5rem 0;  
+  padding: .5rem .5rem 0;
 }
 
 .recipeCard__name {
-  font-weight: 700; 
+  font-weight: 700;
+  font-size: .9rem;
 }
 
 .recipeCard__description {

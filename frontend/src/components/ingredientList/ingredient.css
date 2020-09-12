@@ -1,5 +1,6 @@
 .ingredient {
   display: flex;
+  align-self: baseline;
 }
 
 .ingredient--editMode {

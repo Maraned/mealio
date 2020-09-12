@@ -16,9 +16,9 @@ const NewIngredient = ({ name, groups, closeModal }) => {
   const [ingredientAlternatives, setIngredientAlternatives] = useState([]);
   const { t } = useTranslation();
   const { state: user } = useContext(UserContext);
-  const { 
-    state: allIngredients, 
-    dispatch: allIngredientsDispatch 
+  const {
+    state: allIngredients,
+    dispatch: allIngredientsDispatch
   } = useContext(AllIngredientsContext);
 
   const updateAllIngredients = async () => {
@@ -29,15 +29,15 @@ const NewIngredient = ({ name, groups, closeModal }) => {
   const addIngredient = async () => {
     let groupId = ingredientGroup.id;
     if (!groupId) {
-      groupId = await postRequest('ingredients/groups', { 
+      groupId = await postRequest('ingredients/groups', {
         name: ingredientGroup.name,
         userId: user.id,
       }, true);
       ingredientGroup.id = groupId;
     }
 
-    const ingredientId = await postRequest('ingredients', { 
-      name: ingredientName, 
+    const ingredientId = await postRequest('ingredients', {
+      name: ingredientName,
       group: ingredientGroup,
       alternatives: ingredientAlternatives.map(alternative => alternative.id),
       userId: user.id,
@@ -81,12 +81,12 @@ const NewIngredient = ({ name, groups, closeModal }) => {
           </span>
         ))}
       </div>
-      <EditableField 
-        placeholder={t('Ingredient:Alternative')} 
+      <EditableField
+        placeholder={t('Ingredient:Alternative')}
         searchOptions={allIngredients}
-        onOptionClick={onAlternativeSelect}     
-        optionText={option => t(`IngredientNames:${option.name}`)} 
-        center    
+        onOptionClick={onAlternativeSelect}
+        optionText={option => t(`IngredientNames:${option.name}`)}
+        center
       />
     </div>
   );
@@ -103,18 +103,18 @@ const NewIngredient = ({ name, groups, closeModal }) => {
           <h2>{t('Ingredient:NewIngredient')}</h2>
 
           <EditableField
-            placeholder={t('Ingredient:Name')} 
-            onChange={event => setIngredientName(event.target.value)}  
+            placeholder={t('Ingredient:Name')}
+            onChange={event => setIngredientName(event.target.value)}
             value={ingredientName}
             center
           />
 
-          <EditableField 
+          <EditableField
             value={t(`Group:${ingredientGroup.name}`)}
             onChange={onGroupChange}
-            placeholder={t('Ingredient:Group')} 
+            placeholder={t('Ingredient:Group')}
             searchOptions={groups}
-            onOptionClick={onGroupSelect}    
+            onOptionClick={onGroupSelect}
             optionText={option => t(`Group:${option.name}`)}
             center
           />

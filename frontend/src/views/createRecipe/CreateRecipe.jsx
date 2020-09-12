@@ -5,11 +5,13 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaRegClock, FaStar } from 'react-icons/fa';
 import cc from 'classcat';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { UserContext } from 'contexts/user';
 import { AlertBannerContext } from 'contexts/alertBanner';
+import Loader from 'components/core/Loader';
 
 import {
   GetRecipeNameFromDraftEditorContent,
@@ -23,12 +25,11 @@ import EditableField from 'components/core/EditableField/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
 import Author from 'components/core/Author';
-import RecipeModel from 'models/recipeModel'
 
 import { postRequest, deleteRequest, imageUrl } from 'utils/request';
 import UrlInput from './UrlInput';
 
-const CreateRecipe = ({ publishedMode }) => {
+const CreateRecipe = React.memo(({ publishedMode, onPublish }) => {
   const { t, i18n } = useTranslation();
   // CONTEXTS
   const { state: user, dispatch: userDispatch } = useContext(UserContext);
@@ -36,6 +37,8 @@ const CreateRecipe = ({ publishedMode }) => {
 
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
+
+  const [pendingPublish, setPendingAction] = useState(false);
 
   const getLastSavedText = date => {
     if (!date || (date instanceof Date && isNaN(date))) {
@@ -130,6 +133,7 @@ const CreateRecipe = ({ publishedMode }) => {
   };
 
   const deleteRecipe = async () => {
+    setPendingAction(true);
     const response = await deleteRequest('recipes', {
       type: recipe.draft ? 'draftRecipes' : 'publishedRecipes',
       recipeId: recipe.id,
@@ -137,6 +141,7 @@ const CreateRecipe = ({ publishedMode }) => {
     }, false);
 
     if (response.statusCode !== 200) {
+      setPendingAction(false);
       ShowResponseErrorToast(t, alertBannerDispatch, response, 'Recipe:DeleteFailed');
     } else {
       ShowSuccessToast(t, alertBannerDispatch, 'Recipe:DeleteSuccess')
@@ -144,6 +149,7 @@ const CreateRecipe = ({ publishedMode }) => {
   };
 
   const publishRecipe = async () => {
+    setPendingAction(true);
     const response = await postRequest('recipes/publish', {
       id: user.id,
       recipe: {
@@ -154,9 +160,13 @@ const CreateRecipe = ({ publishedMode }) => {
     }, false);
 
     if (response.statusCode !== 200) {
+      setPendingAction(false);
       ShowResponseErrorToast(t, alertBannerDispatch, response, 'Recipe:PublishFailed');
     } else {
       if (recipe.draft) {
+        if (onPublish) {
+          onPublish(recipe.id);
+        }
         ShowSuccessToast(t, alertBannerDispatch, 'Recipe:PublishSuccess')
       }
     }
@@ -253,30 +263,45 @@ const CreateRecipe = ({ publishedMode }) => {
 
         <UrlInput onRecipeFetch={() => {}} />
 
-        {recipe.draft && recipe.id && (
-          <button
-            className="createRecipe__publish"
-            onClick={publishRecipe}
-          >
-            {t('Recipe:Publish')}
-          </button>
-        )}
+        <AnimatePresence initial={false}>
+          {pendingPublish ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex grow center"
+            >
+              <Loader />
+            </motion.div>
+          ) : (
+            <>
+              {recipe.draft && recipe.id && (
+                <button
+                  className="createRecipe__publish"
+                  onClick={publishRecipe}
+                >
+                  {t('Recipe:Publish')}
+                </button>
+              )}
 
-        {recipe.draft != null && !recipe.draft && (
-          <button
-            className="createRecipe__update"
-            onClick={editRecipe}
-          >
-            {t('Recipe:Update')}
-          </button>
-        )}
+              {recipe.draft != null && !recipe.draft && (
+                <button
+                  className="createRecipe__update"
+                  onClick={editRecipe}
+                >
+                  {t('Recipe:Update')}
+                </button>
+              )}
 
-        <button
-          className="createRecipe__delete remove"
-          onClick={deleteRecipe}
-        >
-          {t('Recipe:Delete')}
-        </button>
+              <button
+                className="createRecipe__delete remove"
+                onClick={deleteRecipe}
+              >
+                {t('Recipe:Delete')}
+              </button>
+            </>
+          )}
+        </AnimatePresence>
       </div>
 
     </FullWidthContainer>
@@ -383,6 +408,6 @@ const CreateRecipe = ({ publishedMode }) => {
       </FullWidthContainer>
     </div>
   );
-}
+});
 
 export default CreateRecipe;

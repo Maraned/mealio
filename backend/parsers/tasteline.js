@@ -57,25 +57,27 @@ async function TastelineParser(htmlPage, url, userId) {
   const authorName = $('.recipe-author-text-inner span').text();
   const authorUrl = $('.recipe-author a').attr('href');
 
-  const existingAuthorByUrl = await findByArray('users', 'urls', authorUrl);
-
   let authorId;
   let author;
-  if (!existingAuthorByUrl.length) {
-    const createdUser = await createUser(
-      authorUrl,
-      uuidv4(),
-      { urls: [authorUrl], displayName: authorName }
-    );
-    author = createdUser;
-    authorId = createdUser.id;
-  } else {
-    author = existingAuthorByUrl[0];
-    authorId = existingAuthorByUrl[0].id;
-  }
+  if (authorUrl) {
+    const existingAuthorByUrl = await findByArray('users', 'urls', authorUrl);
 
-  if (author) {
-    delete author.password;
+    if (!existingAuthorByUrl.length) {
+      const createdUser = await createUser(
+        authorUrl,
+        uuidv4(),
+        { urls: [authorUrl], displayName: authorName }
+      );
+      author = createdUser;
+      authorId = createdUser.id;
+    } else {
+      author = existingAuthorByUrl[0];
+      authorId = existingAuthorByUrl[0].id;
+    }
+
+    if (author) {
+      delete author.password;
+    }
   }
 
   ingredientGroups = await IngredientMatcher(ingredientGroups);

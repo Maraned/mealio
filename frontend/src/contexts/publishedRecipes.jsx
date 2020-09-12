@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'; 
+import React, { createContext, useReducer } from 'react';
 
 const updatePublishedRecipe = (recipes, updatedRecipe) => {
   const nonUpdatedRecipes = recipes.filter(recipe => {
@@ -14,19 +14,37 @@ const removeRecipeFromPublishedRecipes = (recipes, removedRecipe) => {
   });
 };
 
+const recipeOrder = (a, b) => {
+  const aDate = new Date(a.lastUpdate).getTime();
+  const bDate = new Date(b.lastUpdate).getTime();
+
+  if (aDate < bDate) return 1;
+  if (aDate > bDate) return -1;
+  return 0;
+};
+
+
 const reducer = (state, action) => {
+  let recipes = state;
   switch (action.type) {
     case 'added':
-      return [...state, action.value];
+      recipes = [...state, action.value];
+      break;
     case 'updated':
-      return updatePublishedRecipe(state, action.value);
+      recipes = updatePublishedRecipe(state, action.value);
+      break;
     case 'removed':
-      return removeRecipeFromPublishedRecipes(state, action.value);
+      recipes = removeRecipeFromPublishedRecipes(state, action.value);
+      break;
     case 'set':
-      return action.value;
+      recipes = action.value;
+      break;
     default:
       return state;
   }
+
+  const sortedRecipes = recipes.sort(recipeOrder);
+  return sortedRecipes;
 };
 
 const initialState = [];
@@ -39,5 +57,5 @@ export const PublishedRecipesProvider = props => {
     <PublishedRecipesContext.Provider value={{ state, dispatch }}>
       {props.children}
     </PublishedRecipesContext.Provider>
-  ) 
+  )
 };

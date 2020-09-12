@@ -24,8 +24,6 @@ const updateRecipe = async (newState, dispatch) => {
 
   const { originalAuthorUser, authorUser, ...recipe } = newState;
 
-  console.log('newState', newState)
-
   const response = await postRequest('recipes/createUpdate', {
     recipe: {
       ...recipe,
@@ -35,9 +33,7 @@ const updateRecipe = async (newState, dispatch) => {
     id: newState.author,
   });
 
-  console.log('response', response)
-
-  const { status, draftId, recipe: { lastUpdate }, author } = response;
+  const { status, draftId, recipe: { lastUpdate } } = response;
   if (status === 'created') {
     dispatch({ type: 'update', value: { id: draftId, lastUpdate } });
   }
@@ -100,7 +96,7 @@ const recipeReducer = (state, action) => {
       };
       break;
     case 'reset':
-      newState = { ...RecipeModel };
+      newState = new RecipeModel();
       break;
     case 'unset':
       break;
@@ -222,7 +218,6 @@ export const RecipeProvider = props => {
     const recipeUrl = window.location.pathname.replace('/recipes/', '');
     setPendingRequest({ type: 'pendingRecipeFetch', value: true });
     const recipe = await getRequest(`recipes/url/${recipeUrl}`);
-    console.log('recipe from request', recipe)
     dispatch({ type: 'recipe', value: recipe });
     setPendingRequest({ type: 'pendingRecipeFetch', value: false });
   }

@@ -1,38 +1,10 @@
 import './tabs.css';
 
 import React, { useState, useEffect } from 'react';
-import posed from 'react-pose';
 import { Switch, Route, Link, useRouteMatch, Redirect, useLocation } from 'react-router-dom';
 import classcat from 'classcat';
 
-// const Tab = posed.div({
-//   hoverable: true,
-//   hover: {
-//     scale: 0.95,
-//   },
-//   init: {
-//     scale: 1,
-//   },
-//   enter: {
-//     opacity: 1,
-//     borderColor: 'red',
-//     delay: 150,
-//     transition: {
-//       y: { type: 'spring', stiffness: 1000, damping: 15 },
-//       borderColor: { ease: 'easeOut', duration: 150 },
-//     }
-//   },
-//   exit: {
-//     opacity: 0.3,
-//     borderColor: 'none',
-//     transition: {
-//       duration: 150,
-//       borderColor: { ease: 'easeOut', duration: 300 },
-//     }
-//   }
-// });
-
-export const Tab = ({ children, isSelected, onClick }) => (
+export const Tab = React.memo(({ children, isSelected, onClick }) => (
   <div
     onClick={onClick}
       className={classcat(['tab', {
@@ -41,12 +13,12 @@ export const Tab = ({ children, isSelected, onClick }) => (
   >
     {children}
   </div>
-);
+));
 
-export default function Tabs({
+const Tabs = React.memo(({
   views = [],
   defaultRoute,
-}) {
+}) => {
   let match = useRouteMatch();
   let location = useLocation();
 
@@ -105,4 +77,6 @@ export default function Tabs({
       </div>
     </div>
   );
-}
+});
+
+export default Tabs;

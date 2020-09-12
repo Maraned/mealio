@@ -193,7 +193,7 @@ const Step = ({
        </div>
 
       <div className="step__content">
-        {parsedStep.map((word, wordIndex) => (
+        {parsedStep.map((word, wordIndex) => !word.text ? '' : (
           <span
             key={word.text + wordIndex}
             className={word.ingredient && 'highlightedWord'}

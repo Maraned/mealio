@@ -8,7 +8,7 @@ const CreateRecipeView = props => {
   return (
     <EditableProvider editable={props.editable}>
       <RecipeProvider recipe={props.recipe}>
-        <CreateRecipe />
+        <CreateRecipe onPublish={props.onPublish} />
       </RecipeProvider>
     </EditableProvider>
   );

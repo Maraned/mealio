@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import MiniSearch from 'minisearch';
 
 import ReactDOM from 'react-dom';
- 
+
 import { EditableContext } from 'contexts/editable';
 
 const SelectContentPose = posed.div({
@@ -79,7 +79,7 @@ const Select = ({
   const [filteredOptions, setFilteredOptions] = useState(options);
   const miniSearch = useRef(null);
   const inputRef = useRef(null);
- 
+
   const changeSelected = option => () => {
     if (!multiSelect) {
       setOpen(false);
@@ -93,7 +93,7 @@ const Select = ({
   const handleClick = e => {
     if ((
         node.current
-        && !node.current.contains(e.target) 
+        && !node.current.contains(e.target)
         && contentRef.current
         && !contentRef.current.contains(e.target)
       ) || closeOnSelect
@@ -116,9 +116,9 @@ const Select = ({
         fields: searchFields, // fields to index for full-text search
       });
       miniSearch.current.addAll(options)
-    } 
+    }
     setFilteredOptions(options);
-  }, [options, searchable, searchFields]); 
+  }, [options, searchable, searchFields]);
 
   useEffect(() => {
     if (searchable) {
@@ -145,11 +145,11 @@ const Select = ({
     return () => {
       document.removeEventListener("mousedown", handleClick);
     };
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, []);
 
 
-  const editState = manualStateMode 
+  const editState = manualStateMode
     ? manualEditState
     : editableState && editableState.editable;
 
@@ -161,16 +161,16 @@ const Select = ({
   };
 
   const getSelectedText = () => {
-    return selectedText 
+    return selectedText
       || (preSelected && preSelected[textAttribute])
       || defaultText;
   };
 
   const renderEditableView = () => (
-    <div 
+    <div
       className={cc(['select', className, {
         'select--error': error
-      }])} 
+      }])}
       ref={node}
     >
       <div ref={inputRef} className="select__input" onClick={() => setOpen(!open)}>
@@ -178,10 +178,10 @@ const Select = ({
           {getSelectedText()}
         </span>
 
-        <FaCaretDown 
+        <FaCaretDown
           className={cc(['select__caret', {
             'select__caret--open': open
-          }])} 
+          }])}
         />
       </div>
 
@@ -192,16 +192,16 @@ const Select = ({
             <>
               <div className="select__options">
                 {searchable && (
-                  <input 
+                  <input
                     className="select__search"
                     placeholder={searchPlaceholder || t('Select:Search')}
                     onChange={event => setQuery(event.target.value)}
                   />
                 )}
                 {filteredOptions && filteredOptions.map(option => (
-                  <div 
-                    key={option.id} 
-                    className="select__option relative clickable text--ellipsisOverflow" 
+                  <div
+                    key={option.id}
+                    className="select__option relative clickable text--ellipsisOverflow"
                     onClick={changeSelected(option)}
                   >
                     {multiSelect && renderCheckbox(option)}
@@ -223,12 +223,12 @@ const Select = ({
 
   const renderReadonlyView = () => (
     <div className="" ref={node}>
-      {selectedText}
+      {getSelectedText()}
     </div>
   );
-  
+
   return editState
-    ? renderEditableView() 
+    ? renderEditableView()
     : renderReadonlyView();
 };
 

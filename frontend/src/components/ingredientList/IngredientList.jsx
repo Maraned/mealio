@@ -8,7 +8,6 @@ import { Droppable } from 'react-beautiful-dnd';
 import { EditableContext } from 'contexts/editable';
 import { RecipeContext } from 'contexts/recipe';
 import { RouterContext } from 'contexts/router';
-import { UserContext } from 'contexts/user';
 import IngredientModel from 'models/ingredientModel';
 import uuid from 'utils/uuid';
 
@@ -22,7 +21,6 @@ const IngredientList = ({
   ingredientGroupId
 }) => {
   const { state } = useContext(EditableContext);
-  const { state: user } = useContext(UserContext);
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: changeView } = useContext(RouterContext);
   const { t } = useTranslation();
@@ -31,15 +29,10 @@ const IngredientList = ({
 
   const ingredients = groupIngredients || recipeIngredients;
 
-  const author = {
-    id: user.id,
-    name: user.displayName
-  };
-
   const updateIngredient = (index, ingredient) => {
     const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
     modifiedIngredients[index] = ingredient;
-    updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
+    updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients }});
   }
 
   const addIngredient = () => {
@@ -59,18 +52,18 @@ const IngredientList = ({
     } else {
       const modifiedIngredients = JSON.parse(JSON.stringify(ingredients));
       modifiedIngredients.push({...IngredientModel});
-      updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
+      updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients }});
     }
   }
 
   const updateIngredients = ingredients => {
-    updateRecipe({ type: 'update', value: { ingredients, author }});
+    updateRecipe({ type: 'update', value: { ingredients }});
   }
 
   const removeIngredient = (index, ingredient) => {
     const modifiedIngredients = [...ingredients];
     modifiedIngredients.splice(index, 1);
-      updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients, author }});
+      updateRecipe({ type: 'update', value: { ingredients: modifiedIngredients }});
   }
 
   const parseIngredientText = ingredientText => {
@@ -145,6 +138,7 @@ const IngredientList = ({
           onRemove={removeIngredient}
         />
       ))}
+
       {provided?.placeholder}
 
       {state.editable ? (
