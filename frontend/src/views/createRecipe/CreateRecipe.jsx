@@ -88,7 +88,9 @@ const CreateRecipe = React.memo(({ publishedMode, onPublish }) => {
   }, [changed]);
 
   useEffect(() => {
-    dispatch({ type: 'edit' });
+    if (!publishedMode) {
+      dispatch({ type: 'edit' });
+    }
     mounted.current = true;
     // eslint-disable-next-line
   }, []);
