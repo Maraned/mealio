@@ -88,8 +88,7 @@ export const getRequest = async (endpoint, query) => {
     }));
     return response;
   } catch (error) {
-    console.error('getRequest', { endpoint }, error);
-    throw error;
+    return null;
   }
 }
 

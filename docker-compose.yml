@@ -50,6 +50,8 @@ services:
       - ./backend/utils:/usr/src/app/utils
       - ./backend/images:/usr/src/app/images
       - ./backend/parsers:/usr/src/app/parsers
+      - ./backend/server.js:/usr/src/app/server.js
+      - ./backend/wsServer.js:/usr/src/app/wsServer.js
     depends_on:
       - rethink
 

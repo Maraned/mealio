@@ -17,7 +17,7 @@ const RecipeCard = ({ recipe }) => {
   }
 
   return (
-    <Link to={`/recipes/${recipe.name}`}>
+    <Link to={`/recipes/${recipe.url}`}>
       <div className="recipeCard" onClick={goToRecipeDetail}>
         <div className={cc(['recipeCard__image', {
           'recipeCard__image--default': !recipe.image

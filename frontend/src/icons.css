@@ -1,0 +1,9 @@
+.icon--error {
+  color: var(--alert-color);
+}
+
+.icon--marginRight {
+  margin-right: .25rem;
+}
+
+

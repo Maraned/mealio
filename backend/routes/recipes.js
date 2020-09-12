@@ -67,6 +67,17 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/url/:url', async (req, res, next) => {
+  try {
+    const recipes = await rdb.findBy('publishedRecipes', 'url', req.params.url);
+    res.status(200);
+    return res.send(recipes[0]);
+  } catch (error) {
+    console.error(error);
+    return res.sendStatus(500);
+  }
+});
+
 router.post('/createUpdate', async (req, res, next) => {
   try {
     const { recipe, id } = req.body;
@@ -101,8 +112,8 @@ router.post('/publish', async (req, res, next) => {
     try {
       const existingRecipeWithName = await rdb.findBy(
         'publishedRecipes',
-        'name',
-        recipe.name
+        'url',
+        recipe.url
       );
 
       if (existingRecipeWithName.length) {

@@ -64,7 +64,8 @@ export default {
     Import: 'Importera',
     RecipeWithNameExists: 'Ett publicerat recept existerar redan med detta namn. Vänligen ändra det för att kunna publicera.',
     DeleteFailed: 'Något gick fel vid borttagandet av receptet.',
-    DeleteSuccess: 'Receptet har tagits bort.'
+    DeleteSuccess: 'Receptet har tagits bort.',
+    ShowRecipeFailed: 'Något gick fel vid hämtning av recept.'
   },
   Time: {
     Second: 'sekund',

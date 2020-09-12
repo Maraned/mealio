@@ -31,7 +31,7 @@ export default function ViewRoutes() {
         <RecipeCollection />
       </Route>
 
-      <Route path="/recipes/:name">
+      <Route path="/recipes/:url">
         <RecipeDetail />
       </Route>
 

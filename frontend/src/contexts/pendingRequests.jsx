@@ -6,6 +6,8 @@ const pendingRequestReducer = (state, action) => {
       return { ...state, initialFetch: action.value };
     case "initialLoginFetch":
       return { ...state, initialLoginFetch: action.value };
+    case 'pendingRecipeFetch':
+      return { ...state, pendingRecipeFetch: action.value };
     default:
       return state;
   }

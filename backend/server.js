@@ -35,10 +35,11 @@ app.use(jwt({ secret: process.env.SECRET })
       '/login',
       '/login/refresh',
       '/users/create',
-      '/',
+      '/recipes',
+      new RegExp('recipes/url'),
       '/ingredients',
       '/ingredientGroups',
-      '/recipes',
+      '/',
     ],
     ext: '.webp'
   })

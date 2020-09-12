@@ -23,40 +23,19 @@ import EditableField from 'components/core/EditableField/EditableField';
 import FullWidthContainer from 'components/core/FullWidthContainer';
 import ImageUpload from 'components/core/imageUpload/ImageUpload';
 import Author from 'components/core/Author';
+import RecipeModel from 'models/recipeModel'
 
 import { postRequest, deleteRequest, imageUrl } from 'utils/request';
 import UrlInput from './UrlInput';
 
 const CreateRecipe = ({ publishedMode }) => {
+  const { t, i18n } = useTranslation();
   // CONTEXTS
   const { state: user, dispatch: userDispatch } = useContext(UserContext);
   const { dispatch, state: editState } = useContext(EditableContext);
 
   const { state: recipe, dispatch: updateRecipe } = useContext(RecipeContext);
   const { dispatch: alertBannerDispatch } = useContext(AlertBannerContext);
-
-  const mounted = useRef(false);
-
-  const { t, i18n } = useTranslation();
-
-  const {
-    id,
-    name,
-    description,
-    images,
-    time,
-    ingredients,
-    lastUpdate,
-    origin,
-    originUrl,
-    author,
-    authorUser,
-    originalAuthorUser,
-  } = recipe;
-
-  const primaryImage = images && images.length && images[0];
-  const primaryImageUrl = imageUrl(primaryImage);
-
 
   const getLastSavedText = date => {
     if (!date || (date instanceof Date && isNaN(date))) {
@@ -84,13 +63,7 @@ const CreateRecipe = ({ publishedMode }) => {
     setLastSavedText(getLastSavedText(date));
   };
 
-
-  const onRecipeChange = (type, value) => {
-    const author = value.author || user.id;
-
-    updateRecipe({ type, value, author });
-  }
-
+  // USE EFFECTS
   useEffect(() => {
     if (mounted.current) {
       setChanged(true);
@@ -116,6 +89,39 @@ const CreateRecipe = ({ publishedMode }) => {
     mounted.current = true;
     // eslint-disable-next-line
   }, []);
+
+  const mounted = useRef(false);
+
+
+  if (!recipe) {
+    updateRecipe({ type: 'reset', value: {} });
+    return '';
+  }
+
+  const {
+    id,
+    name,
+    description,
+    images,
+    time,
+    ingredients,
+    lastUpdate,
+    origin,
+    originUrl,
+    author,
+    authorUser,
+    originalAuthorUser,
+  } = recipe;
+
+  const primaryImage = images && images.length && images[0];
+  const primaryImageUrl = imageUrl(primaryImage);
+
+
+  const onRecipeChange = (type, value) => {
+    const author = value.author || user.id;
+
+    updateRecipe({ type, value, author });
+  }
 
   const toggleViewMode = () => {
     editState.editable

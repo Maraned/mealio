@@ -1,10 +1,15 @@
 import React, { createContext, useReducer, useEffect, useState, useRef, useContext } from 'react';
 
 import RecipeModel from 'models/recipeModel';
-import { ArrayEqual, GetRecipeNameFromDraftEditorContent } from 'utils/utils';
-import { postRequest } from 'utils/request';
+import {
+  ArrayEqual,
+  GetRecipeNameFromDraftEditorContent,
+  TransformRecipeNameToUrl
+} from 'utils/utils';
+import { postRequest, getRequest } from 'utils/request';
 import { DraftRecipesContext } from 'contexts/draftRecipes';
 import { PublishedRecipesContext } from 'contexts/publishedRecipes';
+import { PendingRequestContext } from 'contexts/pendingRequests';
 
 const isNumberBetweenLimits = (number, lowerLimit, upperLimit) => {
   const isNumber = !isNaN(number);
@@ -19,6 +24,8 @@ const updateRecipe = async (newState, dispatch) => {
 
   const { originalAuthorUser, authorUser, ...recipe } = newState;
 
+  console.log('newState', newState)
+
   const response = await postRequest('recipes/createUpdate', {
     recipe: {
       ...recipe,
@@ -27,6 +34,8 @@ const updateRecipe = async (newState, dispatch) => {
     },
     id: newState.author,
   });
+
+  console.log('response', response)
 
   const { status, draftId, recipe: { lastUpdate }, author } = response;
   if (status === 'created') {
@@ -37,12 +46,20 @@ const updateRecipe = async (newState, dispatch) => {
 const recipeReducer = (state, action) => {
   let newState;
 
+  if (!action.value) {
+    return state;
+  }
+
   switch (action.type) {
     case 'ingredients':
       newState = { ...state, ingredients: [...action.value] };
       break;
     case 'name':
-      newState = { ...state, name: action.value };
+      newState = {
+        ...state,
+        name: action.value,
+        url: TransformRecipeNameToUrl(action.value),
+      };
       break;
     case 'steps':
       newState = { ...state,  steps: action.value };
@@ -66,13 +83,21 @@ const recipeReducer = (state, action) => {
       newState = { ...state, id: action.value };
       break;
     case 'update':
-      newState = { ...state, ...action.value };
+      newState = {
+        ...state,
+        ...action.value,
+        url: TransformRecipeNameToUrl(action.value.name || state.name),
+      };
       break;
     case 'draft':
       newState = { ...state, draft: action.value };
       break;
     case 'recipe':
-      newState = { ...state, ...action.value };
+      newState = {
+        ...state,
+        ...action.value,
+        url: TransformRecipeNameToUrl(action.value.name),
+      };
       break;
     case 'reset':
       newState = { ...RecipeModel };
@@ -136,19 +161,26 @@ const recipeReducer = (state, action) => {
   return newState;
 };
 
-const initialState = {...RecipeModel};
+const initialState = null;
 
 export const RecipeContext = createContext(initialState);
 
+let initialRecipeFetch = false;
+
 export const RecipeProvider = props => {
-  const { state: draftRecipes } = useContext(DraftRecipesContext);
-  const { state: publishedRecipes } = useContext(PublishedRecipesContext);
+  const { dispatch: setPendingRequest } = useContext(PendingRequestContext);
+
   const initialRecipeState = props.recipe || initialState;
   const [state, dispatch] = useReducer(recipeReducer, initialRecipeState);
-  const [previousState, setPreviousState] = useState({...initialRecipeState});
+  const [previousState, setPreviousState] = useState(initialRecipeState);
   const updateTimer = useRef(null);
 
   useEffect(() => {
+    if (!state || !previousState) {
+      setPreviousState(state);
+      return;
+    }
+
     const {
       ingredients,
       ingredientGroups,
@@ -163,7 +195,6 @@ export const RecipeProvider = props => {
       images: prevImages,
       steps: prevSteps,
     } = previousState;
-
 
     const ingredientsChanged = !ArrayEqual(ingredients, prevIngredients);
     const ingredientGroupsChanged = !ArrayEqual(ingredientGroups, prevIngredientGroups);
@@ -182,6 +213,25 @@ export const RecipeProvider = props => {
       setPreviousState(state);
     }
   }, [state, previousState]);
+
+  const fetchRecipeFromUrl = async () => {
+    if (state) {
+      return;
+    }
+    initialRecipeFetch = true;
+    const recipeUrl = window.location.pathname.replace('/recipes/', '');
+    setPendingRequest({ type: 'pendingRecipeFetch', value: true });
+    const recipe = await getRequest(`recipes/url/${recipeUrl}`);
+    console.log('recipe from request', recipe)
+    dispatch({ type: 'recipe', value: recipe });
+    setPendingRequest({ type: 'pendingRecipeFetch', value: false });
+  }
+
+  useEffect(() => {
+    if (window.location.pathname.includes('/recipes/')) {
+      fetchRecipeFromUrl();
+    }
+  }, []);
 
   return (
     <RecipeContext.Provider value={{ state, dispatch }}>

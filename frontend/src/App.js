@@ -18,6 +18,7 @@ import MainView from 'views/MainView';
 
 import './App.css';
 import './vars.css';
+import './icons.css';
 
 const App = () => {
   return (
@@ -33,7 +34,7 @@ const App = () => {
                       <IngredientGroupsProvider>
                         <AllIngredientsProvider>
                           <WebSocketProvider>
-                            <MainView />  
+                            <MainView />
                           </WebSocketProvider>
                         </AllIngredientsProvider>
                       </IngredientGroupsProvider>

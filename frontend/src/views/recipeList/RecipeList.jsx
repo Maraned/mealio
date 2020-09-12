@@ -15,9 +15,9 @@ const RecipeList = ({
       <div className="recipeList box background">
 
         {recipes && !!recipes.length && recipes.map(recipe => (
-          <RecipeCard 
+          <RecipeCard
             key={recipe.id}
-            recipe={recipe} 
+            recipe={recipe}
           />
         ))}
       </div>

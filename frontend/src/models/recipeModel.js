@@ -4,9 +4,10 @@ const RecipeModel = {
   time: '',
   steps: [],
   ingredients: [],
-  images: [], 
+  images: [],
   draft: true,
   defaultPortions: 4,
+  lastUpdate: ''
 }
 
 export default RecipeModel;

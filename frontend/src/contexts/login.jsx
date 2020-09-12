@@ -54,7 +54,6 @@ export function LoggedInProvider(props) {
 
   useEffect(() => {
     autoLogin(dispatch, userDispatch, pendingRequest);
-    // eslint-disable-next-line 
   }, [])
 
   return (

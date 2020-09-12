@@ -31,3 +31,18 @@ export const ShowSuccessToast = (t, toastDispatch, successMessage) => {
     type: 'success'
   }});
 };
+
+export const TransformRecipeNameToUrl = name => {
+  if (!name) {
+    return name;
+  }
+  if (typeof name !== 'string'){
+    name = GetRecipeNameFromDraftEditorContent(name);
+  }
+  const transformedName = name
+    .toLowerCase()
+    .replace(/å|ä/g, 'a')
+    .replace('ö', 'o')
+    .replace(' ', '-');
+  return transformedName;
+}
