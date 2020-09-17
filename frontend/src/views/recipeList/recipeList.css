@@ -12,8 +12,10 @@
 
 .recipeFilter__accordion {
   margin-right: 1rem;
+  width: 100%;
 }
 
 .recipeFilter__accordion .accordion__header {
   justify-content: center;
+  max-width: 170px;
 }

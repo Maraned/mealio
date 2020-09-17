@@ -2,25 +2,13 @@ import React, { useState } from 'react';
 import cc from 'classcat';
 import posed from 'react-pose';
 import { FaCaretDown, FaTrash } from 'react-icons/fa';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import './accordion.css';
 
-const Content = posed.div({
-  enter: {
-    y: 0,
-    height: 'auto',
-    // flip: true,
-  },
-  exit: {
-    y: "-100%",
-    height: '1px',
-    // flip: true,
-  }
-})
-
-const Accordion = ({ 
-  children, 
-  className, 
+const Accordion = ({
+  children,
+  className,
   title,
   editable,
   onBlur,
@@ -53,20 +41,20 @@ const Accordion = ({
             <FaTrash />
           </button>
         )}
-        <div 
+        <div
           className={cc(['accordion__header', {
             'accordion__header--open': open,
-            'accordion__header--removeButtonVisible': hovering && removeable 
+            'accordion__header--removeButtonVisible': hovering && removeable
           }])}
           onClick={toggleOpen}
         >
-        
+
           {LeftIcon && (
             <button className="accordion__header__leftIcon">
               <LeftIcon />
             </button>
           )}
-          
+
           {editable ? (
             <input className="accordion__header__input" value={accordionTitle} onChange={changeTitle} onBlur={onBlur} />
           ) : title}
@@ -76,9 +64,21 @@ const Accordion = ({
           )}
         </div>
       </div>
-      <Content className="accordion__content" initialPose="exit" pose={open ? "enter" : "exit"}>
-        {children}
-      </Content>
+
+      <div className="accordion__content">
+        <AnimatePresence>
+          {open && (
+            <motion.div
+            layoutTransition
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: '100%' }}
+              exit={{ opacity: 0, height: 0 }}
+            >
+              {children}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };

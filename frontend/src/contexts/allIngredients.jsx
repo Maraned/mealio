@@ -57,7 +57,7 @@ export const AllIngredientsContext = createContext(initialState);
 export const AllIngredientsProvider = props => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return (
+    return (
     <AllIngredientsContext.Provider value={{ state, dispatch }}>
       {props.children}
     </AllIngredientsContext.Provider>

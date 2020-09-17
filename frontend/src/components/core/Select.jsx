@@ -76,9 +76,13 @@ const Select = ({
   const contentRef = useRef(null);
   const { t } = useTranslation();
   const [query, setQuery] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [filteredOptions, setFilteredOptions] = useState(() =>options);
   const miniSearch = useRef(null);
   const inputRef = useRef(null);
+
+  const previousOptions = useRef(null);
+  const previousSearchable = useRef(null);
+  const previousSearchFields = useRef(null);
 
   const changeSelected = option => () => {
     if (!multiSelect) {
@@ -111,12 +115,23 @@ const Select = ({
   }
 
   useEffect(() => {
+    if (previousOptions.current?.length === options?.length
+      && previousSearchable.current === searchable
+      && previousSearchFields.current?.length === searchFields?.length) {
+        return;
+    }
+
+    previousOptions.current = options;
+    previousSearchable.current = searchable;
+    previousSearchFields.current = searchFields;
+
     if (searchable) {
       miniSearch.current = new MiniSearch({
         fields: searchFields, // fields to index for full-text search
       });
       miniSearch.current.addAll(options)
     }
+
     setFilteredOptions(options);
   }, [options, searchable, searchFields]);
 
@@ -127,6 +142,7 @@ const Select = ({
         prefix: true
       };
       const searchResult = miniSearch.current.search(query, searchOptions);
+
       const searchResultIds = searchResult.map(result => result.id);
       if (query) {
         const newFilteredOptions = options.filter(option => {

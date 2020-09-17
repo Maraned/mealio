@@ -1,31 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Accordion from 'components/core/Accordion';
 import Select from 'components/core/Select';
+import IngredientsFilter from 'views/recipeList/filters/IngredientsFilter';
 
 import './recipeFilter.css';
 
 const RecipeFilter = () => {
   const { t } = useTranslation();
-  const sorting = [
-    { text: 'Namn A-Ö' },
-    { text: 'Namn Ö-A' },
-  ];
 
   return (
     <div className="recipeFilter background">
-      <Accordion 
-        className="recipeFilter__accordion" 
+      <Accordion
+        className="recipeFilter__accordion"
         title={<span className="recipeFilter__title">{t('Recipe:Filter')}</span>}
       >
-
+        <IngredientsFilter />
       </Accordion>
-
-      <Select
-        defaultText={t('Recipe:Sort')}
-        options={sorting}
-      />
     </div>
   );
 };

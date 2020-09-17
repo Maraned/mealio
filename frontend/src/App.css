@@ -391,6 +391,10 @@ a:hover {
   }
 }
 
+.alignSelf--baseline {
+  align-self: baseline;
+}
+
 .grow {
   flex-grow: 1;
 }
@@ -427,6 +431,10 @@ a:hover {
 
 .margin--top--small {
   margin-top: .25rem !important;
+}
+
+.margin--top--large {
+  margin-top: 1rem !important;
 }
 
 .margin--bottom {
@@ -538,11 +546,19 @@ a:hover {
   font-size: .75rem;
 }
 
-.icon {
+.icon,
+.clickable {
   transition: transform .1s;
 }
 
-.icon--clickable:hover {
+.icon--clickable:hover,
+.clickable:hover {
   transform-origin: center;
+}
+.icon--clickable:hover {
   transform: scale(0.85);
+}
+
+.clickable:hover {
+  transform: scale(0.93);
 }

@@ -187,5 +187,8 @@ export default {
   },
   Select: {
     Search: 'Sök...',
+  },
+  Filter: {
+    Ingredients: 'Ingredienser',
   }
 }
