@@ -51,7 +51,10 @@ export const LoggedInContext = createContext(initialState);
 export function LoggedInProvider(props) {
   const [state, dispatch] = useReducer(loginReducer, initialState);
   const { dispatch: userDispatch } = useContext(UserContext);
-  const { dispatch: pendingRequest } = useContext(PendingRequestContext);
+  const {
+    state: pendingRequestState,
+    dispatch: pendingRequest
+  } = useContext(PendingRequestContext);
   const history = useHistory();
   const location = useLocation();
 
@@ -60,10 +63,14 @@ export function LoggedInProvider(props) {
   }, [])
 
   useEffect(() => {
+    if (pendingRequestState.initialLoginFetch) {
+      return;
+    }
+
     if (!state.loggedIn && location.pathname !== '/') {
       history.push('/');
     }
-  }, [state.loggedIn]);
+  }, [state.loggedIn, pendingRequestState]);
 
   return (
     <LoggedInContext.Provider value={{ state, dispatch }}>
