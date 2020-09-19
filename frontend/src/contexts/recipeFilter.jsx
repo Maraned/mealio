@@ -7,7 +7,7 @@ const filterOnRecipesThatContainIngredients = (recipes, ingredientFilters) => {
   }
   return recipes.filter(recipe => {
     const recipeIngredientIds = recipe.ingredients.map(ingredient => ingredient.id);
-    const recipeIngredientGroupIngredientIds = recipe.ingredientGroups.map(ingredientGroup => {
+    const recipeIngredientGroupIngredientIds = recipe.ingredientGroups?.map(ingredientGroup => {
       return ingredientGroup.ingredients.map(ingredient => ingredient.id);
     }).flat();
     const allRecipeIngredientIds = [...recipeIngredientIds, ...recipeIngredientGroupIngredientIds];
@@ -16,41 +16,75 @@ const filterOnRecipesThatContainIngredients = (recipes, ingredientFilters) => {
       return allRecipeIngredientIds.includes(ingredientFilter.id);
     })
   })
+};
+
+const filterOnRecipesWithMaxAmountOfIngredients = (recipes, maxIngredientsAmount) => {
+  return recipes.filter(recipe => {
+    const recipeIngredientsCount = recipe.ingredients.length;
+    if (recipeIngredientsCount > maxIngredientsAmount) {
+      return false;
+    }
+    const recipeIngredientGroupIngredientsCount = recipe.ingredientGroups?.map(ingredientGroup => {
+      return ingredientGroup.ingredients.map(ingredient => ingredient.id);
+    }).flat().length;
+
+    const allIngredientsCount = recipeIngredientsCount + recipeIngredientGroupIngredientsCount;
+    return allIngredientsCount <= maxIngredientsAmount;
+  });
 }
 
-const applyFiltering = (recipes, ingredientFilters) => {
-  let filteredRecipes = filterOnRecipesThatContainIngredients(
-    recipes,
-    ingredientFilters
-  );
+const applyFiltering = (recipeFilter) => {
+  const { allRecipes, ingredientsFilters, maxIngredientsAmount } = recipeFilter;
+
+  let filteredRecipes = allRecipes;
+  if (ingredientsFilters) {
+    filteredRecipes = filterOnRecipesThatContainIngredients(
+      allRecipes,
+      ingredientsFilters,
+    );
+  }
+  if (maxIngredientsAmount) {
+    filteredRecipes = filterOnRecipesWithMaxAmountOfIngredients(
+      filteredRecipes,
+      maxIngredientsAmount
+    );
+  }
   return filteredRecipes;
 }
 
 const reducer = (state, action) => {
-  let { ingredientFilters, allRecipes } = state;
   let filteredRecipes = [];
 
+  let newState = state;
+
   switch (action.type) {
+    case 'updateMaxIngredientsAmount':
+      localStorage.setItem('maxIngredientsAmount', action.value);
+      newState = { ...state, maxIngredientsAmount: action.value };
+      break;
     case 'updateIngredientFilters':
-      filteredRecipes = applyFiltering(allRecipes, action.value);
       localStorage.setItem('ingredientFilters', JSON.stringify(action.value));
-      return { ...state, ingredientFilters: action.value, filteredRecipes };
+      newState = { ...state, ingredientFilters: action.value };
+      break;
     case 'update':
-      const newState = { ...state, ...action.value };
-      filteredRecipes = applyFiltering(newState.allRecipes, newState.ingredientFilters);
-      return { ...newState, filteredRecipes };
+      newState = { ...state, ...action.value };
+      break;
     case 'updateAllRecipes':
-      filteredRecipes = applyFiltering(action.recipes, ingredientFilters);
-      return { ...state, filteredRecipes, allRecipes: action.recipes };
+      newState = { ...state, allRecipes: action.recipes };
+      break;
     default:
       return state;
   }
+  filteredRecipes = applyFiltering(newState);
+
+  return { ...newState, filteredRecipes};
 }
 
 const initialState = {
   ingredientFilters: [],
   filteredRecipes: [],
   allRecipes: [],
+  maxIngredientsAmount: null,
 };
 
 export const RecipeFilterContext = createContext(initialState);
@@ -72,7 +106,11 @@ export const RecipeFilterProvider = props => {
     const ingredientFiltersFromLocalStorage = JSON.parse(
       localStorage.getItem('ingredientFilters') || '[]'
     );
+    const maxIngredientsAmountFromLocalStorage = localStorage.getItem('maxIngredientsAmount');
+
     updatedInitialState.ingredientFilters = ingredientFiltersFromLocalStorage;
+    updatedInitialState.maxIngredientsAmount = maxIngredientsAmountFromLocalStorage
+      && parseInt(maxIngredientsAmountFromLocalStorage, 10);
 
     recipeFilterDispatch({ type: 'update', value: updatedInitialState });
   }, []);

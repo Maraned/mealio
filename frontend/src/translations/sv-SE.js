@@ -198,6 +198,10 @@ export default {
     SearchAmount: 'Hittade {{filteredRecipesCount}} av totalt {{allRecipesCount}} recept',
     Ingredients: 'Ingredienser',
     FilteredIngredients: '{{count}} ingrediens',
-    FilteredIngredients__plural: '{{count}} ingredienser',
+    FilteredIngredients_plural: '{{count}} ingredienser',
+    MaxIngredients: 'Maximalt antal ingredienser',
+    MaxIngredientsPlaceholder: 'Ange antal',
+    FilteredMaxIngredients: 'Max {{count}} ingrediens',
+    FilteredMaxIngredients_plural: 'Max {{count}} ingredienser',
   }
 }

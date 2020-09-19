@@ -437,6 +437,10 @@ a:hover {
   margin-top: 1rem !important;
 }
 
+.margin--bottom--small {
+  margin-bottom: .25rem !important;
+}
+
 .margin--bottom {
   margin-bottom: .5rem !important;
 }
@@ -561,4 +565,13 @@ a:hover {
 
 .clickable:hover {
   transform: scale(0.93);
+}
+
+.border--right {
+  padding-right: .5rem;
+  border-right: 1px solid #333;
+}
+
+.noBorderOnLastChild:last-child {
+  border: none;
 }
