@@ -197,5 +197,7 @@ export default {
   Filter: {
     SearchAmount: 'Hittade {{filteredRecipesCount}} av totalt {{allRecipesCount}} recept',
     Ingredients: 'Ingredienser',
+    FilteredIngredients: '{{count}} ingrediens',
+    FilteredIngredients__plural: '{{count}} ingredienser',
   }
 }

@@ -16,6 +16,7 @@ const Accordion = ({
   LeftIcon,
   removeable,
   onRemove,
+  headerContent,
 }) => {
   const [open, setOpen] = useState(false);
   const [accordionTitle, setAccordionTitle] = useState(title);
@@ -63,6 +64,12 @@ const Accordion = ({
             <FaCaretDown className="accordion__header__caret" />
           )}
         </div>
+
+        {headerContent && (
+          <div className="margin--left">
+            {headerContent}
+          </div>
+        )}
       </div>
 
       <div className="accordion__content">
