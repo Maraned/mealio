@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import cc from 'classcat';
-import posed from 'react-pose';
 import { FaCaretDown, FaTrash } from 'react-icons/fa';
 import { AnimatePresence, motion } from 'framer-motion';
 

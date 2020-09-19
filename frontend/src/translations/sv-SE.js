@@ -203,5 +203,8 @@ export default {
     MaxIngredientsPlaceholder: 'Ange antal',
     FilteredMaxIngredients: 'Max {{count}} ingrediens',
     FilteredMaxIngredients_plural: 'Max {{count}} ingredienser',
+    MaxCookingTime: 'Maximal tillagningstid',
+    MaxCookingTimePlaceholder: 'Ange tillagningstid (minuter)',
+    FilteredMaxCookingTime: 'Max {{count}} minuter',
   }
 }

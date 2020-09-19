@@ -4,8 +4,10 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { RecipeFilterContext } from 'contexts/recipeFilter';
+import { FaPepperHot } from 'react-icons/fa';
 
 import Select from 'components/core/Select';
+import Filter from 'views/recipeList/filters/Filter';
 
 export default function IngredientsFilter() {
   const { state: ingredients } = useContext(AllIngredientsContext);
@@ -48,22 +50,20 @@ export default function IngredientsFilter() {
   }
 
   return (
-    <>
-      <div className="boxDivider" />
-      <div className="filter__section flex vcenter">
-
-        <div className="alignSelf--baseline">
-          <h4>{t('Filter:Ingredients')}</h4>
-          <Select
-            searchable
-            multiSelect
-            options={filterOptions}
-            textAttribute="name"
-            manualStateMode={true}
-            manualEditState={true}
-            onChange={toggleIngredientFilter}
-          />
-        </div>
+    <Filter
+      Icon={FaPepperHot}
+      title={t('Filter:Ingredients')}
+    >
+      <div className="grid column-2">
+        <Select
+          searchable
+          multiSelect
+          options={filterOptions}
+          textAttribute="name"
+          manualStateMode={true}
+          manualEditState={true}
+          onChange={toggleIngredientFilter}
+        />
 
         <div className="flex grow wrap">
           {ingredientFilters.map(ingredient => (
@@ -77,8 +77,6 @@ export default function IngredientsFilter() {
           ))}
         </div>
       </div>
-
-      <div className="boxDivider" />
-    </>
+    </Filter>
   );
 }

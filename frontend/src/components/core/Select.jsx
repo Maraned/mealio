@@ -197,7 +197,7 @@ console.log('i18n ', i18n )
       ref={node}
     >
       <div ref={inputRef} className="select__input" onClick={() => setOpen(!open)}>
-        <span className="select__inputText text--ellipsisOverflow">
+        <span className="select__inputText text--ellipsisOverflow flex vcenter center">
           {getSelectedText()}
         </span>
 

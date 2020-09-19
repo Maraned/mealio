@@ -31,23 +31,45 @@ const filterOnRecipesWithMaxAmountOfIngredients = (recipes, maxIngredientsAmount
     const allIngredientsCount = recipeIngredientsCount + recipeIngredientGroupIngredientsCount;
     return allIngredientsCount <= maxIngredientsAmount;
   });
-}
+};
+
+const filterOnRecipesWithinMaxCookingTime = (recipes, maxCookingTime) => {
+  return recipes.filter(recipe => {
+    return parseInt(recipe.time, 10) <= parseInt(maxCookingTime, 10);
+  });
+};
 
 const applyFiltering = (recipeFilter) => {
-  const { allRecipes, ingredientsFilters, maxIngredientsAmount } = recipeFilter;
+  const {
+    allRecipes,
+    ingredientFilters,
+    maxIngredientsAmount,
+    maxCookingTime
+  } = recipeFilter;
+
+  console.log('applyFiltering', recipeFilter)
 
   let filteredRecipes = allRecipes;
-  if (ingredientsFilters) {
+  if (ingredientFilters) {
     filteredRecipes = filterOnRecipesThatContainIngredients(
       allRecipes,
-      ingredientsFilters,
+      ingredientFilters,
     );
+    console.log('filteredRecipes after ingredients', filteredRecipes)
   }
   if (maxIngredientsAmount) {
     filteredRecipes = filterOnRecipesWithMaxAmountOfIngredients(
       filteredRecipes,
       maxIngredientsAmount
     );
+    console.log('filteredRecipes after maxIngredientsAmount', filteredRecipes)
+  }
+  if (maxCookingTime) {
+    filteredRecipes = filterOnRecipesWithinMaxCookingTime(
+      filteredRecipes,
+      maxCookingTime
+    );
+    console.log('filteredRecipes after maxCookingTime', filteredRecipes)
   }
   return filteredRecipes;
 }
@@ -61,6 +83,10 @@ const reducer = (state, action) => {
     case 'updateMaxIngredientsAmount':
       localStorage.setItem('maxIngredientsAmount', action.value);
       newState = { ...state, maxIngredientsAmount: action.value };
+      break;
+    case 'updateMaxCookingTime':
+      localStorage.setItem('maxCookingTime', action.value);
+      newState = { ...state, maxCookingTime: action.value };
       break;
     case 'updateIngredientFilters':
       localStorage.setItem('ingredientFilters', JSON.stringify(action.value));
@@ -76,7 +102,7 @@ const reducer = (state, action) => {
       return state;
   }
   filteredRecipes = applyFiltering(newState);
-
+  console.log('filteredRecipes after', filteredRecipes)
   return { ...newState, filteredRecipes};
 }
 
@@ -85,10 +111,10 @@ const initialState = {
   filteredRecipes: [],
   allRecipes: [],
   maxIngredientsAmount: null,
+  maxCookingTime: null,
 };
 
 export const RecipeFilterContext = createContext(initialState);
-
 
 export const RecipeFilterProvider = props => {
   const [recipeFilters, recipeFilterDispatch] = useReducer(reducer, initialState);
@@ -107,10 +133,14 @@ export const RecipeFilterProvider = props => {
       localStorage.getItem('ingredientFilters') || '[]'
     );
     const maxIngredientsAmountFromLocalStorage = localStorage.getItem('maxIngredientsAmount');
+    const maxCookingTimeFromLocalStorage = localStorage.getItem('maxCookingTime');
+
 
     updatedInitialState.ingredientFilters = ingredientFiltersFromLocalStorage;
     updatedInitialState.maxIngredientsAmount = maxIngredientsAmountFromLocalStorage
       && parseInt(maxIngredientsAmountFromLocalStorage, 10);
+    updatedInitialState.maxCookingTime= maxCookingTimeFromLocalStorage
+      && parseInt(maxCookingTimeFromLocalStorage, 10);
 
     recipeFilterDispatch({ type: 'update', value: updatedInitialState });
   }, []);

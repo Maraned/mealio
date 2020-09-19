@@ -4,9 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { RecipeFilterContext } from 'contexts/recipeFilter';
 import Accordion from 'components/core/Accordion';
 import IngredientsFilter from 'views/recipeList/filters/IngredientsFilter';
-import MaxIngredientsFilter from 'views/recipeList/filters/MaxIngredientsFilter';
+import MaxIngredientsFilter from 'views/recipeList/filters/MaxFilters';
 
-import { FaPepperHot, FaSortNumericDown } from 'react-icons/fa';
+import { FaPepperHot, FaSortNumericDown, FaClock } from 'react-icons/fa';
 
 import './recipeFilter.css';
 
@@ -19,19 +19,14 @@ const RecipeFilter = () => {
     allRecipesCount,
     filteredIngredientCount,
     maxIngredientsAmount,
-  } = useMemo(() => {
-    const filteredRecipesCount = recipeFilters.filteredRecipes.length;
-    const allRecipesCount = recipeFilters.allRecipes.length;
-    const filteredIngredientCount = recipeFilters.ingredientFilters.length;
-    const maxIngredientsAmount = recipeFilters.maxIngredientsAmount;
-
-    return {
-      filteredRecipesCount,
-      allRecipesCount,
-      filteredIngredientCount,
-      maxIngredientsAmount,
-    }
-  }, [recipeFilters]);
+    maxCookingTime,
+  } = useMemo(() => ({
+    filteredRecipesCount: recipeFilters.filteredRecipes.length,
+    allRecipesCount: recipeFilters.allRecipes.length,
+    filteredIngredientCount: recipeFilters.ingredientFilters.length,
+    maxIngredientsAmount: recipeFilters.maxIngredientsAmount,
+    maxCookingTime: recipeFilters.maxCookingTime,
+  }), [recipeFilters]);
 
   const accordionHeaderContent = () => (
     <div className="flex column">
@@ -53,6 +48,13 @@ const RecipeFilter = () => {
           <div className="margin--right flex vcenter border--right noBorderOnLastChild">
             <FaSortNumericDown className="margin--right" />
             {t('Filter:FilteredMaxIngredients', { count: maxIngredientsAmount})}
+          </div>
+        )}
+
+        {!!maxCookingTime && (
+          <div className="margin--right flex vcenter border--right noBorderOnLastChild">
+            <FaClock className="margin--right" />
+            {t('Filter:FilteredMaxCookingTime', { count: maxCookingTime})}
           </div>
         )}
       </div>

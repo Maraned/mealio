@@ -11,6 +11,8 @@ const RecipeList = () => {
   const { recipeFilters: { filteredRecipes } } = useContext(RecipeFilterContext);
   const { t } = useTranslation();
 
+  console.log('filteredRecipes', filteredRecipes)
+
   return (
     <div className="recipeListView grow">
       <RecipeFilter />
