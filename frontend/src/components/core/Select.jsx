@@ -74,12 +74,12 @@ const Select = ({
   const [open, setOpen] = useState(false);
   const node = useRef();
   const contentRef = useRef(null);
-  const { t } = useTranslation();
+  const { t, i18n  } = useTranslation();
   const [query, setQuery] = useState('');
   const [filteredOptions, setFilteredOptions] = useState(() =>options);
   const miniSearch = useRef(null);
   const inputRef = useRef(null);
-
+console.log('i18n ', i18n )
   const previousOptions = useRef(null);
   const previousSearchable = useRef(null);
   const previousSearchFields = useRef(null);
@@ -177,6 +177,13 @@ const Select = ({
   };
 
   const getSelectedText = () => {
+    if (multiSelect) {
+      const selectedOptionsCount = options.filter(option => option.selected).length;
+      if (!selectedOptionsCount) {
+        return t('Select:MultiSelectTextNoOptionsSelected');
+      }
+      return t('Select:MultiSelectText', { count: selectedOptionsCount });
+    }
     return selectedText
       || (preSelected && preSelected[textAttribute])
       || defaultText;

@@ -190,8 +190,12 @@ export default {
   },
   Select: {
     Search: 'Sök...',
+    MultiSelectTextNoOptionsSelected: 'Välj från listan',
+    MultiSelectText: '{{count}} vald',
+    MultiSelectText_plural: '{{count}} valda',
   },
   Filter: {
+    SearchAmount: 'Hittade {{filteredRecipesCount}} av totalt {{allRecipesCount}} recept',
     Ingredients: 'Ingredienser',
   }
 }
