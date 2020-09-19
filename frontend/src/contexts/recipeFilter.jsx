@@ -1,11 +1,7 @@
 import React, { createContext, useEffect, useReducer, useContext } from 'react';
 import { PublishedRecipesContext } from 'contexts/publishedRecipes';
-import { isEmpty } from 'utils/utils';
-import { IngredientGroupsContext } from './ingredientGroups';
-
 
 const filterOnRecipesThatContainIngredients = (recipes, ingredientFilters) => {
-  console.log('filterOnRecipesThatContainIngredients', recipes)
   if (!recipes) {
     return [];
   }

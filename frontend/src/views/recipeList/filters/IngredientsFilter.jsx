@@ -16,13 +16,14 @@ export default function IngredientsFilter() {
   const { t } = useTranslation();
 
   const filterOptions = useMemo(() => {
+    const preSelectedIngredientIds = ingredientFilters?.map(ingredient => ingredient.id) || [];
     return ingredients
       // .filter(ingredient => {
       //   return ingredient.status !== 'pending';
       // })
       .map(ingredient => ({
         id: ingredient.id,
-        selected: false,
+        selected: preSelectedIngredientIds.includes(ingredient.id),
         name: ingredient.name
       })
     )

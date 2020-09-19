@@ -217,7 +217,9 @@ const Select = ({
                 {filteredOptions && filteredOptions.map(option => (
                   <div
                     key={option.id}
-                    className="select__option relative clickable text--ellipsisOverflow"
+                    className={cc(['select__option relative clickable text--ellipsisOverflow', {
+                      'select__option--selected': option.selected
+                    }])}
                     onClick={changeSelected(option)}
                   >
                     {multiSelect && renderCheckbox(option)}

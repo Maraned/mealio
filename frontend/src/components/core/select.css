@@ -45,6 +45,10 @@
   padding: .5rem 1rem .5rem 2rem;
 }
 
+.select__option--selected {
+  color: var(--primary-color);
+}
+
 .select__inputText {
   padding-left: var(--select-caret-size);
   flex: 1;
