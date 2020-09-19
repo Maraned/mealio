@@ -27,7 +27,7 @@ export default function IngredientsFilter() {
         name: ingredient.name
       })
     )
-  }, [ingredients]);
+  }, [ingredients, ingredientFilters]);
 
   const removeFilterIngredient = (filteredIngredient) => {
     const updatedIngredientFilters = ingredientFilters.filter(ingredient => {
