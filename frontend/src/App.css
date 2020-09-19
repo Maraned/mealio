@@ -609,3 +609,7 @@ a:hover {
 .rotate {
   transform: rotate(180deg);
 }
+
+.text--small {
+  font-size: .9rem;
+}

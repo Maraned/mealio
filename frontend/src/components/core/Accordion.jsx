@@ -32,7 +32,7 @@ const Accordion = ({
 
   return (
     <div className={cc(['accordion', className])} >
-      <div className="accordion__headerContainer"
+      <div className="accordion__headerContainer flex vcenter"
         onMouseOver={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >

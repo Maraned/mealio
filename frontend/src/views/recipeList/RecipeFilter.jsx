@@ -29,7 +29,7 @@ const RecipeFilter = () => {
   }), [recipeFilters]);
 
   const accordionHeaderContent = () => (
-    <div className="flex column">
+    <div className="flex column text--small">
       {!!filteredRecipesCount && !!allRecipesCount && (
         <div className="margin--right margin--bottom--small">
           {t('Filter:SearchAmount', { filteredRecipesCount, allRecipesCount })}

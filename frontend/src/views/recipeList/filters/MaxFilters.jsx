@@ -51,9 +51,11 @@ export default function MaxIngredientsFilter() {
 
             <Input
               placeholder={t('Filter:MaxCookingTimePlaceholder')}
-              type="number"
               onChange={updateMaxCookingTime}
               value={maxCookingTime}
+              unit={t('Time:Minute', { count: maxCookingTime })}
+              size={50}
+              textAlign="center"
             />
           </div>
         </div>

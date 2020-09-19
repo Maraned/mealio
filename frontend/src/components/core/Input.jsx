@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 
 export default function Input({
   disableEnter,
@@ -7,6 +7,9 @@ export default function Input({
   value,
   type = 'text',
   placeholder,
+  unit,
+  size,
+  textAlign = 'left',
 }) {
   const inputRef = useRef(null);
   const [changedValue, setChangedValue] = useState(() => value);
@@ -39,13 +42,19 @@ export default function Input({
   }
 
   return (
-    <input
-      ref={inputRef}
-      value={changedValue}
-      onChange={handleOnChange}
-      onBlur={onBlur}
-      onKeyDown={handleKeyDown}
-      placeholder
-    />
+    <>
+      <input
+        style={{ width: `${size}px`, textAlign }}
+        ref={inputRef}
+        value={changedValue}
+        onChange={handleOnChange}
+        onBlur={onBlur}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder}
+      />
+      {unit && (
+        <span>{unit}</span>
+      )}
+    </>
   );
 }
