@@ -391,6 +391,10 @@ a:hover {
   }
 }
 
+.alignSelf--baseline {
+  align-self: baseline;
+}
+
 .grow {
   flex-grow: 1;
 }
@@ -429,6 +433,14 @@ a:hover {
   margin-top: .25rem !important;
 }
 
+.margin--top--large {
+  margin-top: 1rem !important;
+}
+
+.margin--bottom--small {
+  margin-bottom: .25rem !important;
+}
+
 .margin--bottom {
   margin-bottom: .5rem !important;
 }
@@ -451,6 +463,18 @@ a:hover {
 
 .margin--left {
   margin-left: .5rem  !important;
+}
+
+.margin--left--small {
+  margin-left: .25rem  !important;
+}
+
+.padding--right {
+  padding-right: .5rem !important;
+}
+
+.padding--right--large {
+  padding-right: 1rem !important;
 }
 
 .image--rounded {
@@ -538,11 +562,54 @@ a:hover {
   font-size: .75rem;
 }
 
-.icon {
+.clickableContainer {
+  cursor: pointer;
+}
+
+.icon,
+.clickable {
   transition: transform .1s;
 }
 
-.icon--clickable:hover {
+.icon--clickable:hover,
+.clickable:hover {
   transform-origin: center;
+}
+.icon--clickable:hover {
   transform: scale(0.85);
+}
+
+.clickable:hover,
+.clickableContainer:hover > .clickable {
+  transform: scale(0.93);
+}
+
+.border--right {
+  padding-right: .5rem;
+  border-right: 1px solid #333;
+}
+
+.noBorderOnLastChild:last-child {
+  border: none;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid.column-2 {
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 1rem;
+}
+
+.rotateable {
+  transition: .2s transform;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.text--small {
+  font-size: .9rem;
 }

@@ -74,11 +74,15 @@ const Select = ({
   const [open, setOpen] = useState(false);
   const node = useRef();
   const contentRef = useRef(null);
-  const { t } = useTranslation();
+  const { t, i18n  } = useTranslation();
   const [query, setQuery] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState(options);
+  const [filteredOptions, setFilteredOptions] = useState(() =>options);
   const miniSearch = useRef(null);
   const inputRef = useRef(null);
+console.log('i18n ', i18n )
+  const previousOptions = useRef(null);
+  const previousSearchable = useRef(null);
+  const previousSearchFields = useRef(null);
 
   const changeSelected = option => () => {
     if (!multiSelect) {
@@ -111,12 +115,23 @@ const Select = ({
   }
 
   useEffect(() => {
+    if (previousOptions.current?.length === options?.length
+      && previousSearchable.current === searchable
+      && previousSearchFields.current?.length === searchFields?.length) {
+        return;
+    }
+
+    previousOptions.current = options;
+    previousSearchable.current = searchable;
+    previousSearchFields.current = searchFields;
+
     if (searchable) {
       miniSearch.current = new MiniSearch({
         fields: searchFields, // fields to index for full-text search
       });
       miniSearch.current.addAll(options)
     }
+
     setFilteredOptions(options);
   }, [options, searchable, searchFields]);
 
@@ -127,6 +142,7 @@ const Select = ({
         prefix: true
       };
       const searchResult = miniSearch.current.search(query, searchOptions);
+
       const searchResultIds = searchResult.map(result => result.id);
       if (query) {
         const newFilteredOptions = options.filter(option => {
@@ -161,6 +177,13 @@ const Select = ({
   };
 
   const getSelectedText = () => {
+    if (multiSelect) {
+      const selectedOptionsCount = options.filter(option => option.selected).length;
+      if (!selectedOptionsCount) {
+        return t('Select:MultiSelectTextNoOptionsSelected');
+      }
+      return t('Select:MultiSelectText', { count: selectedOptionsCount });
+    }
     return selectedText
       || (preSelected && preSelected[textAttribute])
       || defaultText;
@@ -174,7 +197,7 @@ const Select = ({
       ref={node}
     >
       <div ref={inputRef} className="select__input" onClick={() => setOpen(!open)}>
-        <span className="select__inputText text--ellipsisOverflow">
+        <span className="select__inputText text--ellipsisOverflow flex vcenter center">
           {getSelectedText()}
         </span>
 
@@ -201,7 +224,9 @@ const Select = ({
                 {filteredOptions && filteredOptions.map(option => (
                   <div
                     key={option.id}
-                    className="select__option relative clickable text--ellipsisOverflow"
+                    className={cc(['select__option relative clickable text--ellipsisOverflow', {
+                      'select__option--selected': option.selected
+                    }])}
                     onClick={changeSelected(option)}
                   >
                     {multiSelect && renderCheckbox(option)}

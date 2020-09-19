@@ -15,6 +15,9 @@ export default {
     COULDNOTCREATEUSER: 'Något gick fel vid registreringen',
     AUTHENTICATIONFAILED: 'Fel användarnamn eller lösenord',
   },
+  RecipeList: {
+    NoRecipesFound: 'Inga recept kunde hittas baserat på dina filtreringsinställningar.'
+  },
   Recipe: {
     Degrees: 'grader',
     View: 'Förhandsgranska',
@@ -187,5 +190,21 @@ export default {
   },
   Select: {
     Search: 'Sök...',
+    MultiSelectTextNoOptionsSelected: 'Välj från listan',
+    MultiSelectText: '{{count}} vald',
+    MultiSelectText_plural: '{{count}} valda',
+  },
+  Filter: {
+    SearchAmount: 'Hittade {{filteredRecipesCount}} av totalt {{allRecipesCount}} recept',
+    Ingredients: 'Ingredienser',
+    FilteredIngredients: '{{count}} ingrediens',
+    FilteredIngredients_plural: '{{count}} ingredienser',
+    MaxIngredients: 'Maximalt antal ingredienser',
+    MaxIngredientsPlaceholder: 'Ange antal',
+    FilteredMaxIngredients: 'Max {{count}} ingrediens',
+    FilteredMaxIngredients_plural: 'Max {{count}} ingredienser',
+    MaxCookingTime: 'Maximal tillagningstid',
+    MaxCookingTimePlaceholder: 'Ange tillagningstid (minuter)',
+    FilteredMaxCookingTime: 'Max {{count}} minuter',
   }
 }

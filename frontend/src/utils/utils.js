@@ -46,3 +46,7 @@ export const TransformRecipeNameToUrl = name => {
     .replace(/\s/g, '-');
   return transformedName;
 }
+
+export const isEmpty = obj => {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}

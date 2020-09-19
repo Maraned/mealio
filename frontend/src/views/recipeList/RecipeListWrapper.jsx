@@ -1,9 +1,9 @@
+import RecipeList from './RecipeList';
+
 import React, { useEffect, useState } from 'react';
 
 import { getRequest } from 'utils/request';
-
-import RecipeList from './RecipeList';
-
+import { RecipeFilterProvider } from 'contexts/recipeFilter';
 
 export default function RecipeListWrapper() {
   const [recipes, setRecipes] = useState([]);
@@ -12,13 +12,15 @@ export default function RecipeListWrapper() {
     const fetchedRecipes = await getRequest('recipes');
     setRecipes(fetchedRecipes);
   }
-  
+
   useEffect(() => {
     fetchRecipes();
   }, []);
 
   return (
-    <RecipeList recipes={recipes} />
+    <RecipeFilterProvider>
+      <RecipeList recipes={recipes} />
+    </RecipeFilterProvider>
   );
 }
 

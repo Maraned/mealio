@@ -32,7 +32,7 @@
   position: absolute;
   width: 100%;
   background-color: #fff;
-  z-index: 1;
+  z-index: 1001;
   box-shadow: var(--select-shadow);
 }
 
@@ -45,15 +45,16 @@
   padding: .5rem 1rem .5rem 2rem;
 }
 
-.select__option:hover,
-.select__addOption {
-  background-color: var(--light-grey);
+.select__option--selected {
+  color: var(--primary-color);
 }
 
 .select__inputText {
   padding-left: var(--select-caret-size);
   flex: 1;
   line-height: 1;
+  height: 100%;
+  font-size: .9rem;
 }
 
 .select__caret {
@@ -63,7 +64,7 @@
 }
 
 .select__caret--open {
-  transform: rotate(180deg); 
+  transform: rotate(180deg);
 }
 
 .select__search {
