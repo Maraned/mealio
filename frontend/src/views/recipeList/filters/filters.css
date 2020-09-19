@@ -1,0 +1,7 @@
+.filter__selectedOption {
+  background-color: var(--primary-color);
+  border-radius: 1rem;
+  padding: .5rem;
+  color: #fff;
+  font-size: .9rem;
+}

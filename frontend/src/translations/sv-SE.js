@@ -15,6 +15,9 @@ export default {
     COULDNOTCREATEUSER: 'Något gick fel vid registreringen',
     AUTHENTICATIONFAILED: 'Fel användarnamn eller lösenord',
   },
+  RecipeList: {
+    NoRecipesFound: 'Inga recept kunde hittas baserat på dina filtreringsinställningar.'
+  },
   Recipe: {
     Degrees: 'grader',
     View: 'Förhandsgranska',

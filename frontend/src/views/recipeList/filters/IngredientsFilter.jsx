@@ -1,13 +1,18 @@
 import './filters.css';
 
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AllIngredientsContext } from 'contexts/allIngredients';
+import { RecipeFilterContext } from 'contexts/recipeFilter';
+
 import Select from 'components/core/Select';
 
 export default function IngredientsFilter() {
   const { state: ingredients } = useContext(AllIngredientsContext);
-  const [filteredIngredients, setFilteredIngredients] = useState(() => []);
+  const {
+    recipeFilters: { ingredientFilters },
+    recipeFilterDispatch
+  } = useContext(RecipeFilterContext);
   const { t } = useTranslation();
 
   const filterOptions = useMemo(() => {
@@ -24,47 +29,55 @@ export default function IngredientsFilter() {
   }, [ingredients]);
 
   const removeFilterIngredient = (filteredIngredient) => {
-    setFilteredIngredients(filteredIngredients.filter(ingredient => {
+    const updatedIngredientFilters = ingredientFilters.filter(ingredient => {
       return ingredient.id !== filteredIngredient.id;
-    }));
+    });
+    recipeFilterDispatch({ type: 'updateIngredientFilters', value: updatedIngredientFilters });
   }
 
   const toggleIngredientFilter = (filteredIngredient, state) => {
-      console.log('filteredIngredient', {
-        filteredIngredient,
-        state,
-      })
     if (filteredIngredient.selected) {
-      setFilteredIngredients([...filteredIngredients, filteredIngredient]);
+      recipeFilterDispatch({
+        type: 'updateIngredientFilters',
+        value: [...ingredientFilters, filteredIngredient]
+      });
     } else {
       removeFilterIngredient(filteredIngredient);
     }
   }
 
   return (
-    <div className="filter__section margin--top--large flex vcenter">
-      <div className="alignSelf--baseline">
-        <h4>{t('Filter:Ingredients')}</h4>
-        <Select
-          searchable
-          multiSelect
-          options={filterOptions}
-          textAttribute="name"
-          manualStateMode={true}
-          manualEditState={true}
-          onChange={toggleIngredientFilter}
-        />
+    <>
+      <div className="boxDivider" />
+      <div className="filter__section flex vcenter">
+
+        <div className="alignSelf--baseline">
+          <h4>{t('Filter:Ingredients')}</h4>
+          <Select
+            searchable
+            multiSelect
+            options={filterOptions}
+            textAttribute="name"
+            manualStateMode={true}
+            manualEditState={true}
+            onChange={toggleIngredientFilter}
+          />
+        </div>
+
+        <div className="flex grow wrap">
+          {ingredientFilters.map(ingredient => (
+            <span
+              key={`selected-ingredient-filter-${ingredient.id}`}
+              className="margin--right margin--left margin--bottom clickable filter__selectedOption"
+              onClick={() => removeFilterIngredient(ingredient)}
+            >
+              {ingredient.name}
+            </span>
+          ))}
+        </div>
       </div>
-      <div className="flex grow wrap">
-        {filteredIngredients.map(ingredient => (
-          <span
-            className="margin--right margin--left margin--bottom clickable"
-            onClick={() => removeFilterIngredient(ingredient)}
-          >
-            {ingredient.name}
-          </span>
-        ))}
-      </div>
-    </div>
+
+      <div className="boxDivider" />
+    </>
   );
 }

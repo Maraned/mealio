@@ -3,7 +3,7 @@ import './recipeCollection.css';
 import React, { useState, useEffect, useContext } from 'react';
 import { getRequest } from 'utils/request';
 import { UserContext } from 'contexts/user';
-import RecipeList from 'views/recipeList/RecipeList';
+import RecipeList from 'views/recipeList/RecipeListWrapper';
 import { useTranslation } from 'react-i18next';
 
 export default function RecipeCollection() {

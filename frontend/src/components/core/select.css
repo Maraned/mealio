@@ -45,11 +45,6 @@
   padding: .5rem 1rem .5rem 2rem;
 }
 
-.select__option:hover,
-.select__addOption {
-  background-color: var(--light-grey);
-}
-
 .select__inputText {
   padding-left: var(--select-caret-size);
   flex: 1;
@@ -63,7 +58,7 @@
 }
 
 .select__caret--open {
-  transform: rotate(180deg); 
+  transform: rotate(180deg);
 }
 
 .select__search {

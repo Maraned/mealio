@@ -1,25 +1,33 @@
 import './recipeList.css';
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 
+import { RecipeFilterContext } from 'contexts/recipeFilter';
 import RecipeCard from './RecipeCard';
 import RecipeFilter from './RecipeFilter';
 
-const RecipeList = ({
-  recipes
-}) => {
+const RecipeList = () => {
+  const { recipeFilters: { filteredRecipes } } = useContext(RecipeFilterContext);
+  const { t } = useTranslation();
+
   return (
-    <div className="recipeListView">
+    <div className="recipeListView grow">
       <RecipeFilter />
 
-      <div className="recipeList box background">
-
-        {recipes && !!recipes.length && recipes.map(recipe => (
-          <RecipeCard
-            key={recipe.id}
-            recipe={recipe}
-          />
-        ))}
+      <div className="box background">
+        {(filteredRecipes && !!filteredRecipes.length) ? (
+          <div className="recipeList ">
+            {filteredRecipes?.map(recipe => (
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+              />
+            ))}
+          </div>
+        ) : (
+          <span>{t('RecipeList:NoRecipesFound')}</span>
+        )}
       </div>
     </div>
   )
