@@ -116,7 +116,17 @@ const applyFiltering = (recipeFilter) => {
     }
   }
   return filteredRecipes;
-}
+};
+
+const initialState = {
+  ingredientFilters: [],
+  filteredRecipes: [],
+  allRecipes: [],
+  maxIngredientsAmount: null,
+  maxCookingTime: null,
+  sortBy: 'name',
+  sortDirection: 'asc',
+};
 
 const reducer = (state, action) => {
   let filteredRecipes = [];
@@ -150,22 +160,20 @@ const reducer = (state, action) => {
     case 'updateAllRecipes':
       newState = { ...state, allRecipes: action.recipes };
       break;
+    case 'reset':
+      localStorage.removeItem('maxIngredientsAmount');
+      localStorage.removeItem('maxCookingTime');
+      localStorage.removeItem('ingredientFilters');
+      localStorage.removeItem('sortBy');
+      localStorage.removeItem('sortDirection');
+      newState = { ...initialState, allRecipes: state.allRecipes };
+      break;
     default:
       return state;
   }
   filteredRecipes = applyFiltering(newState);
   return { ...newState, filteredRecipes};
 }
-
-const initialState = {
-  ingredientFilters: [],
-  filteredRecipes: [],
-  allRecipes: [],
-  maxIngredientsAmount: null,
-  maxCookingTime: null,
-  sortBy: 'name',
-  sortDirection: 'asc',
-};
 
 export const RecipeFilterContext = createContext(initialState);
 

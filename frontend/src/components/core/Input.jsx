@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function Input({
   disableEnter,
@@ -14,7 +14,7 @@ export default function Input({
   const inputRef = useRef(null);
   const [changedValue, setChangedValue] = useState(() => value);
   useEffect(() => {
-    setChangedValue(value);
+    setChangedValue(value || '');
   }, [value]);
 
   const handleOnChange = event => {

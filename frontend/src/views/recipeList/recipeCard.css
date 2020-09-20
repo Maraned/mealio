@@ -1,22 +1,30 @@
 .recipeCard {
   text-align: center;
-  box-shadow: var(--box-shadow);
+  box-shadow: var(--box-shadow-distinct);
   display: flex;
   flex-direction: column;
   cursor: pointer;
   background-color: white;
   border-radius: .5rem;
   height: 100%;
+  overflow: hidden;
 }
 
-.recipeCard__image {
+.recipeCard__image img {
   height: 150px;
+  transition: transform 1s;
+  transform-origin: center center;
 }
 
 .recipeCard__image img {
   width: 100%;
+  height: 100%;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
+}
+
+.recipeCard:hover .recipeCard__image img {
+  transform: scale(1.1);
 }
 
 .recipeCard__image--default {

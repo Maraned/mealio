@@ -60,4 +60,6 @@
   --modal-side-menu-width: 12rem;
 
   --main-side-menu-width: 15rem;
+
+  --box-shadow-distinct: 1px 1px 6px -3px rgba(0, 0, 0, 1);
 }

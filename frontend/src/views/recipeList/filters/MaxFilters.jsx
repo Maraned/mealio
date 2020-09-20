@@ -12,7 +12,6 @@ export default function MaxIngredientsFilter() {
     recipeFilters: { maxIngredientsAmount, maxCookingTime },
     recipeFilterDispatch
   } = useContext(RecipeFilterContext);
-
   const { t } = useTranslation();
 
   const updateMaxIngredientsAmount = newMaxIngredientsAmount => {

@@ -206,5 +206,6 @@ export default {
     MaxCookingTime: 'Maximal tillagningstid',
     MaxCookingTimePlaceholder: 'Ange tillagningstid (minuter)',
     FilteredMaxCookingTime: 'Max {{count}} minuter',
+    Reset: 'Rensa filter',
   }
 }

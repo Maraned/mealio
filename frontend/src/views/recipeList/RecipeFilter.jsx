@@ -31,6 +31,10 @@ const RecipeFilter = () => {
     sortDirection: recipeFilters.sortDirection,
   }), [recipeFilters]);
 
+  const resetFilters = () => {
+    recipeFilterDispatch({ type: 'reset' });
+  };
+
   const accordionHeaderContent = () => (
     <>
       <div className="flex column text--small">
@@ -78,6 +82,9 @@ const RecipeFilter = () => {
       >
         <IngredientsFilter />
         <MaxIngredientsFilter />
+        <button onClick={resetFilters}>
+          {t('Filter:Reset')}
+        </button>
       </Accordion>
     </div>
   );
