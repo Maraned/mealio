@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Input({
   disableEnter,
@@ -11,8 +12,10 @@ export default function Input({
   size,
   textAlign = 'left',
 }) {
+  const { t } = useTranslation();
   const inputRef = useRef(null);
   const [changedValue, setChangedValue] = useState(() => value);
+
   useEffect(() => {
     setChangedValue(value || '');
   }, [value]);
@@ -41,10 +44,21 @@ export default function Input({
     }
   }
 
+  const style = useMemo(() => {
+    let styling = {};
+    if (changedValue && size) {
+      styling = {
+        textAlign,
+        width: `${size}px`
+      }
+    }
+    return styling;
+  }, [size, textAlign, changedValue]);
+
   return (
     <>
       <input
-        style={{ width: `${size}px`, textAlign }}
+        style={style}
         ref={inputRef}
         value={changedValue}
         onChange={handleOnChange}
@@ -52,8 +66,10 @@ export default function Input({
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
       />
-      {unit && (
-        <span>{unit}</span>
+      {unit && !!changedValue && (
+        <span key={`unit-${unit}-${changedValue}`}>
+          {t(`Unit:${unit}`, { count: parseInt(changedValue, 10) })}
+        </span>
       )}
     </>
   );

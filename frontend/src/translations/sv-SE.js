@@ -207,5 +207,9 @@ export default {
     MaxCookingTimePlaceholder: 'Ange tillagningstid (minuter)',
     FilteredMaxCookingTime: 'Max {{count}} minuter',
     Reset: 'Rensa filter',
+  },
+  Unit: {
+    Minute: 'minut',
+    Minute_plural: 'minuter',
   }
 }

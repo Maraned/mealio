@@ -43,7 +43,7 @@ export default function MaxIngredientsFilter() {
           </div>
 
           <div>
-          <h4 className="flex vcenter">
+            <h4 className="flex vcenter">
               <FaClock className="margin--right" />
               {t('Filter:MaxCookingTime')}
             </h4>
@@ -52,8 +52,8 @@ export default function MaxIngredientsFilter() {
               placeholder={t('Filter:MaxCookingTimePlaceholder')}
               onChange={updateMaxCookingTime}
               value={maxCookingTime}
-              unit={maxCookingTime && t('Time:Minute', { count: maxCookingTime })}
-              size={maxCookingTime && 50}
+              unit="Minute"
+              size={50}
               textAlign="center"
             />
           </div>
