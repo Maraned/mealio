@@ -1,6 +1,6 @@
 import './filters.css';
 
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { RecipeFilterContext } from 'contexts/recipeFilter';
@@ -12,33 +12,30 @@ import Filter from 'views/recipeList/filters/Filter';
 export default function IngredientsFilter() {
   const { state: ingredients } = useContext(AllIngredientsContext);
   const {
-    recipeFilters: { ingredientFilters },
+    recipeFilters: { ingredientFilters, allIngredientOptions },
     recipeFilterDispatch
   } = useContext(RecipeFilterContext);
   const { t } = useTranslation();
 
   const filterOptions = useMemo(() => {
     const preSelectedIngredientIds = ingredientFilters?.map(ingredient => ingredient.id) || [];
-    return ingredients
-      // .filter(ingredient => {
-      //   return ingredient.status !== 'pending';
-      // })
+    return allIngredientOptions
       .map(ingredient => ({
         id: ingredient.id,
         selected: preSelectedIngredientIds.includes(ingredient.id),
         name: ingredient.name
       })
-    )
-  }, [ingredients, ingredientFilters]);
+    );
+  }, [allIngredientOptions, ingredientFilters]);
 
   const removeFilterIngredient = (filteredIngredient) => {
     const updatedIngredientFilters = ingredientFilters.filter(ingredient => {
       return ingredient.id !== filteredIngredient.id;
     });
     recipeFilterDispatch({ type: 'updateIngredientFilters', value: updatedIngredientFilters });
-  }
+  };
 
-  const toggleIngredientFilter = (filteredIngredient, state) => {
+  const toggleIngredientFilter = filteredIngredient => {
     if (filteredIngredient.selected) {
       recipeFilterDispatch({
         type: 'updateIngredientFilters',
@@ -47,7 +44,7 @@ export default function IngredientsFilter() {
     } else {
       removeFilterIngredient(filteredIngredient);
     }
-  }
+  };
 
   return (
     <Filter

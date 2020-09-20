@@ -70,6 +70,40 @@ const sortByPublishedDate = (recipes, sortDirection) => {
   });
 };
 
+const getIngredientsFromFilteredRecipes = (recipes) => {
+  const ingredientOptions = recipes.map(recipe => {
+    const recipeIngredientOptions = recipe.ingredients.map(ingredient => ({
+      id: ingredient.id,
+      name: ingredient.name,
+    }));
+
+    const recipeIngredientGroupIngredientOptions = recipe.ingredientGroups?.map(ingredientGroup => {
+      return ingredientGroup.ingredients.map(ingredient => ({
+        id: ingredient.id,
+        name: ingredient.name,
+      }));
+    }).flat();
+
+    const allRecipeIngredientOptions = [
+      ...recipeIngredientOptions,
+      ...recipeIngredientGroupIngredientOptions
+    ];
+    return allRecipeIngredientOptions;
+  }).flat();
+
+  const allIngredientOptions = [];
+  for (const option of ingredientOptions) {
+    const existingIngredient = allIngredientOptions.find(existingOption => {
+      return existingOption.id === option.id;
+    });
+    if (!existingIngredient) {
+      allIngredientOptions.push(option);
+    }
+  }
+
+  return allIngredientOptions;
+}
+
 const applyFiltering = (recipeFilter) => {
   const {
     allRecipes,
@@ -115,11 +149,14 @@ const applyFiltering = (recipeFilter) => {
         break;
     }
   }
-  return filteredRecipes;
+
+  const allIngredientOptions = getIngredientsFromFilteredRecipes(filteredRecipes);
+  return [filteredRecipes, allIngredientOptions];
 };
 
 const initialState = {
   ingredientFilters: [],
+  allIngredientOptions: [],
   filteredRecipes: [],
   allRecipes: [],
   maxIngredientsAmount: null,
@@ -130,6 +167,7 @@ const initialState = {
 
 const reducer = (state, action) => {
   let filteredRecipes = [];
+  let allIngredientOptions = [];
 
   let newState = state;
 
@@ -171,8 +209,8 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-  filteredRecipes = applyFiltering(newState);
-  return { ...newState, filteredRecipes};
+  [filteredRecipes, allIngredientOptions] = applyFiltering(newState);
+  return { ...newState, filteredRecipes, allIngredientOptions };
 }
 
 export const RecipeFilterContext = createContext(initialState);
@@ -214,5 +252,5 @@ export const RecipeFilterProvider = props => {
     <RecipeFilterContext.Provider value={{ recipeFilters, recipeFilterDispatch }}>
       {props.children}
     </RecipeFilterContext.Provider>
-  )
+  );
 };
