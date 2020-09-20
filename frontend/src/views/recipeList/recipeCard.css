@@ -11,14 +11,10 @@
 }
 
 .recipeCard__image img {
-  height: 150px;
+  width: 100%;
+  height: 175px;
   transition: transform 1s;
   transform-origin: center center;
-}
-
-.recipeCard__image img {
-  width: 100%;
-  height: 100%;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
 }
