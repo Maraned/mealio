@@ -69,17 +69,18 @@ const Select = ({
   manualStateMode,
   manualEditState,
   multiSelect,
+  smallPadding,
 }) => {
   const { state: editableState } = useContext(EditableContext);
   const [open, setOpen] = useState(false);
   const node = useRef();
   const contentRef = useRef(null);
-  const { t, i18n  } = useTranslation();
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState(() =>options);
+  const [filteredOptions, setFilteredOptions] = useState(() => options);
+  useEffect(() => setFilteredOptions(options), [options])
   const miniSearch = useRef(null);
   const inputRef = useRef(null);
-console.log('i18n ', i18n )
   const previousOptions = useRef(null);
   const previousSearchable = useRef(null);
   const previousSearchFields = useRef(null);
@@ -223,9 +224,10 @@ console.log('i18n ', i18n )
                 )}
                 {filteredOptions && filteredOptions.map(option => (
                   <div
-                    key={option.id}
+                    key={`${option.id}-${option.selected}`}
                     className={cc(['select__option relative clickable text--ellipsisOverflow', {
-                      'select__option--selected': option.selected
+                      'select__option--selected': option.selected,
+                      'select__option--smallPadding': smallPadding,
                     }])}
                     onClick={changeSelected(option)}
                   >
@@ -236,7 +238,12 @@ console.log('i18n ', i18n )
               </div>
 
               {addable && (
-                <div className="select__option select__addOption" onClick={handleAddItemClick}>
+                <div
+                  className={cc(['select__option select__addOption', {
+                    'select__option--smallPadding': smallPadding,
+                  }])}
+                  onClick={handleAddItemClick}
+                >
                   <FaPlus />
                 </div>
               )}

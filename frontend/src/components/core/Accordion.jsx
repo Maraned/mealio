@@ -16,6 +16,7 @@ const Accordion = ({
   removeable,
   onRemove,
   headerContent,
+  headerContentClassName,
 }) => {
   const [open, setOpen] = useState(false);
   const [accordionTitle, setAccordionTitle] = useState(title);
@@ -65,7 +66,7 @@ const Accordion = ({
         </div>
 
         {headerContent && (
-          <div className="margin--left">
+          <div className={cc(['margin--left', headerContentClassName ])}>
             {headerContent}
           </div>
         )}

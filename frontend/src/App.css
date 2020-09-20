@@ -613,3 +613,7 @@ a:hover {
 .text--small {
   font-size: .9rem;
 }
+
+.iconButton {
+  padding: .5rem;
+}

@@ -123,7 +123,11 @@ router.post('/publish', async (req, res, next) => {
         return res.send({ status: 'error', message: 'Recipe:RecipeWithNameExists'});
       }
 
-      await rdb.save('publishedRecipes', { ...recipe, collectionCount: 0 });
+      await rdb.save('publishedRecipes', {
+        ...recipe,
+        collectionCount: 0,
+        publishedDate: new Date(),
+      });
       await rdb.addToArray('users', id, 'publishedRecipes', recipe.id);
       await rdb.destroy('draftRecipes', recipe.id);
       await rdb.removeFromArray('users', id, 'draftRecipes', recipe.id);

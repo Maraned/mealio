@@ -45,6 +45,10 @@
   padding: .5rem 1rem .5rem 2rem;
 }
 
+.select__option--smallPadding {
+  padding: .5rem;
+}
+
 .select__option--selected {
   color: var(--primary-color);
 }

@@ -39,15 +39,46 @@ const filterOnRecipesWithinMaxCookingTime = (recipes, maxCookingTime) => {
   });
 };
 
+const sortByName = (recipes, sortDirection) => {
+  return recipes.sort((a, b) => {
+    if (sortDirection === 'asc') {
+      if (a.name < b.name) return -1;
+      if (a.name > b.name) return 1;
+      return 0;
+    }
+    if (a.name > b.name) return -1;
+    if (a.name < b.name) return 1;
+    return 0;
+  });
+};
+
+const sortByScore = (recipes, sortDirection) => {
+  return recipes.sort((a, b) => {
+    if (sortDirection === 'asc') {
+      return a.collectionCount < b.collectionCount;
+    }
+    return a.collectionCount > b.collectionCount;
+  })
+};
+
+const sortByPublishedDate = (recipes, sortDirection) => {
+  return recipes.sort((a, b) => {
+    if (sortDirection === 'asc') {
+      return a.publishedDate < b.publishedDate
+    }
+    return a.publishedDate > b.publishedDate
+  });
+};
+
 const applyFiltering = (recipeFilter) => {
   const {
     allRecipes,
     ingredientFilters,
     maxIngredientsAmount,
-    maxCookingTime
+    maxCookingTime,
+    sortBy,
+    sortDirection,
   } = recipeFilter;
-
-  console.log('applyFiltering', recipeFilter)
 
   let filteredRecipes = allRecipes;
   if (ingredientFilters) {
@@ -55,21 +86,34 @@ const applyFiltering = (recipeFilter) => {
       allRecipes,
       ingredientFilters,
     );
-    console.log('filteredRecipes after ingredients', filteredRecipes)
   }
   if (maxIngredientsAmount) {
     filteredRecipes = filterOnRecipesWithMaxAmountOfIngredients(
       filteredRecipes,
       maxIngredientsAmount
     );
-    console.log('filteredRecipes after maxIngredientsAmount', filteredRecipes)
   }
   if (maxCookingTime) {
     filteredRecipes = filterOnRecipesWithinMaxCookingTime(
       filteredRecipes,
       maxCookingTime
     );
-    console.log('filteredRecipes after maxCookingTime', filteredRecipes)
+  }
+
+  if (sortBy) {
+    switch (sortBy) {
+      case 'name':
+        filteredRecipes = sortByName(filteredRecipes, sortDirection);
+        break;
+      case 'score':
+        filteredRecipes = sortByScore(filteredRecipes, sortDirection);
+        break;
+      case 'publishedDate':
+        filteredRecipes = sortByPublishedDate(filteredRecipes, sortDirection);
+        break;
+      default:
+        break;
+    }
   }
   return filteredRecipes;
 }
@@ -92,6 +136,14 @@ const reducer = (state, action) => {
       localStorage.setItem('ingredientFilters', JSON.stringify(action.value));
       newState = { ...state, ingredientFilters: action.value };
       break;
+    case 'updateSortBy':
+      localStorage.setItem('sortBy', action.value);
+      newState = { ...state, sortBy: action.value };
+      break;
+    case 'updateSortDirection':
+      localStorage.setItem('sortDirection', action.value);
+      newState = { ...state, sortDirection: action.value };
+      break;
     case 'update':
       newState = { ...state, ...action.value };
       break;
@@ -102,7 +154,6 @@ const reducer = (state, action) => {
       return state;
   }
   filteredRecipes = applyFiltering(newState);
-  console.log('filteredRecipes after', filteredRecipes)
   return { ...newState, filteredRecipes};
 }
 
@@ -112,6 +163,8 @@ const initialState = {
   allRecipes: [],
   maxIngredientsAmount: null,
   maxCookingTime: null,
+  sortBy: 'name',
+  sortDirection: 'asc',
 };
 
 export const RecipeFilterContext = createContext(initialState);
@@ -134,13 +187,17 @@ export const RecipeFilterProvider = props => {
     );
     const maxIngredientsAmountFromLocalStorage = localStorage.getItem('maxIngredientsAmount');
     const maxCookingTimeFromLocalStorage = localStorage.getItem('maxCookingTime');
-
+    const sortByFromLocalStorage = localStorage.getItem('sortBy');
+    const sortDirectionFromLocalStorage = localStorage.getItem('sortDirection');
 
     updatedInitialState.ingredientFilters = ingredientFiltersFromLocalStorage;
     updatedInitialState.maxIngredientsAmount = maxIngredientsAmountFromLocalStorage
       && parseInt(maxIngredientsAmountFromLocalStorage, 10);
     updatedInitialState.maxCookingTime= maxCookingTimeFromLocalStorage
       && parseInt(maxCookingTimeFromLocalStorage, 10);
+
+    updatedInitialState.sortBy = sortByFromLocalStorage || 'name';
+    updatedInitialState.sortDirection = sortDirectionFromLocalStorage || 'asc';
 
     recipeFilterDispatch({ type: 'update', value: updatedInitialState });
   }, []);
