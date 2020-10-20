@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "build": "docker build . -t mealio/mealio_backend",
-    "push": "docker push mealio/mealio_backend"
+    "push": "docker push mealio/mealio_backend",
+    "fetchTasteline": "node ./scripts/tastelineFetcher"
   },
   "author": "",
   "license": "ISC",

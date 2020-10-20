@@ -7,7 +7,7 @@ const filterOnRecipesThatContainIngredients = (recipes, ingredientFilters) => {
   }
   return recipes.filter(recipe => {
     const recipeIngredientIds = recipe.ingredients.map(ingredient => ingredient.id);
-    const recipeIngredientGroupIngredientIds = recipe.ingredientGroups?.map(ingredientGroup => {
+    const recipeIngredientGroupIngredientIds = recipe.ingredientGroups.map(ingredientGroup => {
       return ingredientGroup.ingredients.map(ingredient => ingredient.id);
     }).flat();
     const allRecipeIngredientIds = [...recipeIngredientIds, ...recipeIngredientGroupIngredientIds];

@@ -12,10 +12,14 @@ async function TastelineParser(htmlPage, url, userId) {
 
   const name = $('.recipe-description h1').text();
   const description = $('.recipe-ingress').text();
-  const portions = $('.portions').data('portions');
-  const portionsType = $('.portions').data('unit');
+  const portions = $('.portions').data('portions') || 1;
+  const portionsType = $('.portions').data('unit') || 'portion';
   const ingredientGroupElements = $('.ingredient-group');
   const image = $('.recipe-header-image img').attr('src');
+  let imageAttribution = $('.recipe-header-image .attribution').text();
+  if (imageAttribution) {
+    imageAttribution = imageAttribution.replace('Foto:', '').trim();
+  }
 
   const descriptionChildren = Array.from($('.recipe-description').contents());
   let timeElem = null;
@@ -27,6 +31,7 @@ async function TastelineParser(htmlPage, url, userId) {
   };
   const time = timeElem && timeElem.data && timeElem.data.replace('\t', '').trim();
 
+  // eslint-disable-next-line prefer-arrow-callback
   ingredientGroupElements.each(function(index, elem) {
     const ingredientGroupTitle = $(elem).find('h3').text();
     const ingredientElements = $(elem).find('ul').children();
@@ -54,25 +59,43 @@ async function TastelineParser(htmlPage, url, userId) {
     })
   });
 
-  const authorName = $('.recipe-author-text-inner span').text();
-  const authorUrl = $('.recipe-author a').attr('href');
+  let authorName = $('.recipe-author-text-inner span').text();
+  let authorUrl = $('.recipe-author a').attr('href');
+
+  if (!authorName) {
+    authorName = $('.supplier-image').text();
+    if (authorName) {
+      authorName = authorName.replace('Recept är från:', '').trim();
+      authorUrl = $('.supplier-image').attr('href');
+    }
+  }
+
+  if (!authorName) {
+    authorName = $('.steps .no-image').text();
+    if (authorName) {
+      authorName = authorName.replace('Recept:', '').trim();
+    }
+  }
+
+  if (authorName && !authorUrl) {
+    authorUrl = url;
+  }
 
   let authorId;
   let author;
   if (authorUrl) {
-    const existingAuthorByUrl = await findByArray('users', 'urls', authorUrl);
-
-    if (!existingAuthorByUrl.length) {
+    const [existingAuthorByUrl] = await findByArray('users', 'urls', authorUrl);
+    if (!existingAuthorByUrl) {
       const createdUser = await createUser(
         authorUrl,
         uuidv4(),
-        { urls: [authorUrl], displayName: authorName }
+        { urls: [authorUrl], displayName: authorName },
       );
       author = createdUser;
       authorId = createdUser.id;
     } else {
-      author = existingAuthorByUrl[0];
-      authorId = existingAuthorByUrl[0].id;
+      author = existingAuthorByUrl;
+      authorId = existingAuthorByUrl.id;
     }
 
     if (author) {
@@ -88,6 +111,7 @@ async function TastelineParser(htmlPage, url, userId) {
     portions,
     defaultPortions: portions,
     portionsType,
+    ingredients: [],
     ingredientGroups,
     steps,
     time,
@@ -95,10 +119,10 @@ async function TastelineParser(htmlPage, url, userId) {
     originalAuthor: authorId,
     origin: 'Tasteline',
     originUrl: url,
-    images: [image]
+    images: [image],
+    imageAttribution,
   };
-
   return { recipe, originalAuthorUser: author };
-};
+}
 
 module.exports = TastelineParser;

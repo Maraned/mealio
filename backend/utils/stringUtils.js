@@ -1,6 +1,8 @@
 const capitalize = string => {
-  return string[0].toUpperCase() +  
-    string.slice(1); 
+  if (!string || !string[0]) {
+    return '';
+  }
+  return string[0].toUpperCase() + string.slice(1);
 };
 
 const uuidv4 = () => {

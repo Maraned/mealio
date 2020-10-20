@@ -16,7 +16,6 @@ module.exports.uuidv4 = () => {
 
 const createUser = async (email, password, extraAttributes = {}) => {
   const existingUser = await rdb.findBy('users', 'email', email);
-
   if (existingUser.length) {
     const userAlreadyExists = new Error('USERALREADYEXISTS');
     userAlreadyExists.status = 301;
@@ -31,6 +30,7 @@ const createUser = async (email, password, extraAttributes = {}) => {
       password: hashedPassword,
     };
   } catch (error) {
+    console.error(error)
     res.status = 500;
     res.send({ error: 'COULDNOTCREATEUSER' })
   }
