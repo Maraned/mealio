@@ -255,17 +255,25 @@ module.exports.from = async (tableName, columnName, fromDate) => {
         rightBound: 'closed'
       })
     })
-    .run(conn)
+    .run(connection)
     .then((cursor) => { return cursor.toArray() })
   return result;
 }
 
 module.exports.subscribeWithId = async (tableName, id, eventName) => {
-
   const feed = await rdb.table(tableName).get(id).changes().run(connection);
   feed.each((error, cursor) => {
     if (!error) {
       Connections.broadcast({ type: eventName, data: cursor });
     }
   });
-}
+};
+
+module.exports.findIfHasFields = async (tableName, fieldName) => {
+  const result = rdb
+    .table(tableName)
+    .filter((row) => row.hasFields(fieldName))(fieldName)
+    .run(connection)
+    .then((cursor) => cursor.toArray());
+  return result;
+};
