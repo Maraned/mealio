@@ -2,34 +2,38 @@ import './newIngredients.css';
 
 import React, { useContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaCaretDown, FaPen, FaTrash } from 'react-icons/fa';
+import { FaCaretDown, FaCheckSquare, FaTimes } from 'react-icons/fa';
 import cc from 'classcat';
-import Flags from 'country-flag-icons/react/3x2';
+import useFlag from 'utils/useFlag';
 
 import { AllIngredientsContext } from 'contexts/allIngredients';
+import { IngredientGroupsContext } from 'contexts/ingredientGroups';
 import NewIngredient from 'views/admin/newIngredients/PendingNewIngredient';
+import IngredientGroupSelector from 'components/ingredientList/IngredientGroupSelector';
 import useSearchField from 'components/core/useSearchField';
+import { RemoveIngredientsButton } from 'components/core/Button';
+import {
+  DataGrid,
+  GridToolbarContainer,
+  GridColumnsToolbarButton,
+  GridFilterToolbarButton,
+} from '@material-ui/data-grid';
+import ErrorIcon from '@material-ui/icons/Error';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 export default function NewIngredients() {
-  const { state: allIngredients } = useContext(AllIngredientsContext);
+  const { state: allIngredients, dispatch } = useContext(AllIngredientsContext);
+  const { state: ingredientGroups } = useContext(IngredientGroupsContext);
+
   const { t, i18n } = useTranslation();
+  console.log('allIngredients', allIngredients)
+  const Flag = useFlag();
 
   const [sortAttribute, setSortAttribute] = useState('name');
   const [sortDirection, setSortDirection] = useState('asc');
   const [filters, setFilters] = useState(['pending']);
 
-  const changeSortDirection = () => {
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  };
-
-  const changeSortAttribute = attribute => {
-    if (sortAttribute === attribute) {
-      changeSortDirection();
-    } else {
-      setSortAttribute(attribute);
-    }
-  };
-
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   const pendingIngredients = useMemo(() => {
     return allIngredients.filter(ingredient => filters.includes(ingredient.status));
@@ -50,6 +54,8 @@ export default function NewIngredients() {
         } else {
           return itemAttribute ? itemAttribute.name : '';
         }
+      default:
+        return '';
     }
   };
 
@@ -67,6 +73,8 @@ export default function NewIngredients() {
     })
   }, [sortAttribute, sortDirection, filteredIngredients]);
 
+  console.log('sortedIngredients', sortedIngredients)
+
   const changeLanguage = language => {
     if (language !== i18n.language) {
       i18n.changeLanguage(language);
@@ -79,10 +87,10 @@ export default function NewIngredients() {
     } else {
       setFilters([...filters, filterName]);
     }
-  }
+  };
 
   const renderFilter = (filterName, ) => (
-    <div 
+    <div
       onClick={() => toggleFilter(filterName)}
       className={cc(['filter margin--right', {
         'filter--selected': filters.includes(filterName),
@@ -100,14 +108,13 @@ export default function NewIngredients() {
   );
 
   const renderLanguageOption = language => {
-    const Flag = Flags[language];
     const isCurrentLanguage = language === i18n.language;
     return (
-      <Flag 
+      <Flag
         className={cc(['flag margin--right clickable', {
           'flag--nonSelected': !isCurrentLanguage
         }])}
-        onClick={() => changeLanguage(language)} 
+        onClick={() => changeLanguage(language)}
       />
     )
   };
@@ -128,57 +135,100 @@ export default function NewIngredients() {
     </div>
   );
 
-  const renderColumnTitle = (title, attribute) => (
-    <span className={cc(['newIngredients__title', { 
-      'newIngredients__title--selected': attribute === sortAttribute 
-    }])}>
-      <span onClick={() => changeSortAttribute(attribute)}>{title}</span>
-
-      <FaCaretDown 
-        className={cc(['newIngredients__sortCaret', {
-          'newIngredients__sortCaret--down': sortDirection === 'asc',
-          'newIngredients__sortCaret--up': sortDirection === 'desc',
-        }])}
-        onClick={() => changeSortDirection(attribute)} 
-      />
-    </span>
+  const renderIsTranslated = params => (
+    <div className="flex center vcenter fullWidth">
+      {!!t(`Ingredient:${params.row.name}`)
+        ? (
+          <CheckCircleIcon />
+        ) : (
+          <ErrorIcon />
+        )}
+    </div>
   );
 
-  const renderLine = id => (
-    <>
-      <div className="line" key={`line1-${id}`} />
-      <div className="line" key={`line2-${id}`} />
-      <div className="line" key={`line3-${id}`} />
-      <div className="line" key={`line4-${id}`} />
-      <div className="line" key={`line5-${id}`} />
-      <div className="line" key={`line6-${id}`} />
-      <div className="line" key={`line7-${id}`} />
-    </>
+  const onIngredientGroupChange = (selectedGroups) => {
+    console.log('selectedGroups', {selectedGroups, selectedIngredients})
+    for (let id of selectedIngredients) {
+      dispatch({ type: 'updateIngredient', value: { id, groups: selectedGroups }})
+    }
+  };
+
+  const renderGroup = ({ value = [], row }) => {
+    const isSelected = selectedIngredients.find(id => id === row.id);
+    if (isSelected) {
+      return (
+        <IngredientGroupSelector
+          selectedGroups={value}
+          onSelectionChange={onIngredientGroupChange}
+        />
+      );
+    }
+    const ingredientGroupNames = value.map(groupId => {
+      return ingredientGroups?.find(ingredientGroup => ingredientGroup.id === groupId)?.name;
+    });
+    return ingredientGroupNames?.join(', ');
+  };
+
+  const renderAlternatives = ({ value = [] }) => {
+    const alternativeIngredients = value.map(ingredientId => {
+      return allIngredients.find(ingredient => ingredient.id === ingredientId)?.name;
+    })
+    return alternativeIngredients?.join(', ', '')
+  };
+
+  const renderStatus = ({ value }) => (
+    <div className="center">
+      {value === 'pending' ? <FaTimes /> : < FaCheckSquare />}
+    </div>
   );
+
+  const renderSearchAndDelete = () => (
+    <div className="flex vcenter">
+      {!!selectedIngredients.length && (
+        <RemoveIngredientsButton
+          className="margin--right--large margin--left"
+          ingredientIds={selectedIngredients}
+        />
+      )}
+      {SearchField}
+    </div>
+  );
+
+  const columns = [
+    {
+      field: 'isTranslated',
+      flex: 0.1,
+      headerName: t('NewIngredients:IsTranslated'),
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: renderIsTranslated,
+    },
+    { field: 'name', flex: .25, headerName: t('NewIngredients:Name') },
+    {
+      field: 'groups',
+      flex: .25,
+      headerName: t('NewIngredients:Group'),
+      disableClickEventBubbling: true,
+      renderCell: renderGroup
+    },
+    { field: 'alternatives', flex: .25, headerName: t('NewIngredients:Alternatives'), valueGetter: renderAlternatives },
+    // { field: 'tips', headerName: t('NewIngredients:Tips'), renderCell: renderColumnTitle },
+    { field: 'status', headerName: t('NewIngredients:Status'), renderCell: renderStatus },
+  ];
 
   return (
     <div className="newIngredients background fullWidth box">
       {renderHeader()}
+      {renderSearchAndDelete()}
 
-      {SearchField}
-
-      <div className="newIngredients__list scrollable">    
-        <span className="newIngredients__titleIcon" />
-        {renderColumnTitle(t('NewIngredients:Name'), 'name')}
-        {renderColumnTitle(t('NewIngredients:Group'), 'group')}
-        {renderColumnTitle(t('NewIngredients:Alternatives'), 'alternatives')}
-        {renderColumnTitle(t('NewIngredients:Tips'), 'tips')}
-        {renderColumnTitle(t('NewIngredients:Status'), 'status')}
-        <span />
-
-        {sortedIngredients.map((newIngredient, index) => {
-          return (
-            <>
-              <NewIngredient newIngredient={newIngredient} key={newIngredient.id} />
-              {index !== sortedIngredients.length - 1 && renderLine(newIngredient.id)}
-            </>
-          )
-        })}
+      <div className="newIngredients__grid">
+        <DataGrid
+          disableColumnMenu
+          onSelectionChange={e => setSelectedIngredients(e.rowIds)}
+          checkboxSelection
+          rows={sortedIngredients}
+          columns={columns}
+        />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const rdb = require('../lib/rethink');
 const logger = require('../utils/logger');
+const { isEmpty } = require('lodash');
 
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -47,18 +48,39 @@ const getImages = async (images, id) => {
 
   const handledImages = await Promise.all(promises);
   return handledImages;
-}
+};
 
 const removeImages = async (images, id) => {
   for (const image of images) {
     const imagePath = `images/${image}`;
     fs.unlinkSync(imagePath);
   }
-}
+};
+
+// eslint-disable-next-line arrow-body-style
+const getAllIngredientRecipes = async (ingredientIds) => {
+  const ingredientRecipes = {};
+  for (const id of ingredientIds) {
+    const recipes = await rdb.findByArray(
+      'publishedRecipes',
+      'ingredientIds',
+      id,
+    );
+    ingredientRecipes[id] = recipes;
+  }
+  return ingredientRecipes;
+};
 
 router.get('/', async (req, res, next) => {
   try {
-    const response = await rdb.findAll('publishedRecipes');
+    const { query } = req;
+    let response;
+    if (isEmpty(query)) {
+      response = await rdb.findAll('publishedRecipes');
+    } else {
+      const { ingredientIds } = query;
+      response = await getAllIngredientRecipes(ingredientIds);
+    }
     res.status(200);
     return res.send(response);
   } catch (error) {
@@ -78,11 +100,24 @@ router.get('/url/:url', async (req, res, next) => {
   }
 });
 
+const getIngredientIds = (ingredientGroups) => {
+  const ingredientIds = [];
+  ingredientGroups.forEach((ingredientGroup) => {
+    ingredientIds.push(...ingredientGroup.ingredients.map((ingredient) => ingredient.id));
+  });
+  return ingredientIds;
+};
+
 router.post('/createUpdate', async (req, res, next) => {
   try {
     const { recipe, id } = req.body;
 
     if (recipe && id) {
+      let ingredientIds = [];
+      if (recipe.ingredientGroups) {
+        ingredientIds = getIngredientIds(recipe.ingredientGroups);
+      }
+      recipe.ingredientIds = ingredientIds;
       if (recipe.id) {
         const images = await getImages(recipe.images, id);
         await rdb.edit('draftRecipes', recipe.id, { ...recipe, images });
@@ -112,19 +147,26 @@ router.post('/publish', async (req, res, next) => {
 
   if (recipe && id) {
     try {
-      const existingRecipeWithName = await rdb.findBy(
+      const existingRecipeWithUrl = await rdb.findBy(
         'publishedRecipes',
         'url',
         recipe.url
       );
 
-      if (existingRecipeWithName.length) {
+      if (existingRecipeWithUrl.length) {
         res.status(400);
-        return res.send({ status: 'error', message: 'Recipe:RecipeWithNameExists'});
+        return res.send({ status: 'error', message: 'Recipe:RecipeWithUrlExists' });
       }
 
-      await rdb.save('publishedRecipes', {
+      const savedRecipeWithId = await rdb.find('draftRecipes', recipe.id);
+      const publishedRecipe = {
         ...recipe,
+        ...(savedRecipeWithId || {}),
+        draft: false,
+      };
+
+      await rdb.save('publishedRecipes', {
+        ...publishedRecipe,
         collectionCount: 0,
         publishedDate: new Date(),
       });

@@ -8,6 +8,8 @@
 .pendingNewIngredient__group,
 .pendingNewIngredient__alternatives {
   padding-right: .5rem;
+  display: flex;
+  align-items: center;
 }
 
 .pendingNewIngredient__status {

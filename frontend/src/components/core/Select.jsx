@@ -190,6 +190,24 @@ const Select = ({
       || defaultText;
   };
 
+  const renderOption = option => {
+    return (
+      <div
+        key={`${option.id}-${option.selected}`}
+        className={cc(['select__option relative clickable text--ellipsisOverflow', {
+          'select__option--selected': option.selected,
+          'select__option--smallPadding': smallPadding,
+        }])}
+        onClick={changeSelected(option)}
+      >
+        {multiSelect && renderCheckbox(option)}
+        {option[textAttribute]}
+      </div>
+    );
+  };
+
+  console.log('filteredOptions', filteredOptions)
+
   const renderEditableView = () => (
     <div
       className={cc(['select', className, {
@@ -222,19 +240,7 @@ const Select = ({
                     onChange={event => setQuery(event.target.value)}
                   />
                 )}
-                {filteredOptions && filteredOptions.map(option => (
-                  <div
-                    key={`${option.id}-${option.selected}`}
-                    className={cc(['select__option relative clickable text--ellipsisOverflow', {
-                      'select__option--selected': option.selected,
-                      'select__option--smallPadding': smallPadding,
-                    }])}
-                    onClick={changeSelected(option)}
-                  >
-                    {multiSelect && renderCheckbox(option)}
-                    {option[textAttribute]}
-                  </div>
-                ))}
+                {filteredOptions && filteredOptions.map(renderOption)}
               </div>
 
               {addable && (

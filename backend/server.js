@@ -53,7 +53,7 @@ app.use('/ingredients', ingredients);
 app.use('/ingredientGroups', ingredientGroups);
 app.use('/statistics', statistics);
 
-app.get('/images/:recipe/:image', function(req, res){
+app.get('/images/:recipe/:image', function(req, res) {
   const { recipe, image} = req.params;
   res.sendFile(`${__dirname}/images/${recipe}/${image}`);
 });

@@ -4,14 +4,13 @@ import React, { useContext, useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaCheckCircle, FaPen, FaTrash } from 'react-icons/fa';
 import cc from 'classcat';
-import Flags from 'country-flag-icons/react/3x2';
-
 import { AllIngredientsContext } from 'contexts/allIngredients';
 import { IngredientGroupsContext } from 'contexts/ingredientGroups';
 import { UserContext } from 'contexts/user';
 import EditableField from 'components/core/EditableField/EditableField';
 import Select from 'components/core/Select';
 import { Capitalize } from 'utils/utils';
+import useFlag from 'utils/useFlag';
 
 export default function PendingNewIngredient({ newIngredient }) {
   const [editMode, setEditMode] = useState(false);
@@ -19,6 +18,7 @@ export default function PendingNewIngredient({ newIngredient }) {
   const { state: ingredientGroups } = useContext(IngredientGroupsContext);
   const { state: user } = useContext(UserContext);
   const { t, i18n } = useTranslation();
+  const Flag = useFlag();
 
   const sortOptions = options => {
     return options.sort((a, b) => {
@@ -117,95 +117,118 @@ export default function PendingNewIngredient({ newIngredient }) {
     updateNewIngredient({ status });
   };
 
-  const Flag = Flags[i18n.language];
+  const renderEditToggle = () => (
+    <span
+      className="pendingNewIngredient__edit flex vcenter"
+      key={`edit-${newIngredient.id}`}
+      onClick={() => setEditMode(!editMode)}
+    >
+      <FaPen />
+    </span>
+  );
 
-  return (
-    <>
-      <span
-        className="pendingNewIngredient__edit flex vcenter"
-        key={`edit-${newIngredient.id}`}
-        onClick={() => setEditMode(!editMode)}
-      >
-        <FaPen />
-      </span>
+  const renderName = () => (
+    <span className="pendingNewIngredient__name" key={`name-${newIngredient.id}`}>
+      <EditableField
+        manualStateMode
+        manualEditState={editMode}
+        value={newIngredient.name}
+        onChange={updateIngredientName}
+      />
 
-      <span className="pendingNewIngredient__name" key={`name-${newIngredient.id}`}>
+      <div className={cc(['flex', { 'column center': editMode } ])}>
+        <div className="flex vcenter">
+          {Flag && (
+            <Flag className="flag--small margin--right noShrink" />
+          )}
+          <span className="noShrink">{t('NewIngredients:Singular')} &nbsp;</span>
+        </div>
         <EditableField
           manualStateMode
           manualEditState={editMode}
-          value={newIngredient.name}
-          onChange={updateIngredientName}
+          value={t(`Ingredient:${newIngredient.name}`)}
+          // onChange={updateNewIngredient}
         />
+      </div>
 
-        <div className={cc(['flex', { 'column center': editMode } ])}>
-          <div className="flex vcenter">
-            <Flag className="flag--small margin--right noShrink" />
-            <span className="noShrink">{t('NewIngredients:Singular')} &nbsp;</span>
-          </div>
-          <EditableField
-            manualStateMode
-            manualEditState={editMode}
-            value={t(`Ingredient:${newIngredient.name}`)}
-            // onChange={updateNewIngredient}
-          />
+      <div className={cc(['flex', { 'column center': editMode } ])}>
+        <div className="flex vcenter">
+          <Flag className="flag--small margin--right noShrink" />
+          <span className="noShrink">{t('NewIngredients:Plural')} &nbsp;</span>
         </div>
-
-        <div className={cc(['flex', { 'column center': editMode } ])}>
-          <div className="flex vcenter">
-            <Flag className="flag--small margin--right noShrink" />
-            <span className="noShrink">{t('NewIngredients:Plural')} &nbsp;</span>
-          </div>
-          <EditableField
-            manualStateMode
-            manualEditState={editMode}
-            value={t(`Ingredient:${newIngredient.name}`)}
-            // onChange={updateNewIngredient}
-          />
-        </div>
-      </span>
-
-      <span className="pendingNewIngredient__group" key={`group-${newIngredient.id}`}>
-        <Select
-          textAttribute="name"
-          selectedText={selectedGroups.join(', ')}
-          onChange={updateIngredientGroup}
+        <EditableField
           manualStateMode
           manualEditState={editMode}
-          multiSelect
-          options={ingredientGroupOptions}
+          value={t(`Ingredient:${newIngredient.name}`)}
+          // onChange={updateNewIngredient}
         />
-      </span>
+      </div>
+    </span>
+  );
 
-      <span className="pendingNewIngredient__alternatives" key={`alternatives-${newIngredient.id}`}>
-        <Select
-          textAttribute="name"
-          selectedText={selectedAlternatives.join(', ')}
-          onChange={updateAlternatives}
-          manualStateMode
-          manualEditState={editMode}
-          multiSelect
-          options={alternativeOptions}
-        />
-      </span>
+  const renderGroup = () => (
+    <span className="pendingNewIngredient__group" key={`group-${newIngredient.id}`}>
+      <Select
+        textAttribute="name"
+        selectedText={selectedGroups.join(', ')}
+        onChange={updateIngredientGroup}
+        manualStateMode
+        manualEditState={editMode}
+        multiSelect
+        options={ingredientGroupOptions}
+      />
+    </span>
+  );
 
-      <span className="pendingNewIngredient__tips" key={`tops-${newIngredient.id}`}>
-        {newIngredient.tips}
-      </span>
+  const renderAlternatives = () => (
+    <span className="pendingNewIngredient__alternatives" key={`alternatives-${newIngredient.id}`}>
+      <Select
+        textAttribute="name"
+        selectedText={selectedAlternatives.join(', ')}
+        onChange={updateAlternatives}
+        manualStateMode
+        manualEditState={editMode}
+        multiSelect
+        options={alternativeOptions}
+      />
+    </span>
+  );
 
-      <span
-        key={`status-${newIngredient.id}`}
-        className="pendingNewIngredient__status flex vcenter"
-        onClick={updateIngredientStatus}
-      >
-        <FaCheckCircle className={cc(['pendingNewIngredient__statusIcon', {
-          'pendingNewIngredient__statusIcon--checked': newIngredient.status === 'active'
-        }])}/>
-        {Capitalize(newIngredient.status)}
-      </span>
+  const renderTips = () => (
+    <span className="pendingNewIngredient__tips" key={`tops-${newIngredient.id}`}>
+      {newIngredient.tips}
+    </span>
+  );
 
-      <span className="pendingNewIngredient__remove flex center vcenter">
-        <FaTrash />
-      </span>
+  const renderStatus = () => (
+    <span
+      key={`status-${newIngredient.id}`}
+      className="pendingNewIngredient__status flex vcenter"
+      onClick={updateIngredientStatus}
+    >
+      <FaCheckCircle className={cc(['pendingNewIngredient__statusIcon', {
+        'pendingNewIngredient__statusIcon--checked': newIngredient.status === 'active'
+      }])}/>
+      {Capitalize(newIngredient.status)}
+    </span>
+  );
+
+  const renderRemoveIcon = () => (
+    <span className="pendingNewIngredient__remove flex center vcenter">
+      <FaTrash />
+    </span>
+  );
+
+
+  return (
+    <>
+      {renderEditToggle()}
+      {renderName()}
+      {renderGroup()}
+      {renderAlternatives()}
+      {renderTips()}
+      {renderStatus()}
+      {renderRemoveIcon()}
     </>
   );
 }

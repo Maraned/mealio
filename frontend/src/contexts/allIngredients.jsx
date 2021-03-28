@@ -31,7 +31,9 @@ const reducer = (state, action) => {
     case 'update':
       return action.value;
     case 'updateIngredient':
-      putRequest(`ingredients/${action.value.id}`, action.value);
+      const id = action.value.id;
+      delete action.value.id;
+      putRequest(`ingredients/${id}`, action.value);
       return state;
     case 'updated':
       return updateIngredient(state, action.value);

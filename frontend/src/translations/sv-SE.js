@@ -1,6 +1,7 @@
-export default {
+const translations = {
   Common: {
     Save: 'Spara',
+    Cancel: 'Stäng',
   },
   Login: {
     Login: 'Logga in',
@@ -65,7 +66,7 @@ export default {
     AuthorUrl: 'Recept av: <1>{{author}}<1>',
     AuthorWithOrigin: 'Recept av: {{author}}, från <2>{{origin}}</2>',
     Import: 'Importera',
-    RecipeWithNameExists: 'Ett publicerat recept existerar redan med detta namn. Vänligen ändra det för att kunna publicera.',
+    RecipeWithUrlExists: 'Ett publicerat recept existerar redan med detta namn. Vänligen ändra det för att kunna publicera.',
     DeleteFailed: 'Något gick fel vid borttagandet av receptet.',
     DeleteSuccess: 'Receptet har tagits bort.',
     ShowRecipeFailed: 'Något gick fel vid hämtning av recept.'
@@ -187,6 +188,7 @@ export default {
     Status: 'Status',
     Singular: 'Singular:',
     Plural: 'Plural:',
+    IsTranslated: 'Översatt',
   },
   Select: {
     Search: 'Sök...',
@@ -211,5 +213,16 @@ export default {
   Unit: {
     Minute: 'minut',
     Minute_plural: 'minuter',
-  }
-}
+  },
+  RemoveIngredients: {
+    Title: 'Ta bort ingredienser',
+    SaveText: 'Spara och ta bort',
+    ColumnName: 'Namn',
+    ColumnReplacement: 'Ersättningsingrediens',
+    ColumnUsedIn: 'Används i',
+    RecipeCount: '{{count}} recept',
+    RecipeCount__plural: '{{count}} recept',
+  },
+};
+
+export default translations;

@@ -11,7 +11,6 @@ const initIndexes = connection => {
 
 const Connections = require('../utils/Connections');
 
-
 const { mapRecipeUsers } = require('../utils/utils');
 
 const initConnection = async () => {
@@ -71,8 +70,7 @@ module.exports.findBy = async (tableName, fieldName, value) => {
     .run(connection);
   return cursor.toArray();
 };
-
-module.exports.findByArray = async (tableName, fieldName, value) => {
+const findByArray = async (tableName, fieldName, value) => {
   const cursor = await rdb
     .table(tableName)
     .filter(rdb
@@ -82,6 +80,7 @@ module.exports.findByArray = async (tableName, fieldName, value) => {
     .run(connection);
   return cursor.toArray();
 };
+module.exports.findByArray = findByArray;
 
 module.exports.save = async (tableName, object) => {
   const result = await rdb
@@ -261,7 +260,6 @@ module.exports.from = async (tableName, columnName, fromDate) => {
 }
 
 module.exports.subscribeWithId = async (tableName, id, eventName) => {
-
   const feed = await rdb.table(tableName).get(id).changes().run(connection);
   feed.each((error, cursor) => {
     if (!error) {
@@ -269,3 +267,11 @@ module.exports.subscribeWithId = async (tableName, id, eventName) => {
     }
   });
 }
+
+module.exports.getPublishedRecipesWithIngredient = (id) => {
+  return findByArray('publishedRecipes', 'ingredientIds', id);
+};
+
+module.exports.getDraftRecipesWithIngredient = (id) => {
+  return findByArray('draftRecipes', 'ingredientIds', id);
+};

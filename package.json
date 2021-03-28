@@ -11,7 +11,8 @@
     "pullBackend": "docker pull mealio/mealio_backend",
     "dcomp": "docker-compose -f production.yml",
     "ssh": "docker-machine ssh mealio1",
-    "stop": "docker-compose -f production.yml stop"
+    "stop": "docker-compose -f production.yml stop",
+    "build": "docker-compose up -d --build"
   },
   "author": "",
   "license": "ISC",

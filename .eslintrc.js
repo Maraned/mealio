@@ -22,5 +22,8 @@ module.exports = {
     'react',
   ],
   rules: {
+    'no-restricted-syntax': 'off',
+    'no-await-in-loop': 'off',
+    'arrow-body-style': 'off'
   },
 };

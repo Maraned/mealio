@@ -1,0 +1,6 @@
+.scrollbox {
+ max-height: 350px;
+ overflow-x: hidden;
+ overflow-y: auto;
+ box-shadow: inset 0px -4px 6px -6px grey;
+}

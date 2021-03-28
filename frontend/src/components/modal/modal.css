@@ -30,6 +30,7 @@
     border-radius: 5px;
     max-width: 50%;
     max-height: 80vh;
+    margin-top: -8rem;
   }
 
   .modal--large {
@@ -116,4 +117,8 @@
   justify-content: space-between;
   background-color: #fff;
   padding: .5rem;
+}
+
+.modalButtons--center {
+  justify-content: center;
 }

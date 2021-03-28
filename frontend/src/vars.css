@@ -32,6 +32,7 @@
 
   --grey: #ababab;
   --light-grey: #efefef;
+  --cancel-color: var(--grey);
 
   --box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .15);
   --box-shadow-thin: 1px 1px 1px 0px rgba(0, 0, 0, .15);

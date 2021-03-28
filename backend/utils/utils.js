@@ -1,17 +1,17 @@
 const rdb = require('../lib/rethink');
 
 module.exports.mapRecipeUsers = async (recipes) => {
-    return Promise.all(recipes.map(async recipe => {
-      let originalAuthorUser = null;
-      if (recipe.originalAuthor) {
-        originalAuthorUser = await rdb.find('users', recipe.originalAuthor);
-      }
+  return Promise.all(recipes.map(async recipe => {
+    let originalAuthorUser = null;
+    if (recipe.originalAuthor) {
+      originalAuthorUser = await rdb.find('users', recipe.originalAuthor);
+    }
 
-      let authorUser = null;
-      if (recipe.author) {
-        authorUser = await rdb.find('users', recipe.author);
-      }
+    let authorUser = null;
+    if (recipe.author) {
+      authorUser = await rdb.find('users', recipe.author);
+    }
 
-      return { ...recipe, originalAuthorUser, authorUser };
-    }));
+    return { ...recipe, originalAuthorUser, authorUser };
+  }));
 };

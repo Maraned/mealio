@@ -1,0 +1,38 @@
+
+.removeButton {
+  background-color: var(--alert-color);
+  color: #fff;
+  padding: .25rem;
+  display: flex;
+  align-items: center;
+  transition: opacity .1s;
+  cursor: pointer;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.removeButton:hover {
+  opacity: .7;
+}
+
+.removeButton svg {
+  transition: transform .1s;
+}
+
+.removeButton:hover svg {
+  transform: scale(1.15);
+}
+
+.removeButton--inverted {
+  color: var(--alert-color);
+  background-color: transparent;
+  width: 2rem;
+}
+
+.removeButton--inverted svg {
+  transform: translateX(-50%);
+}
+
+.button.cancel {
+  color: var(--cancel-color);
+}

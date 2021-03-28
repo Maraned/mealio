@@ -26,15 +26,22 @@ export function ModalButtons({
   onSave,
   saveText,
   saveDisabled,
+  center,
 }) {
   const { t } = useTranslation();
 
   return (
-    <div className="modalButtons">
+    <div
+      className={cc(['modalButtons', {
+        'modalButtons--center': center
+      }])}
+    >
       {onSave && (
-        <button 
-          className={cc({ 'disabled': saveDisabled })} 
-          disabled={saveDisabled} 
+        <button
+          className={cc({
+            'disabled': saveDisabled,
+          })}
+          disabled={saveDisabled}
           onClick={onSave}
         >
           {saveText || t('Modal:Save')}
@@ -51,8 +58,8 @@ export const ModalSideOption = ({
   children,
   flexOption,
 }) => (
-  <div 
-    key={key} 
+  <div
+    key={key}
     className={cc(['modal__sideMenu__option', {
       'modal__sideMenu__option--selected': selected,
       'flex center vcenter': flexOption
@@ -90,6 +97,8 @@ const Modal = ({ children, ref, ModalSize = 'large', WithSideMenu = true, header
   const wrapperRef = useRef(null);
   const history = useHistory();
 
+  console.log('headerTitle', headerTitle)
+
   useEffect(() => {
     document.getElementsByTagName('body')[0].style.overflow = 'hidden';
 
@@ -99,30 +108,32 @@ const Modal = ({ children, ref, ModalSize = 'large', WithSideMenu = true, header
   }, []);
 
   const outsideClick = event => {
-    if (!modalRef.current.contains(event.target)) {
-      history.goBack();
-    }
+    // console.log('event.target', event.target)
+    // if (!modalRef.current.contains(event.target)) {
+    //   console.log('outsideClick!!')
+    //   history.goBack();
+    // }
   };
 
   const closeModal = () => {
     history.goBack();
   };
-  
+
 
   const ModalView = (
     <PoseGroup enterPose="enter">
-      <PosedModal 
-        key="modal" 
-        className="modalWrapper" 
+      <PosedModal
+        key="modal"
+        className="modalWrapper"
         onClick={outsideClick}
         ref={wrapperRef}
       >
-        <div 
+        <div
           className={cc(['modal', {
             'modal--large': ModalSize === 'large',
             'modal--auto': ModalSize === 'auto',
             'modal--withSideMenu': WithSideMenu
-          }])} 
+          }])}
           ref={modalRef}
         >
           <div className="modal__header">
@@ -132,7 +143,7 @@ const Modal = ({ children, ref, ModalSize = 'large', WithSideMenu = true, header
               <FaTimes onClick={closeModal} />
             </div>
           </div>
-          
+
           {children}
         </div>
       </PosedModal>
