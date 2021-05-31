@@ -21,7 +21,7 @@
     "nodemon": "1.18.10",
     "request-promise": "^4.2.5",
     "sharp": "^0.25.4",
-    "ws": "^7.2.1"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "body-parser": "^1.18.3",
