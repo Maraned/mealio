@@ -11,7 +11,7 @@
     "classcat": "^3.2.5",
     "country-flag-icons": "^1.2.1",
     "draft-js": "^0.11.7",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "framer-motion": "^2.6.0",
     "fuse": "^0.4.0",
     "i18next": "19.6.3",
